@@ -1,4 +1,5 @@
 const { Post } = require('../models/index');
+const { User } = require('../models/index');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -67,4 +68,14 @@ exports.getAllPosts = (req, res, next) => {
     Post.findAll() 
       .then(posts => res.status(200).json(posts))
       .catch(error => res.status(400).json({ error }));
+};
+
+// Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
+exports.getAllPostsUser = (req, res, next) => {
+  Post.findAll({ where: { UserId: req.params.id },
+    include: { model: User, attributes: ["username"]},
+    order: [["createdAt", "DESC"]]
+  })
+    .then(posts => res.status(200).json(posts))
+    .catch(error => res.status(400).json({ error }));
 };
