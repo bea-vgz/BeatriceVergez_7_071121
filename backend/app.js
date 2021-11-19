@@ -12,6 +12,7 @@ const commentRoutes = require('./routes/comment'); // On importe la route dédi�
 const likePostRoutes = require('./routes/like_post'); // On importe la route dédiée aux likes des posts
 const dislikePostRoutes = require('./routes/dislike_post'); // On importe la route dédiée aux dislikes des posts
 const likeCommentRoutes = require('./routes/like_comment'); // On importe la route dédiée aux likes des commentaires
+const dislikeCommentRoutes = require('./routes/dislike_comment'); // On importe la route dédiée aux likes des commentaires
 
 //db
 const { sequelize } = require('./models/index');
@@ -35,6 +36,7 @@ app.use('/api/posts', commentRoutes);
 app.use('/api/posts', likePostRoutes);
 app.use('/api/posts', dislikePostRoutes);
 app.use('/api/comments', likeCommentRoutes);
+app.use('/api/comments', dislikeCommentRoutes);
 
 // Connexion à la db
 async function dbConnect() {
