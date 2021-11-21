@@ -27,7 +27,7 @@ exports.dislikePost = async (req, res, next) => {
 
 // Afficher/Récupérer tous les commentaires
 exports.getAllPostsDislikes = (req, res, next) => {
-  Dislike_post.findAll( { where: { id: req.params.id } }) 
+  Dislike_post.findAll( { where: { PostId: req.params.id } }) 
     .then(dislike => res.status(200).json(dislike))
     .catch(error => res.status(400).json({ error }));
 };

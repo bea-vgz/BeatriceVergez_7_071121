@@ -51,7 +51,7 @@ exports.getOneComment = (req, res, next) => {
 
 // Afficher/Récupérer tous les commentaires
 exports.getAllComments = (req, res, next) => {
-    Comment.findAll() 
-      .then(comment => res.status(200).json(comment))
+    Comment.findAll({ where: { PostId: req.params.id } }) 
+      .then(comments => res.status(200).json(comments))
       .catch(error => res.status(400).json({ error }));
 };
