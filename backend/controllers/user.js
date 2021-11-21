@@ -74,6 +74,24 @@ exports.modifyUser = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 }
 
+// Modifier un password
+exports.modifyPassword = async (req, res) =>{ 
+    const password = await bcrypt.hash(req.body.password, 10);
+    const value = { password };
+    User.findOne({ where : { id: req.params.id }})
+      .then(user => {
+        if(!user){
+            return res.status(401).json({ error: 'Utilisateur non trouvé'})
+        }
+        else {
+            user.update({ ...value,  id: req.params.id } )
+            .then(res.status(201).json({ message:'Mot de passe modifié !' }))  
+            .catch(error=>res.status(400).json({ error:error }) )       
+          }     
+        })
+        .catch(error => res.status(500).json({error})) 
+  }
+
 // Supprimer un user
 exports.deleteUser = (req, res, next) => {
     User.findOne({where : { id: req.params.id }})
