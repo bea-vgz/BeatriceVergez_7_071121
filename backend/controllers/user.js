@@ -120,12 +120,12 @@ exports.getAllUsers = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
 };
 
-// se déconnecter 
+/* Se déconnecter 
 
-//exports.logout = (req, res) => {
-    //user.update({
-        //userId: req.body.userId
-   // })
-        //.then(() => res.status(200).json({ message: "Utilisateur deconnecté"}))
-       // .catch(error => { throw error })
-//}
+exports.logout = (req, res) => {
+    User.update({
+      UserId: req.user
+    })
+    .then(() => res.status(200).json({ message: "Utilisateur deconnecté"}))
+    .catch(error => { throw error })
+} */

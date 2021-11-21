@@ -1,4 +1,6 @@
 const { Like_post } = require('../models/index');
+const { User } = require('../models/index');
+const { Post } = require('../models/index');
 
 // Création d'un like post :
 exports.likePost = async (req, res, next) => {
@@ -10,13 +12,14 @@ exports.likePost = async (req, res, next) => {
         );
         res.status(200).send({ message : "Vous n'aimez plus ce post !" });
       } else {
-        await Like_post.create({
+        const newLike = await Like_post.create({
           UserId: req.user,
           PostId: req.params.id
         });
         res.status(201).json({ 
           message: " J'aime !",
           PostId: req.params.id,
+          id : newLike.id
         })
       }
     }
@@ -25,9 +28,12 @@ exports.likePost = async (req, res, next) => {
       }
 };
 
-// Afficher/Récupérer tous les likes des posts
-exports.getAllPostsLikes = (req, res, next) => {
-  Like_post.findAll( { where: { PostId: req.params.id } }) 
+//Recupérer tous les likes d'un post
+exports.getPostsLikes = (req, res, next) => {
+  Like_post.findAll( { where: { PostId: req.params.id },
+    include: [{ model: User, attributes: ["username"] }],
+    order: [["createdAt", "ASC"]],
+  }) 
     .then(like => res.status(200).json(like))
     .catch(error => res.status(400).json({ error }));
 };

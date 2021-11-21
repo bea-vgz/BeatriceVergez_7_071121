@@ -1,4 +1,5 @@
 const { Like_comment } = require('../models/index');
+const { User } = require('../models/index');
 
 // Création d'un like post :
 exports.likeComment = async (req, res, next) => {
@@ -10,13 +11,14 @@ exports.likeComment = async (req, res, next) => {
         );
         res.status(200).send({ message : "Vous n'aimez plus ce commentaire !" });
       } else {
-        await Like_comment.create({
+        const newLike = await Like_comment.create({
           UserId: req.user,
           CommentId: req.params.id
         });
         res.status(201).json({ 
           message: " J'aime !",
           CommentId: req.params.id,
+          id: newLike.id
         })
       }
     }
@@ -27,7 +29,10 @@ exports.likeComment = async (req, res, next) => {
 
 // Afficher/Récupérer tous les commentaires
 exports.getAllCommentsLikes = (req, res, next) => {
-  Like_comment.findAll( { where: { CommentId: req.params.id } }) 
+  Like_comment.findAll( { where: { CommentId: req.params.id },
+    include: [{ model: User, attributes: ["username"] }],
+    order: [["createdAt", "ASC"]], 
+  }) 
     .then(dislike => res.status(200).json(dislike))
     .catch(error => res.status(400).json({ error }));
 };
