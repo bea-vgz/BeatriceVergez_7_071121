@@ -1,4 +1,5 @@
 const { Comment } = require('../models/index');
+const { User } = require('../models/index');
 
 // Création d'un commentaire :
 exports.createComment = async (req, res, next) => {
@@ -11,12 +12,12 @@ exports.createComment = async (req, res, next) => {
       res.status(201).json({ 
         message: "Nouveau commentaire ajouté !",
         content: newComment.content,
-        PostId: req.params.id,
+        CommentId: newComment.id
       })
     }
     catch (error) {
-          res.status(400).json({ error: error.message });
-      }
+      res.status(400).json({ error: error.message });
+    }
   };
 
 //Modifier un commentaire
@@ -50,8 +51,11 @@ exports.getOneComment = (req, res, next) => {
 };
 
 // Afficher/Récupérer tous les commentaires
-exports.getAllComments = (req, res, next) => {
-    Comment.findAll({ where: { PostId: req.params.id } }) 
-      .then(comments => res.status(200).json(comments))
-      .catch(error => res.status(400).json({ error }));
+exports.getComments = (req, res, next) => {
+  Comment.findAll({ where: { PostId: req.params.id },
+    include: [{ model: User }],
+    order: [["createdAt", "ASC"]], 
+  }) 
+    .then(comments => res.status(200).json(comments))
+    .catch(error => res.status(400).json({ error }));
 };
