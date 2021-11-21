@@ -72,7 +72,7 @@ exports.getAllPosts = (req, res, next) => {
 
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPostsUser = (req, res, next) => {
-  Post.findAll({ where: { UserId: req.params.id },
+  Post.findAll({ where: { id: req.params.id },
     include: { model: User, attributes: ["username"]},
     order: [["createdAt", "DESC"]]
   })

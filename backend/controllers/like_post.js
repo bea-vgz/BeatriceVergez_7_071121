@@ -25,9 +25,9 @@ exports.likePost = async (req, res, next) => {
       }
 };
 
-// Afficher/Récupérer tous les commentaires
+// Afficher/Récupérer tous les likes des posts
 exports.getAllPostsLikes = (req, res, next) => {
-  Like_post.findAll( { where: { postId: req.params.id } }) 
+  Like_post.findAll( { where: { id: req.params.id } }) 
     .then(like => res.status(200).json(like))
     .catch(error => res.status(400).json({ error }));
 };
