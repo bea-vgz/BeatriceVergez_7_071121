@@ -1,4 +1,5 @@
 const { Dislike_comment } = require('../models/index');
+const { User } = require('../models/index');
 
 // Création d'un like post :
 exports.dislikeComment = async (req, res, next) => {
