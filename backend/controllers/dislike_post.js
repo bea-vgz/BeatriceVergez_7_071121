@@ -27,7 +27,7 @@ exports.dislikePost = async (req, res, next) => {
 };
 
 //Récupérer tous les dislikes d'un post
-exports.getAllPostsDislikes = (req, res, next) => {
+exports.getPostsDislikes = (req, res, next) => {
   Dislike_post.findAll({ where: { PostId: req.params.id },
   include: [
     { model: User, attributes: ["username"] },
