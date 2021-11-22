@@ -5,12 +5,14 @@ const { Post } = require('../models/index');
 // Création d'un like post :
 exports.likePost = async (req, res, next) => {
     try {
-      const user = await Like_post.findOne({ where: { UserId: req.user, PostId: req.params.id } });
-      if (user) {
+      const existLike = await Like_post.findOne({ 
+        where: { UserId: req.user, PostId: req.params.id } 
+      });
+      if (existLike) {
         await Like_post.destroy(
           { truncate: true, restartIdentity: true }
         );
-        res.status(200).send({ message : "Vous n'aimez plus ce post !" });
+        res.status(200).send({ message : "Vous n'aimez plus ce post !", like: false });
       } else {
         const newLike = await Like_post.create({
           UserId: req.user,
@@ -19,7 +21,8 @@ exports.likePost = async (req, res, next) => {
         res.status(201).json({ 
           message: " J'aime !",
           PostId: req.params.id,
-          id : newLike.id
+          id : newLike.id,
+          like: true
         })
       }
     }

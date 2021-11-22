@@ -1,5 +1,7 @@
 const { Post } = require('../models/index');
 const { User } = require('../models/index');
+const { Comment } = require('../models/index');
+const { Like_post } = require('../models/index');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -58,7 +60,12 @@ exports.deletePost = (req, res, next) => {
 
 // Afficher/Récupérer un post 
 exports.getOnePost = (req, res, next) => {
-    Post.findOne({ where: { id: req.params.id } })
+    Post.findOne({ where: { id: req.params.id },
+      include: { 
+        model: User, attributes: ["username"],
+        model: Comment, attributes: ["content"], require : false,
+      },
+      order: [["createdAt", "DESC"]] })
       .then((post) => res.status(200).json(post))
       .catch((error) => res.status(404).json({ error }));
 };
