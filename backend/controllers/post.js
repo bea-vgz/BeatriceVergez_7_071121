@@ -82,7 +82,7 @@ exports.getAllPosts = (req, res, next) => {
 exports.getAllPostsUser = (req, res, next) => {
   Post.findAll({ where: { UserId: req.params.id },
     include: { model: User, attributes: ["username"]},
-    order: [["createdAt", "DESC"]]
+    order: [["createdAt", "ASC"]]
   })
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }));
