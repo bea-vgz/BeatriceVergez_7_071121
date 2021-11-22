@@ -7,7 +7,7 @@ exports.dislikeComment = async (req, res, next) => {
       const user = await Dislike_comment.findOne({ where: { UserId: req.user, CommentId: req.params.id } });
       if (user) {
         await Dislike_comment.destroy(
-          { truncate: true, restartIdentity: true }
+          { truncate: true }
         );
         res.status(200).send({ message : "Vous ne dislikez plus ce comme,taire !" });
       } else {

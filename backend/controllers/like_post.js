@@ -9,9 +9,7 @@ exports.likePost = async (req, res, next) => {
         where: { UserId: req.user, PostId: req.params.id } 
       });
       if (existLike) {
-        await Like_post.destroy(
-          { truncate: true, restartIdentity: true }
-        );
+        await Like_post.destroy({ truncate: true });
         res.status(200).send({ message : "Vous n'aimez plus ce post !", like: false });
       } else {
         const newLike = await Like_post.create({
@@ -20,7 +18,6 @@ exports.likePost = async (req, res, next) => {
         });
         res.status(201).json({ 
           message: " J'aime !",
-          PostId: req.params.id,
           id : newLike.id,
           like: true
         })
@@ -37,6 +34,6 @@ exports.getPostsLikes = (req, res, next) => {
     include: [{ model: User, attributes: ["username"] }],
     order: [["createdAt", "ASC"]],
   }) 
-    .then(like => res.status(200).json(like))
+    .then(likes => res.status(200).json(likes))
     .catch(error => res.status(400).json({ error }));
 };
