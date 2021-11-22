@@ -2,6 +2,7 @@ const { Post } = require('../models/index');
 const { User } = require('../models/index');
 const { Comment } = require('../models/index');
 const { Like_post } = require('../models/index');
+const { Dislike_post } = require('../models/index');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -65,6 +66,7 @@ exports.getOnePost = (req, res, next) => {
         { model: User, attributes: ["username"] },
         { model: Comment, attributes: ["content", "userId"] },
         { model: Like_post, attributes: ["userId"] },
+        { model: Dislike_post, attributes: ["userId"] }
       ],
       order: [["createdAt", "ASC"]] })
       .then((post) => res.status(200).json(post))

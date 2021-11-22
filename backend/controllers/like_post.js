@@ -26,7 +26,7 @@ exports.likePost = async (req, res, next) => {
       }
 };
 
-//recupérer tous les likes d'un post
+//Récupérer tous les likes d'un post
 exports.getPostsLikes = (req, res, next) => {
   Like_post.findAll({ where: { PostId: req.params.id },
   include: [

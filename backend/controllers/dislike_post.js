@@ -1,10 +1,11 @@
 const { Dislike_post } = require('../models/index');
 const { User } = require('../models/index');
+const { Post } = require('../models/index');
 
 // Création d'un like post :
 exports.dislikePost = async (req, res, next) => {
   try {
-    const existDislike = await Like_post.findOne({ where: { UserId: req.user, PostId: req.params.id } });
+    const existDislike = await Dislike_post.findOne({ where: { UserId: req.user, PostId: req.params.id } });
       if (existDislike) {
         await Dislike_post.destroy( { truncate: true } );
         res.status(200).send({ message : "Vous ne dislikez plus ce post !", dislike: false });
@@ -25,9 +26,9 @@ exports.dislikePost = async (req, res, next) => {
       }
 };
 
-//Recupérer tous les dislikes d'un post
+//Récupérer tous les dislikes d'un post
 exports.getAllPostsDislikes = (req, res, next) => {
-  Like_post.findAll({ where: { PostId: req.params.id },
+  Dislike_post.findAll({ where: { PostId: req.params.id },
   include: [
     { model: User, attributes: ["username"] },
     { model: Post, attributes: ["title"] },
