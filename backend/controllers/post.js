@@ -61,11 +61,12 @@ exports.deletePost = (req, res, next) => {
 // Afficher/Récupérer un post 
 exports.getOnePost = (req, res, next) => {
     Post.findOne({ where: { id: req.params.id },
-      include: { 
-        model: User, attributes: ["username"],
-        model: Comment, attributes: ["content"], require : false,
-      },
-      order: [["createdAt", "DESC"]] })
+      include: [
+        { model: User, attributes: ["username"] },
+        { model: Comment, attributes: ["content", "userId"] },
+        { model: Like_post, attributes: ["userId"] },
+      ],
+      order: [["createdAt", "ASC"]] })
       .then((post) => res.status(200).json(post))
       .catch((error) => res.status(404).json({ error }));
 };
