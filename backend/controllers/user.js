@@ -1,6 +1,10 @@
 const bcrypt = require('bcrypt'); //package de cryptage pour les mdp
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/index');
+const { Post } = require('../models/index');
+const { Comment } = require('../models/index');
+const { Like_post, Dislike_post } = require('../models/index');
+const { Like_comment, Dislike_comment } = require('../models/index');
 const fs = require('fs');
 
 // Création d'un utilisateur dans la bdd
@@ -106,16 +110,25 @@ exports.deleteUser = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-// Afficher/Récupérer un user 
-exports.getOneUser = (req, res, next) => { // Methode pour trouver un user unique
-    User.findOne({ where: { id: req.params.id } }) // L'user est retourné dans une promesse envoyée au front
-      .then(user => res.status(200).json(user))
-      .catch(error => res.status(404).json({ error }));
-};
-  
 // Afficher/Récupérer tous les users / renvoie un tableau contenant tous les users de la BDD
 exports.getAllUsers = (req, res, next) => {
     User.findAll() 
+      .then(users => res.status(200).json(users))
+      .catch(error => res.status(400).json({ error }));
+};
+
+// Afficher/Récupérer un user
+exports.getOneUser = (req, res, next) => {
+    User.findOne({ where: { id: req.params.id },
+        include: [
+        { model: Post, attributes: ["title"] },
+        { model: Comment, attributes: ["content", "userId"] },
+        { model: Like_post, attributes: ["postId"] },
+        { model: Dislike_post, attributes: ["postId"] },
+        { model: Like_comment, attributes: ["commentId"] },
+        { model: Dislike_comment, attributes: ["commentId"] }
+      ],
+      order: [["createdAt", "ASC"]] })
       .then(users => res.status(200).json(users))
       .catch(error => res.status(400).json({ error }));
 };

@@ -51,7 +51,7 @@ exports.getOneComment = (req, res, next) => {
 };
 
 // Afficher/Récupérer tous les commentaires
-exports.getComments = (req, res, next) => {
+exports.getPostsComments = (req, res, next) => {
   Comment.findAll({ where: { PostId: req.params.id },
     include: [{ model: User }],
     order: [["createdAt", "ASC"]], 
