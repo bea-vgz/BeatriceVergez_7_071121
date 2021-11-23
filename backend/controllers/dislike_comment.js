@@ -5,17 +5,17 @@ const { Comment } = require('../models/index');
 // Création d'un like post :
 exports.dislikeComment = async (req, res, next) => {
     try {
-      const existDislike = await Dislike_comment.findOne({ where: { UserId: req.user, CommentId: req.params.id } });
+      const existDislike = await Dislike_comment.findOne({ where: { UserId: req.user, CommentId: req.params.commentId } });
       if (existDislike) {
         await Dislike_comment.destroy( { truncate: true } );
         res.status(200).send({ message : "Vous ne dislikez plus ce commentaire !", dislike: false });
       } else {
         const newDislike = await Dislike_comment.create({
           UserId: req.user,
-          CommentId: req.params.id
+          CommentId: req.params.commentId
         });
         res.status(201).json({ 
-          message: " Je n'aime pas ce commentaire !",
+          message: "Je n'aime pas ce commentaire !",
           id: newDislike.id,
           dislike: true
         })
@@ -28,7 +28,7 @@ exports.dislikeComment = async (req, res, next) => {
 
 //Récupérer tous les dislikes d'un commentaire
 exports.getCommentsDislikes = (req, res, next) => {
-  Dislike_comment.findAll({ where: { CommentId: req.params.id },
+  Dislike_comment.findAll({ where: { CommentId: req.params.commentId },
   include: [
     { model: User, attributes: ["username"] },
     { model: Comment, attributes: ["content"] },

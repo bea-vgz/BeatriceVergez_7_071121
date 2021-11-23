@@ -5,14 +5,14 @@ const { Comment } = require('../models/index');
 // Création d'un like post :
 exports.likeComment = async (req, res, next) => {
     try {
-      const existLike = await Like_comment.findOne({ where: { UserId: req.user, CommentId: req.params.id } });
+      const existLike = await Like_comment.findOne({ where: { UserId: req.user, CommentId: req.params.commentId } });
       if (existLike) {
         await Like_comment.destroy( { truncate: true } );
         res.status(200).send({ message : "Vous n'aimez plus ce commentaire !", like: false });
       } else {
         const newLike = await Like_comment.create({
           UserId: req.user,
-          CommentId: req.params.id
+          CommentId: req.params.commentId
         });
         res.status(201).json({ 
           message: " J'aime ce commentaire !",
@@ -28,7 +28,7 @@ exports.likeComment = async (req, res, next) => {
 
 // Afficher/Récupérer tous les commentaires
 exports.getCommentsLikes = (req, res, next) => {
-  Like_comment.findAll( { where: { CommentId: req.params.id },
+  Like_comment.findAll( { where: { CommentId: req.params.commentId },
     include: [
       { model: User, attributes: ["username"] },
       { model: Comment, attributes: ["content"] },

@@ -61,14 +61,7 @@ exports.deletePost = (req, res, next) => {
 
 // Afficher/Récupérer un post 
 exports.getOnePost = (req, res, next) => {
-    Post.findOne({ where: { id: req.params.id },
-      include: [
-        { model: User, attributes: ["username"] },
-        { model: Comment, attributes: ["content", "userId"] },
-        { model: Like_post, attributes: ["userId"] },
-        { model: Dislike_post, attributes: ["userId"] }
-      ],
-      order: [["createdAt", "ASC"]] })
+    Post.findOne({ where: { id: req.params.id }})
       .then((post) => res.status(200).json(post))
       .catch((error) => res.status(404).json({ error }));
 };
@@ -82,7 +75,7 @@ exports.getAllPosts = (req, res, next) => {
 
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPostsUser = (req, res, next) => {
-  Post.findAll({ where: { UserId: req.params.id },
+  Post.findAll({ where: { UserId: req.params.userId },
     include: { model: User, attributes: ["username"]},
     order: [["createdAt", "ASC"]]
   })

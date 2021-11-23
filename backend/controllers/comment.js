@@ -7,7 +7,7 @@ exports.createComment = async (req, res, next) => {
       const newComment = await Comment.create({
       ...req.body,
       UserId: req.user,
-      PostId: req.params.id
+      PostId: req.params.postId
     })
       res.status(201).json({ 
         message: "Nouveau commentaire ajouté !",
@@ -22,7 +22,7 @@ exports.createComment = async (req, res, next) => {
 
 //Modifier un commentaire
 exports.modifyComment = (req, res, next) => {
-    Comment.findOne({ where: { id: req.params.id } })
+    Comment.findOne({ where: { id: req.params.id, PostId: req.params.postId } })
     .then((comment) => {
         comment.update({ 
             ...req.body 
@@ -35,7 +35,7 @@ exports.modifyComment = (req, res, next) => {
 
 //Supprimer un commentaire
 exports.deleteComment = (req, res, next) => {
-    Comment.findOne({ where: { id: req.params.id } })
+    Comment.findOne({ where: { id: req.params.id, PostId: req.params.postId } })
     .then((comment) => {
       comment.destroy({ where: { id: req.params.id } })
       .then(() => { res.status(200).json({ message: "Commentaire supprimé !" })})
@@ -45,14 +45,14 @@ exports.deleteComment = (req, res, next) => {
 
 // Afficher/Récupérer un commentaire 
 exports.getOneComment = (req, res, next) => {
-    Comment.findOne({ where: { id: req.params.id } })
+    Comment.findOne({ where: { id: req.params.id, PostId: req.params.postId } })
       .then((comment) => res.status(200).json(comment))
       .catch((error) => res.status(404).json({ error }));
 };
 
 // Afficher/Récupérer tous les commentaires
 exports.getPostsComments = (req, res, next) => {
-  Comment.findAll({ where: { PostId: req.params.id },
+  Comment.findAll({ where: { PostId: req.params.postId },
     include: [{ model: User }],
     order: [["createdAt", "ASC"]], 
   }) 

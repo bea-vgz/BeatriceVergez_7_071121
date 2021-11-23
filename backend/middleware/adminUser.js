@@ -6,10 +6,10 @@ module.exports = (req, res, next) => {
 		const token = req.headers.authorization.split(' ')[1];
 		const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
 		const userId = decodedToken.userId;
-        const isAdmin = decodedToken.isAdmin;
-		const id = req.params.id;
+        const isNotAdmin = decodedToken.isNotAdmin;
+		const currentUserId = req.params.id;
 
-		if ((isAdmin !== true) && (userId != id)){
+		if ((isNotAdmin !== false) && (userId != currentUserId)){
             res.status(403).json({ message: "Requête non authentifiée" });
 		} else {
 			next();
