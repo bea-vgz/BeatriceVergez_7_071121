@@ -12,46 +12,81 @@
 
     </section>
 
-    <form class="formulaire">
+    <form class="formulaire" @submit.prevent="createUser">
         <h2>S'inscrire</h2>
 
+    <!-- photoProfil -->
+      <div id="preview"> <img v-if="photoProfil" :src="photoProfil" /> </div>
+      <label> Avatar 🤳 </label>
+      <input type="file" ref="file" @change="selectFile" />
+
+    <!-- Username input -->
+        <label for="userName"> Username </label>
         <input type="text" id="userName" v-model="username" placeholder="Pseudo">
-        <label for="userName"> </label>
 
+    <!-- Email input -->
+        <label for="email"> Email 📧 : </label>
         <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com">
-        <label for="email"> </label>
 
+    <!-- Password input -->
+        <label for="password"> Mot de passe 🔒 : </label>
         <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe">
-        <label for="password"> </label>
 
-        <input type="bio" id="bio" v-model="biographie" placeholder="Quelques mots sur vous : âge, message, poste...">
-        <label for="bio"> </label>
+    <!-- Bio input -->
+        <label for="bio"> Biographie 💬 : </label>
+        <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
+        
 
-        <button class="buttonInsc" @click.prevent="">
+        <button class="buttonInsc" type="submit" value="Submit">
             S'inscrire
         </button>
-
-        <button class="buttonCompte" @click.prevent="">
-            Déjà un compte ?
+        
+        <button type="submit" value="Submit" class="buttonCompte" >
+            <router-link to="/login" > Déjà un compte ?</router-link>
         </button>
     </form>
-    
 </div>
 </template>
 
 <script>
+import UserServices from "../services/Users"
 export default {
-    name: 'SignupUser',
+  
+    name: 'Signup',
     components: {
     },
     data () {
         return {
+            photoProfil: '',
             username: '',
             email: '',
             password: '',
             bio: '',
-        }
-    }
+            isAdmin: false
+          }
+    },
+    methods: {
+      selectFile() {
+        this.photoProfil = URL.createObjectURL(this.photoProfil);
+      },
+
+    async createUser() {
+      try {
+        const response = await UserServices.signup({
+          photoProfil: null,
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          bio: this.bio,
+          isAdmin: null
+        });
+        this.message = response.data.message;
+        this.$router.push('')
+      } catch (error) {
+        this.messageError = error.response.data.error;
+      }
+    },
+  },
 }
 </script>
 
@@ -67,6 +102,9 @@ export default {
     width: 100%;
     padding-bottom: 132px;
     padding-top: 100px;
+}
+label {
+  text-align: left;
 }
 h1{
     font-size: 2rem;
@@ -120,6 +158,7 @@ input {
     margin: 0.5rem;
     border: none;
     background: none;
+    text-decoration: none;
 }
 .buttonCompte:hover {
     font-weight: 600;
