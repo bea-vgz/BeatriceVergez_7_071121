@@ -1,4 +1,4 @@
-// Configuration d'axios pour faciliter les requêtes du back
+/* Configuration d'axios pour faciliter les requêtes du back
 import axios from 'axios';
 
 export default axios.create({
@@ -6,4 +6,4 @@ export default axios.create({
     headers: {
         "Content-type": "application/json"
     }   
-});
+}); */

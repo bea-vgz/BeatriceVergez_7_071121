@@ -12,12 +12,11 @@
 
     </section>
 
-    <form class="formulaire" @submit.prevent="createUser">
+    <form class="formulaire" @submit.prevent="signup">
         <h2>S'inscrire</h2>
 
     <!-- photoProfil -->
-      <div id="preview"> <img v-if="photoProfil" :src="photoProfil" /> </div>
-      <label> Avatar 🤳 :</label>
+      <div id="photoProfil"> <img class="imgProfil" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/> </div>
       <input type="file" ref="file" @change="selectFile" />
 
     <!-- Username input -->
@@ -25,7 +24,7 @@
         <input type="text" id="userName" v-model="username" placeholder="Pseudo" required="required">
 
     <!-- Email input -->
-        <label for="email"> Email 📧 * : </label>
+        <label for="email"> Email 📧  * : </label>
         <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com" required="required">
 
     <!-- Password input -->
@@ -51,7 +50,9 @@
 </template>
 
 <script>
-import UserServices from "../services/Users"
+import router from "../router";
+import Swal from "sweetalert2";
+
 export default {
   
     name: 'Signup',
@@ -59,37 +60,52 @@ export default {
     },
     data () {
         return {
-            photoProfil: '',
+            photoProfil: 'File',
             username: '',
             email: '',
             password: '',
             bio: '',
-            isAdmin: false
+            isAdmin: 0
           }
     },
     methods: {
-      selectFile() {
-        this.photoProfil = URL.createObjectURL(this.photoProfil);
-      },
-
-    async createUser() {
-      try {
-        const response = await UserServices.signup({
-          photoProfil: null,
-          username: this.username,
-          email: this.email,
-          password: this.password,
-          bio: this.bio,
-          isAdmin: null
-        });
-        this.message = response.data.message;
-        this.$router.push('')
-      } catch (error) {
-        this.messageError = error.response.data.error;
+      
+    selectFile(event) {
+      this.photoProfil = event.target.files[0];
+    },
+      
+    signup() {
+      let user = {
+        username: this.username,
+        email: this.email,
+        password: this.password
       }
+      this.$store.dispatch('signup', user)
+      .then((res) => {console.log(res.data.username)
+          Swal.fire({
+            text: "Création du profil réusssi !",
+            footer: "Redirection en cours...",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+            willClose: () => {
+              router.push("/login");
+            },
+          });
+        })
+        .catch(() => {
+          let messageError = "";
+          Swal.fire({
+            title: "Oops...une erreur est survenue",
+            text: messageError,
+            icon: "error",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        });
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -105,10 +121,18 @@ export default {
     padding-bottom: 80px;
     padding-top: 80px;
 }
+.imgProfil {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 label {
   text-align: left;
   margin-top: 0.6rem;
   margin-left: 0.5rem;
+  font-size: 0.9rem;
 }
 h1{
     font-size: 2rem;
