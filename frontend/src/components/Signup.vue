@@ -21,21 +21,22 @@
       <input type="file" ref="file" @change="selectFile" />
 
     <!-- Username input -->
-        <label for="userName"> Pseudo 👤 : </label>
-        <input type="text" id="userName" v-model="username" placeholder="Pseudo">
+        <label for="userName"> Pseudo 👤 * : </label>
+        <input type="text" id="userName" v-model="username" placeholder="Pseudo" required="required">
 
     <!-- Email input -->
-        <label for="email"> Email 📧 : </label>
-        <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com">
+        <label for="email"> Email 📧 * : </label>
+        <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com" required="required">
 
     <!-- Password input -->
-        <label for="password"> Mot de passe 🔒 : </label>
-        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre">
+        <label for="password"> Mot de passe 🔒 * : </label>
+        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
 
     <!-- Bio input -->
         <label for="bio"> Biographie 💬 : </label>
         <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
         
+        <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
         <button class="buttonInsc" type="submit" value="Submit">
             S'inscrire
@@ -44,6 +45,7 @@
         <button type="submit" value="Submit" class="buttonCompte" >
             <router-link to="/login" > Déjà un compte ?</router-link>
         </button>
+
     </form>
 </div>
 </template>
@@ -113,6 +115,12 @@ h1{
     font-weight: 600;
     margin-top : -0.5rem;
 }
+.champs {
+    font-size: 0.7rem;
+    color: #fd2d01;
+    text-align: left;
+    margin-left: 0.5rem;
+}
 .formulaire {
     font-family: 'Barlow', sans-serif;
     margin-right: 10rem;
@@ -145,6 +153,9 @@ input {
     background-color: #fd2d01;
     color: #fff;
     margin-top: 1rem;
+    display: block;
+    margin-left: 5rem;
+    margin-right: 5rem;
 }
 .buttonInsc:hover {
     background-color: #fff;

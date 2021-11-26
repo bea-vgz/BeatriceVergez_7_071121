@@ -12,17 +12,19 @@
 
     </section>
 
-    <form class="formulaire">
+    <form class="formulaire" @submit.prevent="userLogin">
         
         <h2>Se connecter</h2>
 
-        <label for="email"> Email 📧 : </label>
-        <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com">
+        <label for="email"> Email 📧 * : </label>
+        <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com" required="required">
 
-        <label for="password"> Mot de passe 🔒 : </label>
-        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe">
+        <label for="password"> Mot de passe 🔒 * : </label>
+        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe" required="required">
 
-        <button class="buttonConnect" v-on:click.prevent="userLogin" type="submit">
+        <p class="champs">Les champs indiqués par une * sont obligatoires</p>
+
+        <button class="buttonConnect" type="submit">
             Connexion
         </button>
 
@@ -73,6 +75,12 @@ h1{
     font-weight: 600;
     margin-top : -0.5rem;
 }
+.champs {
+    font-size: 0.7rem;
+    color: #fd2d01;
+    text-align: left;
+    margin-left: 0.5rem;
+}
 label {
   text-align: left;
   margin-top: 0.6rem;
@@ -110,6 +118,9 @@ input {
     background-color: #fd2d01;
     color: #fff;
     margin-top: 1rem;
+    display: block;
+    margin-left: 5rem;
+    margin-right: 5rem;
 }
 .buttonConnect:hover {
     background-color: #fff;
