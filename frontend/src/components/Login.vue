@@ -16,14 +16,18 @@
         
         <h2>Se connecter</h2>
 
+        <label for="email"> Email 📧 : </label>
         <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com">
-        <label for="email"> </label>
 
+        <label for="password"> Mot de passe 🔒 : </label>
         <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe">
-        <label for="password"> </label>
 
         <button class="buttonConnect" v-on:click.prevent="userLogin" type="submit">
-            C'est parti !
+            Connexion
+        </button>
+
+        <button type="submit" value="Submit" class="buttonCompte" >
+            <router-link to="/" > S'inscrire </router-link>
         </button>
 
     </form>
@@ -69,6 +73,11 @@ h1{
     font-weight: 600;
     margin-top : -0.5rem;
 }
+label {
+  text-align: left;
+  margin-top: 0.6rem;
+  margin-left: 0.5rem;
+}
 .formulaire {
     font-family: 'Barlow', sans-serif;
     margin-right: 10rem;
@@ -95,7 +104,7 @@ input {
 }
 .buttonConnect {
     font-family: 'Barlow', sans-serif;
-    padding: 0.8rem;
+    padding: 0.5rem;
     border-radius: 1rem;
     border: solid 0.15rem #fd2d01;
     background-color: #fd2d01;
@@ -108,5 +117,19 @@ input {
     color: #fd2d01;
     cursor: pointer;
     font-weight: bold;
+}
+.buttonCompte {
+    font-family: 'Barlow', sans-serif;
+    padding: 0.5rem;
+    color: #fd2d01;
+    margin: 0.5rem;
+    border: none;
+    background: none;
+    text-decoration: none;
+}
+.buttonCompte:hover {
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer
 }
 </style >

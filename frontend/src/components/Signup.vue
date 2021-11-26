@@ -17,11 +17,11 @@
 
     <!-- photoProfil -->
       <div id="preview"> <img v-if="photoProfil" :src="photoProfil" /> </div>
-      <label> Avatar 🤳 </label>
+      <label> Avatar 🤳 :</label>
       <input type="file" ref="file" @change="selectFile" />
 
     <!-- Username input -->
-        <label for="userName"> Username </label>
+        <label for="userName"> Pseudo 👤 : </label>
         <input type="text" id="userName" v-model="username" placeholder="Pseudo">
 
     <!-- Email input -->
@@ -30,7 +30,7 @@
 
     <!-- Password input -->
         <label for="password"> Mot de passe 🔒 : </label>
-        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe">
+        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre">
 
     <!-- Bio input -->
         <label for="bio"> Biographie 💬 : </label>
@@ -100,11 +100,13 @@ export default {
     background-color: #F2F2F2;
     max-width: 100%;
     width: 100%;
-    padding-bottom: 132px;
-    padding-top: 100px;
+    padding-bottom: 80px;
+    padding-top: 80px;
 }
 label {
   text-align: left;
+  margin-top: 0.6rem;
+  margin-left: 0.5rem;
 }
 h1{
     font-size: 2rem;
@@ -114,7 +116,7 @@ h1{
 .formulaire {
     font-family: 'Barlow', sans-serif;
     margin-right: 10rem;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 1rem;
     display: flex;
     width: 400px;
@@ -130,14 +132,14 @@ h1{
 }
 input {
     font-family: 'Barlow', sans-serif;
-    padding: 1rem;
+    padding: 0.8rem;
     border: solid 2px #F2F2F2;
     border-radius: 1rem;
     margin: 0.3rem;
 }
 .buttonInsc {
     font-family: 'Barlow', sans-serif;
-    padding: 0.8rem;
+    padding: 0.5rem;
     border-radius: 1rem;
     border: solid 0.15rem #fd2d01;
     background-color: #fd2d01;
