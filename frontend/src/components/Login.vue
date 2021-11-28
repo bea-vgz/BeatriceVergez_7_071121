@@ -7,29 +7,31 @@
       <div class="identity">
         <img src="../assets/groupomania_logo.png" alt="Groupomania"/>
         <h1>Bienvenue sur votre réseau social !</h1>
-        <p>- Inscrivez-vous et échangez avec vos collègues 🤓 🖥️ -</p>
+        <p>- Connectez-vous et échangez avec vos collègues 🤓 🖥️ -</p>
       </div>
 
     </section>
 
-    <form class="formulaire" @submit.prevent="userLogin">
+    <form class="formulaire" @submit.prevent="login">
         
         <h2>Se connecter</h2>
-
+    
+    <!-- Email input -->
         <label for="email"> Email 📧 * : </label>
         <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com" required="required">
 
+    <!-- Password input -->
         <label for="password"> Mot de passe 🔒 * : </label>
         <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe" required="required">
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
-        <button class="buttonConnect" type="submit">
-            Connexion
+        <button type="submit" class="buttonConnect" aria-label="se connecter"> 
+        <router-link style="text-decoration: none; color: inherit;" to="/home" > Connexion </router-link>
         </button>
 
         <button type="submit" value="Submit" class="buttonCompte" >
-            <router-link to="/" > S'inscrire </router-link>
+            <router-link style="text-decoration: none; color: inherit;" to="/signup"> Pas encore de compte ? Je m'inscris </router-link>
         </button>
 
     </form>
@@ -39,21 +41,49 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+import router from "../router";
+
 export default {
-    name: 'LoginUser',
+
+    name: 'Login',
     components: {
     },
-    data () {
+    data() {
         return {
             email: '',
             password: ''
         }
     },
-    props : {
-    },
+
     methods: {
-    }
-}
+      login: function () {
+            const email = this.email
+            const password = this.password
+            this.$store.dispatch('login', { email, password })
+            .then(() => {
+            Swal.fire({
+                text: "Connexion réussi !",
+                footer: "Vous allez être redirigé sur votre fil d'actualité",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false,
+                willClose: () => {
+                    router.push("/home");
+                },
+            });
+        })
+        .catch(() => {
+            Swal.fire({
+                title: "Oops...une erreur est survenue",
+                icon: "error",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -131,8 +161,9 @@ input {
 }
 .buttonCompte {
     font-family: 'Barlow', sans-serif;
+    font-weight: 600;
     padding: 0.5rem;
-    color: #fd2d01;
+    color: #000000;
     margin: 0.5rem;
     border: none;
     background: none;

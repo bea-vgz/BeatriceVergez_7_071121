@@ -1,8 +1,8 @@
 <template>
-  <div class="Home">
+  <div class="Connexion">
   <!-- Home -->
-    <div class="signUp">
-    <Signup />
+    <div class="login">
+    <Login />
     </div>
 
   <!-- Footer -->
@@ -17,18 +17,18 @@
 <script>
 // @ is an alias to /src
 import Footer from '@/components/Footer.vue';
-import Signup from '@/components/Signup.vue'
+import Login from '@/components/Login.vue'
 export default {
-  name: 'Home',
+  name: 'Connexion',
   components: {
     Footer,
-    Signup
+    Login
   }
 }
 </script>
 
 <style scoped>
-.Home {
+.Connexion {
   font-family: 'Barlow', sans-serif;
   margin: auto;
   width: 100%;

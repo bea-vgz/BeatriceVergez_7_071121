@@ -16,7 +16,7 @@
         <h2>S'inscrire</h2>
 
     <!-- photoProfil -->
-      <div id="photoProfil"> <img class="imgProfil" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/> </div>
+      <label id="photoProfil"> <img class="imgProfil" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/> </label>
       <input type="file" ref="file" @change="selectFile" />
 
     <!-- Username input -->
@@ -42,7 +42,7 @@
         </button>
         
         <button type="submit" value="Submit" class="buttonCompte" >
-            <router-link to="/login" > Déjà un compte ?</router-link>
+            <router-link style="text-decoration: none; color: inherit;" to="/"> Déjà un compte ? </router-link>
         </button>
 
     </form>
@@ -60,7 +60,7 @@ export default {
     },
     data () {
         return {
-            photoProfil: 'File',
+            photoProfil: '',
             username: '',
             email: '',
             password: '',
@@ -75,29 +75,27 @@ export default {
     },
       
     signup() {
-      let user = {
+      let data = {
         username: this.username,
         email: this.email,
         password: this.password
       }
-      this.$store.dispatch('signup', user)
-      .then((res) => {console.log(res.data.username)
+      this.$store.dispatch('signup', data)
+      .then((res) => {console.log(res)
           Swal.fire({
-            text: "Création du profil réusssi !",
+            text: "Création du profil réussi !",
             footer: "Redirection en cours...",
             icon: "success",
             timer: 2000,
             showConfirmButton: false,
             willClose: () => {
-              router.push("/login");
+              router.push("/");
             },
           });
         })
         .catch(() => {
-          let messageError = "";
           Swal.fire({
             title: "Oops...une erreur est survenue",
-            text: messageError,
             icon: "error",
             timer: 2000,
             showConfirmButton: false,
@@ -127,6 +125,9 @@ export default {
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
+}
+#photoProfil {
+  text-align: center;
 }
 label {
   text-align: left;
@@ -190,8 +191,9 @@ input {
 }
 .buttonCompte {
     font-family: 'Barlow', sans-serif;
+    font-weight: 600;
     padding: 0.5rem;
-    color: #fd2d01;
+    color: #000000;
     margin: 0.5rem;
     border: none;
     background: none;

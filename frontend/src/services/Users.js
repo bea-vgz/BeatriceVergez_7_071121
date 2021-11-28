@@ -1,26 +1,26 @@
-import axios from 'axios'
+import api from '../services/Api'
 
 class UserServices {
     signup(data) {
-        return axios.post('http://localhost:3020/api/users/signup', data);
+        return api.post('/users/signup', data);
     }
     login(data) {
-        return axios.post('http://localhost:3020/api/users/login', data);
+        return api.post('/users/login', data);
     }
     getAllUsers() {
-        return axios.get('http://localhost:3020/api/users/');
+        return api.get('/users/');
     }
     getOneUser(id) {
-        return axios.get('http://localhost:3020/api/users/' + id);
+        return api.get('/users/' + id);
     }
     modifyUser(id, data) {
-        return axios.put('http://localhost:3020/api/users/' + id, data);
+        return api.put('/users/' + id, data);
     }
     modifyPassword(id, data) {
-        return axios.put(`http://localhost:3020/api/users/${id}/password`, data);
+        return api.put(`/users/${id}/password`, data);
     }
     deleteUser(id) {
-        return axios.delete('http://localhost:3020/api/users/' + id);
+        return api.delete('/users/' + id);
     }
 }
 

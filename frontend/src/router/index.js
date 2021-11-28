@@ -1,22 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../views/Home.vue'
-
+import store from '../store/index.js'
 Vue.use(VueRouter)
 
 const routes = [
   // Route page d'accueil
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/signup',
+    name: 'Inscription',
+    component: () => import("../views/Inscription.vue"),
+    meta: { title: 'Groupomania - Inscription' }
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
-},
+    path: '/',
+    name: 'Connexion',
+    component: () => import("../views/Connexion.vue"),
+    meta: { title: 'Groupomania - Connexion' }
+  },
+  {
+    path: '/home',
+    name: 'HomePage',
+    component: () => import("../views/HomePage.vue"),
+    meta: { title: 'Groupomania' }
+  },
  /* {
     path: '/about',
     name: 'About',
@@ -29,6 +35,25 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+// Permet de mettre à jour le titre (les meta) en fonction du routeur
+router.afterEach((to, from) => {
+  console.log(from, to);
+  document.title = to.meta.title;
+});
+
+//Vérifie les accès non autorisés
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
+  }
 })
 
 export default router
