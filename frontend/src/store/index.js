@@ -70,7 +70,6 @@ export default new Vuex.Store({
         UserServices.signup(user)
         .then(response => {
           commit('REGISTER_USER', user)
-          alert(response.data.message);
           resolve(response.data)
         })
         .catch(err => {
@@ -88,7 +87,7 @@ export default new Vuex.Store({
           .then(function(response) {
             const token = response.data.token; // Le token est récupéré
             localStorage.setItem("token", token); // Envoyé au localStorage
-            commit("AUTH_SUCCESS", { token }); // mutation pour la connexion
+            commit("AUTH_SUCCESS", { token }); 
             resolve(response);
           })
           .catch(function(error) {
