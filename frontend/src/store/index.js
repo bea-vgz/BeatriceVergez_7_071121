@@ -24,14 +24,6 @@ export default new Vuex.Store({
 
   mutations: {
 
-    SIGNUP_USER (state, user) {
-      user.photoProfil = state.user.photoProfil,
-      user.email = state.user.email,
-      user.username = state.user.username,
-      user.bio = state.user.bio,
-      user.password = state.user.password,
-      user.isAdmin = 0;
-    },
     AUTH_SUCCESS(state, token, user){
       state.status = 'success'
       state.token = token
@@ -53,29 +45,11 @@ export default new Vuex.Store({
       state.user = user;
       state.message = "Profil modifié !";
     },
-    LOGOUT_USER(state) {
-      state.user = null;
-      state.user.isAdmin = null;
-      state.user.token = '';
-      sessionStorage.clear();
-    },
-    EMAIL_INPUT (state, email) {
-      state.user.email = email
-    },
-    USERNAME_INPUT (state, username) {
-      state.user.username = username
-    },
-    BIO_INPUT (state, bio) {
-      state.user.bio = bio
-    },
-    PASSWORD_INPUT (state, password) {
-      state.user.password = password
-    },
   },
 
   getters: {
     // Nécessaire pour vérifier si l'user est authentifié
-    isLoggedIn: (state) => !!state.user.token, // !! convertit la valeur en boolean et fixe à true
+    isLoggedIn: (state) => !!state.token, // !! convertit la valeur en boolean = true
     authStatus: (state) => state.status,
   },
 
@@ -88,10 +62,10 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('AUTH_REQUEST')
         UserServices.signup(user)
-        .then(resp => {
-          const user = resp.data.user
-          commit('AUTH_REQUEST', user)
-          resolve(resp)
+        .then(response => {
+          const user = response.data.user
+          commit('AUTH_SUCCESS', user)
+          resolve(response)
         })
         .catch(err => {
           commit('AUTH_ERROR', err)
@@ -101,16 +75,16 @@ export default new Vuex.Store({
     },
      
     // Connexion de l'user
-    login: ({ commit }, userLogin) => {
+    login({ commit }, userLogin) {
       return new Promise((resolve, reject) => {
         commit("AUTH_REQUEST");
         UserServices.login(userLogin)
-          .then(function(response) {
+        .then(response => {
             const token = response.data.token; // Le token est récupéré + userId
             const user = response.data.user;
             localStorage.setItem("token", token); // Envoi au localStorage
-            localStorage.setItem("UserId", user);
-            commit('AUTH_REQUEST', token, user)
+            localStorage.setItem("userId", user);
+            commit('AUTH_SUCCESS', token, user)
             resolve(response);
           })
           .catch(err => {

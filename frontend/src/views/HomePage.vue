@@ -1,11 +1,14 @@
 <template>
   <div class="HomePage">
-      <div>
-        <p class="text-center">
-          Il n'y a encore aucune publications.<br />
-          Publiez un post : cliquez ici ;)
-        </p>
-      </div>
+    <div id="nav">
+      <router-link to="/">Home</router-link> 
+    </div>
+    <div>
+      <p class="text-center">
+        Il n'y a encore aucune publications.<br />
+        Publiez un post : cliquez ici ;)
+      </p>
+    </div>
   </div>
 </template>
 
@@ -14,7 +17,12 @@
 export default {
   name: 'HomePage',
   components: {
-  }
+  },
+  computed : {
+      isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+    },
+  methods: {
+  },
   
 }
 </script>

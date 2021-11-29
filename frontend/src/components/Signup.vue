@@ -76,9 +76,11 @@ export default {
       
     signup() {
       let data = {
+        photoProfil: this.photoProfil,
         username: this.username,
         email: this.email,
-        password: this.password
+        password: this.password,
+        bio: this.bio
       }
       this.$store.dispatch('signup', data)
       .then((res) => {console.log(res)
