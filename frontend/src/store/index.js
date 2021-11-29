@@ -14,16 +14,18 @@ export default new Vuex.Store({
     status: '',
     token: localStorage.getItem('token'),
     user : {},
-    post: {},
-    comment: {},
+    users: [],
     message: '',
+
+    posts: [],
+    post: {},
   },
 
   // Mutations : modifient le store en fonction des opérations effectuées
   // USERS 
 
   mutations: {
-
+    //mutations de base, montrant le chargement, le succès, l'erreur pour refléter l'état de l'appel de l'API 
     AUTH_SUCCESS(state, token, user){
       state.status = 'success'
       state.token = token
@@ -35,6 +37,10 @@ export default new Vuex.Store({
     AUTH_REQUEST(state) {
       state.status = "loading";
     },
+    REGISTER_USER(state) {
+      state.status = "registerAccount";
+    },
+    
     GET_USER (state, data) {
       state.user = data
     },
@@ -60,12 +66,12 @@ export default new Vuex.Store({
     // Création de l'user
     signup({commit}, user){
       return new Promise((resolve, reject) => {
-        commit('AUTH_REQUEST')
+        commit("AUTH_REQUEST");
         UserServices.signup(user)
         .then(response => {
-          const user = response.data.user
-          commit('AUTH_SUCCESS', user)
-          resolve(response)
+          commit('REGISTER_USER', user)
+          alert(response.data.message);
+          resolve(response.data)
         })
         .catch(err => {
           commit('AUTH_ERROR', err)
@@ -75,23 +81,21 @@ export default new Vuex.Store({
     },
      
     // Connexion de l'user
-    login({ commit }, userLogin) {
+    login({ commit }, loginUser) {
       return new Promise((resolve, reject) => {
         commit("AUTH_REQUEST");
-        UserServices.login(userLogin)
-        .then(response => {
-            const token = response.data.token; // Le token est récupéré + userId
-            const user = response.data.user;
-            localStorage.setItem("token", token); // Envoi au localStorage
-            localStorage.setItem("userId", user);
-            commit('AUTH_SUCCESS', token, user)
+        UserServices.login(loginUser)
+          .then(function(response) {
+            const token = response.data.token; // Le token est récupéré
+            localStorage.setItem("token", token); // Envoyé au localStorage
+            commit("AUTH_SUCCESS", { token }); // mutation pour la connexion
             resolve(response);
           })
-          .catch(err => {
-            commit('AUTH_ERROR')
-            localStorage.removeItem('token')
-            reject(err)
-          })
+          .catch(function(error) {
+            commit("AUTH_ERROR");
+            localStorage.clear();
+            reject(error);
+          });
       });
     },
   },

@@ -8,19 +8,19 @@ class UserServices {
         return api.post('/users/login', data);
     }
     getAllUsers() {
-        return api.get('/users/');
+        return api.get('/users');
     }
     getOneUser(id) {
-        return api.get('/users/' + id);
+        return api.get(`/users/${id}`);
     }
     modifyUser(id, data) {
-        return api.put('/users/' + id, data);
+        return api.put(`/users/${id}`, data);
     }
     modifyPassword(id, data) {
         return api.put(`/users/${id}/password`, data);
     }
     deleteUser(id) {
-        return api.delete('/users/' + id);
+        return api.delete(`/users/${id}`);
     }
 }
 

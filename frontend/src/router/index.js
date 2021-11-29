@@ -4,19 +4,21 @@ import store from '../store/index.js'
 Vue.use(VueRouter)
 
 const routes = [
-  // Route page d'accueil
-  {
-    path: '/signup',
-    name: 'Inscription',
-    component: () => import("../views/Inscription.vue"),
-    meta: { title: 'Groupomania - Inscription' }
-  },
+  // Route login
   {
     path: '/',
     name: 'Connexion',
     component: () => import("../views/Connexion.vue"),
     meta: { title: 'Groupomania - Connexion' }
   },
+  // Route signup
+  {
+    path: '/signup',
+    name: 'Inscription',
+    component: () => import("../views/Inscription.vue"),
+    meta: { title: 'Groupomania - Inscription' }
+  },
+  // Route Wall / Home
   {
     path: '/home',
     name: 'HomePage',

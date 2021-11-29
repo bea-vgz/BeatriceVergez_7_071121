@@ -58,20 +58,19 @@ export default {
 
     methods: {
       login: function () {
-            const email = this.email
-            const password = this.password
-            this.$store.dispatch('login', { email, password })
-            .then(() => {
-            Swal.fire({
-                text: "Connexion réussi !",
-                footer: "Vous allez être redirigé sur votre fil d'actualité",
-                icon: "success",
-                timer: 2000,
-                showConfirmButton: false,
-                willClose: () => {
-                    router.push("/home");
-                },
-            });
+        const { email, password } = this
+        this.$store.dispatch('login', { email, password })
+        .then((response) => {console.log(response)
+        Swal.fire({
+            text: "Connexion réussi !",
+            footer: "Vous allez être redirigé sur votre fil d'actualité",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+            willClose: () => {
+                router.push("/home");
+            },
+        });
         })
         .catch(() => {
             Swal.fire({

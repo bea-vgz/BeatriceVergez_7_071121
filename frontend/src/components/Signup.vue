@@ -80,10 +80,11 @@ export default {
         username: this.username,
         email: this.email,
         password: this.password,
-        bio: this.bio
+        bio: this.bio,
+        isAdmin: this.isAdmin
       }
-      this.$store.dispatch('signup', data)
-      .then((res) => {console.log(res)
+      this.$store.dispatch('signup', data) //Propager une action
+      .then((response) => { console.log(response)
           Swal.fire({
             text: "Création du profil réussi !",
             footer: "Redirection en cours...",
