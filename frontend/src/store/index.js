@@ -12,7 +12,7 @@ export default new Vuex.Store({
 
   state: {
     status: '',
-    token: localStorage.getItem('token'),
+    token: '',
     user : {},
     users: [],
     message: '',
@@ -41,8 +41,8 @@ export default new Vuex.Store({
       state.status = "registerAccount";
     },
     
-    GET_USER (state, data) {
-      state.user = data
+    GET_USER (state, user) {
+      state.user = user
     },
     GET_ALL_USER(state, users) {
       state.user = users;
