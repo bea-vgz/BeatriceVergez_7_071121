@@ -41,8 +41,6 @@ header {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-}
-.bg-white {
   background-color: #fff,
 }
 #nav a {

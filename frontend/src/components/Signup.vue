@@ -166,6 +166,7 @@ input {
     border: solid 2px #F2F2F2;
     border-radius: 1rem;
     margin: 0.3rem;
+    width: 100%;
 }
 .input_email {
   text-align: left;
