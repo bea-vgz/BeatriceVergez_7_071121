@@ -25,6 +25,15 @@ const routes = [
     component: () => import("../views/HomePage.vue"),
     meta: { title: 'Groupomania' }
   },
+// Route Profil user 
+  {
+    path: "/profil",
+    name: "Profil",
+    component: () => import("../views/Profil.vue"),
+    meta: {
+      title: "Groupomania - Profil",
+    },
+  }
  /* {
     path: '/about',
     name: 'About',
@@ -50,7 +59,7 @@ router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters.isLoggedIn) {
       next()
-      return
+      return 
     }
     next('/login') 
   } else {

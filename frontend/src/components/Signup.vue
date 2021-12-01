@@ -14,27 +14,25 @@
 
     <form class="formulaire" @submit.prevent="signup">
         <h2>S'inscrire</h2>
-
-    <!-- photoProfil -->
-      <label id="photoProfil"> <img class="imgProfil" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/> </label>
-      <input type="file" ref="file" @change="selectFile" />
-
     <!-- Username input -->
         <label for="userName"> Pseudo 👤 * : </label>
         <input type="text" id="userName" v-model="username" placeholder="Pseudo" required="required">
 
     <!-- Email input -->
         <label for="email"> Email 📧  * : </label>
-        <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com" required="required">
+        <div class="input_email">
+          <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
+          <span class="input_email_text">@groupomania.com</span>
+        </div>
 
     <!-- Password input -->
         <label for="password"> Mot de passe 🔒 * : </label>
         <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
-
+        
     <!-- Bio input -->
         <label for="bio"> Biographie 💬 : </label>
         <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
-        
+
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
         <button class="buttonInsc" type="submit" value="Submit">
@@ -70,15 +68,11 @@ export default {
     },
     methods: {
       
-    selectFile(event) {
-      this.photoProfil = event.target.files[0];
-    },
-      
     signup() {
       let data = {
         photoProfil: this.photoProfil,
         username: this.username,
-        email: this.email,
+        email: `${this.email}@groupomania.com`,
         password: this.password,
         bio: this.bio,
         isAdmin: this.isAdmin
@@ -173,6 +167,14 @@ input {
     border-radius: 1rem;
     margin: 0.3rem;
 }
+.input_email {
+  text-align: left;
+  width: 100%;
+}
+.input_email_text {
+  color: rgb(141, 141, 141);
+  font-size: 0.9rem;
+}
 .buttonInsc {
     font-family: 'Barlow', sans-serif;
     padding: 0.5rem;
@@ -196,7 +198,7 @@ input {
     font-family: 'Barlow', sans-serif;
     font-weight: 600;
     padding: 0.5rem;
-    color: #000000;
+    color: #242424;
     margin: 0.5rem;
     border: none;
     background: none;

@@ -17,8 +17,11 @@
         <h2>Se connecter</h2>
     
     <!-- Email input -->
-        <label for="email"> Email 📧 * : </label>
-        <input type="text" id="email" v-model="email" autocomplete="email" placeholder="xxx@groupomania.com" required="required">
+        <label for="email"> Email 📧  * : </label>
+        <div class="input_email">
+          <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
+          <span class="input_email_text">@groupomania.com</span>
+        </div>
 
     <!-- Password input -->
         <label for="password"> Mot de passe 🔒 * : </label>
@@ -52,10 +55,14 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
         }
     },
-
+    computed : {
+        isLoggedIn () {
+            return this.$store.getters.isLoggedIn
+        }
+    },
     methods: {
       login: function () {
         const { email, password } = this
@@ -139,6 +146,14 @@ input {
     border-radius: 1rem;
     margin: 0.3rem;
 }
+.input_email {
+  text-align: left;
+  width: 100%;
+}
+.input_email_text {
+  color: rgb(141, 141, 141);
+  font-size: 0.9rem;
+}
 .buttonConnect {
     font-family: 'Barlow', sans-serif;
     padding: 0.5rem;
@@ -162,7 +177,7 @@ input {
     font-family: 'Barlow', sans-serif;
     font-weight: 600;
     padding: 0.5rem;
-    color: #000000;
+    color: #242424;
     margin: 0.5rem;
     border: none;
     background: none;
