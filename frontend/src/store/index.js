@@ -6,20 +6,16 @@ import UserServices from '../services/user.ressource'
 //Axios permet d'effectuer des requêtes
 Vue.use(Vuex)
 
-const user = localStorage.getItem('user')
-const initialState = user
-  ? { status: { isLoggedIn: true }, user }
-  : { status: { isNotLoggedIn: true }, user: null }
-
 export default new Vuex.Store({
   
   plugins: [(createPersistedState)], // Permet de garder le state quand la page est rafraîchie
 
   state: {
-    status: initialState,
-    token: '',
+    status: '',
+    token: null,
     user: {}, //!localStorage.getItem("user")
     message: '',
+    error:'',
 
     users: [],
     posts: [],
@@ -47,7 +43,6 @@ export default new Vuex.Store({
       state.status = "loading";
     },
     REGISTER_USER(state) {
-      state.status = "registerAccount"
       state.status = "isNotLoggedIn";
     },
     GET_USER (state, user) {
@@ -60,6 +55,14 @@ export default new Vuex.Store({
       state.user = user;
       state.message = "Profil modifié !";
     },
+    SET_TOKEN(state, token) {
+      state.token = token;
+      if (token) {
+        state.status = 'isLoggedIn';
+      } else {
+        state.status = 'isNotLoggedIn';
+      }
+    },
     DELETE_TOKEN(state) {
       state.token = null;
       state.user = "";
@@ -68,25 +71,25 @@ export default new Vuex.Store({
     DELETE_ACCOUNT(state, id) {
       state.users = [...state.users.filter((element) => element.id !== id)];
       state.message = "compte supprimé";
+      state.status = "isNotLoggedIn";
     },
     LOGOUT(state) {
       sessionStorage.clear();
       state.token = '';
-      state.user = '';
-      state.status = false;
-      state.message = '';
+      state.user = null;
+      state.status = "isNotLoggedIn";
     },
 
   },
 
   getters: {
     // Nécessaire pour vérifier si l'user est authentifié
-    isLoggedIn: (state) => !!state.token, // !! convertit la valeur en boolean = true
-    
+    isLoggedIn (state) {
+      return !!state.token
+    },
     user(state) {
       return state.user;
     },
-
   },
 
   // Les différentes requêtes CRUD sont renseignées ici, elles modifient le store via les commit
@@ -97,14 +100,7 @@ export default new Vuex.Store({
     signup({commit}, user){
       return new Promise((resolve, reject) => {
         commit("AUTH_REQUEST");
-        UserServices.signup(user, {
-          photoProfil: user.photoProfil,
-          username: user.username,
-          email: user.email,
-          password: user.password,
-          bio: user.bio,
-          isAdmin: user.isAdmin
-        })
+        UserServices.signup(user)
         .then(response => {
           commit('REGISTER_USER', user)
           resolve(response.data)
@@ -122,9 +118,12 @@ export default new Vuex.Store({
         commit("AUTH_REQUEST", user)
         UserServices.login(user)
           .then(function(response) {
-            localStorage.setItem("token", response.data.token);
-            commit("AUTH_SUCCESS", user); 
-            resolve(response);
+            const token = response.data.token;
+            const userId = response.data.userId;
+            localStorage.setItem("token", token);
+            localStorage.setItem("userId", userId);
+            commit("AUTH_SUCCESS", { token, userId }); 
+            resolve(response.data);
           })
           .catch(function(error) {
             commit("AUTH_ERROR");
@@ -137,47 +136,42 @@ export default new Vuex.Store({
     // Deconnexion 
     logout({commit}){
       return new Promise((resolve) => {
-        commit("LOGOUT")
-        localStorage.removeItem('token')
+        commit("LOGOUT");
+        localStorage.clear();
         resolve()
       })
-    }
-  },
+    },
 
-  getUserInfos: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      const id = localStorage.getItem("UserId"); // Récupération de l'id, necessaire à l'appel API
-      UserServices
-        .getUser(id)
-        .then(function(response) {
-          // On récupère les infos dont on a besoin puis on les rajoute au store
-          const username = response.data.username;
-          const email = response.data.email;
-          const password = response.data.password;
-          const photoProfil = response.data.photoProfil;
-          const bio = response.data.bio;
-          const isAdmin = response.data.isAdmin;
-
-          // On a besoin du token de l'userId pour la nouvelle mutation de AUTH_SUCCES
-          const token = localStorage.getItem("token");
-          const userId = localStorage.getItem("UserId");
-
-          commit("AUTH_SUCCESS", {
-            token,
-            userId,
-            username,
-            email,
-            password,
-            photoProfil,
-            bio,
-            isAdmin
+    // Suppression d'un user
+    deleteUser({ commit }, id){
+      return new Promise((resolve, reject) => {
+        UserServices.deleteUser(id)
+          .then(function(response) {
+            commit("DELETE_ACCOUNT", id); // Le commit permet de supprimer l'élément du store
+            resolve(response);
+          })
+          .catch(function(error) {
+            reject(error);
           });
-          resolve(response.data);
-        })
-        .catch(function(error) {
-          reject(error);
-        });
-    });
+      });
+    },
+
+    getOneUser({commit}) {
+      return new Promise((resolve, reject) => {
+        const id = localStorage.getItem("userId"); // Récupération de l'id, necessaire à l'appel API
+        UserServices.getOneUser(id)
+          .then(function(response) {
+            // On a besoin du token de l'userId pour la nouvelle mutation de AUTH_SUCCES
+            const token = localStorage.getItem("token");
+            const userId = localStorage.getItem("userId");
+            commit("GET_USER", {token, userId});
+            resolve(response);
+          })
+          .catch(function(error) {
+            reject(error);
+          });
+      });
+    },
   },
   modules: {
   }

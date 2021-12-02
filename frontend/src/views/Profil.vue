@@ -8,12 +8,12 @@
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white">
             <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
-            <h2 class="username"> Username </h2>
-            <h4 class="email"> email </h4>
+            <h2 class="username"> <span>{{ user.username }}</span> </h2>
+            <h4 class="email"> <span> {{user.email}}</span> </h4>
         </div>
         <div class="optionsProfil bg-white ">
             <button type="submit" value="Submit" class="buttonOption"> 
-                <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user"/> Mon compte</router-link>
+                <router-link to="/profil" class="nav_centrale"> Mon compte</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption">
                 <router-link to="/password" class="nav_centrale">Mot de passe</router-link>
@@ -22,7 +22,9 @@
                 <router-link to="/UserPosts" class="nav_centrale">Mes posts</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/logout" class="nav_centrale">Me déconnecter</router-link>
+                <router-link to="/" class="nav_centrale">Me déconnecter</router-link>
+            </button>
+            <button type="button" @click="deleteUser(user.id)">Supprimer mon compte
             </button>
         </div>
     </aside>
@@ -31,15 +33,15 @@
         <h2>Mon profil</h2>
     <!-- Username input -->
         <label for="userName"> Pseudo 👤 : </label>
-        <input type="text" id="userName" v-model="username" placeholder="Pseudo" required="required">
+        <input type="text" id="userName" placeholder="Pseudo" required="required">
 
     <!-- Password input -->
         <label for="password"> Mot de passe 🔒 : </label>
-        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
+        <input type="password" id="password" utocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
         
     <!-- Bio input -->
         <label for="bio"> Biographie 💬 : </label>
-        <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
+        <input type="bio" id="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
         <button class="button" type="submit" value="Submit">
             Sauvegarder
@@ -58,6 +60,7 @@
 <script>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
+import { mapState } from "vuex";
 
 export default {
   name: "Profil",
@@ -65,14 +68,23 @@ export default {
     Header,
     Footer
   },
-  beforeMount() {
-    this.$store.dispatch("getUserInfos"); // On veut récupérer les infos de l'user dès le chargement
+  
+  created() {
+    this.$store.dispatch("getOneUser"); // On veut récupérer les infos de l'user dès le chargement
+  },
+  methods: {
+    deleteUser(id) {
+      this.$store.dispatch("deleteUser", id);
+      this.$store.dispatch("logout").then(() => { // Pour éviter des erreurs la session se ferme après la suppression de l'user
+        this.$router.push("/"); 
+      });
+    },
   },
   computed: {
-    user () {
-        return this.$store.getters.user
-    },
-    }
+    ...mapState({
+      user: (state) => state.user,
+    }),
+  },
 }
 </script>
 

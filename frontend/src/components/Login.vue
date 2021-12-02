@@ -20,7 +20,6 @@
         <label for="email"> Email 📧  * : </label>
         <div class="input_email">
           <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
-          <span class="input_email_text">@groupomania.com</span>
         </div>
 
     <!-- Password input -->
@@ -44,7 +43,6 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
 import router from "../router";
 
 export default {
@@ -67,26 +65,14 @@ export default {
       login: function () {
         const { email, password } = this
         this.$store.dispatch('login', { email, password })
-        .then((response) => {console.log(response)
-        Swal.fire({
-            text: "Connexion réussi !",
-            footer: "Vous allez être redirigé sur votre fil d'actualité",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false,
-            willClose: () => {
-                router.push("/profil");
+        .then( 
+            function() {
+                router.push("/profil"); // Puis on bascule sur la page profil
             },
-        });
-        })
-        .catch(() => {
-            Swal.fire({
-                title: "Oops...une erreur est survenue",
-                icon: "error",
-                timer: 2000,
-                showConfirmButton: false,
-            });
-        });
+            function(error) {
+                console.log(error);
+            }
+        );
     },
   },
 };

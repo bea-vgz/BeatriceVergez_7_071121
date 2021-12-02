@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store/index.js'
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,17 +22,17 @@ const routes = [
     path: '/home',
     name: 'HomePage',
     component: () => import("../views/HomePage.vue"),
-    meta: { title: 'Groupomania' }
+    meta: { title: 'Groupomania' },
+    requiresAuth: true,
   },
 // Route Profil user 
   {
     path: "/profil",
     name: "Profil",
     component: () => import("../views/Profil.vue"),
-    meta: {
-      title: "Groupomania - Profil",
-    },
-  }
+    meta: { title:'Groupomania - Profil' },
+    requiresAuth: true,
+  },
  /* {
     path: '/about',
     name: 'About',
@@ -53,18 +52,5 @@ router.afterEach((to, from) => {
   console.log(from, to);
   document.title = to.meta.title;
 });
-
-//Vérifie les accès non autorisés
-router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return 
-    }
-    next('/login') 
-  } else {
-    next() 
-  }
-})
 
 export default router

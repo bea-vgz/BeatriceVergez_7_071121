@@ -22,7 +22,6 @@
         <label for="email"> Email 📧  * : </label>
         <div class="input_email">
           <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
-          <span class="input_email_text">@groupomania.com</span>
         </div>
 
     <!-- Password input -->
@@ -34,7 +33,7 @@
         <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
-
+        
         <button class="buttonInsc" type="submit" value="Submit">
             S'inscrire
         </button>
@@ -49,7 +48,7 @@
 
 <script>
 import router from "../router";
-import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
   
@@ -66,38 +65,28 @@ export default {
             isAdmin: 0
           }
     },
+    computed: {
+      ...mapState(["status"]),
+    },
     methods: {
       
     signup() {
-      let data = {
+      const data = {
         photoProfil: this.photoProfil,
         username: this.username,
-        email: `${this.email}@groupomania.com`,
+        email: this.email,
         password: this.password,
         bio: this.bio,
         isAdmin: this.isAdmin
       }
       this.$store.dispatch('signup', data) //Propager une action
-      .then((response) => { console.log(response)
-          Swal.fire({
-            text: "Création du profil réussi !",
-            footer: "Redirection en cours...",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false,
-            willClose: () => {
-              router.push("/");
-            },
-          });
-        })
-        .catch(() => {
-          Swal.fire({
-            title: "Oops...une erreur est survenue",
-            icon: "error",
-            timer: 2000,
-            showConfirmButton: false,
-          });
-        });
+      .then((response) => { 
+        console.log(response)
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     },
   },
 };
@@ -166,7 +155,6 @@ input {
     border: solid 2px #F2F2F2;
     border-radius: 1rem;
     margin: 0.3rem;
-    width: 100%;
 }
 .input_email {
   text-align: left;

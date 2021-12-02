@@ -5,35 +5,29 @@
       <template v-if="status == 'isLoggedIn'">
         <router-link to="/home" class="nav_centrale">Fil d'actualité</router-link> |
         <router-link to="/posts" class="nav_centrale">Publier</router-link>
-      <div class="profil bg-sea-light rounded-full relative text-center text-white flex justify-center items-center font-medium h-12 w-12 cursor-pointer">
-        <img src="//www.gravatar.com/avatar/0082479fc08ae9f617453243bcf9704c?s=80&d=blank&r=g" alt="Avatar">
         <router-link to="/profil" class="nav_centrale">Profil</router-link>
-      </div>
+        <div class="profil bg-sea-light rounded-full relative text-center text-white flex justify-center items-center font-medium h-12 w-12 cursor-pointer">
+          <img src="//www.gravatar.com/avatar/0082479fc08ae9f617453243bcf9704c?s=80&d=blank&r=g" alt="Avatar">
+        </div>
       </template>
       <template v-else>
-        <router-link
-          to="/"
-          class="text-white font-semibold hover:text-gray-700 mx-3"
-          >Connexion</router-link
-        >
-        <router-link
-          to="/signup"
-          class="text-white font-semibold hover:text-gray-700 mx-3"
-          >Inscription</router-link
-        >
+        <router-link to="/" class="text-white font-semibold hover:text-gray-700 mx-3">
+          Connexion
+        </router-link>
+        <router-link to="/signup" class="text-white font-semibold hover:text-gray-700 mx-3">
+          Inscription
+        </router-link>
       </template>
       </div>
   </header>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import { mapState } from "vuex";
 export default {
   
   name: 'Header',
   computed : {
-      ...mapGetters(["isLoggedIn"]),
-      ...mapState(["status"]), // Le statut "isLogged in" sera recherché dans le store
+      ...mapState(["status"]), // Le statut "isLoggedIn" sera recherché dans le store
     },
     methods: {
       logout: function () {

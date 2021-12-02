@@ -31,26 +31,27 @@ exports.signup = async (req, res, next) => {
 exports.login = (req, res, next) => { // récupération du login
     User.findOne({ where: { email: req.body.email } }) // verification de l'e-mail entré par l'utilisateur avec un utilisateur existant de la base de données 
         .then(user => { // comparaison avec le MDP envoyé dans la requete avec celui enregistré dans le user (BDD)
-            return bcrypt.compare(req.body.password, user.password)
-        })
-        .then(valid => { // si pas bon = erreur
-            if (!valid) {
-                return res.status(401).json({ error: 'Mot de passe incorrect !'});
-            } else { // envoi du Token;
-                res.status(200).json({ // identifiant valable donc envoi de son user id + token bearer
-                    userId: User.id,
-                    isAdmin: User.isAdmin,
-                    token: jwt.sign( // identification avec un TOKEN
-                        { userId: User.id,
-                        isAdmin: User.isAdmin },
-                        process.env.TOKEN_SECRET, // utilisation d'une chaîne secrète de développement temporaire pour encoder le token
-                        { expiresIn: '24h' } // validité du token à 24 heures. L'utilisateur devra donc se reconnecter au bout de 24 heures
-                    ) 
-                });
-            }
+            bcrypt.compare(req.body.password, user.password)
+            .then(valid => { // si pas bon = erreur
+                if (!valid) {
+                    return res.status(401).json({ error: 'Mot de passe incorrect !'});
+                } else { // envoi du Token
+                    res.status(200).json({ // identifiant valable donc envoi de son user id + token bearer
+                        userId: user.id,
+                        isAdmin: user.isAdmin,
+                        token: jwt.sign( // identification avec un TOKEN
+                            { userId: user.id,
+                            isAdmin: user.isAdmin },
+                            process.env.TOKEN_SECRET, // utilisation d'une chaîne secrète de développement temporaire pour encoder le token
+                            { expiresIn: '24h' } // validité du token à 24 heures. L'utilisateur devra donc se reconnecter au bout de 24 heures
+                        ) 
+                    });
+                }
+            })
+                .catch(error => res.status(500).json({ error }));
         })
     .catch(error => res.status(500).json({ error }));
-}
+};
 
 //Modifier un user
 exports.modifyUser = (req, res, next) => {
@@ -114,7 +115,7 @@ exports.getAllUsers = (req, res, next) => {
 // Afficher/Récupérer un user
 exports.getOneUser = (req, res, next) => {
     User.findOne({ where: { id: req.params.id }})
-      .then(users => res.status(200).json(users))
+      .then(user => res.status(200).json(user))
       .catch(error => res.status(400).json({ error }));
 };
 
