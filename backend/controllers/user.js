@@ -44,7 +44,8 @@ exports.login = (req, res, next) => { // récupération du login
                             isAdmin: user.isAdmin },
                             process.env.TOKEN_SECRET, // utilisation d'une chaîne secrète de développement temporaire pour encoder le token
                             { expiresIn: '24h' } // validité du token à 24 heures. L'utilisateur devra donc se reconnecter au bout de 24 heures
-                        ) 
+                        ),
+                        message: "Hello " + user.username + " !", 
                     });
                 }
             })

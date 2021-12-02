@@ -22,7 +22,6 @@ export default new Vuex.Store({
     post: {},
   },
   
-
   // Mutations : modifient le store en fonction des opérations effectuées
   // USERS 
 
@@ -42,7 +41,11 @@ export default new Vuex.Store({
     AUTH_REQUEST(state) {
       state.status = "loading";
     },
-    REGISTER_USER(state) {
+    REGISTER_USER(state, user) {
+      user.email = state.user.email,
+      user.username = state.user.username,
+      user.bio = state.user.bio,
+      user.password = state.user.password,
       state.status = "isNotLoggedIn";
     },
     GET_USER (state, user) {
@@ -69,13 +72,13 @@ export default new Vuex.Store({
       state.status = "isNotLoggedIn";
     },
     DELETE_ACCOUNT(state, id) {
-      state.users = [...state.users.filter((element) => element.id !== id)];
+      state.user = [...state.user.filter((element) => element.id !== id)];
       state.message = "compte supprimé";
       state.status = "isNotLoggedIn";
     },
     LOGOUT(state) {
-      sessionStorage.clear();
-      state.token = '';
+      localStorage.userId = "";
+      state.token = null;
       state.user = null;
       state.status = "isNotLoggedIn";
     },
@@ -90,6 +93,11 @@ export default new Vuex.Store({
     user(state) {
       return state.user;
     },
+    isAdmin(state) {
+      if(state.user.isAdmin == 1) {
+          return true;
+      }
+  }
   },
 
   // Les différentes requêtes CRUD sont renseignées ici, elles modifient le store via les commit
@@ -156,18 +164,17 @@ export default new Vuex.Store({
       });
     },
 
-    getOneUser({commit}) {
+    getUserProfil({commit}) {
       return new Promise((resolve, reject) => {
         const id = localStorage.getItem("userId"); // Récupération de l'id, necessaire à l'appel API
         UserServices.getOneUser(id)
           .then(function(response) {
-            // On a besoin du token de l'userId pour la nouvelle mutation de AUTH_SUCCES
-            const token = localStorage.getItem("token");
-            const userId = localStorage.getItem("userId");
-            commit("GET_USER", {token, userId});
+            const userId = response.data;
+            commit("GET_USER", userId);
             resolve(response);
           })
           .catch(function(error) {
+            localStorage.clear();
             reject(error);
           });
       });

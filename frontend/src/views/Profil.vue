@@ -8,8 +8,10 @@
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white">
             <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
-            <h2 class="username"> <span>{{ user.username }}</span> </h2>
-            <h4 class="email"> <span> {{user.email}}</span> </h4>
+              <div>
+                <h2>Hello <span class="username">{{ user.username }}</span></h2>
+              </div>
+            <h4 class="email"> <span>  {{ user.email }} </span> </h4>
         </div>
         <div class="optionsProfil bg-white ">
             <button type="submit" value="Submit" class="buttonOption"> 
@@ -21,10 +23,10 @@
             <button type="submit" value="Submit" class="buttonOption">
                 <router-link to="/UserPosts" class="nav_centrale">Mes posts</router-link>
             </button>
-            <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/" class="nav_centrale">Me déconnecter</router-link>
+            <button type="submit" value="Submit" class="buttonOption" @click="logout">
+                <router-link to="/" class="nav_centrale" >Me déconnecter</router-link>
             </button>
-            <button type="button" @click="deleteUser(user.id)">Supprimer mon compte
+            <button type="button" class="buttonOption" @click="deleteUser(userId)">Supprimer mon compte
             </button>
         </div>
     </aside>
@@ -32,15 +34,15 @@
         <form class="formulaire bg-white" @submit.prevent="update">
         <h2>Mon profil</h2>
     <!-- Username input -->
-        <label for="userName"> Pseudo 👤 : </label>
+        <label for="userName"> 👤  Pseudo actuel : {{ user.username }} </label>
         <input type="text" id="userName" placeholder="Pseudo" required="required">
 
     <!-- Password input -->
-        <label for="password"> Mot de passe 🔒 : </label>
+        <label for="password"> 🔒  Mot de passe : </label>
         <input type="password" id="password" utocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
         
     <!-- Bio input -->
-        <label for="bio"> Biographie 💬 : </label>
+        <label for="bio"> 💬  Biographie : {{ user.bio }}</label>
         <input type="bio" id="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
         <button class="button" type="submit" value="Submit">
@@ -60,7 +62,7 @@
 <script>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Profil",
@@ -69,10 +71,21 @@ export default {
     Footer
   },
   
-  created() {
-    this.$store.dispatch("getOneUser"); // On veut récupérer les infos de l'user dès le chargement
+  beforeMount() {
+    this.$store.dispatch("getUserProfil"); // On veut récupérer les infos de l'user dès le chargement
   },
   methods: {
+    logout: function () {
+        this.$store.dispatch('logout')
+        .then((res) => { 
+            console.log(res)
+            this.$router.push('/');
+        })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+
     deleteUser(id) {
       this.$store.dispatch("deleteUser", id);
       this.$store.dispatch("logout").then(() => { // Pour éviter des erreurs la session se ferme après la suppression de l'user
@@ -81,9 +94,7 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      user: (state) => state.user,
-    }),
+    ...mapGetters(["user"]),
   },
 }
 </script>

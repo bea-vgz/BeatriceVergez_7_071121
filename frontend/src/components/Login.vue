@@ -17,13 +17,13 @@
         <h2>Se connecter</h2>
     
     <!-- Email input -->
-        <label for="email"> Email 📧  * : </label>
+        <label for="email">  📧  Email * : </label>
         <div class="input_email">
           <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
         </div>
 
     <!-- Password input -->
-        <label for="password"> Mot de passe 🔒 * : </label>
+        <label for="password"> 🔒  Mot de passe * : </label>
         <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe" required="required">
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>

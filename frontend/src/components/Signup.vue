@@ -15,21 +15,21 @@
     <form class="formulaire" @submit.prevent="signup">
         <h2>S'inscrire</h2>
     <!-- Username input -->
-        <label for="userName"> Pseudo 👤 * : </label>
+        <label for="userName"> 👤 Pseudo * : </label>
         <input type="text" id="userName" v-model="username" placeholder="Pseudo" required="required">
 
     <!-- Email input -->
-        <label for="email"> Email 📧  * : </label>
+        <label for="email"> 📧  Email * : </label>
         <div class="input_email">
           <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
         </div>
 
     <!-- Password input -->
-        <label for="password"> Mot de passe 🔒 * : </label>
+        <label for="password"> 🔒 Mot de passe * : </label>
         <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
         
     <!-- Bio input -->
-        <label for="bio"> Biographie 💬 : </label>
+        <label for="bio"> 💬  Biographie : </label>
         <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
