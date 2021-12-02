@@ -30,7 +30,7 @@
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
         <button type="submit" class="buttonConnect" aria-label="se connecter"> 
-        <router-link style="text-decoration: none; color: inherit;" to="/home" > Connexion </router-link>
+        <router-link style="text-decoration: none; color: inherit;" to="/signup" > Connexion </router-link>
         </button>
 
         <button type="submit" value="Submit" class="buttonCompte" >
@@ -75,7 +75,7 @@ export default {
             timer: 2000,
             showConfirmButton: false,
             willClose: () => {
-                router.push("/home");
+                router.push("/profil");
             },
         });
         })

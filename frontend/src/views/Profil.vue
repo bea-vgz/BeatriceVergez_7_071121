@@ -8,8 +8,8 @@
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white">
             <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
-            <h2 class="username"> username </h2>
-            <h3 class="email"> email </h3>
+            <h2 class="username"> Username </h2>
+            <h4 class="email"> email </h4>
         </div>
         <div class="optionsProfil bg-white ">
             <button type="submit" value="Submit" class="buttonOption"> 
@@ -64,6 +64,9 @@ export default {
   components: {
     Header,
     Footer
+  },
+  beforeMount() {
+    this.$store.dispatch("getUserInfos"); // On veut récupérer les infos de l'user dès le chargement
   },
   computed: {
     user () {

@@ -9,7 +9,7 @@ Vue.use(Vuex)
 const user = localStorage.getItem('user')
 const initialState = user
   ? { status: { isLoggedIn: true }, user }
-  : { status: { isLoggedIn: false }, user: null }
+  : { status: { isNotLoggedIn: true }, user: null }
 
 export default new Vuex.Store({
   
@@ -20,8 +20,6 @@ export default new Vuex.Store({
     token: '',
     user: {}, //!localStorage.getItem("user")
     message: '',
-    isLoggedIn: false,
-
 
     users: [],
     posts: [],
@@ -38,13 +36,8 @@ export default new Vuex.Store({
     },
     //mutations de base, montrant le chargement, le succès, l'erreur pour refléter l'état de l'appel de l'API 
     AUTH_SUCCESS(state, token, user){
-      state.status = 'success'
       state.token = token
-      if (token) {
-        state.isLoggedIn = true;
-      } else {
-        state.isLoggedIn = false;
-      }
+      state.status = "isLoggedIn",
       state.user = user
     },
     AUTH_ERROR(state){
@@ -55,7 +48,7 @@ export default new Vuex.Store({
     },
     REGISTER_USER(state) {
       state.status = "registerAccount"
-      state.isLoggedIn = false
+      state.status = "isNotLoggedIn";
     },
     GET_USER (state, user) {
       state.user = user
@@ -70,7 +63,7 @@ export default new Vuex.Store({
     DELETE_TOKEN(state) {
       state.token = null;
       state.user = "";
-      state.isLoggedIn = false;
+      state.status = "isNotLoggedIn";
     },
     DELETE_ACCOUNT(state, id) {
       state.users = [...state.users.filter((element) => element.id !== id)];
@@ -80,7 +73,7 @@ export default new Vuex.Store({
       sessionStorage.clear();
       state.token = '';
       state.user = '';
-      state.isLoggedIn = false;
+      state.status = false;
       state.message = '';
     },
 
@@ -93,6 +86,7 @@ export default new Vuex.Store({
     user(state) {
       return state.user;
     },
+
   },
 
   // Les différentes requêtes CRUD sont renseignées ici, elles modifient le store via les commit
@@ -148,6 +142,42 @@ export default new Vuex.Store({
         resolve()
       })
     }
+  },
+
+  getUserInfos: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      const id = localStorage.getItem("UserId"); // Récupération de l'id, necessaire à l'appel API
+      UserServices
+        .getUser(id)
+        .then(function(response) {
+          // On récupère les infos dont on a besoin puis on les rajoute au store
+          const username = response.data.username;
+          const email = response.data.email;
+          const password = response.data.password;
+          const photoProfil = response.data.photoProfil;
+          const bio = response.data.bio;
+          const isAdmin = response.data.isAdmin;
+
+          // On a besoin du token de l'userId pour la nouvelle mutation de AUTH_SUCCES
+          const token = localStorage.getItem("token");
+          const userId = localStorage.getItem("UserId");
+
+          commit("AUTH_SUCCESS", {
+            token,
+            userId,
+            username,
+            email,
+            password,
+            photoProfil,
+            bio,
+            isAdmin
+          });
+          resolve(response.data);
+        })
+        .catch(function(error) {
+          reject(error);
+        });
+    });
   },
   modules: {
   }
