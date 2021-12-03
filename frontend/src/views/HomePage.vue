@@ -26,7 +26,6 @@
 // @ is an alias to /src
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import { mapGetters } from "vuex";
 
 export default {
   name: 'HomePage',
@@ -35,10 +34,9 @@ export default {
     Footer
   },
   computed : {
-    ...mapGetters(["isLoggedIn"]),
-    user () {
-        return this.$store.getters.user
-    }
+    isLoggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
   },
   methods: {
       logout: function () {

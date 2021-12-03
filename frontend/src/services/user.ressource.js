@@ -1,26 +1,22 @@
 import api from './authentification'
+//data service
+import authHeader from './authHeader';
 
 class UserServices {
-    signup(data) {
-        return api.post('/users/signup', data);
-    }
-    login(data) {
-        return api.post('/users/login', data);
-    }
     getAllUsers() {
-        return api.get('/users');
+        return api.get('/users', { headers: authHeader() });
     }
     getOneUser(id) {
-        return api.get(`/users/${id}`);
+        return api.get(`/users/${id}`, { headers: authHeader() })
     }
     modifyUser(id, data) {
-        return api.put(`/users/${id}`, data);
+        return api.put(`/users/${id}`, data, { headers: authHeader() });
     }
     modifyPassword(id, data) {
-        return api.put(`/users/${id}/password`, data);
+        return api.put(`/users/${id}/password`, data, { headers: authHeader() });
     }
     deleteUser(id) {
-        return api.delete(`/users/${id}`);
+        return api.delete(`/users/${id}`, { headers: authHeader() });
     }
 }
 

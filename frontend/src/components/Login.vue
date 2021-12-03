@@ -19,17 +19,17 @@
     <!-- Email input -->
         <label for="email">  📧  Email * : </label>
         <div class="input_email">
-          <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
+          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
         </div>
 
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : </label>
-        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Mot de passe" required="required">
+        <input type="password" id="password" v-model="user.password" autocomplete="current-password" placeholder="Mot de passe" required="required">
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
-        <button type="submit" class="buttonConnect" aria-label="se connecter"> 
-        <router-link style="text-decoration: none; color: inherit;" to="/signup" > Connexion </router-link>
+        <button type="submit" class="buttonConnect" aria-label="se connecter">
+        <router-link style="text-decoration: none; color: inherit;" to="/profil" > Connexion </router-link>
         </button>
 
         <button type="submit" value="Submit" class="buttonCompte" >
@@ -44,6 +44,7 @@
 
 <script>
 import router from "../router";
+import { mapState } from 'vuex';
 
 export default {
 
@@ -52,22 +53,23 @@ export default {
     },
     data() {
         return {
-            email: '',
-            password: '',
+            user: {
+                email : '',
+                password: '',
+            },
         }
     },
     computed : {
-        isLoggedIn () {
-            return this.$store.getters.isLoggedIn
-        }
+        ...mapState(['status']),
     },
     methods: {
-      login: function () {
-        const { email, password } = this
-        this.$store.dispatch('login', { email, password })
+        login: function () {
+            const email = this.user.email
+            const password = this.user.password
+            this.$store.dispatch('login', { email, password })
         .then( 
             function() {
-                router.push("/profil"); // Puis on bascule sur la page profil
+                router.push('/profil'); // Puis on bascule sur la page profil
             },
             function(error) {
                 console.log(error);
@@ -75,6 +77,7 @@ export default {
         );
     },
   },
+
 };
 </script>
 

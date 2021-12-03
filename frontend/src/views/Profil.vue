@@ -9,9 +9,9 @@
         <div class="contanier_presentation bg-white">
             <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
               <div>
-                <h2>Hello <span class="username">{{ user.username }}</span></h2>
+                <h2>Hello <span class="username">{{user.username}}</span></h2>
               </div>
-            <h4 class="email"> <span>  {{ user.email }} </span> </h4>
+            <h4 class="email"> <span>{{user.email}}</span> </h4>
         </div>
         <div class="optionsProfil bg-white ">
             <button type="submit" value="Submit" class="buttonOption"> 
@@ -23,10 +23,11 @@
             <button type="submit" value="Submit" class="buttonOption">
                 <router-link to="/UserPosts" class="nav_centrale">Mes posts</router-link>
             </button>
-            <button type="submit" value="Submit" class="buttonOption" @click="logout">
-                <router-link to="/" class="nav_centrale" >Me déconnecter</router-link>
+            <button type="submit" value="Submit" class="buttonOption">
+                <router-link to="/" class="nav_centrale" @click="logout">Me déconnecter</router-link>
             </button>
-            <button type="button" class="buttonOption" @click="deleteUser(userId)">Supprimer mon compte
+            <button type="button" class="buttonOption" >
+              <router-link to="/" class="nav_centrale" @click="deleteAccount" >Supprimer mon compte</router-link>
             </button>
         </div>
     </aside>
@@ -34,7 +35,7 @@
         <form class="formulaire bg-white" @submit.prevent="update">
         <h2>Mon profil</h2>
     <!-- Username input -->
-        <label for="userName"> 👤  Pseudo actuel : {{ user.username }} </label>
+        <label for="userName"> 👤  Pseudo actuel : </label>
         <input type="text" id="userName" placeholder="Pseudo" required="required">
 
     <!-- Password input -->
@@ -42,7 +43,7 @@
         <input type="password" id="password" utocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
         
     <!-- Bio input -->
-        <label for="bio"> 💬  Biographie : {{ user.bio }}</label>
+        <label for="bio"> 💬  Biographie : </label>
         <input type="bio" id="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
         <button class="button" type="submit" value="Submit">
@@ -62,39 +63,53 @@
 <script>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import { mapGetters } from "vuex";
+import UserServices from '../services/user.ressource';
 
 export default {
   name: "Profil",
+  data() {
+    return{ 
+      user : '',
+    }
+  },
   components: {
     Header,
     Footer
   },
-  
-  beforeMount() {
-    this.$store.dispatch("getUserProfil"); // On veut récupérer les infos de l'user dès le chargement
+  mounted(){
+    this.getOneUser();
   },
   methods: {
-    logout: function () {
-        this.$store.dispatch('logout')
-        .then((res) => { 
-            console.log(res)
-            this.$router.push('/');
-        })
+    getOneUser(){
+    const id = localStorage.getItem("userId");
+    UserServices.getOneUser(id)
+      .then ((response) => {
+        this.userId = response.data;
+        return this.userId;
+      })
       .catch((error) => {
-        console.log(error);
+        console.log(error); 
       });
     },
 
-    deleteUser(id) {
-      this.$store.dispatch("deleteUser", id);
-      this.$store.dispatch("logout").then(() => { // Pour éviter des erreurs la session se ferme après la suppression de l'user
-        this.$router.push("/"); 
-      });
+      deleteAccount() {
+      let payload = this.$store.state.auth.user.userId
+      this.$store.dispatch("deleteAccount",payload)
+      .then(data => {
+          console.log(data);
+          window.alert(data.message)
+          this.$router.push("/"); 
+        },
+        error => {
+          console.log(error);
+        }
+      );
     },
-  },
-  computed: {
-    ...mapGetters(["user"]),
+
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.push('/login');
+    }
   },
 }
 </script>
@@ -165,12 +180,15 @@ input {
     border-color: rgba(231, 233, 244);
 }
 .button, .buttonOption {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
     font-family: 'Barlow', sans-serif;
     border-radius: 2rem;
     border: solid 0.15rem #fd2d01;
     background-color: #fd2d01;
     margin-top: 1rem;
-    display: block;
     padding: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -183,7 +201,10 @@ a {
     color:#fff;
     font-size : 1rem;
 }
-.button:hover {
+a:hover {
+    color: #fd2d01;
+}
+.button:hover, .buttonOption:hover {
     background-color: #fff;
     border: solid 0.15rem #fd2d01;
     color: #fd2d01;

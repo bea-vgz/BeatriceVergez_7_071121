@@ -2,7 +2,7 @@
   <header id="nav" class="border_nav bg-white" >
     <img class="logo" src="../assets/groupomania_logo.png" alt="Groupomania"/>
     <div class="navigation">
-      <template v-if="status == 'isLoggedIn'">
+      <template v-if="loggedIn">
         <router-link to="/home" class="nav_centrale">Fil d'actualité</router-link> |
         <router-link to="/posts" class="nav_centrale">Publier</router-link>
         <router-link to="/profil" class="nav_centrale">Profil</router-link>
@@ -22,12 +22,13 @@
   </header>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   
   name: 'Header',
   computed : {
-      ...mapState(["status"]), // Le statut "isLoggedIn" sera recherché dans le store
+      loggedIn() {
+        return this.$store.state.auth.status.loggedIn;
+      },
     },
     methods: {
       logout: function () {

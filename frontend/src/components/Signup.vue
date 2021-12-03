@@ -11,26 +11,27 @@
       </div>
 
     </section>
+    <div class="card-container">
 
     <form class="formulaire" @submit.prevent="signup">
         <h2>S'inscrire</h2>
     <!-- Username input -->
         <label for="userName"> 👤 Pseudo * : </label>
-        <input type="text" id="userName" v-model="username" placeholder="Pseudo" required="required">
+        <input type="text" id="userName" v-model="user.username" placeholder="Pseudo" required="required">
 
     <!-- Email input -->
         <label for="email"> 📧  Email * : </label>
         <div class="input_email">
-          <input type="text" id="email" v-model="email" autocomplete="email" placeholder="Votre nom" required="required" >
+          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
         </div>
 
     <!-- Password input -->
         <label for="password"> 🔒 Mot de passe * : </label>
-        <input type="password" id="password" v-model="password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
+        <input type="password" id="password" v-model="user.password" autocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
         
     <!-- Bio input -->
         <label for="bio"> 💬  Biographie : </label>
-        <input type="bio" id="bio" v-model="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
+        <input type="bio" id="bio" v-model="user.bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
         
@@ -43,12 +44,12 @@
         </button>
 
     </form>
+  </div>
 </div>
 </template>
 
 <script>
 import router from "../router";
-import { mapState } from "vuex";
 
 export default {
   
@@ -57,31 +58,27 @@ export default {
     },
     data () {
         return {
+          user: {
             photoProfil: '',
             username: '',
             email: '',
             password: '',
             bio: '',
             isAdmin: 0
-          }
+          },
+        }
     },
     computed: {
-      ...mapState(["status"]),
+      loggedIn() {
+        return this.$store.state.auth.status.loggedIn;
+      }
     },
     methods: {
       
     signup() {
-      const data = {
-        photoProfil: this.photoProfil,
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        bio: this.bio,
-        isAdmin: this.isAdmin
-      }
-      this.$store.dispatch('signup', data) //Propager une action
-      .then((response) => { 
-        console.log(response)
+      this.$store.dispatch('signup', this.user)
+      .then(data => {
+        this.message = data.message;
         router.push("/");
       })
       .catch((error) => {
