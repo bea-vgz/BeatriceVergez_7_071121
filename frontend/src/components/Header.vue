@@ -1,13 +1,41 @@
 <template>
   <header id="nav" class="border_nav bg-white" >
-    <img class="logo" src="../assets/groupomania_logo.png" alt="Groupomania"/>
     <div class="navigation">
+      <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
+      <div id="search">
+        <span class="icon"><i class="fas fa-search"></i></span>
+        <input class="inputSearch" type="search" placeholder="Rechercher un utilisateur" @keyup.enter="checkResearch" v-model="userSearch">
+      </div>
       <template v-if="currentUser">
-        <router-link to="/home" class="nav_centrale">Fil d'actualité</router-link> |
-        <router-link to="/posts" class="nav_centrale">Publier</router-link>
-        <router-link to="/profil" class="nav_centrale">Profil</router-link>
-        <router-link v-if="currentUser" to="/profil" class="text-decoration-none mr-5 white--text"><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </router-link> 
-        <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/> Déconnexion </a>
+
+        <div class="accessPosts">
+          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Fil d'actualité</router-link> |
+          <router-link to="/posts" class="nav_centrale text-decoration-none">Publier</router-link>
+        </div>
+
+        <div class="menu-item" @click="isOpen = !isOpen" >
+          <div class="accessUser">
+            <i> <font-awesome-icon icon="user" class="icone"/> </i>
+            <a href ='#' v-if="currentUser" class="username text-decoration-none red-text "><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </a>
+            <svg class="flecheMenu" viewBox="0 0 1030 638" width="10">
+              <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#000000"></path>
+            </svg>
+          </div>
+          <transition name="fade" apear>
+          <div class="sub-menu" v-if="isOpen">
+            <div class="menu-item">
+              <router-link to="/profil"><font-awesome-icon icon="user" class="ml-5 mr-2"/>Mon compte</router-link>
+            </div>
+            <div class="menu-item">
+              <router-link to="/profil"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
+            </div>
+            <div class="menu-item">
+              <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/>Se déconnecter</a>
+            </div>
+          </div>
+        </transition>
+        </div>
+        
       </template>
       <template v-else>
         <router-link to="/" class="text-white font-semibold hover:text-gray-700 mx-3">
@@ -17,13 +45,20 @@
           Inscription
         </router-link>
       </template>
-      </div>
+    </div>
   </header>
 </template>
 <script>
+import router from "../router";
 export default {
   
   name: 'Header',
+  data() {
+    return {
+      userSearch: null,
+      isOpen: false,
+    }
+  },
   computed: {
       currentUser() {
         return this.$store.state.auth.user;
@@ -33,8 +68,12 @@ export default {
       logout() {
         this.$store.dispatch('auth/logout');
         window.alert('Vous êtes maintenant déconnecté(e)')
-        this.$router.push('/');
-      }
+        router.push('/');
+      },
+      checkResearch(){ // Recherche d'utilisateur
+      router.push({name: 'UserSearch', params: { id: this.userSearch }});
+      this.userSearch = null;      
+    },
     }
 }
 </script>
@@ -43,7 +82,37 @@ export default {
 header {
   margin: 0;
 }
-#nav {
+nav .menu-item, .sub-menu {
+  position: absolute;
+  background-color: #fff;
+  width: max-content;
+  padding: 2rem;
+  transform: translateX(-30%);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .2s ease-out;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.sub-menu {
+  cursor: pointer;
+}
+svg {
+  padding-right: 0.5rem;
+}
+.flecheMenu {
+  padding-left : 0.7rem;
+}
+.flecheMenu:hover {
+  cursor: pointer;
+}
+.menu-item {
+  padding: 0.7rem;
+}
+.navigation {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -55,19 +124,21 @@ header {
 #nav a {
   font-weight: bold;
   color: #242424;
+  text-decoration: none;
 }
-a:hover {
+#nav a:hover {
   cursor: pointer;
-}
-#nav a.router-link-exact-active {
   color: #fd2d01;
 }
 .nav_centrale {
   padding: 2rem;
 }
+.text-decoration-none {
+  text-decoration: none;
+}
 .logo {
   display: block;
-  width: 9%;
+  width: 4%;
   padding-left: 1rem;
 }
 .border_nav {
@@ -77,11 +148,28 @@ a:hover {
   position: relative;
   box-sizing: border-box;
 }
-.profil {
+.accessUser, .accessPosts {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   padding-right: 1rem;
+}
+.profil, .deconnexion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 1rem;
+}
+.username {
+  text-decoration: none;
+}
+.icone {
+    background-color: #fd2d01;
+    color: #fff;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
 }
 </style>

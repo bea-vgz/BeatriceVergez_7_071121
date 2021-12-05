@@ -41,6 +41,8 @@ exports.login = (req, res, next) => { // récupération du login
                         username: user.username,
                         bio: user.bio,
                         email: user.email,
+                        password: user.password,
+                        isAdmin: user.isAdmin,
                         token: jwt.sign( // identification avec un TOKEN
                             { userId: user.id,
                             isAdmin: user.isAdmin },

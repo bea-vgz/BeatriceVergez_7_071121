@@ -29,9 +29,10 @@ class AuthServices {
         location.reload(true);
     }
 
-    deleteUser(id) {
-      return api.delete(`/users/${id}`, { headers: authHeader()  })
-      .then(() => localStorage.removeItem('user'))
+    async deleteUser(payload) {
+      const id = payload
+      await api.delete(`/users/${id}`, { headers: authHeader() });
+      return localStorage.removeItem('user');
     }
   }
 

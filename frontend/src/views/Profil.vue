@@ -10,23 +10,24 @@
             <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
               <div>
                 <h2>Hello <span class="username">{{ currentUser.username }}</span></h2>
+                <p><span class="email">{{ currentUser.email }}</span></p>
               </div>
         </div>
         <div class="optionsProfil bg-white ">
             <button type="submit" value="Submit" class="buttonOption"> 
-                <router-link to="/profil" class="nav_centrale"> Mon compte</router-link>
+                <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="ml-5 mr-2"/> Mon compte</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/password" class="nav_centrale">Mot de passe</router-link>
+                <router-link to="/password" class="nav_centrale">Modifier mon mot de passe</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/UserPosts" class="nav_centrale">Mes posts</router-link>
+                <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption">
                 <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/> Me déconnecter </a>
             </button>
             <button type="button" class="buttonOption" >
-              <router-link to="/" class="nav_centrale" @click="deleteAccount" >Supprimer mon compte</router-link>
+              <router-link to="/" class="nav_centrale" @click="deleteAccount">Supprimer mon compte</router-link>
             </button>
         </div>
     </aside>
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 
@@ -71,14 +73,13 @@ export default {
     }
   },
   methods: {
-
       deleteAccount() {
       let payload = this.$store.state.auth.user.userId
       this.$store.dispatch("auth/deleteUser",payload)
       .then(data => {
           console.log(data);
           window.alert(data.message)
-          this.$router.push("/"); 
+          router.push("/"); 
         },
         error => {
           console.log(error);
@@ -89,7 +90,7 @@ export default {
     logout() {
         this.$store.dispatch('auth/logout');
         window.alert('Vous êtes maintenant déconnecté(e)')
-        this.$router.push('/');
+        router.push('/');
       }
   },
 }
