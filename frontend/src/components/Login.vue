@@ -18,9 +18,7 @@
     
     <!-- Email input -->
         <label for="email">  📧  Email * : </label>
-        <div class="input_email">
-          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
-        </div>
+        <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
 
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : </label>
@@ -134,10 +132,6 @@ input {
     border: solid 2px #F2F2F2;
     border-radius: 1rem;
     margin: 0.3rem;
-}
-.input_email {
-  text-align: left;
-  width: 100%;
 }
 .input_email_text {
   color: rgb(141, 141, 141);

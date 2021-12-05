@@ -21,9 +21,7 @@
 
     <!-- Email input -->
         <label for="email"> 📧  Email * : </label>
-        <div class="input_email">
-          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
-        </div>
+        <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
 
     <!-- Password input -->
         <label for="password"> 🔒 Mot de passe * : </label>

@@ -31,16 +31,16 @@
             </button>
         </div>
     </aside>
-          <div class="text-justify infoUser bg-white">
-            <h3><strong>Vos infos : </strong> </h3>
-            <div>
-              <p v-if="currentUser"><strong>Pseudo : </strong><input :value='currentUser.username'></p>
-              <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p> 
-              <p v-if="currentUser"><strong>Biographie :</strong><input :value='currentUser.bio'></p>
-              <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
-            </div>
-          </div>
+    <div class="text-justify infoUser bg-white">
+      <h3><strong>Vos infos : </strong> </h3>
+      <div>
+        <p v-if="currentUser"><strong>Pseudo : </strong><input :value='currentUser.username'></p>
+        <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p> 
+        <p v-if="currentUser"><strong>Biographie :</strong><input :value='currentUser.bio'></p>
+        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
+      </div>
     </div>
+  </div>
   <!-- Footer -->
     <div class="footer">
         <Footer />
@@ -120,8 +120,8 @@ export default {
 }
 .infoUser {
     padding: 3.5rem;
-    max-width: 30rem;
-    width: auto;
+    max-width: 100%;
+    width: 30rem;
     height: auto;
     border-radius: 1.25rem;
     box-shadow: 0 0 16px #0000002e;
@@ -142,7 +142,7 @@ input {
     padding-left: 0.8rem;
     line-height: inherit;
     color: inherit;
-    height: 2.5rem;
+    height: 2rem;
     width: auto;
     text-align: left;
 }
@@ -173,11 +173,10 @@ input {
     padding-right: 1rem;
     margin-bottom: 0.5rem;
     width: 100%;
-    color:#fd2d01;
 }
 a {
     text-decoration: none;
-    color:#fd2d01;;
+    color:#242424;
     font-size : 1rem;
 }
 a:active {
@@ -192,6 +191,7 @@ a:active {
 }
 .icon {
   padding-right: 0.7rem;
+  color: #9e9e9e
 }
 
 </style>

@@ -15,13 +15,13 @@
         </div>
 
         <div class="menu-item" @click="isOpen = !isOpen" >
-          <div class="accessUser">
+          <button class="accessUser">
             <i> <font-awesome-icon icon="user" class="icone"/> </i>
-            <a href ='#' v-if="currentUser" class="username text-decoration-none red-text "><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </a>
-            <svg class="flecheMenu" viewBox="0 0 1030 638" width="10">
-              <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#000000"></path>
+            <span v-if="currentUser" class="username bg-white text-decoration-none red-text "><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </span>
+            <svg class="flecheMenu bg-white" viewBox="0 0 1030 638" width="10">
+              <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#fff"></path>
             </svg>
-          </div>
+          </button>
           <transition name="fade" apear>
             <div class="sub-menu" v-if="isOpen">
               <div class="menu-item">
@@ -88,7 +88,7 @@ nav .menu-item, .sub-menu {
   background-color: #fff;
   width: max-content;
   padding: 2rem;
-  transform: translateX(-30%);
+  transform: translateX(-10%);
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -112,6 +112,7 @@ svg {
 }
 .menu-item {
   padding: 0.7rem;
+  margin-right: 2rem;
 }
 .navigation {
   width: 100%;
@@ -149,11 +150,20 @@ svg {
   position: relative;
   box-sizing: border-box;
 }
+button {
+  padding: 0.2rem;
+  border-radius: 2rem;
+  border: solid 0.15rem #fd2d01;
+  background-color: #fd2d01;
+}
 .accessUser, .accessPosts {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-right: 1rem;
+}
+.accessUser {
+  color: #fff;
 }
 .profil, .deconnexion {
   display: flex;
