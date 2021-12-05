@@ -3,8 +3,9 @@
     <div class="navigation">
       <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
       <div id="search">
-        <span class="icon"><i class="fas fa-search"></i></span>
-        <input class="inputSearch" type="search" placeholder="Rechercher un utilisateur" @keyup.enter="checkResearch" v-model="userSearch">
+        <span class="icon" viewBox="0 0 16 16"><font-awesome-icon icon="search" class="ml-5 mr-2"/></span>
+        <input class="inputSearch" type="search" placeholder="Rechercher un utilisateur" aria-autocomplete="list" aria-label="rechercher un utilisateur" 
+        @keyup.enter="checkResearch" v-model="userSearch"> 
       </div>
       <template v-if="currentUser">
 
@@ -22,18 +23,18 @@
             </svg>
           </div>
           <transition name="fade" apear>
-          <div class="sub-menu" v-if="isOpen">
-            <div class="menu-item">
-              <router-link to="/profil"><font-awesome-icon icon="user" class="ml-5 mr-2"/>Mon compte</router-link>
+            <div class="sub-menu" v-if="isOpen">
+              <div class="menu-item">
+                <router-link to="/profil"><font-awesome-icon icon="user" class="ml-5 mr-2"/>Mon compte</router-link>
+              </div>
+              <div class="menu-item">
+                <router-link to="/profil"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
+              </div>
+              <div class="menu-item">
+                <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/>Se déconnecter</a>
+              </div>
             </div>
-            <div class="menu-item">
-              <router-link to="/profil"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
-            </div>
-            <div class="menu-item">
-              <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/>Se déconnecter</a>
-            </div>
-          </div>
-        </transition>
+          </transition>
         </div>
         
       </template>
@@ -171,5 +172,10 @@ svg {
     border-radius: 100%;
     padding: 0.5rem;
     margin-right: 0.5rem;
+}
+input {
+  border-radius: 1rem;
+  border: solid 1px #a7a7a7;
+  padding: 0.5rem;
 }
 </style>

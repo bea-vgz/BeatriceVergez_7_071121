@@ -14,33 +14,31 @@
               </div>
         </div>
         <div class="optionsProfil bg-white ">
-            <button type="submit" value="Submit" class="buttonOption"> 
-                <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="ml-5 mr-2"/> Mon compte</router-link>
+            <button type="submit" value="Submit" class="buttonOption is-active"> 
+                <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="icon ml-5 mr-2"/> Mon compte</router-link>
             </button>
-            <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/password" class="nav_centrale">Modifier mon mot de passe</router-link>
+            <button type="submit" value="Submit" class="buttonOption is-active">
+                <router-link to="/password" class="nav_centrale"><font-awesome-icon icon="user-lock" class="icon ml-5 mr-2"/>Modifier mon mot de passe</router-link>
             </button>
-            <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
+            <button type="submit" value="Submit" class="buttonOption is-active">
+                <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
             </button>
-            <button type="submit" value="Submit" class="buttonOption">
-                <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/> Me déconnecter </a>
+            <button type="submit" value="Submit" class="buttonOption is-active">
+                <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
             </button>
-            <button type="button" class="buttonOption" >
+            <button type="button" class="buttonOption is-active" >
               <router-link to="/" class="nav_centrale" @click="deleteAccount">Supprimer mon compte</router-link>
             </button>
         </div>
     </aside>
-          <div class="text-justify">
+          <div class="text-justify infoUser bg-white">
             <h3><strong>Vos infos : </strong> </h3>
-            
             <div>
-              <p v-if="currentUser"><strong>Pseudo : </strong><span  style="text-transform: uppercase"> {{currentUser.username}} </span></p>
-              <p v-if="currentUser"><strong>Email : </strong>{{currentUser.email}}</p>
-              <p v-if="currentUser"><strong>Biographie :</strong> {{currentUser.bio}} </p>
-              <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.userId}} </p>      
+              <p v-if="currentUser"><strong>Pseudo : </strong><input :value='currentUser.username'></p>
+              <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p> 
+              <p v-if="currentUser"><strong>Biographie :</strong><input :value='currentUser.bio'></p>
+              <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
             </div>
-              
           </div>
     </div>
   <!-- Footer -->
@@ -120,7 +118,7 @@ export default {
 .formulaire_account {
    flex: 1 1 0%;
 }
-.formulaire {
+.infoUser {
     padding: 3.5rem;
     max-width: 30rem;
     width: auto;
@@ -150,7 +148,6 @@ input {
 }
 .optionProfil {
     border-color: rgba(231, 233, 244);
-    
 }
 .profil_account {
     width: 20%;
@@ -165,33 +162,36 @@ input {
     display: flex;
     flex-direction: column;
     text-align: center;
-    align-items: center;
+    align-items: left;
     font-family: 'Barlow', sans-serif;
     border-radius: 2rem;
-    border: solid 0.15rem #fd2d01;
-    background-color: #fd2d01;
+    border: solid 0.15rem #fff;
+    background-color: #fff;
     margin-top: 1rem;
     padding: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
     margin-bottom: 0.5rem;
-    width: 45%;
-    color:#fff;
+    width: 100%;
+    color:#fd2d01;
 }
 a {
     text-decoration: none;
-    color:#fff;
+    color:#fd2d01;;
     font-size : 1rem;
 }
-a:hover {
-    color: #fd2d01;
+a:active {
+    color: #fff;
 }
-.button:hover, .buttonOption:hover {
-    background-color: #fff;
+.button:active, .buttonOption:active {
+    background-color: #fd2d01;;
     border: solid 0.15rem #fd2d01;
-    color: #fd2d01;
+    color: #fff;
     cursor: pointer;
     font-weight: bold;
+}
+.icon {
+  padding-right: 0.7rem;
 }
 
 </style>
