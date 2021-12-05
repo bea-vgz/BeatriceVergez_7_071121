@@ -36,9 +36,11 @@ exports.login = (req, res, next) => { // récupération du login
                 if (!valid) {
                     return res.status(401).json({ error: 'Mot de passe incorrect !'});
                 } else { // envoi du Token
-                    res.status(200).json({ // identifiant valable donc envoi de son user id + token bearer
-                        userId: user.id,
-                        isAdmin: user.isAdmin,
+                    res.status(200).json({ // identifiant valable donc envoi de son user + token bearer
+                        userId : user.id,
+                        username: user.username,
+                        bio: user.bio,
+                        email: user.email,
                         token: jwt.sign( // identification avec un TOKEN
                             { userId: user.id,
                             isAdmin: user.isAdmin },

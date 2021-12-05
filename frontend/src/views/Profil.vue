@@ -9,9 +9,8 @@
         <div class="contanier_presentation bg-white">
             <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
               <div>
-                <h2>Hello <span class="username">{{user.username}}</span></h2>
+                <h2>Hello <span class="username">{{ currentUser.username }}</span></h2>
               </div>
-            <h4 class="email"> <span>{{user.email}}</span> </h4>
         </div>
         <div class="optionsProfil bg-white ">
             <button type="submit" value="Submit" class="buttonOption"> 
@@ -24,33 +23,24 @@
                 <router-link to="/UserPosts" class="nav_centrale">Mes posts</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption">
-                <router-link to="/" class="nav_centrale" @click="logout">Me déconnecter</router-link>
+                <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/> Me déconnecter </a>
             </button>
             <button type="button" class="buttonOption" >
               <router-link to="/" class="nav_centrale" @click="deleteAccount" >Supprimer mon compte</router-link>
             </button>
         </div>
     </aside>
-    <div class= "formulaire_account">
-        <form class="formulaire bg-white" @submit.prevent="update">
-        <h2>Mon profil</h2>
-    <!-- Username input -->
-        <label for="userName"> 👤  Pseudo actuel : </label>
-        <input type="text" id="userName" placeholder="Pseudo" required="required">
-
-    <!-- Password input -->
-        <label for="password"> 🔒  Mot de passe : </label>
-        <input type="password" id="password" utocomplete="current-password" placeholder="Doit contenir au moins 8 caractères, 1 maj, 1 chiffre" required="required">
-        
-    <!-- Bio input -->
-        <label for="bio"> 💬  Biographie : </label>
-        <input type="bio" id="bio" placeholder="Quelques mots sur vous : âge, message, poste...">
-
-        <button class="button" type="submit" value="Submit">
-            Sauvegarder
-        </button>
-        </form>
-    </div>
+          <div class="text-justify">
+            <h3><strong>Vos infos : </strong> </h3>
+            
+            <div>
+              <p v-if="currentUser"><strong>Pseudo : </strong><span  style="text-transform: uppercase"> {{currentUser.username}} </span></p>
+              <p v-if="currentUser"><strong>Email : </strong>{{currentUser.email}}</p>
+              <p v-if="currentUser"><strong>Biographie :</strong> {{currentUser.bio}} </p>
+              <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.userId}} </p>      
+            </div>
+              
+          </div>
     </div>
   <!-- Footer -->
     <div class="footer">
@@ -63,38 +53,28 @@
 <script>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import UserServices from '../services/user.ressource';
 
 export default {
   name: "Profil",
-  data() {
-    return{ 
-      user : '',
-    }
-  },
   components: {
     Header,
     Footer
   },
-  mounted(){
-    this.getOneUser();
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/");
+    }
   },
   methods: {
-    getOneUser(){
-    const id = localStorage.getItem("userId");
-    UserServices.getOneUser(id)
-      .then ((response) => {
-        this.userId = response.data;
-        return this.userId;
-      })
-      .catch((error) => {
-        console.log(error); 
-      });
-    },
 
       deleteAccount() {
       let payload = this.$store.state.auth.user.userId
-      this.$store.dispatch("deleteAccount",payload)
+      this.$store.dispatch("auth/deleteUser",payload)
       .then(data => {
           console.log(data);
           window.alert(data.message)
@@ -107,9 +87,10 @@ export default {
     },
 
     logout() {
-      this.$store.dispatch('logout');
-      this.$router.push('/login');
-    }
+        this.$store.dispatch('auth/logout');
+        window.alert('Vous êtes maintenant déconnecté(e)')
+        this.$router.push('/');
+      }
   },
 }
 </script>

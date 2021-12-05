@@ -44,40 +44,40 @@
 
 <script>
 import router from "../router";
-import { mapState } from 'vuex';
+import User from '../models/user'
 
 export default {
 
     name: 'Login',
-    components: {
+    computed: {
+      loggedIn() {
+        return this.$store.state.auth.status.loggedIn;
+      }
     },
     data() {
         return {
-            user: {
-                email : '',
-                password: '',
-            },
+            user: new User('', ''),
         }
     },
-    computed : {
-        ...mapState(['status']),
+    created() {
+      if (this.loggedIn) {
+        router.push('/profil');
+      }
     },
     methods: {
-        login: function () {
-            const email = this.user.email
-            const password = this.user.password
-            this.$store.dispatch('login', { email, password })
-        .then( 
-            function() {
-                router.push('/profil'); // Puis on bascule sur la page profil
-            },
-            function(error) {
+        login () {
+            if (this.user.email && this.user.password) {
+                this.$store.dispatch('auth/login', this.user)
+                .then(() => {
+                    router.push('/profil');
+                },
+            error => {
                 console.log(error);
-            }
+          }
         );
-    },
-  },
-
+      }
+    }
+  }
 };
 </script>
 

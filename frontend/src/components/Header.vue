@@ -2,13 +2,12 @@
   <header id="nav" class="border_nav bg-white" >
     <img class="logo" src="../assets/groupomania_logo.png" alt="Groupomania"/>
     <div class="navigation">
-      <template v-if="loggedIn">
+      <template v-if="currentUser">
         <router-link to="/home" class="nav_centrale">Fil d'actualité</router-link> |
         <router-link to="/posts" class="nav_centrale">Publier</router-link>
         <router-link to="/profil" class="nav_centrale">Profil</router-link>
-        <div class="profil bg-sea-light rounded-full relative text-center text-white flex justify-center items-center font-medium h-12 w-12 cursor-pointer">
-          <img src="//www.gravatar.com/avatar/0082479fc08ae9f617453243bcf9704c?s=80&d=blank&r=g" alt="Avatar">
-        </div>
+        <router-link v-if="currentUser" to="/profil" class="text-decoration-none mr-5 white--text"><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </router-link> 
+        <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/> Déconnexion </a>
       </template>
       <template v-else>
         <router-link to="/" class="text-white font-semibold hover:text-gray-700 mx-3">
@@ -25,19 +24,18 @@
 export default {
   
   name: 'Header',
-  computed : {
-      loggedIn() {
-        return this.$store.state.auth.status.loggedIn;
-      },
-    },
-    methods: {
-      logout: function () {
-        this.$store.dispatch('logout')
-        .then(() => {
-          this.$router.push('/')
-        })
+  computed: {
+      currentUser() {
+        return this.$store.state.auth.user;
       }
     },
+    methods: {
+      logout() {
+        this.$store.dispatch('auth/logout');
+        window.alert('Vous êtes maintenant déconnecté(e)')
+        this.$router.push('/');
+      }
+    }
 }
 </script>
 

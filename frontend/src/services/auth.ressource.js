@@ -1,4 +1,5 @@
 import api from './authentification'
+import authHeader from './authHeader'
 
 class AuthServices {
     signup(user) {
@@ -16,7 +17,7 @@ class AuthServices {
             password: user.password,
         })
         .then(response => {
-          if (response.data.accessToken) {
+          if (response.data.token) {
             localStorage.setItem('user', JSON.stringify(response.data));
           }
           return response.data;
@@ -28,17 +29,10 @@ class AuthServices {
         location.reload(true);
     }
 
-    handleResponse(response) {
-        if (response.status === 401) {
-          this.logout();
-          location.reload(true);
-    
-          const error = response.data && response.data.message;
-          return Promise.reject(error);
-        }
-    
-        return Promise.resolve(response);
-      }
-}
+    deleteUser(id) {
+      return api.delete(`/users/${id}`, { headers: authHeader()  })
+      .then(() => localStorage.removeItem('user'))
+    }
+  }
 
 export default new AuthServices();

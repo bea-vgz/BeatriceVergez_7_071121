@@ -6,7 +6,7 @@ const initialState = user
   : { status: { loggedIn: false }, user: null };
 
 export const auth = {
-
+  namespaced: true,
   state: initialState,
   actions: {
     login({ commit }, user) {
@@ -38,7 +38,20 @@ export const auth = {
           return Promise.reject(error.response.data);
         }
       );
-    }
+    },
+
+    deleteUser({commit}, payload) {
+      return AuthServices.delete(payload).then(
+        (response) => {
+          commit ('deleteSuccess')
+          return Promise.resolve(response.data)
+        },
+        (error) => {
+          commit ('deleteFailure')
+          return Promise.reject(error)
+        }
+      )
+    },
   },
 
   mutations: {
@@ -60,5 +73,17 @@ export const auth = {
     registerFailure(state) {
       state.status.loggedIn = false;
     },
-  }
+    deleteSuccess(state) {
+      state.status.loggedIn= false
+      state.user = null
+    },
+    deleteFailure() {
+    },
+  },
+
+  getters : {
+    userState: (state) => {
+      return state.user
+    }
+  },
 }

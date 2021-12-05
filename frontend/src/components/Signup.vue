@@ -50,6 +50,7 @@
 
 <script>
 import router from "../router";
+import User from '../models/user'
 
 export default {
   
@@ -58,14 +59,7 @@ export default {
     },
     data () {
         return {
-          user: {
-            photoProfil: '',
-            username: '',
-            email: '',
-            password: '',
-            bio: '',
-            isAdmin: 0
-          },
+          user: new User('', '', '', '', '', ''),
         }
     },
     computed: {
@@ -76,9 +70,10 @@ export default {
     methods: {
       
     signup() {
-      this.$store.dispatch('signup', this.user)
+      this.$store.dispatch('auth/signup', this.user)
       .then(data => {
         this.message = data.message;
+        window.alert("Création du compte réussi ! Il ne reste plus qu'à vous connecter pour continer !")
         router.push("/");
       })
       .catch((error) => {
