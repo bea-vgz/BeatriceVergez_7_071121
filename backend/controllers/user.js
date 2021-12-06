@@ -42,7 +42,7 @@ exports.login = (req, res, next) => { // récupération du login
                         bio: user.bio,
                         email: user.email,
                         password: user.password,
-                        isAdmin: user.isAdmin,
+                        isAdmin: false,
                         token: jwt.sign( // identification avec un TOKEN
                             { userId: user.id,
                             isAdmin: user.isAdmin },

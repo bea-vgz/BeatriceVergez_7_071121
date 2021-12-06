@@ -87,8 +87,8 @@ nav .menu-item, .sub-menu {
   position: absolute;
   background-color: #fff;
   width: max-content;
-  padding: 2rem;
-  transform: translateX(-10%);
+  padding: 1.5rem;
+  transform: translateX(-30%);
 }
 .fade-enter-active,
 .fade-leave-active {

@@ -7,7 +7,9 @@
     <div class="container_account">
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white">
-            <label class="avatar"> <img class="avatar" src="../assets/default-avatar-user.jpeg"/> </label>
+            <label class="avatar"> 
+              <img class="avatar" src="../assets/default-avatar-user.jpeg"/> 
+            </label>
               <div>
                 <h2>Hello <span class="username">{{ currentUser.username }}</span></h2>
                 <p><span class="email">{{ currentUser.email }}</span></p>
@@ -24,10 +26,11 @@
                 <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
             </button>
             <button type="submit" value="Submit" class="buttonOption is-active">
-                <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+                <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+                <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </button>
-            <button type="button" class="buttonOption is-active" >
-              <router-link to="/" class="nav_centrale" @click="deleteAccount">Supprimer mon compte</router-link>
+            <button type="submit" class="buttonOption is-active" >
+              <router-link to="/" class="nav_centrale" @click="confirmDelete"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</router-link>
             </button>
         </div>
     </aside>
@@ -35,10 +38,13 @@
       <h3><strong>Vos infos : </strong> </h3>
       <div>
         <p v-if="currentUser"><strong>Pseudo : </strong><input :value='currentUser.username'></p>
-        <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p> 
+        <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
         <p v-if="currentUser"><strong>Biographie :</strong><input :value='currentUser.bio'></p>
         <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
       </div>
+      <button type="submit" class="buttonSave">
+        <router-link to="/" class="save">Sauvegarder</router-link>
+      </button>
     </div>
   </div>
   <!-- Footer -->
@@ -53,12 +59,14 @@
 import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
+import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
 
 export default {
   name: "Profil",
   components: {
     Header,
-    Footer
+    Footer,
+    ConfirmDialogue,
   },
   computed: {
     currentUser() {
@@ -71,7 +79,7 @@ export default {
     }
   },
   methods: {
-      deleteAccount() {
+      deleteUser() {
       let payload = this.$store.state.auth.user.userId
       this.$store.dispatch("auth/deleteUser",payload)
       .then(data => {
@@ -84,12 +92,22 @@ export default {
         }
       );
     },
-
-    logout() {
-        this.$store.dispatch('auth/logout');
-        window.alert('Vous êtes maintenant déconnecté(e)')
+      
+    async logout() {
+      this.$store.dispatch('auth/logout');
+      const ok = await this.$refs.confirmDialogue.show({
+        title: 'Déconnexion',
+        message: 'Êtes-vous sur de vouloir vous déconnecter ?',
+        okButton: 'Se déconnecter',
+      })
+      // If you throw an error, the method will terminate here unless you surround it wil try/catch
+      if (ok) {
+        alert('Vous avez été déconnecté. Vous allez être redirigé.')
         router.push('/');
+      } else {
+        alert("Vous n'avez pas été déconnecté")
       }
+    },
   },
 }
 </script>
@@ -178,9 +196,11 @@ a {
     text-decoration: none;
     color:#242424;
     font-size : 1rem;
+    cursor: pointer;
 }
 a:active {
     color: #fff;
+    cursor: pointer;
 }
 .button:active, .buttonOption:active {
     background-color: #fd2d01;;
@@ -193,5 +213,18 @@ a:active {
   padding-right: 0.7rem;
   color: #9e9e9e
 }
-
+.buttonSave {
+  background-color: #fd2d01;;
+  border: solid 0.15rem #fd2d01;
+  padding: 1rem;
+  padding-right: 1rem;
+  border-radius: 2rem;
+  padding: 0.5rem;
+  max-width: 100%;
+  width: 30%;
+  margin-top: 1rem;
+}
+.save {
+  color: #fff;
+}
 </style>

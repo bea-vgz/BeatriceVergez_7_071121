@@ -26,7 +26,6 @@ class AuthServices {
 
     logout() {
         localStorage.removeItem('user');
-        location.reload(true);
     }
 
     async deleteUser(payload) {
