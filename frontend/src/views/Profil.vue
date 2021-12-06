@@ -6,41 +6,43 @@
     </div>
     <div class="container_account">
     <aside class="profil_account bg-white">
-        <div class="contanier_presentation bg-white">
-            <label class="avatar"> 
-              <img class="avatar" src="../assets/default-avatar-user.jpeg"/> 
-            </label>
-              <div>
-                <h2>Hello <span class="username">{{ currentUser.username }}</span></h2>
-                <p><span class="email">{{ currentUser.email }}</span></p>
-              </div>
+        <div class="contanier_presentation bg-white border-b py-8">
+            <img v-if="currentUser.photoProfil == null" class="avatar" alt="image par defaut" src="../assets/default-avatar-user.jpeg" />
+            <img v-else alt="image de profil" :src="currentUser.photoProfil" />
+            <h2>Bonjour <span class="username">{{ currentUser.username }}</span></h2>
+            <p><span class="email">{{ currentUser.email }}</span></p>
         </div>
-        <div class="optionsProfil bg-white ">
-            <button type="submit" value="Submit" class="buttonOption is-active"> 
-                <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="icon ml-5 mr-2"/> Mon compte</router-link>
-            </button>
-            <button type="submit" value="Submit" class="buttonOption is-active">
-                <router-link to="/password" class="nav_centrale"><font-awesome-icon icon="user-lock" class="icon ml-5 mr-2"/>Modifier mon mot de passe</router-link>
-            </button>
-            <button type="submit" value="Submit" class="buttonOption is-active">
-                <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
-            </button>
-            <button type="submit" value="Submit" class="buttonOption is-active">
-                <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
-                <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
-            </button>
-            <button type="submit" value="Submit" class="buttonOption is-active" >
+        <div class="optionsProfil bg-white">
+          <ul>
+            <li class="option is-active"> 
+              <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="icon ml-5 mr-2"/> Mon compte</router-link>
+            </li>
+            <li class="option is-active">
+              <router-link to="/password" class="nav_centrale"><font-awesome-icon icon="user-lock" class="icon ml-5 mr-2"/>Modifier mot de passe</router-link>
+            </li>
+            <li class="option is-active">
+              <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
+            </li>
+            <li class="option is-active">
+              <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            </li>
+            <li class="option is-active" >
               <a to="/" class="nav_centrale" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
-            </button>
+            </li>
+          </ul>
         </div>
     </aside>
     <div class="text-justify infoUser bg-white">
-      <h3><strong>Vos infos : </strong> </h3>
+      <h2><strong>Mon compte : </strong> </h2>
       <div>
         <p v-if="currentUser"><strong>Pseudo : </strong><input :value='currentUser.username'></p>
         <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
-        <p v-if="currentUser"><strong>Biographie :</strong><input :value='currentUser.bio'></p>
+        <p v-if="currentUser"><strong>Biographie :</strong>
+          <input v-if="currentUser.bio !== null" :value='currentUser.bio'>
+          <input v-else placeholder="Un mot sur vous..." >
+        </p>
         <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
       </div>
       <button type="submit" class="buttonSave">
@@ -69,6 +71,13 @@ export default {
     Footer,
     ConfirmDialogue,
   },
+  data() {
+        return {
+          username:'',
+          bio: '',
+          file: null,
+        }
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -80,6 +89,10 @@ export default {
     }
   },
   methods: {
+    selectFile() {
+      this.file = this.$refs.file.files[0];
+    },
+
     async deleteUser() {
       let payload = this.$store.state.auth.user.userId
       this.$store.dispatch("auth/deleteUser",payload)
@@ -186,19 +199,17 @@ input {
     text-align: center;
     border-color: rgba(231, 233, 244);
 }
-.button, .buttonOption {
+li {
     display: flex;
-    flex-direction: column;
     text-align: center;
     align-items: left;
     font-family: 'Barlow', sans-serif;
+    font-size: 15px;
     border-radius: 2rem;
     border: solid 0.15rem #fff;
     background-color: #fff;
     margin-top: 1rem;
     padding: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
     margin-bottom: 0.5rem;
     width: 100%;
 }
@@ -206,25 +217,19 @@ a {
     text-decoration: none;
     color:#242424;
     font-size : 1rem;
-    cursor: pointer;
-}
-a:active {
-    color: #fff;
-    cursor: pointer;
-}
-.button:active, .buttonOption:active {
-    background-color: #fd2d01;;
-    border: solid 0.15rem #fd2d01;
-    color: #fff;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
+}
+a:hover{
+    color: #fff;
+    cursor: pointer;
 }
 .icon {
   padding-right: 0.7rem;
   color: #9e9e9e
 }
 .buttonSave {
-  background-color: #fd2d01;;
+  background-color: #fd2d01;
   border: solid 0.15rem #fd2d01;
   padding: 1rem;
   padding-right: 1rem;
@@ -236,5 +241,12 @@ a:active {
 }
 .save {
   color: #fff;
+}
+.border-b {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+.py-8 {
+   padding-bottom: 2rem;
 }
 </style>

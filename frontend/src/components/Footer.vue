@@ -19,7 +19,6 @@ export default {
   font-family: 'Barlow', sans-serif;
   border-top: 1px solid #ccc;
   padding: 1rem;
-  margin-top: 10px;
   text-align: center;
   color : #9e9e9e;
   background-color:#ffffff

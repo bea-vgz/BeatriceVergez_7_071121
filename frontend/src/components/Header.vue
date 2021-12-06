@@ -10,7 +10,7 @@
       <template v-if="currentUser">
 
         <div class="accessPosts">
-          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Fil d'actualité</router-link> |
+          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Home</router-link> |
           <router-link to="/posts" class="nav_centrale text-decoration-none">Publier</router-link>
         </div>
 
@@ -31,7 +31,7 @@
                 <router-link to="/profil"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
               </div>
               <div class="menu-item">
-                <a @click="logout" to="/" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/>Me déconnecter</a>
+                <a @click="logout" to="/" class="logout text-decoration-none white--text border-t py-8"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/>Me déconnecter</a>
               </div>
             </div>
           </transition>
@@ -113,6 +113,7 @@ svg {
 .menu-item {
   padding: 0.7rem;
   margin-right: 2rem;
+  color:#242424;
 }
 .navigation {
   width: 100%;
