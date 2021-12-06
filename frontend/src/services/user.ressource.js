@@ -15,6 +15,7 @@ class UserServices {
     modifyPassword(id, data) {
         return api.put(`/users/${id}/password`, data, { headers: authHeader() });
     }
+    
 }
 
 export default new UserServices();

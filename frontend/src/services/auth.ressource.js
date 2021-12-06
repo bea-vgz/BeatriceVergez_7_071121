@@ -12,27 +12,27 @@ class AuthServices {
     }
 
     login(user) {
-        return api.post('/users/login', {
-            email: user.email,
-            password: user.password,
-        })
-        .then(response => {
-          if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-          }
-          return response.data;
-        });
+      return api.post('/users/login', {
+        email: user.email,
+        password: user.password,
+      })
+      .then(response => {
+        if (response.data.token) {
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
+        return response.data;
+      });
     }
 
     logout() {
         localStorage.removeItem('user');
     }
 
-    async deleteUser(payload) {
+    delete(payload) {
       const id = payload
-      await api.delete(`/users/${id}`, { headers: authHeader() });
-      return localStorage.removeItem('user');
+      return api.delete(`/users/${id}`, { headers: authHeader() })
+      .then(() => localStorage.removeItem('user'))
     }
-  }
+}
 
 export default new AuthServices();

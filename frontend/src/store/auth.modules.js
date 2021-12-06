@@ -44,7 +44,7 @@ export const auth = {
       return AuthServices.delete(payload).then(
         (response) => {
           commit ('deleteSuccess')
-          return Promise.resolve(response.data)
+          return Promise.resolve(response.data);
         },
         (error) => {
           commit ('deleteFailure')

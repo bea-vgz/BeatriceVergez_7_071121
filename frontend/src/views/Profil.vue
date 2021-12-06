@@ -29,8 +29,9 @@
                 <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
                 <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </button>
-            <button type="submit" class="buttonOption is-active" >
-              <router-link to="/" class="nav_centrale" @click="confirmDelete"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</router-link>
+            <button type="submit" value="Submit" class="buttonOption is-active" >
+              <a to="/" class="nav_centrale" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</a>
+              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </button>
         </div>
     </aside>
@@ -79,18 +80,27 @@ export default {
     }
   },
   methods: {
-      deleteUser() {
+    async deleteUser() {
       let payload = this.$store.state.auth.user.userId
       this.$store.dispatch("auth/deleteUser",payload)
       .then(data => {
-          console.log(data);
-          window.alert(data.message)
-          router.push("/"); 
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      });
+      const ok = await this.$refs.confirmDialogue.show({
+        title: 'Supprimer mon compte',
+        message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
+        okButton: 'Supprimer mon compte',
+      })
+      // If you throw an error, the method will terminate here unless you surround it wil try/catch
+      if (ok) {
+        alert('Votre compte a été supprimé !')
+        router.push('/');
+      } else {
+        alert("Oups, une erreur est survenue")
+      }
     },
       
     async logout() {
