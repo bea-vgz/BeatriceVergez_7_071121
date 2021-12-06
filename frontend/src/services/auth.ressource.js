@@ -4,10 +4,12 @@ import authHeader from './authHeader'
 class AuthServices {
     signup(user) {
         return api.post('/users/signup', {
+            photoProfil:user.photoProfil,
             username: user.username,
             email: user.email,
             password: user.password,
-            bio: user.bio
+            bio: user.bio,
+            isAdmin: user.isAdmin
         })
     }
 

@@ -1,0 +1,223 @@
+<template>
+  <div class="profil">
+    <Header/>
+
+    <div class="container_account eight wide column">
+        <aside class="profil_account bg-white">
+            <div class="contanier_presentation bg-white">
+                <label class="avatar"> 
+                <img class="avatar" src="../assets/default-avatar-user.jpeg"/> 
+                </label>
+                <div>
+                    <h2>Hello <span class="username">{{ currentUser.username }}</span></h2>
+                    <p><span class="email">{{ currentUser.email }}</span></p>
+                </div>
+            </div>
+        <div class="optionsProfil bg-white ">
+            <button type="submit" value="Submit" class="buttonOption is-active"> 
+                <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="icon ml-5 mr-2"/> Mon compte</router-link>
+            </button>
+            <button type="submit" value="Submit" class="buttonOption is-active">
+                <router-link to="/password" class="nav_centrale"><font-awesome-icon icon="user-lock" class="icon ml-5 mr-2"/>Modifier mon mot de passe</router-link>
+            </button>
+            <button type="submit" value="Submit" class="buttonOption is-active">
+                <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
+            </button>
+            <button type="submit" value="Submit" class="buttonOption is-active">
+                <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+                <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            </button>
+            <button type="submit" value="Submit" class="buttonOption is-active" >
+              <a to="/" class="nav_centrale" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</a>
+              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            </button>
+        </div>
+    </aside>
+      <div class="ui segment infoUser bg-white">
+        <h2 class="ui dividing header">Modifier votre mot de passe</h2>
+
+        <div class="card">
+        <div class="form-row">
+            <label for="password">Votre mot de passe actuel : </label>
+            <input v-model="password" class="form-row_input" id="password" type="password" />
+        </div>
+        <div class="form-row">
+            <label for="newpassword">Votre nouveau mot de passe : </label>
+            <input v-model="newPassword" class="form-row_input" id="newPassword" type="password" />
+        </div>
+        <div class="form-row">
+            <label for="confirmpassword">Confirmer le nouveau mot de passe : </label>
+            <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" type="password" />
+        </div>
+        <button class="buttonSave" type="submit" @click="modifyPassword()">
+            <router-link to="/profil" class="save">Sauvegarder</router-link>
+        </button>
+        <div v-if="message">
+            {{ message }}
+        </div>
+        </div>
+     </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <Footer />
+    </div>
+  <router-view />
+  </div>
+</template>
+
+<script>
+    import Header from '@/components/Header'
+    import Footer from '@/components/Footer'
+    import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
+
+    export default {
+        name: 'UpdatePassword',
+        components: {
+            Header,
+            Footer,
+            ConfirmDialogue
+        },
+        data () {
+            return {
+                password: '',
+                message: '',
+            }
+        },
+        computed: {
+            currentUser() {
+            return this.$store.state.auth.user;
+        }
+        },
+        methods: {
+            modifyPassword() {
+                this.$store.dispatch("user/modifyPassword", {
+                    password: this.password,
+                    newPassword: this.newPassword,
+                    confirmPassword : this.confirmPassword
+                })
+                .then(() => {
+                    this.message = 'Mot de passe modifié avec succès'
+                    //this.$router.push('/profile');
+                })
+
+        }
+    }
+}
+</script>
+<style scoped>
+.container_account {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 100%;
+    width: 100%;
+}
+.profil {
+    background-color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+}
+.avatar {
+    width: 30%;
+    border-radius: 100%;
+}
+.bg-white {
+  background-color: #fff;
+  border-color: rgba(231, 233, 244);
+}
+.formulaire_account {
+   flex: 1 1 0%;
+}
+.infoUser {
+    padding: 3.5rem;
+    max-width: 100%;
+    width: 30rem;
+    height: auto;
+    border-radius: 1.25rem;
+    box-shadow: 0 0 16px #0000002e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+}
+input {
+    font-family: 'Barlow', sans-serif;
+    border: solid 2px #F2F2F2;
+    border-radius: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.8rem;
+    line-height: inherit;
+    color: inherit;
+    height: 2rem;
+    width: auto;
+    text-align: left;
+}
+.optionProfil {
+    border-color: rgba(231, 233, 244);
+}
+.profil_account {
+    width: 20%;
+    padding: 4rem;
+    border-right-width: 1px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-color: rgba(231, 233, 244);
+}
+.button, .buttonOption {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: left;
+    font-family: 'Barlow', sans-serif;
+    border-radius: 2rem;
+    border: solid 0.15rem #fff;
+    background-color: #fff;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+a {
+    text-decoration: none;
+    color:#242424;
+    font-size : 1rem;
+    cursor: pointer;
+}
+a:active {
+    color: #fff;
+    cursor: pointer;
+}
+.button:active, .buttonOption:active {
+    background-color: #fd2d01;;
+    border: solid 0.15rem #fd2d01;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+.icon {
+  padding-right: 0.7rem;
+  color: #9e9e9e
+}
+.buttonSave {
+  background-color: #fd2d01;;
+  border: solid 0.15rem #fd2d01;
+  padding: 1rem;
+  padding-right: 1rem;
+  border-radius: 2rem;
+  padding: 0.5rem;
+  max-width: 100%;
+  width: 30%;
+  margin-top: 1rem;
+}
+.save {
+  color: #fff;
+}
+</style>
