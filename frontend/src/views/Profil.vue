@@ -38,7 +38,7 @@
         <p><strong>Pseudo : </strong><input :value='currentUser.username'></p>
         <p><strong>Email : </strong>{{ currentUser.email }}</p>
         <p><strong>Biographie :</strong>
-          <input v-if="currentUser.bio !== null">
+          <input v-if="currentUser.bio !== null" :value='currentUser.bio'>
           <input v-else placeholder="Un mot sur vous..." >
         </p>
         <p><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
@@ -126,19 +126,17 @@ export default {
     },
 
     modifyUser(){    
-      AuthServices.modifyUser(this.currentUser.userId, this.currentUser, {
+      return AuthServices.modifyUser(this.currentUser.userId, {
         username: this.currentUser.username,
         bio: this.currentUser.bio,
       })
       .then(response => { 
-        if(response){ localStorage.user = JSON.stringify(this.currentUser) }              
+        if(response.data){ 
+          localStorage.user = JSON.stringify(this.currentUser) 
+        }              
       })     
-      .catch(() => {
-        let user = JSON.parse(localStorage.getItem('user'))
-        console.log('user already exist')
-      .then(() =>
-        this.currentUser.username = user
-      )
+      .catch((error) => {
+        console.log(error)
     })
   },
   }
@@ -198,7 +196,8 @@ input {
     line-height: inherit;
     color: inherit;
     height: 2rem;
-    width: auto;
+    max-width: 100%;
+    width: 50%;
     text-align: left;
 }
 .optionProfil {

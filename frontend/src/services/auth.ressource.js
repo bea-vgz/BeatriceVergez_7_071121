@@ -35,12 +35,6 @@ class AuthServices {
 
     modifyUser(id, user, data) {
       return api.put(`/users/${id}`, data, { headers: authHeader(), user })
-      .then(response => {
-          if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-          }
-          return response.data;
-      });
   }
 }
 

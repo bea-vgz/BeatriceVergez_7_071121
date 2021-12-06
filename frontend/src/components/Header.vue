@@ -2,10 +2,9 @@
   <header id="nav" class="border_nav bg-white" >
     <div class="navigation">
       <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-      <div id="search">
-        <span class="icon" viewBox="0 0 30 16"><font-awesome-icon icon="search" class="ml-5 mr-2"/></span>
-        <input class="inputSearch" type="search" placeholder="Rechercher un utilisateur" aria-autocomplete="list" aria-label="rechercher un utilisateur" 
-        @keyup.enter="checkResearch" v-model="userSearch"> 
+      <div id="searchInput">
+        <input viewBox="0 0 60 20" class="inputSearch" type="search" placeholder="Rechercher un utilisateur " aria-autocomplete="list" aria-label="rechercher un utilisateur" 
+        @keyup.enter="checkResearch" v-model="userSearch">
       </div>
       <template v-if="currentUser">
 
@@ -180,5 +179,6 @@ input {
   border-radius: 1rem;
   border: solid 1px #a7a7a7;
   padding: 0.5rem;
+  width: 100%
 }
 </style>
