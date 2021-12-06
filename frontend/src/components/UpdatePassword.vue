@@ -7,29 +7,27 @@
         <div class="contanier_presentation bg-white border-b py-8">
             <img v-if="currentUser.photoProfil == null" class="avatar" alt="image par defaut" src="../assets/default-avatar-user.jpeg" />
             <img v-else alt="image de profil" :src="currentUser.photoProfil" />
-            <h2>Bonjour <span class="username">{{ currentUser.username }}</span></h2>
+            <h1 class="username">{{ currentUser.username }}</h1>
             <p><span class="email">{{ currentUser.email }}</span></p>
         </div>
         <div class="optionsProfil bg-white">
-          <ul>
-            <li class="option is-active"> 
+            <div class="option is-active"> 
               <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="icon ml-5 mr-2"/> Mon compte</router-link>
-            </li>
-            <li class="option is-active">
+            </div>
+            <div class="option is-active">
               <router-link to="/password" class="nav_centrale"><font-awesome-icon icon="user-lock" class="icon ml-5 mr-2"/>Modifier mot de passe</router-link>
-            </li>
-            <li class="option is-active">
+            </div>
+            <div class="option is-active">
               <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
-            </li>
-            <li class="option is-active">
+            </div>
+            <div class="option is-active">
               <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
-            </li>
-            <li class="option is-active" >
+            </div>
+            <div class="option is-active" >
               <a to="/" class="nav_centrale" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
-            </li>
-          </ul>
+            </div>
         </div>
     </aside>
       <div class="ui segment infoUser bg-white">
@@ -152,6 +150,10 @@
     max-width: 100%;
     width: 100%;
 }
+h1 {
+  font-size: 30px;
+  color : #fd2d01
+}
 .profil {
     background-color: #F2F2F2;
     display: flex;
@@ -208,7 +210,7 @@ input {
     text-align: center;
     border-color: rgba(231, 233, 244);
 }
-li {
+.option {
     display: flex;
     text-align: center;
     align-items: left;

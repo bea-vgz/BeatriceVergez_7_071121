@@ -3,7 +3,7 @@
     <div class="navigation">
       <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
       <div id="search">
-        <span class="icon" viewBox="0 0 16 16"><font-awesome-icon icon="search" class="ml-5 mr-2"/></span>
+        <span class="icon" viewBox="0 0 30 16"><font-awesome-icon icon="search" class="ml-5 mr-2"/></span>
         <input class="inputSearch" type="search" placeholder="Rechercher un utilisateur" aria-autocomplete="list" aria-label="rechercher un utilisateur" 
         @keyup.enter="checkResearch" v-model="userSearch"> 
       </div>
@@ -37,14 +37,6 @@
           </transition>
         </div>
         
-      </template>
-      <template v-else>
-        <router-link to="/" class="text-white font-semibold hover:text-gray-700 mx-3">
-          Connexion
-        </router-link>
-        <router-link to="/signup" class="text-white font-semibold hover:text-gray-700 mx-3">
-          Inscription
-        </router-link>
       </template>
     </div>
   </header>

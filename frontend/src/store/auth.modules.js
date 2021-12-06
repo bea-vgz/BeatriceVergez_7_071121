@@ -79,6 +79,12 @@ export const auth = {
     },
     deleteFailure() {
     },
+    updateSuccess(state, user) {
+      state.status.loggedIn = true;
+      state.user = user;
+    },
+    updateFailure() {
+    },
   },
 
   getters : {
