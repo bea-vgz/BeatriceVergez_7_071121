@@ -30,7 +30,7 @@ const routes = [
     path: "/profil",
     name: "Profil",
     component: () => import("../views/Profil.vue"),
-    meta: { title:'Groupomania - Profil' },
+    meta: { title:'Groupomania - Mon compte' },
     requiresAuth: true,
   },
   // Route paswword user 

@@ -1,42 +1,48 @@
 <template>
   <header id="nav" class="border_nav bg-white" >
     <div class="navigation">
-      <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-      <div id="searchInput">
-        <input viewBox="0 0 60 20" class="inputSearch" type="search" placeholder="Rechercher un utilisateur " aria-autocomplete="list" aria-label="rechercher un utilisateur" 
-        @keyup.enter="checkResearch" v-model="userSearch">
+      <div class="nav_logo">
+        <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
+        <form class="form-search" method="get" action="/">
+          <div class="input-append">
+            <input type="text" class="input-medium search-query" name="s" placeholder="Rechercher un utilisateur" value="" aria-autocomplete="list" aria-label="rechercher un utilisateur">
+          </div>
+        </form>
       </div>
-      <template v-if="currentUser">
 
+      <template v-if="currentUser">
         <div class="accessPosts">
           <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Home</router-link> |
           <router-link to="/posts" class="nav_centrale text-decoration-none">Publier</router-link>
         </div>
 
-        <div class="menu-item" @click="isOpen = !isOpen" >
-          <button class="accessUser">
-            <i> <font-awesome-icon icon="user" class="icone"/> </i>
-            <span v-if="currentUser" class="username bg-white text-decoration-none red-text "><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </span>
-            <svg class="flecheMenu bg-white" viewBox="0 0 1030 638" width="10">
+        <div class="notifUser">
+          <a class="nav_centrale bell_notif text-decoration-none" aria-label="Notitfications"><font-awesome-icon icon="bell" class="icon ml-5 mr-2"/></a>
+          <div class="menu-item" @click="isOpen = !isOpen" >
+            <button class="accessUser">
+              <i> <font-awesome-icon icon="user" class="icone"/> </i>
+              <span v-if="currentUser" class="username bg-white text-decoration-none red-text "><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </span>
+              <svg class="flecheMenu bg-white" viewBox="0 0 1030 638" width="10">
               <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#fff"></path>
-            </svg>
-          </button>
-          <transition name="fade" apear>
-            <div class="sub-menu" v-if="isOpen">
-              <div class="menu-item">
-                <router-link to="/profil"><font-awesome-icon icon="user" class="ml-5 mr-2"/>Mon compte</router-link>
+              </svg>
+            </button>
+            <transition name="fade" apear>
+              <div class="sub-menu" v-if="isOpen">
+                <div class="menu-item">
+                  <router-link to="/profil"><font-awesome-icon icon="user" class="profil_icon ml-5 mr-2"/>Mon compte</router-link>
+                </div>
+                <div class="menu-item">
+                  <router-link to="/profil"><font-awesome-icon icon="clone" class="profil_icon ml-5 mr-2"/>Mes posts</router-link>
+                </div>
+                <div class="menu-item">
+                  <a @click="logout" to="/" class="logout text-decoration-none white--text border-t py-8"><font-awesome-icon icon="sign-out-alt" class="profil_icon ml-5 mr-2"/>Me déconnecter</a>
+                </div>
               </div>
-              <div class="menu-item">
-                <router-link to="/profil"><font-awesome-icon icon="clone" class="ml-5 mr-2"/>Mes posts</router-link>
-              </div>
-              <div class="menu-item">
-                <a @click="logout" to="/" class="logout text-decoration-none white--text border-t py-8"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/>Me déconnecter</a>
-              </div>
-            </div>
-          </transition>
+            </transition>
+          </div>
         </div>
-        
       </template>
+
     </div>
   </header>
 </template>
@@ -92,9 +98,6 @@ nav .menu-item, .sub-menu {
 .sub-menu {
   cursor: pointer;
 }
-svg {
-  padding-right: 0.5rem;
-}
 .flecheMenu {
   padding-left : 0.7rem;
 }
@@ -132,8 +135,24 @@ svg {
 }
 .logo {
   display: block;
-  width: 4%;
-  padding-left: 1rem;
+  width: 25%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.profil_icon {
+  padding-right: 0.5rem;
+}
+.notifUser, .nav_logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.bell_notif {
+  background: #e4e4e4;
+  padding: 0.8rem;
+  border-radius: 100%;
+  width: 1rem;
+  height: 1rem;
 }
 .border_nav {
   box-shadow: 0 8px 8px 0 rgba(95, 99, 122, 0.123);
@@ -176,9 +195,10 @@ button {
     margin-right: 0.5rem;
 }
 input {
-  border-radius: 1rem;
-  border: solid 1px #a7a7a7;
-  padding: 0.5rem;
-  width: 100%
+  border-radius: 2rem;
+  border: solid 1px #F2F2F2;
+  background: #F2F2F2;
+  padding: 0.7rem;
+  width: 100%;
 }
 </style>
