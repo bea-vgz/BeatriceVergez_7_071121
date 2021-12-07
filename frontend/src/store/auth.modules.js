@@ -1,4 +1,4 @@
-import AuthServices from '../services/auth.ressource';
+import AuthService from '../service/auth.resource';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user
@@ -10,7 +10,7 @@ export const auth = {
   state: initialState,
   actions: {
     login({ commit }, user) {
-      return AuthServices.login(user).then(
+      return AuthService.login(user).then(
         user => {
           commit('loginSuccess', user);
           return Promise.resolve(user);
@@ -23,12 +23,12 @@ export const auth = {
     },
     
     logout({ commit }) {
-      AuthServices.logout();
+      AuthService.logout();
       commit('logout');
     },
 
     signup({ commit }, user) {
-      return AuthServices.signup(user)
+      return AuthService.signup(user)
       .then(response => {
           commit('registerSuccess');
           return Promise.resolve(response.data);
@@ -41,7 +41,7 @@ export const auth = {
     },
 
     deleteUser({commit}, payload) {
-      return AuthServices.delete(payload).then(
+      return AuthService.delete(payload).then(
         (response) => {
           commit ('deleteSuccess')
           return Promise.resolve(response.data);

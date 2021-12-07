@@ -20,7 +20,8 @@
           <a class="nav_centrale bell_notif text-decoration-none" aria-label="Notitfications"><font-awesome-icon icon="bell" class="icon ml-5 mr-2"/></a>
           <div class="menu-item" @click="isOpen = !isOpen" >
             <button class="accessUser">
-              <i> <font-awesome-icon icon="user" class="icone"/> </i>
+              <img v-if="currentUser.photoProfil == null" class="icone" alt="image par defaut" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
+              <img v-else class="icone" alt="image de profil" :src="currentUser.photoProfil" />
               <span v-if="currentUser" class="username bg-white text-decoration-none red-text "><strong style="text-transform: uppercase"> {{ currentUser.username }} </strong> </span>
               <svg class="flecheMenu bg-white" viewBox="0 0 1030 638" width="10">
               <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#fff"></path>
@@ -186,13 +187,11 @@ button {
   text-decoration: none;
 }
 .icone {
-    background-color: #fd2d01;
-    color: #fff;
-    width: 1rem;
-    height: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 100%;
     padding: 0.5rem;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
 }
 input {
   border-radius: 2rem;

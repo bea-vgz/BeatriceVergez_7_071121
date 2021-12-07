@@ -8,7 +8,7 @@ exports.signup = async (req, res, next) => {
     try {
         const hash = await bcrypt.hash(req.body.password, 10);
         const newUser = await User.create({
-            photoProfil : "../images/default-avatar-user.jpg",
+            photoProfil : src="//ssl.gstatic.com/accounts/ui/avatar_1x.png",
             username : req.body.username,
             email: req.body.email,
             password: hash,
@@ -38,6 +38,7 @@ exports.login = (req, res, next) => { // récupération du login
                 } else { // envoi du Token
                     res.status(200).json({ // identifiant valable donc envoi de son user + token bearer
                         userId : user.id,
+                        photoProfil : user.photoProfil,
                         username: user.username,
                         bio: user.bio,
                         email: user.email,

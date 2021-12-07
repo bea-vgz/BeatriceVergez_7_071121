@@ -7,8 +7,8 @@
     <div class="container_account">
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="currentUser.photoProfil == null" class="avatar" alt="image par defaut" src="../assets/default-avatar-user.jpeg" />
-            <img v-else alt="image de profil" :src="currentUser.photoProfil" />
+            <img v-if="currentUser.photoProfil == null" class="avatar" alt="image par defaut" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
+            <img v-else class="avatar" alt="image de profil" :src="currentUser.photoProfil" />
             <h1 class="username">{{ currentUser.username }}</h1>
             <p><span class="email">{{ currentUser.email }}</span></p>
         </div>
@@ -61,7 +61,7 @@ import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
-import AuthServices from '@/services/auth.ressource'
+import AuthService from '@/service/auth.resource'
 export default {
   name: "Profil",
   components: {
@@ -127,7 +127,7 @@ export default {
     },
 
     modifyUser(){    
-      return AuthServices.modifyUser(this.currentUser.userId, {
+      return AuthService.modifyUser(this.currentUser.userId, {
         username: this.currentUser.username,
         bio: this.currentUser.bio,
       })

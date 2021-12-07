@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import UserServices from '../services/user.ressource'
+import UserServices from '../services/user.resource'
 export default {
   name:'UserSearch',
   data() {

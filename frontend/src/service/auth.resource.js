@@ -1,9 +1,9 @@
-import api from './authentification'
-import authHeader from './authHeader'
+import resource from './resource'
+import authHeader from './auth.header'
 
-class AuthServices {
+class AuthService extends resource {
     signup(user) {
-        return api.post('/users/signup', {
+        return resource.post('/users/signup', {
             username: user.username,
             email: user.email,
             password: user.password,
@@ -11,7 +11,7 @@ class AuthServices {
     }
 
     login(user) {
-      return api.post('/users/login', {
+      return resource.post('/users/login', {
         email: user.email,
         password: user.password,
       })
@@ -29,13 +29,13 @@ class AuthServices {
 
     delete(payload) {
       const id = payload
-      return api.delete(`/users/${id}`, { headers: authHeader() })
+      return resource.delete(`/users/${id}`, { headers: authHeader() })
       .then(() => localStorage.removeItem('user'))
     }
 
     modifyUser(id, user) {
-      return api.put(`/users/${id}`, { headers: authHeader(), user })
+      return resource.put(`/users/${id}`, { headers: authHeader(), user })
     }
 }
 
-export default new AuthServices();
+export default new AuthService();
