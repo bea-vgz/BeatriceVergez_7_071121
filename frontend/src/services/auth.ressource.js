@@ -24,7 +24,7 @@ class AuthServices {
     }
 
     logout() {
-        localStorage.removeItem('user');
+      localStorage.removeItem('user');
     }
 
     delete(payload) {
@@ -33,9 +33,9 @@ class AuthServices {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modifyUser(id, user, data) {
-      return api.put(`/users/${id}`, data, { headers: authHeader(), user })
-  }
+    modifyUser(id, user) {
+      return api.put(`/users/${id}`, { headers: authHeader(), user })
+    }
 }
 
 export default new AuthServices();

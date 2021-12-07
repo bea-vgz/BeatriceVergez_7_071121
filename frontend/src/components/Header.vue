@@ -13,7 +13,7 @@
       <template v-if="currentUser">
         <div class="accessPosts">
           <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Home</router-link> |
-          <router-link to="/posts" class="nav_centrale text-decoration-none">Publier</router-link>
+          <router-link to="/posts" class="nav_centrale text-decoration-none">Créer un post</router-link>
         </div>
 
         <div class="notifUser">

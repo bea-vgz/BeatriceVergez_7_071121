@@ -25,7 +25,7 @@
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
             <div class="option is-active" >
-              <a to="/" class="nav_centrale" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer mon compte</a>
+              <a to="/" class="nav_centrale delete_user" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="delete_icon ml-5 mr-2"/>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
         </div>
@@ -219,7 +219,7 @@ input {
     border-radius: 2rem;
     border: solid 0.15rem #fff;
     background-color: #fff;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     width: 100%;;
@@ -239,6 +239,14 @@ a:hover {
 .icon {
   padding-right: 0.7rem;
   color: #9e9e9e
+}
+.delete_user {
+  margin-top: 2rem;
+  color: #fd2d01
+}
+.delete_icon {
+  color: #fd2d01;
+  padding-right: 0.7rem;
 }
 .buttonSave {
   background-color: #fd2d01;;

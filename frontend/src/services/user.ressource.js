@@ -9,9 +9,6 @@ class UserServices {
     getOneUser(id) {
         return api.get(`/users/${id}`, { headers: authHeader() })
     }
-    modifyPassword(id, data) {
-        return api.put(`/users/${id}/password`, data, { headers: authHeader() });
-    }
 }
 
 export default new UserServices();
