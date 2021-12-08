@@ -1,7 +1,7 @@
 import resource from './resource'
 import authHeader from './auth.header'
 
-class AuthService extends resource {
+class AuthService {
     signup(user) {
         return resource.post('/users/signup', {
             username: user.username,
@@ -33,8 +33,14 @@ class AuthService extends resource {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modifyUser(id, user) {
-      return resource.put(`/users/${id}`, { headers: authHeader(), user })
+    modifyUser(id, user, data) {
+      return resource.put(`/users/${id}`, data, { headers: authHeader(), user })
+      .then(response => {
+          if (response.data.token) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+          }
+          return response.data;
+      });
     }
 }
 

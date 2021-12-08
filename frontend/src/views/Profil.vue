@@ -60,8 +60,8 @@
 import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
-import AuthService from '@/service/auth.resource'
+import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
+import AuthService from '../service/auth.resource'
 export default {
   name: "Profil",
   components: {
@@ -106,7 +106,7 @@ export default {
         alert('Votre compte a été supprimé !')
         router.push('/');
       } else {
-        alert("Oups, une erreur est survenue")
+        alert("Vous n'avez pas été déconnecté")
       }
     },
       
