@@ -35,7 +35,11 @@ class AuthService {
     }
 
     modifyUser(id, user) {
-      return resource.put(`/users/${id}`, user, { headers: authHeader() })
+      return resource.put(`/users/${id}`, user, { headers: authHeader() }, {
+        username: user.username,
+        bio: user.bio,
+        photoProfil: user.photoProfil
+      })
       .then(response => {
         if (response.data) {
           localStorage.setItem('user', JSON.stringify(response.data));

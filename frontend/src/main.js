@@ -18,10 +18,11 @@ import {
   faBell,
   faUserEdit,
   faTimesCircle,
-  faPencilAlt
+  faPencilAlt,
+  faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faClone, faSearch, faUserLock, faTrashAlt, faBell, faUserEdit, faTimesCircle, faPencilAlt);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faClone, faSearch, faUserLock, faTrashAlt, faBell, faUserEdit, faTimesCircle, faPencilAlt, faCheckCircle);
 library.add(faUserSecret)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

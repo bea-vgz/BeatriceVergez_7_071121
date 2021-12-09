@@ -15,14 +15,14 @@
                 <div class="group">
                     <label for="username">Pseudo</label>
                     <input v-model="newUser.username" type="text" id="username" @input="validateInput">
-                    <i v-if="usernameValid === true" class="far fa-check-circle"></i>
-                    <i v-else-if="usernameValid === false" class="far fa-check-circle"></i>
+                    <font-awesome-icon v-if="usernameValid === true" icon="check-circle"/>
+                    <font-awesome-icon v-else-if="usernameValid === false" icon="check-circle"/>
                 </div>
                 <div class="group">
                     <label for="bio">Biographie</label>
                     <input v-model="newUser.bio" type="text" id="bio" @input="validateInput">
-                    <i v-if="bioValid === true" class="far fa-check-circle"></i>
-                    <i v-else-if="bioValid === false" class="far fa-check-circle"></i>
+                    <font-awesome-icon v-if="bioValid === true" icon="check-circle"/>
+                    <font-awesome-icon v-else-if="bioValid === false" icon="check-circle"/>
                 </div>
             </div>
             <div class="row">
@@ -71,11 +71,11 @@ export default {
       if(this.validateInput()) {
         let user;
         delete this.newUser.photoProfil;
-        if(this.newUser.photoProfil && this.newUser.photoProfil != "") {
+        if(this.newUser.newPhoto && this.newUser.newPhoto != "") {
           user = new FormData();
           user.append('username', this.newUser.username);
           user.append('bio', this.newUser.bio);
-          user.append('image', this.newUser.photoProfil);
+          user.append('image', this.newUser.newPhoto);
         }
         else {
           user = {
@@ -83,7 +83,7 @@ export default {
             bio: this.newUser.bio,
           };
         }
-        return AuthService.modifyUser(user, this.currentUser)
+        return AuthService.modifyUser(user, this.newUser)
           .then(()=> {
             document.location.reload();
           })
@@ -91,39 +91,39 @@ export default {
       },
 
       onFileChange() {
-        this.newUser.photoProfil = this.$refs.file.files[0];
+        this.newUser.newPhoto = this.$refs.file.files[0];
         var reader = new FileReader();
         reader.onload = (e) => {
         this.image = e.target.result;
         };
-        reader.readAsDataURL(this.newUser.photoProfil);
+        reader.readAsDataURL(this.newUser.newPhoto);
         this.validateInput();
       },
 
-    validateInput() {
-            if(this.newUser.username != '') {
-                this.usernameValid = true;
-            }
-            else {
-                this.usernameValid = "";
-            }
-            if(this.newUser.bio != '') {
-                this.bioValid = true;
-            }
-            else {
-                this.bioValid = "";
-            }
-            if(this.usernameValid && this.bioValid) {
-                this.disabledButton = false;
-                return true;
-            }
-            else {
-                this.disabledButton = true;
-                return false;
-            }
-        },
-    close() {
-      this.$emit("close");
+      validateInput() {
+        if(this.newUser.username != '') {
+          this.usernameValid = true;
+        }
+        else {
+          this.usernameValid = "";
+        }
+        if(this.newUser.bio != '') {
+          this.bioValid = true;
+        }
+        else {
+          this.bioValid = "";
+        }
+        if(this.usernameValid && this.bioValid) {
+          this.disabledButton = false;
+          return true;
+        }
+        else {
+          this.disabledButton = true;
+          return false;
+        }
+      },
+      close() {
+        this.$emit("close");
     },
   }
 }
