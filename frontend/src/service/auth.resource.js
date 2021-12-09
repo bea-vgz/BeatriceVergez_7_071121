@@ -7,6 +7,7 @@ class AuthService {
             username: user.username,
             email: user.email,
             password: user.password,
+            bio: user.bio,
         })
     }
 
@@ -33,15 +34,15 @@ class AuthService {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modifyUser(id, user, data) {
-      return resource.put(`/users/${id}`, data, { headers: authHeader(), user })
+    modifyUser(id, user) {
+      return resource.put(`/users/${id}`, user, { headers: authHeader() })
       .then(response => {
-          if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-          }
-          return response.data;
+        if (response.data) {
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
+        return response.data;
       });
-    }
+  }
 }
 
 export default new AuthService();

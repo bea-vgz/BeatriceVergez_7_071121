@@ -15,10 +15,13 @@ import {
   faSearch,
   faUserLock,
   faTrashAlt,
-  faBell
+  faBell,
+  faUserEdit,
+  faTimesCircle,
+  faPencilAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faClone, faSearch, faUserLock, faTrashAlt, faBell);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faClone, faSearch, faUserLock, faTrashAlt, faBell, faUserEdit, faTimesCircle, faPencilAlt);
 library.add(faUserSecret)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

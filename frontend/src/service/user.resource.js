@@ -1,6 +1,5 @@
 import resource from './resource'
-//data service
-import authHeader from './authHeader';
+import authHeader from './auth.header';
 
 class UserService extends resource {
     getAllUsers() {
@@ -9,6 +8,7 @@ class UserService extends resource {
     getOneUser(id) {
         return resource.get(`/users/${id}`, { headers: authHeader() })
     }
+    
 }
 
 export default new UserService();

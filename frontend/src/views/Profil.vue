@@ -7,8 +7,8 @@
     <div class="container_account">
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="currentUser.photoProfil == null" class="avatar" alt="image par defaut" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
-            <img v-else class="avatar" alt="image de profil" :src="currentUser.photoProfil" />
+            <img v-if="currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
+            <img v-else class="avatar" alt="Avatar" :src="currentUser.photoProfil" />
             <h1 class="username">{{ currentUser.username }}</h1>
             <p><span class="email">{{ currentUser.email }}</span></p>
         </div>
@@ -35,17 +35,15 @@
     <div v-if="currentUser" class="text-justify infoUser bg-white">
       <h2><strong>Mon compte : </strong> </h2>
       <div>
-        <p><strong>Pseudo : </strong><input :value='currentUser.username'></p>
+        <p><strong>Pseudo : </strong>{{currentUser.username}}</p>
         <p><strong>Email : </strong>{{ currentUser.email }}</p>
-        <p><strong>Biographie :</strong>
-          <input v-if="currentUser.bio !== null" :value='currentUser.bio'>
-          <input v-else placeholder="Un mot sur vous..." >
-        </p>
+        <p><strong>Biographie :</strong>{{ currentUser.bio }}</p>
         <p><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
       </div>
-      <button type="submit" class="buttonSave">
-        <a @click="modifyUser(currentUser)" to="/" class="save">Sauvegarder</a>
-      </button>
+    <a title="Modifier mon profil" @click="displayModal" class="icone" >
+      <span><font-awesome-icon icon="user-edit" class="modif_icon"/> Modifier mon compte</span>
+    </a>
+    <modify-profil v-show="modifyProfil" @close="closeModal" />
     </div>
   </div>
   <!-- Footer -->
@@ -61,18 +59,21 @@ import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
-import AuthService from '../service/auth.resource'
+import modifyProfil from '../components/modifyProfilModal.vue'
+
 export default {
   name: "Profil",
   components: {
     Header,
     Footer,
     ConfirmDialogue,
+    modifyProfil
   },
   data() {
         return {
           user:'',
           file: null,
+          modifyProfil: false
         }
   },
   computed: {
@@ -80,12 +81,22 @@ export default {
       return this.$store.state.auth.user;
     }
   },
+  //Ici on utilise l'étape mounted, 
+  //puisque l'on a besoin d'attendre l'arrivée des données (utilisateur connecté ou non)
+  //avant d'effectuer la redirection
   mounted() {
     if (!this.currentUser) {
       this.$router.push("/");
     }
   },
   methods: {
+
+    displayModal() {
+      this.modifyProfil = true;
+    },
+    closeModal() {
+      this.modifyProfil = false;
+    },
     
     async deleteUser() {
       let payload = this.$store.state.auth.user.userId
@@ -125,21 +136,6 @@ export default {
         alert("Vous n'avez pas été déconnecté")
       }
     },
-
-    modifyUser(){    
-      return AuthService.modifyUser(this.currentUser.userId, {
-        username: this.currentUser.username,
-        bio: this.currentUser.bio,
-      })
-      .then(response => { 
-        if(response.data){ 
-          localStorage.user = JSON.stringify(this.currentUser) 
-        }              
-      })     
-      .catch((error) => {
-        console.log(error)
-    })
-  },
   }
 }
 </script>
@@ -213,11 +209,11 @@ input {
     text-align: center;
     border-color: rgba(231, 233, 244);
 }
-.delete_user {
+.delete_user, .modif_user {
   margin-top: 2rem;
   color: #fd2d01
 }
-.delete_icon {
+.delete_icon, .modif_icon {
   color: #fd2d01;
   padding-right: 0.7rem;
 }
@@ -250,19 +246,14 @@ a:hover{
   padding-right: 0.7rem;
   color: #9e9e9e
 }
-.buttonSave {
-  background-color: #fd2d01;
-  border: solid 0.15rem #fd2d01;
-  padding: 1rem;
-  padding-right: 1rem;
-  border-radius: 2rem;
-  padding: 0.5rem;
-  max-width: 100%;
-  width: 30%;
-  margin-top: 1rem;
-}
 .save {
   color: #fff;
+}
+.icone {
+    color: #fd2d01;
+    padding-top: 2rem;
+    border-top: 1px solid #ccc;
+    margin-top: 1rem;
 }
 .border-b {
   border-bottom: 1px solid #ccc;
