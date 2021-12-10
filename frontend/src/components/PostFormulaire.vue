@@ -39,15 +39,8 @@
             Choisir un fichier
           </span>
         </button>
-        <input
-          ref="fileInput"
-          class="d-none"
-          type="file"
-          @change="onFileSelected"
-        />
         <button
           class="d-flex align-items-center justify-content-center button"
-          :disabled="emptyField"
           type="submit"
           aria-label="Publier"
         >
@@ -56,6 +49,12 @@
             Publier
           </span>
         </button>
+        <input
+          ref="fileInput"
+          class="d-none"
+          type="file"
+          @change="onFileSelected"
+        />
       </div>
     </form>
 
@@ -70,7 +69,7 @@ export default {
   props: ['value', 'image', 'onFormSubmit', 'isCreating'],
   data () {
     return {
-      userData: JSON.parse(localStorage.getItem('userData')),
+      user: JSON.parse(localStorage.getItem('user')),
       url: this.image
     }
   },
@@ -85,13 +84,6 @@ export default {
     }
   },
   methods: {
-    logout: function () {
-        this.$store.dispatch('logout')
-        .then(() => {
-          this.$router.push('/login')
-        })
-    },
-    
     onFileSelected (event) {
       this.url = URL.createObjectURL(event.target.files[0])
       this.$emit('onFileSelected', event.target.files[0])

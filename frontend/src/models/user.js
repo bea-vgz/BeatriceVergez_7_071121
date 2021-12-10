@@ -1,6 +1,7 @@
 // modèle de données
 export default class User {
-    constructor( username, email, password, bio, isAdmin, userId) {
+    constructor( photoProfil, username, email, password, bio, isAdmin, userId) {
+      this.photoProfil = photoProfil;
       this.username = username; 
       this.bio = bio;
       this.email = email;

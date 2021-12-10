@@ -8,12 +8,9 @@
     <h1 v-if="currentUser">
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
-    <PostFormulaire
-        @onFileSelected="onFileSelected"
-        v-model="content"
-        :onFormSubmit="didSubmitForm"
-        :isCreating="true"
-    />
+    
+    <CreatePost/>
+
     </div>
  <!-- Footer -->
     <div class="footer">
@@ -28,26 +25,14 @@
 
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import PostFormulaire from '@/components/PostFormulaire.vue';
+import CreatePost from '@/components/CreatePost.vue';
 
 export default {
   name: 'HomePage',
   components: {
     Header,
     Footer,
-    PostFormulaire
-  },
-  props: ['value', 'image', 'onFormSubmit', 'isCreating'],
-  data () {
-    return {
-      userData: JSON.parse(localStorage.getItem('userData')),
-      url: this.image
-    }
-  },
-  watch: {
-    onFormSubmit () {
-      this.url = null
-    }
+    CreatePost
   },
   computed: {
     currentUser() {
@@ -61,18 +46,7 @@ export default {
           this.$router.push('/login')
         })
     },
-    
-    onFileSelected (event) {
-      this.url = URL.createObjectURL(event.target.files[0])
-      this.$emit('onFileSelected', event.target.files[0])
-    },
-    updateValue (value) {
-      this.$emit('input', value)
-    },
-    triggerInput () {
-      this.$refs.fileInput.click()
-    }
-},
+  }
 }
 </script>
 

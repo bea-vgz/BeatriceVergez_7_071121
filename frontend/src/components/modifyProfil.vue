@@ -5,7 +5,7 @@
     <form @submit.prevent="updateUser" class="modifyProfil">
         <div class="bg-primary"></div>
         <label class="img" for="selectImage">
-            <img v-if="image || newUser.photoProfil" :src="image || newUser.photoProfil" alt="Avatar">
+            <img v-if="image || currentUser.photoProfil" :src="image || currentUser.photoProfil" alt="Avatar">
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png" alt="Avatar">
             <div class="indication"><font-awesome-icon icon="pencil-alt"/></div>
             <input ref="file" type="file" id="selectImage" @change="onFileChange">
@@ -14,15 +14,15 @@
             <div class="row">
                 <div class="group">
                     <label for="username">Pseudo</label>
-                    <input v-model="newUser.username" type="text" id="username" @input="validateInput">
-                    <font-awesome-icon v-if="usernameValid === true" icon="check-circle"/>
-                    <font-awesome-icon v-else-if="usernameValid === false" icon="check-circle"/>
+                    <input v-model="currentUser.username" type="text" id="username" @input="validateInput">
+                    <font-awesome-icon v-if="username === true" icon="check-circle"/>
+                    <font-awesome-icon v-else-if="username === false" icon="check-circle"/>
                 </div>
                 <div class="group">
                     <label for="bio">Biographie</label>
-                    <input v-model="newUser.bio" type="text" id="bio" @input="validateInput">
-                    <font-awesome-icon v-if="bioValid === true" icon="check-circle"/>
-                    <font-awesome-icon v-else-if="bioValid === false" icon="check-circle"/>
+                    <input v-model="currentUser.bio" type="text" id="bio" @input="validateInput">
+                    <font-awesome-icon v-if="bio === true" icon="check-circle"/>
+                    <font-awesome-icon v-else-if="bio === false" icon="check-circle"/>
                 </div>
             </div>
             <div class="row">
@@ -51,15 +51,11 @@ export default {
   name: "modifyProfil",
   data() {
         return {
-            image: "",
-            usernameValid: "",
-            bioValid: "",
+            image: '',
+            username: "",
+            bio: "",
             disabledButton: true,
-            newUser: {},
         }
-  },
-  updated() {
-    this.newUser = this.currentUser;
   },
   computed: {
     currentUser() {
@@ -70,50 +66,52 @@ export default {
     updateUser() {
       if(this.validateInput()) {
         let user;
-        delete this.newUser.photoProfil;
-        if(this.newUser.newPhoto && this.newUser.newPhoto != "") {
-          user = new FormData();
-          user.append('username', this.newUser.username);
-          user.append('bio', this.newUser.bio);
-          user.append('image', this.newUser.newPhoto);
+        delete this.currentUser.photoProfil;
+        if(this.currentUser.photoProfil && this.currentUser.photoProfil != "") {
+          const user = new FormData();
+          user.append('username', this.currentUser.username);
+          user.append('bio', this.currentUser.bio);
+          user.append('image', this.currentUser.photoProfil);
         }
         else {
           user = {
-            username: this.newUser.username,
-            bio: this.newUser.bio,
+            username: this.currentUser.username,
+            bio: this.currentUser.bio
           };
         }
-        return AuthService.modifyUser(user, this.newUser)
-          .then(()=> {
-            document.location.reload();
+        AuthService.modifyUser(user, this.currentUser)
+          .then((res)=> {
+            localStorage.setItem('currentUser', JSON.stringify(res.user))
+            this.currentUser = res.user
+            window.location.reload();
           })
         }
       },
 
       onFileChange() {
-        this.newUser.newPhoto = this.$refs.file.files[0];
+        this.currentUser.photoProfil = this.$refs.file.files[0];
         var reader = new FileReader();
         reader.onload = (e) => {
-        this.image = e.target.result;
+        this.currentUser.photoProfil = e.target.result;
         };
-        reader.readAsDataURL(this.newUser.newPhoto);
+        reader.readAsDataURL(this.currentUser.photoProfil);
         this.validateInput();
       },
 
       validateInput() {
-        if(this.newUser.username != '') {
-          this.usernameValid = true;
+        if(this.currentUser.username != '') {
+          this.username = true;
         }
         else {
-          this.usernameValid = "";
+          this.username = "";
         }
-        if(this.newUser.bio != '') {
-          this.bioValid = true;
+        if(this.currentUser.bio != '') {
+          this.bio = true;
         }
         else {
-          this.bioValid = "";
+          this.bio = "";
         }
-        if(this.usernameValid && this.bioValid) {
+        if(this.username && this.bio) {
           this.disabledButton = false;
           return true;
         }

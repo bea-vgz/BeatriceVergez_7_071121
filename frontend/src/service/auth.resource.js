@@ -36,16 +36,16 @@ class AuthService {
 
     modifyUser(payload, user) {
       const id = payload
-      return resource.put(`/users/${id}`, user, { headers: authHeader() }, {
+      return resource.put(`/users/${id}`, user, { 
+        headers: authHeader(),
+        'Content-Type': user.photoProfil ? 'multipart/form-data' : 'application/json', }, 
+        {
         username: user.username,
         bio: user.bio,
         photoProfil: user.photoProfil
       })
       .then(response => {
-        if (response.data) {
-          localStorage.setItem('user', JSON.stringify(response.data));
-        }
-        return response.data;
+        console.log(response.data)
       });
   }
 }
