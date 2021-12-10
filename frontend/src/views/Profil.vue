@@ -98,14 +98,6 @@ export default {
     },
     
     async deleteUser() {
-      let payload = this.$store.state.auth.user.userId
-      this.$store.dispatch("auth/deleteUser",payload)
-      .then(data => {
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      });
       const ok = await this.$refs.confirmDialogue.show({
         title: 'Supprimer mon compte',
         message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
@@ -113,8 +105,16 @@ export default {
       })
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
+        let payload = this.$store.state.auth.user.userId
+        this.$store.dispatch("auth/deleteUser",payload)
+        .then(data => {
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
         alert('Votre compte a été supprimé !')
-        router.push('/');
+        router.push('/signup');
       } else {
         alert("Vous n'avez pas été déconnecté")
       }

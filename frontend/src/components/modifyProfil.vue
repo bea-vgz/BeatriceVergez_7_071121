@@ -51,6 +51,7 @@ export default {
   name: "modifyProfil",
   data() {
         return {
+            user:'',
             image: '',
             username: "",
             bio: "",
@@ -80,9 +81,9 @@ export default {
           };
         }
         AuthService.modifyUser(user, this.currentUser)
-          .then((res)=> {
-            localStorage.setItem('currentUser', JSON.stringify(res.user))
-            this.currentUser = res.user
+          .then((response)=> {
+            localStorage.setItem('user', JSON.stringify(response))
+            this.currentUser = response.data
             window.location.reload();
           })
         }
