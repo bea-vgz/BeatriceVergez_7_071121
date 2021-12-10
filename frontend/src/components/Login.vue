@@ -59,7 +59,7 @@ export default {
     },
     created() {
       if (this.loggedIn) {
-        router.push('/profil');
+        router.push('/home');
       }
     },
     methods: {
@@ -67,7 +67,7 @@ export default {
             if (this.user.email && this.user.password) {
                 this.$store.dispatch('auth/login', this.user)
                 .then(() => {
-                    router.push('/profil');
+                    router.push('/home');
                 },
             error => {
                 console.log(error);

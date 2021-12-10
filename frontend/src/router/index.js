@@ -20,8 +20,8 @@ const routes = [
   // Route Wall / Home
   {
     path: '/home',
-    name: 'HomePage',
-    component: () => import("../views/HomePage.vue"),
+    name: 'Home',
+    component: () => import("../views/Home.vue"),
     meta: { title: 'Groupomania' },
     requiresAuth: true,
   },
