@@ -2,10 +2,10 @@
   <transition name="modal-fade">
     <div class="fixed bottom-0 inset-x-0 flex" @click.stop>
     <div class="fixed inset-0 transition-opacity">
-    <form @submit.prevent="updateUser" class="modifyProfil">
+    <form @submit.prevent="modifyUser" class="modifyProfil">
         <div class="bg-primary"></div>
         <label class="img" for="selectImage">
-            <img v-if="image || currentUser.photoProfil" :src="image || currentUser.photoProfil" alt="Avatar">
+            <img v-if="file || currentUser.photoProfil" :src="file|| currentUser.photoProfil" alt="Avatar">
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png" alt="Avatar">
             <div class="indication"><font-awesome-icon icon="pencil-alt"/></div>
             <input ref="file" type="file" id="selectImage" @change="onFileChange">
@@ -45,17 +45,16 @@
 </template>
 
 <script>
-
 import AuthService from "../service/auth.resource";
 export default {
   name: "modifyProfil",
   data() {
         return {
-            user:'',
-            image: '',
-            username: "",
-            bio: "",
+            file: null,
+            username: '',
+            bio: '',
             disabledButton: true,
+            user: this.user,
         }
   },
   computed: {
@@ -64,7 +63,7 @@ export default {
     },
   },
   methods: {
-    updateUser() {
+    modifyUser() {
       if(this.validateInput()) {
         let user;
         delete this.currentUser.photoProfil;
@@ -80,11 +79,9 @@ export default {
             bio: this.currentUser.bio
           };
         }
-        AuthService.modifyUser(user, this.currentUser)
-          .then((response)=> {
-            localStorage.setItem('user', JSON.stringify(response))
-            this.currentUser = response.data
-            window.location.reload();
+        AuthService.modify(user, this.currentUser)
+          .then(()=> {
+            console.log(user)
           })
         }
       },
@@ -126,6 +123,7 @@ export default {
     },
   }
 }
+
 </script>
 
 <style>

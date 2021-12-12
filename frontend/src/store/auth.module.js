@@ -80,10 +80,12 @@ export const auth = {
     deleteFailure() {
     },
     updateSuccess(state, user) {
-      state.status.loggedIn = true;
-      state.user = user;
+      state.status.loggedIn = true; 
+      state.user = user
     },
-    updateFailure() {
+    updateFailure(state) {
+      state.status.loggedIn = true;
+      state.user = null;
     },
   },
 

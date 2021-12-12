@@ -59,7 +59,7 @@ import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
-import modifyProfil from '@/components/modifyProfil.vue'
+import modifyProfil from '@/components/ModifyProfil.vue'
 
 export default {
   name: "Profil",

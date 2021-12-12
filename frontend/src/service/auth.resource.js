@@ -34,7 +34,7 @@ class AuthService {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modifyUser(user) {
+    modify(user) {
       const storage = JSON.parse(localStorage.getItem("user"));
       return resource.put(`/users/${storage.userId}`, user, { headers: authHeader() })
       .then(response => {
