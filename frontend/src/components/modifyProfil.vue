@@ -5,7 +5,7 @@
     <form @submit.prevent="modifyUser" class="modifyProfil">
         <div class="bg-primary"></div>
         <label class="img" for="selectImage">
-            <img v-if="file || currentUser.photoProfil" :src="file|| currentUser.photoProfil" alt="Avatar">
+            <img v-if="image || currentUser.photoProfil" :src="image|| currentUser.photoProfil" alt="Avatar">
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png" alt="Avatar">
             <div class="indication"><font-awesome-icon icon="pencil-alt"/></div>
             <input ref="file" type="file" id="selectImage" @change="onFileChange">
@@ -45,12 +45,11 @@
 </template>
 
 <script>
-import AuthService from "../service/auth.resource";
 export default {
   name: "modifyProfil",
   data() {
         return {
-            file: null,
+            image: null,
             username: '',
             bio: '',
             disabledButton: true,
@@ -79,7 +78,8 @@ export default {
             bio: this.currentUser.bio
           };
         }
-        AuthService.modify(user, this.currentUser)
+        let payload = this.$store.state.auth.user.userId
+        this.$store.dispatch("auth/modifyUser", payload)
           .then(()=> {
             console.log(user)
           })
@@ -109,7 +109,7 @@ export default {
         else {
           this.bio = "";
         }
-        if(this.username && this.bio) {
+        if(this.username || this.bio) {
           this.disabledButton = false;
           return true;
         }
@@ -118,6 +118,7 @@ export default {
           return false;
         }
       },
+
       close() {
         this.$emit("close");
     },

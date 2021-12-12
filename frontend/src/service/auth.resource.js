@@ -34,11 +34,12 @@ class AuthService {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modify(user) {
-      const storage = JSON.parse(localStorage.getItem("user"));
-      return resource.put(`/users/${storage.userId}`, user, { headers: authHeader() })
+    modify(payload, user) {
+      const id = payload
+      return resource.put(`/users/${id}`, user, { headers: authHeader() })
       .then(response => {
-        console.log(response.data)
+        localStorage.setItem('user', JSON.stringify(response.data));
+        console.log(response)
       });
   }
 }

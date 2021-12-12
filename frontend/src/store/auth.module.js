@@ -52,6 +52,19 @@ export const auth = {
         }
       )
     },
+
+    modifyUser({commit}, payload) {
+      return AuthService.modify(payload, user).then(
+        (user) => {
+          commit ('updateSuccess')
+          return Promise.resolve(user);
+        },
+        (error) => {
+          commit ('updateFailure')
+          return Promise.reject(error)
+        }
+      )
+    }
   },
 
   mutations: {
