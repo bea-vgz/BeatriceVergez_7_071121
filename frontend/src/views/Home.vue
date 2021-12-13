@@ -9,7 +9,7 @@
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
     
-    <CreatePost/>
+    <PostFormulaire/>
 
     </div>
  <!-- Footer -->
@@ -25,14 +25,14 @@
 
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import CreatePost from '@/components/CreatePost.vue';
+import PostFormulaire from '@/components/PostFormulaire.vue';
 
 export default {
   name: 'HomePage',
   components: {
     Header,
     Footer,
-    CreatePost
+    PostFormulaire
   },
   computed: {
     currentUser() {

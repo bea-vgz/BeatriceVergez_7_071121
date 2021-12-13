@@ -89,7 +89,6 @@ export default {
           })
         }
       },
-
       onFileChange(event) {
         this.selectedFile = event.target.files[0]
         this.currentUser.photoProfil = this.$refs.file.files[0];
@@ -100,7 +99,6 @@ export default {
         reader.readAsDataURL(this.currentUser.photoProfil);
         this.validateInput();
       },
-
       validateInput() {
         if(this.currentUser.username != '') {
           this.username = true;
@@ -123,12 +121,12 @@ export default {
           return false;
         }
       },
-
       close() {
         this.$emit("close");
     },
   }
 }
+
 
 </script>
 

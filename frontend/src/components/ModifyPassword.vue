@@ -35,20 +35,24 @@
 
         <div class="card">
         <div class="form-row">
-            <label for="newpassword">Nouveau mot de passe : </label>
-            <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
-            <button type="button" class="bg-transparent rounded" @click="show = !show" >
-              <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
-              <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
-            </button>
+            <label for="newpassword"> 🔒  Nouveau mot de passe : </label>
+            <div class="inputPassword">
+              <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
+              <button type="button" class="buttonEyes" @click="show = !show" >
+                <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+                <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+              </button>
+            </div>
         </div>
         <div class="form-row">
-            <label for="newpassword">Confirmer le mot de passe : </label>
-            <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
-            <button type="button" class="bg-transparent rounded" @click="show = !show" >
-              <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
-              <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
-            </button>
+            <label for="newpassword">🔒  Confirmer le mot de passe : </label>
+            <div class="inputPassword">
+              <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
+              <button type="button" class="buttonEyes" @click="show = !show" >
+                <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+                <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+              </button>
+            </div>
         </div>
         <button class="buttonSave" type="submit" @click="modifyPassword()">
             <router-link to="/profil" class="save">Sauvegarder</router-link>
@@ -68,72 +72,74 @@
 </template>
 
 <script>
-    import router from "../router";
-    import Header from '@/components/Header'
-    import Footer from '@/components/Footer'
-    import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
+  import router from "../router";
+  import Header from '@/components/Header'
+  import Footer from '@/components/Footer'
+  import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
 
-    export default {
-        name: 'ModifyPassword',
-        components: {
-            Header,
-            Footer,
-            ConfirmDialogue
-        },
-        data () {
-            return {
-                newPassword: '',
-                confirmPassword:'',
-                show: false,
-                message:''
-            }
-        },
-        computed: {
-          currentUser() {
-            return this.$store.state.auth.user;
-        }
-        },
-        methods: {
-          modifyPassword() {
-            if (this.newPassword === this.confirmPassword) {
-              const password = {
-                password: this.newPassword,
-              }
-
-            let payload = {
-              userId: this.currentUser.userId,
-              data: password
-            }
-            this.$store.dispatch("auth/modifyPassword", payload)
-            .then(() => {
-              console.log(this.message = 'Mot de passe modifié avec succès')
-              alert('Mot de passe modifié')
-            })
+  export default {
+    name: 'ModifyPassword',
+    components: {
+      Header,
+      Footer,
+      ConfirmDialogue
+    },
+    data () {
+      return {
+        newPassword: '',
+        confirmPassword:'',
+        show: false,
+        message:''
+      }
+    },
+    computed: {
+      currentUser() {
+        return this.$store.state.auth.user;
+      }
+    },
+    methods: {
+      modifyPassword() {
+        if (this.newPassword === this.confirmPassword) {
+          const password = {
+            password: this.newPassword,
           }
-          },
+          let payload = {
+            userId: this.currentUser.userId,
+            data: password
+          }
+          this.$store.dispatch("auth/modifyPassword", payload)
+          .then(() => {
+            console.log(this.message = 'Mot de passe modifié avec succès')
+            alert('Mot de passe modifié')
+          })
+        }
+        else {
+          console.log(this.message = "Le mot de passe n'a pas pu être mis à jour")
+          alert("Oups, une erreur est survenue")
+        }
+      },
 
-          async deleteUser() {
-            let payload = this.$store.state.auth.user.userId
-            this.$store.dispatch("auth/deleteUser",payload)
-            .then(data => {
-                console.log(data);
-            },
-            error => {
-                console.log(error);
-            });
-            const ok = await this.$refs.confirmDialogue.show({
-                title: 'Supprimer mon compte',
-                message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
-                okButton: 'Supprimer mon compte',
-            })
-        // If you throw an error, the method will terminate here unless you surround it wil try/catch
-            if (ok) {
-                alert('Votre compte a été supprimé !')
-                router.push('/');
-            } else {
-                alert("Oups, une erreur est survenue")
-            }
+      async deleteUser() {
+        let payload = this.$store.state.auth.user.userId
+        this.$store.dispatch("auth/deleteUser",payload)
+        .then(data => {
+          console.log(data);
         },
+        error => {
+          console.log(error);
+        });
+        const ok = await this.$refs.confirmDialogue.show({
+          title: 'Supprimer mon compte',
+          message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
+          okButton: 'Supprimer mon compte',
+        })
+        if (ok) {
+          alert('Votre compte a été supprimé !')
+          router.push('/');
+        } else {
+          alert("Oups, une erreur est survenue")
+        }
+      },
       
     async logout() {
       this.$store.dispatch('auth/logout');
@@ -280,5 +286,16 @@ a:hover {
 }
 .py-8 {
    padding-bottom: 2rem;
+}
+.buttonEyes {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.inputPassword {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: auto;
 }
 </style>

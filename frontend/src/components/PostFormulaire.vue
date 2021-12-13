@@ -5,56 +5,35 @@
           <img v-if="currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
           <img v-else class="avatar" alt="Avatar" :src="currentUser.photoProfil" />
       </router-link>
-        <div class="textarea_form">
-          <textarea
-            :value="value"
-            @input="updateValue"
-            id="title"
-            placeholder="Titre du post"
-            aria-label="Écrire un titre"
-            class="text-dark"
-          ></textarea>
-          <textarea
-            :value="value"
-            @input="updateValue"
-            id="content"
-            :placeholder="`Quoi de beau, ${currentUser.username} ?`"
-            aria-label="Écrire une publication"
-            class="text-dark"
-          ></textarea>
-        </div>
-      <div id="preview" class="d-flex justify-content-center align-items-center" >
-        <img class="mt-3" v-if="url" :src="url" alt="" />
+      <div class="textarea_form">
+        <input
+          v-model="post.title"
+          id="title"
+          placeholder="Titre du post"
+          aria-label="Écrire un titre"
+          class="text-dark"
+        />
+        <input
+          v-model="post.content"
+          id="content"
+          :placeholder="`Quoi de beau, ${currentUser.username} ?`"
+          aria-label="Écrire une publication"
+          class="text-dark"
+        />
       </div>
-      <div class="line"></div>
+      <div class="form">
+        <label class="sr-only" for="image" title="image" name="filename" role="button">image</label>
+        <input type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" name="filename" />
+      </div>
       <div>
-        <button
-          class="d-flex align-items-center justify-content-center button btn-block"
-          @click="triggerInput"
-          type="button"
-          aria-label="Choisir un fichier"
-        >
-          <span class="mr-2 d-none d-md-block">
-            <font-awesome-icon icon="image" class="icon ml-5 mr-2"/>
-            Choisir un fichier
-          </span>
-        </button>
         <button
           class="d-flex align-items-center justify-content-center button"
           type="submit"
           aria-label="Publier"
-        >
-          <span class="mr-2 d-none d-md-block">
-            <font-awesome-icon icon="file-import" class="icon ml-5 mr-2"/>
+          @click="createPost()"
+        > <font-awesome-icon icon="file-import" class="icon ml-5 mr-2"/>
             Publier
-          </span>
         </button>
-        <input
-          ref="fileInput"
-          class="d-none"
-          type="file"
-          @change="onFileSelected"
-        />
       </div>
     </form>
 
@@ -63,37 +42,47 @@
 </template>
 
 <script>
-
+import Post from '../models/post'
 export default {
   name: 'PostFormulaire',
-  props: ['value', 'image', 'onFormSubmit', 'isCreating'],
   data () {
-    return {
-      user: JSON.parse(localStorage.getItem('user')),
-      url: this.image
-    }
-  },
-  watch: {
-    onFormSubmit () {
-      this.url = null
-    }
+    return {  
+      post: new Post("", ""),
+      file: "",
+      image:"",
+    };
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
   },
   methods: {
-    onFileSelected (event) {
-      this.url = URL.createObjectURL(event.target.files[0])
-      this.$emit('onFileSelected', event.target.files[0])
+    onSelect() {
+      const file = this.$refs.file.files[0];
+      this.file = file;
+      console.log(this.file);
     },
-    updateValue (value) {
-      this.$emit('input', value)
+
+    createPost() {
+      let post;
+      if(this.file != "") {
+        post = new FormData();
+        post.append('image', this.file, this.filename);
+        post.append('title', this.title);
+        post.append('content', this.content);
+      } else {
+        post = {
+          title: this.post.title,
+          content: this.post.content,
+        }
+      }
+      this.$store.dispatch("post/createPost", post)
+        .then(() => {
+          console.log('post')
+          window.alert("Création du post réussi !")
+        })
     },
-    triggerInput () {
-      this.$refs.fileInput.click()
-    }
 },
 }
 </script>
@@ -146,7 +135,7 @@ export default {
   font-weight: 500;
   padding: 0.375rem 0.75rem;
 }
-textarea {
+input {
   border: solid 1px #F2F2F2;
   background: #F2F2F2;
   width: 50%;

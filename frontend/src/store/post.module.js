@@ -6,7 +6,7 @@ export const post = {
       createdPost: { status: '' },
       modifyPost: { status: '' },
       deletedPost: { status: '' },
-      post: '',
+      posts: '',
     },
 
 actions: {
@@ -25,9 +25,11 @@ actions: {
 mutations: {
     createPostSuccess(state) {
       state.createdPost.status = 'Created'
+      state.post = post
     },
     createPostFailure(state) {
       state.createdPost.status = 'Not created'
+      state.post = null
     },
 }
 

@@ -5,7 +5,7 @@ class UserService extends resource {
     getAllUsers() {
         return resource.get('/users', { headers: authHeader() });
     }
-    getOneUser(id) {
+    getUser(id) {
         return resource.get(`/users/${id}`, { headers: authHeader() })
     }
     
