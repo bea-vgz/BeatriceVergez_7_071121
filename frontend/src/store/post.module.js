@@ -14,7 +14,7 @@ actions: {
       return PostService.createPost(post)
       .then((response) => {
         commit('createPostSuccess')
-        return Promise.resolve(response.data)
+        return Promise.resolve(response)
       },
       (error) => {
         commit('createPostFailure')

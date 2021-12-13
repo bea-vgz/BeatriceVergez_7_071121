@@ -66,22 +66,15 @@ export default {
 
     createPost() {
       let post;
-      if(this.file != "") {
         post = new FormData();
         post.append('image', this.file, this.filename);
-        post.append('title', this.title);
-        post.append('content', this.content);
-      } else {
-        post = {
-          title: this.post.title,
-          content: this.post.content,
-        }
-      }
-      this.$store.dispatch("post/createPost", post)
-        .then(() => {
-          console.log('post')
-          window.alert("Création du post réussi !")
-        })
+        post.append('title', this.post.title);
+        post.append('content', this.post.content);
+        this.$store.dispatch("post/createPost", post)
+          .then(() => {
+            console.log('post')
+            window.alert("Création du post réussi !")
+          })
     },
 },
 }
