@@ -11,27 +11,27 @@
           id="title"
           placeholder="Titre du post"
           aria-label="Écrire un titre"
-          class="text-dark"
+          class="input"
         />
         <input
           v-model="post.content"
           id="content"
           :placeholder="`Quoi de beau, ${currentUser.username} ?`"
           aria-label="Écrire une publication"
-          class="text-dark"
+          class="input"
         />
       </div>
-      <div class="form">
+      <div class="file">
         <label class="sr-only" for="image" title="image" name="filename" role="button">image</label>
-        <input type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" name="filename" />
+        <input class='buttonFile' type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" name="filename" />
       </div>
       <div>
         <button
-          class="d-flex align-items-center justify-content-center button"
+          class="button"
           type="submit"
           aria-label="Publier"
           @click="createPost()"
-        > <font-awesome-icon icon="file-import" class="icon ml-5 mr-2"/>
+        > <font-awesome-icon icon="file-import" class="icon"/>
             Publier
         </button>
       </div>
@@ -122,17 +122,21 @@ export default {
 }
 .button {
   background: white;
-  color: #747474;
+  color: #fd2d01;
   border: none;
   border-radius: 0.25rem;
-  font-weight: 500;
-  padding: 0.375rem 0.75rem;
+  margin-top: 2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
 }
-input {
+.input {
   border: solid 1px #F2F2F2;
   background: #F2F2F2;
-  width: 50%;
+  width: 60%;
   margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 .textearea_form {
   display:flex;
@@ -142,7 +146,13 @@ input {
 }
 .icon {
   padding-right: 0.5rem;
-  color: #9e9e9e
+}
+.button:hover {
+  background: #fd2d01;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 2rem;
 }
 
 </style>
