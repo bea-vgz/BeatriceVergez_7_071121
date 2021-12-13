@@ -1,4 +1,4 @@
-<template>
+<template v-if="currentUser">
   <transition name="modal-fade">
     <div class="fixed bottom-0 inset-x-0 flex" @click.stop>
     <div class="fixed inset-0 transition-opacity">
@@ -53,7 +53,6 @@ export default {
             username: '',
             bio: '',
             disabledButton: true,
-            user: this.user,
         }
   },
   computed: {
@@ -66,11 +65,11 @@ export default {
       if(this.validateInput()) {
         let user;
         delete this.currentUser.photoProfil;
+        const formData = new FormData();
         if(this.currentUser.photoProfil && this.currentUser.photoProfil != "") {
-          const user = new FormData();
-          user.append('username', this.currentUser.username);
-          user.append('bio', this.currentUser.bio);
-          user.append('image', this.currentUser.photoProfil);
+          formData.append('username', this.currentUser.username);
+          formData.append('bio', this.currentUser.bio);
+          formData.append('image', this.currentUser.photoProfil);
         }
         else {
           user = {
@@ -78,7 +77,11 @@ export default {
             bio: this.currentUser.bio
           };
         }
-        let payload = this.$store.state.auth.user.userId
+        let payload = {
+          userId: this.currentUser.userId,
+          formData: formData,
+          data: user
+        }
         this.$store.dispatch("auth/modifyUser", payload)
           .then(()=> {
             console.log(user)

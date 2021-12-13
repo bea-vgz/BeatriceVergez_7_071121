@@ -40,8 +40,8 @@ export const auth = {
       );
     },
 
-    deleteUser({commit}, payload) {
-      return AuthService.delete(payload).then(
+    deleteUser({commit}, user) {
+      return AuthService.delete(user).then(
         (response) => {
           commit ('deleteSuccess')
           return Promise.resolve(response.data);
@@ -54,10 +54,10 @@ export const auth = {
     },
 
     modifyUser({commit}, payload) {
-      return AuthService.modify(payload, user).then(
-        (user) => {
+      return AuthService.modify(payload).then(
+        (response) => {
           commit ('updateSuccess')
-          return Promise.resolve(user);
+          return Promise.resolve(response);
         },
         (error) => {
           commit ('updateFailure')

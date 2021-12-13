@@ -127,9 +127,9 @@ export default {
         message: 'Êtes-vous sur de vouloir vous déconnecter ?',
         okButton: 'Se déconnecter',
       })
-      // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
         alert('Vous avez été déconnecté. Vous allez être redirigé.')
+        window.location.reload()
         router.push('/');
       } else {
         alert("Vous n'avez pas été déconnecté")

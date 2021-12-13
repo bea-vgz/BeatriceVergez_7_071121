@@ -25,7 +25,7 @@ class AuthService {
     }
 
     logout() {
-      localStorage.removeItem('user');
+      localStorage.removeItem('user')
     }
 
     delete(payload) {
@@ -34,14 +34,15 @@ class AuthService {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modify(payload, user) {
-      const id = payload
-      return resource.put(`/users/${id}`, user, { headers: authHeader() })
+    modify(payload) {
+      return resource.put(`/users/${payload.userId}`, payload.data,
+      { headers: authHeader() }
+    )
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response)
       });
-  }
+    }
 }
 
 export default new AuthService();
