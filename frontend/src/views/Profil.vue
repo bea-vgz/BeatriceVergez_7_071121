@@ -7,8 +7,8 @@
     <div class="container_account">
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
-            <img v-else class="avatar" alt="Avatar" :src="currentUser.photoProfil" />
+            <img v-if="image || currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
+            <img v-else class="avatar" alt="Avatar" :src="image || currentUser.photoProfil" />
             <h1 class="username">{{ currentUser.username }}</h1>
             <p><span class="email">{{ currentUser.email }}</span></p>
         </div>
@@ -72,6 +72,7 @@ export default {
   data() {
         return {
           user:'',
+          image:'',
           modifyProfil: false
         }
   },
@@ -157,7 +158,7 @@ h1 {
     flex-direction: column;
 }
 .avatar {
-    width: 30%;
+    width: 35%;
     border-radius: 100%;
 }
 .bg-white {

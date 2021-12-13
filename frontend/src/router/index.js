@@ -37,7 +37,7 @@ const routes = [
   {
     path: "/password",
     name: "Password",
-    component: () => import("../components/UpdatePassword.vue"),
+    component: () => import("../components/ModifyPassword.vue"),
     meta: { title:'Groupomania - modification Password' },
     requiresAuth: true,
   },

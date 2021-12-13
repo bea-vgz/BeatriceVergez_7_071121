@@ -67,6 +67,7 @@ export default {
       logout() {
         this.$store.dispatch('auth/logout');
         window.alert('Vous êtes maintenant déconnecté(e)')
+        window.location.reload()
         router.push('/');
       },
       checkResearch(){ // Recherche d'utilisateur

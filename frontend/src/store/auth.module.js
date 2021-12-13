@@ -64,6 +64,19 @@ export const auth = {
           return Promise.reject(error)
         }
       )
+    },
+
+    modifyPassword({commit}, payload) {
+      return AuthService.modifyPassword(payload).then(
+        (response) => {
+          commit ('updateSuccess')
+          return Promise.resolve(response);
+        },
+        (error) => {
+          commit ('updateFailure')
+          return Promise.reject(error)
+        }
+      )
     }
   },
 

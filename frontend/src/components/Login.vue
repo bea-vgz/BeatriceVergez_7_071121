@@ -22,7 +22,11 @@
 
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : </label>
-        <input type="password" id="password" v-model="user.password" autocomplete="current-password" placeholder="Mot de passe" required="required">
+        <input id="password" name="password" v-model="user.password" autocomplete="current-password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
+        <button type="button" class="bg-transparent rounded" @click="show = !show" >
+          <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+          <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+        </button>
 
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
@@ -55,6 +59,7 @@ export default {
     data() {
         return {
             user: new User('', ''),
+            show: false
         }
     },
     created() {

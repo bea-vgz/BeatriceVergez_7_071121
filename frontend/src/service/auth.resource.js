@@ -43,6 +43,16 @@ class AuthService {
         console.log(response)
       });
     }
+
+    modifyPassword(payload) {
+      return resource.put(`/users/${payload.userId}/password`, payload.data,
+      { headers: authHeader() }
+    )
+      .then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data));
+        console.log(response)
+      });
+    }
 }
 
 export default new AuthService();

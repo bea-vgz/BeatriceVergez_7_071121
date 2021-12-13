@@ -5,8 +5,8 @@
     <div class="container_account">
         <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="currentUser.photoProfil == null" class="avatar" alt="image par defaut" src="../assets/default-avatar-user.jpeg" />
-            <img v-else alt="image de profil" :src="currentUser.photoProfil" />
+            <img v-if="image || currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
+            <img v-else class="avatar" alt="Avatar" :src="image || currentUser.photoProfil" />
             <h1 class="username">{{ currentUser.username }}</h1>
             <p><span class="email">{{ currentUser.email }}</span></p>
         </div>
@@ -35,22 +35,26 @@
 
         <div class="card">
         <div class="form-row">
-            <label for="password">Mot de passe actuel : </label>
-            <input v-model="password" class="form-row_input" id="password" type="password" />
-        </div>
-        <div class="form-row">
             <label for="newpassword">Nouveau mot de passe : </label>
-            <input v-model="newPassword" class="form-row_input" id="newPassword" type="password" />
+            <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
+            <button type="button" class="bg-transparent rounded" @click="show = !show" >
+              <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+              <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+            </button>
         </div>
         <div class="form-row">
-            <label for="confirmpassword">Confirmer le nouveau mot de passe : </label>
-            <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" type="password" />
+            <label for="newpassword">Confirmer le mot de passe : </label>
+            <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
+            <button type="button" class="bg-transparent rounded" @click="show = !show" >
+              <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+              <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+            </button>
         </div>
         <button class="buttonSave" type="submit" @click="modifyPassword()">
             <router-link to="/profil" class="save">Sauvegarder</router-link>
         </button>
         <div v-if="message">
-            {{ message }}
+          {{ message }}
         </div>
         </div>
      </div>
@@ -70,7 +74,7 @@
     import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
 
     export default {
-        name: 'UpdatePassword',
+        name: 'ModifyPassword',
         components: {
             Header,
             Footer,
@@ -78,29 +82,37 @@
         },
         data () {
             return {
-                password: '',
-                message: '',
+                newPassword: '',
+                confirmPassword:'',
+                show: false,
+                message:''
             }
         },
         computed: {
-            currentUser() {
+          currentUser() {
             return this.$store.state.auth.user;
         }
         },
         methods: {
-            modifyPassword() {
-                this.$store.dispatch("user/modifyPassword", {
-                    password: this.password,
-                    newPassword: this.newPassword,
-                    confirmPassword : this.confirmPassword
-                })
-                .then(() => {
-                    this.message = 'Mot de passe modifié avec succès'
-                    //this.$router.push('/profile');
-                })
+          modifyPassword() {
+            if (this.newPassword === this.confirmPassword) {
+              const password = {
+                password: this.newPassword,
+              }
 
-        },
-        async deleteUser() {
+            let payload = {
+              userId: this.currentUser.userId,
+              data: password
+            }
+            this.$store.dispatch("auth/modifyPassword", payload)
+            .then(() => {
+              console.log(this.message = 'Mot de passe modifié avec succès')
+              alert('Mot de passe modifié')
+            })
+          }
+          },
+
+          async deleteUser() {
             let payload = this.$store.state.auth.user.userId
             this.$store.dispatch("auth/deleteUser",payload)
             .then(data => {
@@ -160,7 +172,7 @@ h1 {
     flex-direction: column;
 }
 .avatar {
-    width: 30%;
+    width: 35%;
     border-radius: 100%;
 }
 .bg-white {

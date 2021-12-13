@@ -5,7 +5,7 @@
     <form @submit.prevent="modifyUser" class="modifyProfil">
         <div class="bg-primary"></div>
         <label class="img" for="selectImage">
-            <img v-if="image || currentUser.photoProfil" :src="image|| currentUser.photoProfil" alt="Avatar">
+            <img v-if="image || currentUser.photoProfil" :src="image || currentUser.photoProfil" alt="Avatar">
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png" alt="Avatar">
             <div class="indication"><font-awesome-icon icon="pencil-alt"/></div>
             <input ref="file" type="file" id="selectImage" @change="onFileChange">
@@ -49,10 +49,11 @@ export default {
   name: "modifyProfil",
   data() {
         return {
-            image: null,
             username: '',
             bio: '',
             disabledButton: true,
+            imageUrl: null,
+            selectedFile: null
         }
   },
   computed: {
@@ -64,12 +65,12 @@ export default {
     modifyUser() {
       if(this.validateInput()) {
         let user;
-        delete this.currentUser.photoProfil;
-        const formData = new FormData();
-        if(this.currentUser.photoProfil && this.currentUser.photoProfil != "") {
-          formData.append('username', this.currentUser.username);
+        const isFormData = !!this.selectedFile
+        if(isFormData) {
+          const formData = new FormData();
+          formData.append('image', this.selectedFile);
           formData.append('bio', this.currentUser.bio);
-          formData.append('image', this.currentUser.photoProfil);
+          formData.append('username', this.currentUser.username);
         }
         else {
           user = {
@@ -79,7 +80,7 @@ export default {
         }
         let payload = {
           userId: this.currentUser.userId,
-          formData: formData,
+          formData: isFormData,
           data: user
         }
         this.$store.dispatch("auth/modifyUser", payload)
@@ -89,11 +90,12 @@ export default {
         }
       },
 
-      onFileChange() {
+      onFileChange(event) {
+        this.selectedFile = event.target.files[0]
         this.currentUser.photoProfil = this.$refs.file.files[0];
         var reader = new FileReader();
         reader.onload = (e) => {
-        this.currentUser.photoProfil = e.target.result;
+          this.currentUser.photoProfil = e.target.result;
         };
         reader.readAsDataURL(this.currentUser.photoProfil);
         this.validateInput();
