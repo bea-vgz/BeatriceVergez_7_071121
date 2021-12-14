@@ -33,12 +33,21 @@ const routes = [
     meta: { title:'Groupomania - Mon compte' },
     requiresAuth: true,
 },
-  // Route paswword user 
+  // Route password user 
   {
     path: "/password",
     name: "Password",
     component: () => import("../components/ModifyPassword.vue"),
     meta: { title:'Groupomania - modification Password' },
+    requiresAuth: true,
+  },
+
+  // Route création post 
+  {
+    path: "/post",
+    name: "Create_Post",
+    component: () => import("../components/CreatePost.vue"),
+    meta: { title:'Groupomania - création de post' },
     requiresAuth: true,
   },
  /* {

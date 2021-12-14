@@ -40,6 +40,7 @@
     </div>
 
     </div>
+    <router-view />
     </div>
   </transition>
 </template>
@@ -52,8 +53,8 @@ export default {
             username: '',
             bio: '',
             disabledButton: true,
-            imageUrl: null,
-            selectedFile: null
+            image: null,
+            file: null
         }
   },
   computed: {
@@ -65,12 +66,11 @@ export default {
     modifyUser() {
       if(this.validateInput()) {
         let user;
-        const isFormData = !!this.selectedFile
-        if(isFormData) {
-          const formData = new FormData();
-          formData.append('image', this.selectedFile);
-          formData.append('bio', this.currentUser.bio);
-          formData.append('username', this.currentUser.username);
+        if(this.file) {
+          user = new FormData();
+          user.append('image', this.file);
+          user.append('bio', this.currentUser.bio);
+          user.append('username', this.currentUser.username);
         }
         else {
           user = {
@@ -80,7 +80,7 @@ export default {
         }
         let payload = {
           userId: this.currentUser.userId,
-          formData: isFormData,
+          formData: user,
           data: user
         }
         this.$store.dispatch("auth/modifyUser", payload)

@@ -15,7 +15,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Footer from '@/components/Footer.vue';
 import Signup from '@/components/Signup.vue'
 export default {
