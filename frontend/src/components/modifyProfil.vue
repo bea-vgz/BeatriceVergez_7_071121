@@ -66,9 +66,10 @@ export default {
     modifyUser() {
       if(this.validateInput()) {
         let user;
-        if(this.file) {
+        delete this.currentUser.photoProfil;
+        if(this.currentUser.newPhoto && this.currentUser.newPhoto != "") {
           user = new FormData();
-          user.append('image', this.file);
+          user.append('image', this.currentUser.newPhoto);
           user.append('bio', this.currentUser.bio);
           user.append('username', this.currentUser.username);
         }
@@ -89,14 +90,13 @@ export default {
           })
         }
       },
-      onFileChange(event) {
-        this.selectedFile = event.target.files[0]
-        this.currentUser.photoProfil = this.$refs.file.files[0];
+      onFileChange() {
+        this.currentUser.newPhoto = this.$refs.file.files[0];
         var reader = new FileReader();
         reader.onload = (e) => {
           this.currentUser.photoProfil = e.target.result;
         };
-        reader.readAsDataURL(this.currentUser.photoProfil);
+        reader.readAsDataURL(this.currentUser.newPhoto);
         this.validateInput();
       },
       validateInput() {
