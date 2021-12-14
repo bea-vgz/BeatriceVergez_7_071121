@@ -9,8 +9,6 @@
           </div>
         </form>
       </div>
-
-      <template v-if="currentUser">
         <div class="accessPosts">
           <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Home</router-link> |
           <router-link to="/post" class="nav_centrale text-decoration-none">Créer un post</router-link>
@@ -42,7 +40,6 @@
             </transition>
           </div>
         </div>
-      </template>
 
     </div>
   </header>

@@ -81,16 +81,7 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  //Ici on utilise l'étape mounted, 
-  //puisque l'on a besoin d'attendre l'arrivée des données (utilisateur connecté ou non)
-  //avant d'effectuer la redirection
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push("/");
-    }
-  },
   methods: {
-
     displayModal() {
       this.modifyProfil = true;
     },
@@ -136,7 +127,12 @@ export default {
         alert("Vous n'avez pas été déconnecté")
       }
     },
-  }
+  },
+  mounted() { // on récupère les données user avant la redirection
+    if (!this.currentUser) {
+      this.$router.push("/");
+    }
+  },
 }
 </script>
 

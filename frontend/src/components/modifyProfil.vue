@@ -53,8 +53,8 @@ export default {
             username: '',
             bio: '',
             disabledButton: true,
-            image: null,
-            file: null
+            image: '',
+            file: '',
         }
   },
   computed: {
@@ -65,23 +65,15 @@ export default {
   methods: {
     modifyUser() {
       if(this.validateInput()) {
-        let user;
-        delete this.currentUser.photoProfil;
-        if(this.currentUser.newPhoto && this.currentUser.newPhoto != "") {
-          user = new FormData();
-          user.append('image', this.currentUser.newPhoto);
-          user.append('bio', this.currentUser.bio);
-          user.append('username', this.currentUser.username);
+        const user = new FormData();
+        if (typeof this.file === 'object') {
+          user.append('image', this.file, this.file.name);
         }
-        else {
-          user = {
-            username: this.currentUser.username,
-            bio: this.currentUser.bio
-          };
-        }
+        user.append('bio', this.currentUser.bio);
+        user.append('username', this.currentUser.username);
+        
         let payload = {
           userId: this.currentUser.userId,
-          formData: user,
           data: user
         }
         this.$store.dispatch("auth/modifyUser", payload)
@@ -92,6 +84,7 @@ export default {
       },
       onFileChange() {
         this.currentUser.newPhoto = this.$refs.file.files[0];
+        this.file = this.currentUser.newPhoto;
         var reader = new FileReader();
         reader.onload = (e) => {
           this.currentUser.photoProfil = e.target.result;
@@ -124,7 +117,12 @@ export default {
       close() {
         this.$emit("close");
     },
-  }
+  },
+  mounted() { // on récupère les données user avant la redirection
+    if (!this.currentUser) {
+      this.$router.push("/profil");
+    }
+  },
 }
 
 

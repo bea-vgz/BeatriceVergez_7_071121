@@ -18,7 +18,11 @@ exports.signup = async (req, res, next) => {
         res.status(201).json({ 
             message: 'Utilisateur crée !', 
             userId: newUser.id,
+            photoProfil: newUser.photoProfil,
             username: newUser.username,
+            email: newUser.email,
+            password: newUser.password,
+            bio: newUser.bio,
             isAdmin: newUser.isAdmin
         })
     }
@@ -73,7 +77,7 @@ exports.modifyUser = (req, res, next) => {
         const filename = user.photoProfil.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
             user.update({ ...User, id: req.params.id })
-            .then(() => res.status(200).json({ message: "User modifié ! "}))
+            .then(() => res.status(200).json({ message: "User modifié ! ", user }))
             .catch((error) => res.status(400).json({ error }));
         })
     })
@@ -90,7 +94,7 @@ exports.modifyPassword = async (req, res) =>{
         }
         else {
             user.update({ password },  {id: req.params.id } )
-            .then(res.status(201).json({ message:'Mot de passe modifié !' }))  
+            .then(res.status(201).json({ message:'Mot de passe modifié !', user }))  
             .catch(error=>res.status(400).json({ error:error }) )       
           }     
         })

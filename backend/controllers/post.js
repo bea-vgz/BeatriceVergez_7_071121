@@ -19,6 +19,8 @@ exports.createPost = async (req, res, next) => {
     res.status(201).json({ 
       message: "Nouveau post créé !",
       title: newPost.title,
+      content: newPost.content,
+      image: newPost.image,
       postId: newPost.id
     })
   }
@@ -38,7 +40,7 @@ exports.modifyPost = (req, res, next) => {
       const filename = post.image.split("/images/")[1];
       fs.unlink(`images/${filename}`, () => {
         post.update({ ...Post, id: req.params.id })
-        .then(() => res.status(200).json({ message: "Post modifié ! "}))
+        .then(() => res.status(200).json({ message: "Post modifié ! ", post }))
         .catch((error) => res.status(400).json({ error }));
       })
   })

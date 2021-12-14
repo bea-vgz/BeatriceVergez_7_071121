@@ -22,8 +22,8 @@
         />
       </div>
       <div class="file">
-        <label class="sr-only" for="image" title="image" name="filename" role="button">image</label>
-        <input class='buttonFile' type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" name="filename" />
+        <label class="sr-only" for="image" title="image" role="button">image</label>
+        <input class='buttonFile' type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" />
       </div>
       <div>
         <button
@@ -65,16 +65,17 @@ export default {
     },
 
     createPost() {
-      let post;
-        post = new FormData();
-        post.append('image', this.file, this.filename);
-        post.append('title', this.post.title);
-        post.append('content', this.post.content);
-        this.$store.dispatch("post/createPost", post)
-          .then(() => {
-            console.log('post')
-            window.alert("Création du post réussi !")
-          })
+      const post = new FormData();
+      if (typeof this.file === 'object') {
+        post.append('image', this.file, this.file.name);
+      }
+      post.append('title', this.post.title);
+      post.append('content', this.post.content);
+      this.$store.dispatch("post/createPost", post)
+        .then(() => {
+          console.log('post')
+          alert("Création du post réussi !")
+        });
     },
 },
 }

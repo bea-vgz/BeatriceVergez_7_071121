@@ -32,9 +32,15 @@
     </aside>
       <div class="ui segment infoUser bg-white">
         <h2 class="ui dividing header">Mot de passe</h2>
-
+    
         <div class="card">
-        <div class="form-row">
+          <div class="form-row">
+            <label for="password"> 🔒  Mot de passe actuel : </label>
+            <div class="inputPassword">
+              <input v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
+            </div>
+          </div>
+          <div class="form-row">
             <label for="newpassword"> 🔒  Nouveau mot de passe : </label>
             <div class="inputPassword">
               <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
@@ -43,8 +49,8 @@
                 <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
               </button>
             </div>
-        </div>
-        <div class="form-row">
+          </div>
+          <div class="form-row">
             <label for="newpassword">🔒  Confirmer le mot de passe : </label>
             <div class="inputPassword">
               <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
@@ -53,7 +59,7 @@
                 <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
               </button>
             </div>
-        </div>
+          </div>
         <button class="buttonSave" type="submit" @click="modifyPassword()">
             <router-link to="/profil" class="save">Sauvegarder</router-link>
         </button>
