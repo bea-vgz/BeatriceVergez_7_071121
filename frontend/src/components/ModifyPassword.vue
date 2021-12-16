@@ -5,10 +5,10 @@
     <div class="container_account">
         <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="image || currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
-            <img v-else class="avatar" alt="Avatar" :src="image || currentUser.photoProfil" />
-            <h1 class="username">{{ currentUser.username }}</h1>
-            <p><span class="email">{{ currentUser.email }}</span></p>
+            <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" />
+            <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
+            <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
+            <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
         </div>
         <div class="optionsProfil bg-white">
             <div class="option is-active"> 
@@ -37,7 +37,7 @@
           <div class="form-row">
             <label for="password"> 🔒  Mot de passe actuel : </label>
             <div class="inputPassword">
-              <input v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
+              <input v-if="currentUser" v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
             </div>
           </div>
           <div class="form-row">

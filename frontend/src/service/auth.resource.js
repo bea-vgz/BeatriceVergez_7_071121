@@ -8,6 +8,8 @@ class AuthService {
             email: user.email,
             password: user.password,
             bio: user.bio,
+            photoProfil: user.photoProfil,
+            isAdmin: 0,
         })
     }
 
@@ -40,7 +42,7 @@ class AuthService {
     )
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
-        console.log(response)
+        return response.data;
       });
     }
 

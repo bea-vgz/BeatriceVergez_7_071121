@@ -11,5 +11,9 @@ class PostService {
           });
     }
 
+    getAllPosts(){
+        return resource.get('/posts', { headers: authHeader() })
+    }
+
 }
 export default new PostService();

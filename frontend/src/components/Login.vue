@@ -21,15 +21,14 @@
         <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
 
     <!-- Password input -->
-        <label for="password"> 🔒  Mot de passe * : </label>
-        <div class="inputPassword">
-          <input id="password" name="password" v-model="user.password" autocomplete="current-password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
-          <button role="button" class="buttonEyes" @click="show = !show" >
+        <label for="password"> 🔒  Mot de passe * : 
+          <button type="button" class="buttonEyes" @click="show = !show" >
             <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
             <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
           </button>
-        </div>
-
+        </label>
+        <input id="password" name="password" v-model="user.password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
+        
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
         <button type="submit" class="buttonConnect" aria-label="se connecter">
@@ -51,34 +50,28 @@ import router from "../router";
 import User from '../models/user'
 
 export default {
-
-    name: 'Login',
-    computed: {
-      loggedIn() {
-        return this.$store.state.auth.status.loggedIn;
-      }
-    },
-    data() {
-        return {
-            user: new User('', ''),
-            show: false
+  name: 'Login',
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+  },
+  data() {
+    return {
+      user: new User('', ''),
+      show: false
+    }
+  },
+  methods: {
+    login () {
+      if (this.user.email && this.user.password) {
+        this.$store.dispatch('auth/login', this.user)
+        .then(() => {
+          router.push('/home');
+        },
+        error => {
+          console.log(error);
         }
-    },
-    created() {
-      if (this.loggedIn) {
-        router.push('/home');
-      }
-    },
-    methods: {
-        login () {
-            if (this.user.email && this.user.password) {
-                this.$store.dispatch('auth/login', this.user)
-                .then(() => {
-                    router.push('/home');
-                },
-            error => {
-                console.log(error);
-          }
         );
       }
     }
@@ -180,14 +173,12 @@ input {
     cursor: pointer
 }
 .buttonEyes {
-  background: none;
+  background: #F2F2F2;;
   border: none;
   cursor: pointer;
-}
-.inputPassword {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: auto;
+  color: #fd2d01;
+  padding: 0.3rem;
+  border-radius: 100%;
+  margin-left: 0.7rem;
 }
 </style >

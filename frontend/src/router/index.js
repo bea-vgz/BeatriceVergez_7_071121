@@ -22,33 +22,29 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import("../views/Home.vue"),
-    meta: { title: 'Groupomania' },
-    requiresAuth: true,
+    meta: { title: 'Groupomania' }
   },
 // Route Profil user 
   {
     path: "/profil",
     name: "Profil",
     component: () => import("../views/Profil.vue"),
-    meta: { title:'Groupomania - Mon compte' },
-    requiresAuth: true,
+    meta: { title:'Groupomania - Mon compte' }
 },
   // Route password user 
   {
     path: "/password",
     name: "Password",
     component: () => import("../components/ModifyPassword.vue"),
-    meta: { title:'Groupomania - modification Password' },
-    requiresAuth: true,
+    meta: { title:'Groupomania - modification Password' }
   },
 
   // Route création post 
   {
     path: "/post",
     name: "Create_Post",
-    component: () => import("../components/CreatePost.vue"),
-    meta: { title:'Groupomania - création de post' },
-    requiresAuth: true,
+    component: () => import("../components/PostFormulaire.vue"),
+    meta: { title:'Groupomania - création de post' }
   },
  /* {
     path: '/about',

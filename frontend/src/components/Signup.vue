@@ -24,14 +24,14 @@
         <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
 
     <!-- Password input -->
-        <label for="password"> 🔒  Mot de passe * : </label>
-        <div class="inputPassword">
-          <input id="password" name="password" v-model="user.password" autocomplete="current-password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
+        <label for="password"> 🔒  Mot de passe * : 
           <button type="button" class="buttonEyes" @click="show = !show" >
             <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
             <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
           </button>
-        </div>
+        </label>
+        <input id="password" name="password" v-model="user.password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
+
     <!-- Bio input -->
         <label for="bio"> 💬  Biographie : </label>
         <input type="bio" id="bio" v-model="user.bio" placeholder="Quelques mots sur vous : âge, message, poste...">
@@ -195,14 +195,12 @@ input {
     cursor: pointer
 }
 .buttonEyes {
-  background: none;
+  background: #F2F2F2;;
   border: none;
   cursor: pointer;
-}
-.inputPassword {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: auto;
+  color: #fd2d01;
+  padding: 0.3rem;
+  border-radius: 100%;
+  margin-left: 0.7rem;
 }
 </style>

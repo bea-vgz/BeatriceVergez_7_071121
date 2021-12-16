@@ -7,10 +7,10 @@
     <div class="container_account">
     <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="image || currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
-            <img v-else class="avatar" alt="Avatar" :src="image || currentUser.photoProfil" />
-            <h1 class="username">{{ currentUser.username }}</h1>
-            <p><span class="email">{{ currentUser.email }}</span></p>
+          <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
+          <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
+          <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
+          <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
         </div>
         <div class="optionsProfil bg-white">
             <div class="option is-active"> 
@@ -23,7 +23,7 @@
               <router-link to="/UserPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
             </div>
             <div class="option is-active">
-              <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+              <router-link @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </router-link>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
             <div class="option is-active" >
@@ -32,18 +32,18 @@
             </div>
         </div>
     </aside>
-    <div v-if="currentUser" class="text-justify infoUser bg-white">
+    <div class="text-justify infoUser bg-white">
       <h2><strong>Mon compte : </strong> </h2>
       <div>
-        <p><strong>Pseudo : </strong>{{currentUser.username}}</p>
-        <p><strong>Email : </strong>{{ currentUser.email }}</p>
-        <p><strong>Biographie :</strong>{{ currentUser.bio }}</p>
-        <p><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
+        <p v-if="currentUser"><strong>Pseudo : </strong>{{currentUser.username}}</p>
+        <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
+        <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
+        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
       </div>
-    <a title="Modifier mon profil" @click="displayModal" class="icone" >
-      <span><font-awesome-icon icon="user-edit" class="modif_icon"/> Modifier mon compte</span>
-    </a>
-    <modify-profil v-show="modifyProfil" @close="closeModal" />
+      <a title="Modifier mon profil" @click="displayModal" class="icone" >
+        <span><font-awesome-icon icon="user-edit" class="modif_icon"/> Modifier mon compte</span>
+      </a>
+      <modify-profil v-show="modifyProfil" @close="closeModal" />
     </div>
   </div>
   <!-- Footer -->
@@ -70,15 +70,18 @@ export default {
     modifyProfil
   },
   data() {
-        return {
-          user:'',
-          image:'',
-          modifyProfil: false
-        }
+    return {
+      modifyProfil: false,
+      image:'',
+      user:'',
+    }
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
     }
   },
   methods: {
@@ -95,7 +98,6 @@ export default {
         message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
         okButton: 'Supprimer mon compte',
       })
-      // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
         let payload = this.$store.state.auth.user.userId
         this.$store.dispatch("auth/deleteUser",payload)
@@ -127,11 +129,6 @@ export default {
         alert("Vous n'avez pas été déconnecté")
       }
     },
-  },
-  mounted() { // on récupère les données user avant la redirection
-    if (!this.currentUser) {
-      this.$router.push("/");
-    }
   },
 }
 </script>

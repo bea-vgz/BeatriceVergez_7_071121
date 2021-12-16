@@ -8,15 +8,13 @@
     <h1 v-if="currentUser">
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
-    
-    <PostFormulaire/>
+     <PostFormulaire/>
 
     </div>
  <!-- Footer -->
     <div class="footer">
       <Footer />
     </div>
-    
   <router-view />
   </div>
 </template>
@@ -26,27 +24,30 @@
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import PostFormulaire from '@/components/PostFormulaire.vue';
-
 export default {
   name: 'HomePage',
+  data() {
+		return {
+			errorMessage: null,
+      posts:''
+		};
+	},
+	beforeMount() {
+		this.$store.dispatch("post/getAllPosts");
+	},
   components: {
     Header,
     Footer,
-    PostFormulaire
+    PostFormulaire,
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    }
-  },
-  methods: {
-    logout: function () {
-        this.$store.dispatch('logout')
-        .then(() => {
-          this.$router.push('/login')
-        })
     },
-  }
+    post() {
+      return this.$store.state.post.post;
+    },
+  },
 }
 </script>
 

@@ -1,9 +1,9 @@
 <template>
   <div id="PostFormulaire">
-    <form class="container_post bg-white">
-      <router-link to="/profil" class="container_user bg-white">
-          <img v-if="currentUser.photoProfil == null" class="avatar" alt="Avatar" src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"/>
-          <img v-else class="avatar" alt="Avatar" :src="currentUser.photoProfil" />
+    <form class="container_post bg-white" @submit.prevent="createPost">
+      <router-link to="/profil" v-if="currentUser" class="container_user bg-white">
+          <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" />
+          <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" ref="file" />
       </router-link>
       <div class="textarea_form">
         <input
@@ -21,6 +21,12 @@
           class="input"
         />
       </div>
+      <div
+        id="preview"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <img class="mt-3" v-if="file" :src="file" alt="" />
+      </div>
       <div class="file">
         <label class="sr-only" for="image" title="image" role="button">image</label>
         <input class='buttonFile' type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" />
@@ -30,7 +36,6 @@
           class="button"
           type="submit"
           aria-label="Publier"
-          @click="createPost()"
         > <font-awesome-icon icon="file-import" class="icon"/>
             Publier
         </button>
@@ -41,6 +46,7 @@
   </div>
 </template>
 
+
 <script>
 import Post from '../models/post'
 export default {
@@ -49,7 +55,7 @@ export default {
     return {  
       post: new Post("", ""),
       file: "",
-      image:"",
+      image:""
     };
   },
   computed: {
@@ -64,7 +70,7 @@ export default {
       console.log(this.file);
     },
 
-    createPost() {
+    createPost: function(event) {
       const post = new FormData();
       if (typeof this.file === 'object') {
         post.append('image', this.file, this.file.name);
@@ -76,14 +82,15 @@ export default {
           console.log('post')
           alert("Création du post réussi !")
         });
+      event.target.reset();
     },
-},
+  },
 }
 </script>
 
 <style scoped>
 
-.container_post {
+#PostFormulaire {
   display: flex;
   flex-direction: column;
   text-align: center;

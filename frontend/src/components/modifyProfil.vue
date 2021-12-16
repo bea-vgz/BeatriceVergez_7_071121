@@ -1,11 +1,11 @@
-<template v-if="currentUser">
+<template>
   <transition name="modal-fade">
     <div class="fixed bottom-0 inset-x-0 flex" @click.stop>
     <div class="fixed inset-0 transition-opacity">
     <form @submit.prevent="modifyUser" class="modifyProfil">
         <div class="bg-primary"></div>
         <label class="img" for="selectImage">
-            <img v-if="image || currentUser.photoProfil" :src="image || currentUser.photoProfil" alt="Avatar">
+            <img v-if="image || currentUser" :src="image || currentUser.photoProfil" alt="Avatar">
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png" alt="Avatar">
             <div class="indication"><font-awesome-icon icon="pencil-alt"/></div>
             <input ref="file" type="file" id="selectImage" @change="onFileChange">
@@ -14,13 +14,13 @@
             <div class="row">
                 <div class="group">
                     <label for="username">Pseudo</label>
-                    <input v-model="currentUser.username" type="text" id="username" @input="validateInput">
+                    <input v-if="currentUser" v-model="currentUser.username" type="text" id="username" @input="validateInput">
                     <font-awesome-icon v-if="username === true" icon="check-circle"/>
                     <font-awesome-icon v-else-if="username === false" icon="check-circle"/>
                 </div>
                 <div class="group">
                     <label for="bio">Biographie</label>
-                    <input v-model="currentUser.bio" type="text" id="bio" @input="validateInput">
+                    <input v-if="currentUser" v-model="currentUser.bio" type="text" id="bio" @input="validateInput">
                     <font-awesome-icon v-if="bio === true" icon="check-circle"/>
                     <font-awesome-icon v-else-if="bio === false" icon="check-circle"/>
                 </div>
@@ -62,12 +62,19 @@ export default {
       return this.$store.state.auth.user;
     },
   },
+  watch: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+  },
   methods: {
-    modifyUser() {
+    modifyUser(event) {
+      event.preventDefault();
+
       if(this.validateInput()) {
         const user = new FormData();
-        if (typeof this.file === 'object') {
-          user.append('image', this.file, this.file.name);
+        if (typeof this.currentUser.newPhoto === 'object') {
+          user.append('image', this.currentUser.newPhoto);
         }
         user.append('bio', this.currentUser.bio);
         user.append('username', this.currentUser.username);
@@ -78,7 +85,7 @@ export default {
         }
         this.$store.dispatch("auth/modifyUser", payload)
           .then(()=> {
-            console.log(user)
+            alert("Modification de votre profil réussi !")
           })
         }
       },
@@ -118,14 +125,7 @@ export default {
         this.$emit("close");
     },
   },
-  mounted() { // on récupère les données user avant la redirection
-    if (!this.currentUser) {
-      this.$router.push("/profil");
-    }
-  },
 }
-
-
 </script>
 
 <style>
@@ -142,12 +142,10 @@ export default {
     border-radius: 10px;
     overflow: hidden;
 }
-
 .modifyProfil .bg-primary {
     height: 150px;
     width: 100%;
 }
-
 .modifyProfil .img {
     display: block;
     margin: -125px auto 0;
@@ -158,18 +156,15 @@ export default {
     position: relative;
     cursor: pointer;
 }
-
 .modifyProfil .img img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .modifyProfil .img input {
     display: none;
 }
-
 .modifyProfil .img .indication {
     position: absolute;
     bottom: -70px;
@@ -183,34 +178,27 @@ export default {
     font-size: 20px;
     transition: .4s ease;
 }
-
 .modifyProfil .img:hover .indication {
     bottom: 0;
 }
-
 .modifyProfil .inputs {
     padding: 20px;
 }
-
 .modifyProfil .inputs .group {
     display: flex;
     flex-direction: column;
     width: 100%;
     position: relative;
 }
-
 .modifyProfil .inputs .group:not(:last-child) {
     margin-right: 10px;
 }
-
 .modifyProfil .inputs .row:not(:last-child) {
     margin-bottom: 20px;
 }
-
 .modifyProfil .inputs .group label {
     font-size: 13px;
 }
-
 .modifyProfil .inputs .group input {
     font-size: 13.3333px;
     border: none;
@@ -219,21 +207,17 @@ export default {
     border-radius: 5px;
     padding: 10px 30px 10px 10px;
 }
-
 .modifyProfil .inputs .group i {
     position: absolute;
     bottom: 10px;
     right: 10px;
 }
-
 .modifyProfil .inputs .group i.fa-check-circle {
     color: green;
 }
-
 .modifyProfil .inputs .group i.fa-times-circle {
     color: red;
 }
-
 .modifyProfil .inputs button {
     width: 100%;
     border: none;
@@ -245,12 +229,10 @@ export default {
     cursor: pointer;
     transition: .3s ease;
 }
-
 .modifyProfil .inputs button:disabled {
     opacity: .4;
     cursor: default;
 }
-
 .modifyProfil .inputs button:not(:disabled):hover {
     background-color: #e42801;
 }
