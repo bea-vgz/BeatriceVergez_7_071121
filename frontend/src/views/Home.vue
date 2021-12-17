@@ -9,6 +9,9 @@
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
      <PostFormulaire/>
+     <postView v-for="post of posts" :key="post.id" :post="post" :id="postId">
+        <!-- Le contenu itéré sera affiché via le composant post.vue -->
+     </postView>
 
     </div>
  <!-- Footer -->
@@ -24,28 +27,29 @@
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import PostFormulaire from '@/components/PostFormulaire.vue';
+import postView from "../components/Post.vue";
 export default {
   name: 'HomePage',
   data() {
 		return {
 			errorMessage: null,
-      posts:''
 		};
 	},
-	beforeMount() {
+	mounted() {
 		this.$store.dispatch("post/getAllPosts");
 	},
   components: {
     Header,
     Footer,
     PostFormulaire,
+    postView
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    post() {
-      return this.$store.state.post.post;
+    posts() {
+      return this.$store.state.post.posts;
     },
   },
 }

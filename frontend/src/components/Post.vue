@@ -44,18 +44,6 @@
           :src="post.image"
           alt=""
         />
-        <b-modal
-          :id="`modal-photo-${post.id}`"
-          size="xl"
-          class="modal-photo"
-          header-class="header-style"
-        >
-          <div slot="modal-title"></div>
-          <div class="d-flex align-items-center justify-content-center">
-            <img class="modal-photo__img" :src="post.image" alt="" />
-          </div>
-          <div slot="modal-footer"></div>
-        </b-modal>
       </div>
 
       <LikesList :post="post" :likesCount="likesCount" />
@@ -108,16 +96,18 @@
 </template>
 <script>
 export default {
-
-  props: {
-    post: {
-      type: Object,
-      required: true,
+  data() {
+    return {
+      id: this.post.id,
     }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
 }
 </script>
-
 
 <style lang="scss">
 .div-post-picture {

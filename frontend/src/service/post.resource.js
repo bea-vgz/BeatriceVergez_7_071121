@@ -6,9 +6,9 @@ class PostService {
     createPost(post) {
         return resource.post('/posts', post, { headers: authHeader() })
         .then(response => {
-            localStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.setItem('post', JSON.stringify(response.data));
             console.log(response)
-          });
+        });
     }
 
     getAllPosts(){

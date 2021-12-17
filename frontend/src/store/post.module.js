@@ -7,6 +7,7 @@ export const post = {
       modifyPost: { status: '' },
       deletedPost: { status: '' },
       posts: [],
+      post: {},
     },
 
 actions: {
@@ -29,11 +30,13 @@ actions: {
       const posts = response.data;
       commit('getPosts', posts);
       return Promise.resolve(response.data);
-    })
-    .catch(function(error) {
+    },
+    (error) => {
+      commit('getPostsFailure')
       return Promise.reject(error)
-    });
+    })
   }
+
 },
 mutations: {
     createPostSuccess(state) {
@@ -47,6 +50,10 @@ mutations: {
     getPosts(state, posts) {
       state.posts = posts;
       state.message = "Posts récupérés !";
+    },
+    getPostsFailure(state) {
+      state.posts = null;
+      state.message = "Posts non récupérés !";
     },
 },
 getters : {
