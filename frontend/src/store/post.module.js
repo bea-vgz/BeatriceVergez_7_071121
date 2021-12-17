@@ -26,13 +26,24 @@ actions: {
 
   getAllPosts({ commit }) {
     return PostService.getAllPosts()
-    .then((response) => {
-      const posts = response.data;
-      commit('getPosts', posts);
-      return Promise.resolve(response.data);
+    .then((posts) => {
+      commit('getPosts');
+      return Promise.resolve(posts);
     },
     (error) => {
       commit('getPostsFailure')
+      return Promise.reject(error)
+    })
+  },
+
+  getOnePost({ commit }, id) {
+    return PostService.getOnePost(id)
+    .then((response) => {
+      commit('getOnePost');
+      return Promise.resolve(response.data);
+    },
+    (error) => {
+      commit('getOnePostFailure')
       return Promise.reject(error)
     })
   }
@@ -55,10 +66,21 @@ mutations: {
       state.posts = null;
       state.message = "Posts non récupérés !";
     },
+    getOnePost(state, post) {
+      state.post = post;
+      state.message = "Post récupéré !";
+    },
+    getOnePostFailure(state) {
+      state.post = null;
+      state.message = "Post non récupéré !";
+    },
 },
 getters : {
   post(state) {
     return state.post;
+  },
+  posts: (state) => {
+    return state.posts;
   },
 }
 

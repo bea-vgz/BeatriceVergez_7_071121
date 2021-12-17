@@ -77,7 +77,31 @@ export const auth = {
           return Promise.reject(error)
         }
       )
-    }
+    },
+
+    getAllUsers({ commit }) {
+      return AuthService.getAllUsers()
+      .then((response) => {
+        commit('getUsers');
+        return Promise.resolve(response.data);
+      },
+      (error) => {
+        commit('getUsersFailure')
+        return Promise.reject(error)
+      })
+    },
+
+    getOneUser({ commit }, id) {
+      return AuthService.getOneUser(id)
+      .then((response) => {
+        commit('getOneUser');
+        return Promise.resolve(response.data);
+      },
+      (error) => {
+        commit('getOneUserFailure')
+        return Promise.reject(error)
+      })
+    },
   },
 
   mutations: {
@@ -113,10 +137,26 @@ export const auth = {
       state.status.loggedIn = true;
       state.user = null;
     },
+    getUsers(state, users) {
+      state.users = users;
+      state.message = "Users récupérés !";
+    },
+    getUsersFailure(state) {
+      state.users = null;
+      state.message = "Users non récupérés !";
+    },
+    getOneUser(state, user) {
+      state.user = user;
+      state.message = "User récupéré !";
+    },
+    getOneUserFailure(state) {
+      state.user = null;
+      state.message = "User non récupéré !";
+    },
   },
 
   getters : {
-    userState: (state) => {
+    user: (state) => {
       return state.user
     }
   },

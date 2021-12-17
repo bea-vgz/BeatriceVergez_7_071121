@@ -55,6 +55,14 @@ class AuthService {
         console.log(response)
       });
     }
+
+    getAllUsers() {
+      return resource.get('/users', { headers: authHeader() });
+    }
+
+    getOneUser(id) {
+      return resource.get(`/users/${id}`, { headers: authHeader() })
+    }
 }
 
 export default new AuthService();

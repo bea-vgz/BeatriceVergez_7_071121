@@ -9,9 +9,9 @@
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
      <PostFormulaire/>
-     <postView v-for="post of posts" :key="post.id" :post="post" :id="postId">
-        <!-- Le contenu itéré sera affiché via le composant post.vue -->
-     </postView>
+     <div class="posts" v-for="post in posts" :key="post.id">
+        <Post />
+      </div>
 
     </div>
  <!-- Footer -->
@@ -23,33 +23,42 @@
 </template>
 
 <script>
-
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import PostFormulaire from '@/components/PostFormulaire.vue';
-import postView from "../components/Post.vue";
+import Post from "../components/Post.vue";
 export default {
   name: 'HomePage',
   data() {
 		return {
-			errorMessage: null,
+      posts: [],
 		};
 	},
 	mounted() {
-		this.$store.dispatch("post/getAllPosts");
+		this.getAllPosts();
+    window.addEventListener("scroll", this.checkPosition);
 	},
   components: {
     Header,
     Footer,
     PostFormulaire,
-    postView
+    Post
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    posts() {
-      return this.$store.state.post.posts;
+  },
+  methods: {
+    getAllPosts() {
+      this.$store.dispatch("post/getAllPosts")
+      .then((res) => (this.posts = res.data))
+    },
+  //method to chekc if user is at the bottom of the page
+    checkPosition() {
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+        this.feedPostsIndex += 20;
+      }
     },
   },
 }

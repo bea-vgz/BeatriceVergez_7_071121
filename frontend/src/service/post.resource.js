@@ -11,6 +11,10 @@ class PostService {
         });
     }
 
+    getOnePost(id){
+        return resource.get(`/posts/${id}`, { headers: authHeader() })
+    }
+
     getAllPosts(){
         return resource.get('/posts', { headers: authHeader() })
     }
