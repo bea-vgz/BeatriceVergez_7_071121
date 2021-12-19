@@ -21,11 +21,8 @@
           class="input"
         />
       </div>
-      <div
-        id="preview"
-        class="d-flex justify-content-center align-items-center"
-      >
-        <img class="mt-3" v-if="file" :src="file" alt="" />
+      <div id="preview" class="d-flex justify-content-center align-items-center" >
+        <img class="mt-3" v-show="showPreview" v-if="file" v-bind:src="imagePreview" alt="" />
       </div>
       <div class="file">
         <label class="sr-only" for="image" title="image" role="button">image</label>
@@ -55,7 +52,9 @@ export default {
     return {  
       post: new Post("", ""),
       file: "",
-      image:""
+      image:"",
+      showPreview: false,
+      imagePreview: ''
     };
   },
   computed: {
@@ -68,6 +67,12 @@ export default {
       const file = this.$refs.file.files[0];
       this.file = file;
       console.log(this.file);
+      const reader  = new FileReader()
+      reader.addEventListener("load", function () {
+        this.showPreview = true;
+        this.imagePreview = reader.result
+      }.bind(this), false)
+      reader.readAsDataURL( this.file );
     },
 
     createPost: function(event) {

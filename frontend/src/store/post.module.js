@@ -7,7 +7,13 @@ export const post = {
       modifyPost: { status: '' },
       deletedPost: { status: '' },
       posts: [],
-      post: {},
+      post: {
+        title:'',
+        content:'',
+        image:'',
+      },
+      allPosts: {},
+      
     },
 
 actions: {
@@ -36,8 +42,8 @@ actions: {
     })
   },
 
-  getOnePost({ commit }, id) {
-    return PostService.getOnePost(id)
+  getOnePost({ commit }, post_id) {
+    return PostService.getOnePost(post_id)
     .then((response) => {
       commit('getOnePost');
       return Promise.resolve(response.data);

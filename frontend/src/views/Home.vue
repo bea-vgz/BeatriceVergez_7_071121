@@ -8,10 +8,9 @@
     <h1 v-if="currentUser">
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
-     <PostFormulaire/>
-     <div class="posts" v-for="post in posts" :key="post.id">
-        <Post />
-      </div>
+    
+    <PostFormulaire/>
+    <AllPosts />
 
     </div>
  <!-- Footer -->
@@ -26,46 +25,29 @@
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import PostFormulaire from '@/components/PostFormulaire.vue';
-import Post from "../components/Post.vue";
+import AllPosts from '@/components/AllPosts.vue';
 export default {
   name: 'HomePage',
   data() {
 		return {
-      posts: [],
+      posts: {},
 		};
-	},
-	mounted() {
-		this.getAllPosts();
-    window.addEventListener("scroll", this.checkPosition);
 	},
   components: {
     Header,
     Footer,
     PostFormulaire,
-    Post
+    AllPosts
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
-  methods: {
-    getAllPosts() {
-      this.$store.dispatch("post/getAllPosts")
-      .then((res) => (this.posts = res.data))
-    },
-  //method to chekc if user is at the bottom of the page
-    checkPosition() {
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-        this.feedPostsIndex += 20;
-      }
-    },
-  },
 }
 </script>
 
 <style scoped>
-
 .container_home {
   font-family: 'Barlow', sans-serif;
   background-color: #F2F2F2;
@@ -145,5 +127,4 @@ textarea {
   padding-right: 0.5rem;
   color: #9e9e9e
 }
-
 </style>

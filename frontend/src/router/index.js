@@ -42,9 +42,9 @@ const routes = [
   // Route création post 
   {
     path: "/post",
-    name: "Create_Post",
-    component: () => import("../components/PostFormulaire.vue"),
-    meta: { title:'Groupomania - création de post' }
+    name: "Post",
+    component: () => import("../components/Post.vue"),
+    meta: { title:'Groupomania - mes posts' }
   },
  /* {
     path: '/about',
