@@ -8,16 +8,13 @@
         <div class="col" v-if="`${post}`" >
           <div class="card-body">
             <b> { userId: post.User.id }</b>
+            {{ getDateWithoutTime(date) }}
             <div class="card-text">
               <h2> {{ post.title }} </h2>
               <p> {{ post.content }}</p>
             </div>
-            <div>
-              <img 
-                :src="`${post.image}`"
-                alt="image"
-                class="img-fluid"
-              >
+            <div class="img_container">
+                <img :src="`${post.image}`" alt="image" class="img">
             </div>
         
             
@@ -77,6 +74,9 @@ export default {
         this.feedPostsIndex += 10;
       }
     },
+    getDateWithoutTime(date) {
+      return require("moment")(date).format("HH:mm YYYY-MM-DD ");
+    },
     user(post) {
       if(post.user) {
         return post.User.username
@@ -96,7 +96,7 @@ export default {
     padding: 3.5rem;
     max-width: 100%;
     border-radius: 1.25rem;
-    box-shadow: 0 0 16px #0000002e;
+    box-shadow: 0 0 6px #0000002e;
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -109,9 +109,11 @@ export default {
     padding: 2rem;
 }
 img{
-  max-width: 100%;
-  width: 10rem;
-  height: auto;
+    max-width: 100%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
 }
 button {
     justify-content: center;
@@ -135,5 +137,8 @@ button:hover {
 }
 svg {
     padding-right: 0.5rem;
+}
+.blue {
+  color: rgb(32, 120, 244);
 }
 </style>
