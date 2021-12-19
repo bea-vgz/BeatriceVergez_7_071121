@@ -102,9 +102,10 @@ export default {
   background-color: #fff;
   border-radius: 2rem;
   max-width: 100%;
-  width: 50%;
+  width: 30%;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 3rem;
   padding: 2rem
 }
 .avatar {
