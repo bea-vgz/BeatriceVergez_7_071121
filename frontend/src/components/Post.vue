@@ -8,24 +8,24 @@
       {{ error }}
     </div>
 
-    <div class="col">
-        <h4 class="card-text"
-          v-if="`${post.content}`">
-          {{ checkUserExist(post) }} a publié le {{ getDateWithoutTime(date) }}:
-        </h4>
-        <h3 class="card-text" v-if="`${post.title}`">
-          {{ post.title }}
-        </h3>
-        <h4 class="card-text" v-if="`${post.content}`">
-          {{ post.content }}
-        </h4>
-        <div v-if="`${post.image}`">
-          <img
-            :src="`${post.image}`"
-            alt="image"
-          >
-        </div>
+    <div class="col" v-if="`${post}`">
+      <h4 class="card-text"
+        v-if="`${post.content}`">
+        {{ checkUserExist(post) }} a publié le {{ getDateWithoutTime(date) }}:
+      </h4>
+      <h3 class="card-text" v-if="`${post.title}`">
+        {{ post.title }}
+      </h3>
+      <h4 class="card-text" v-if="`${post.content}`">
+        {{ post.content }}
+      </h4>
+      <div v-if="`${post.image}`">
+        <img
+          :src="`${post.image}`"
+          alt="image"
+        >
       </div>
+    </div>
   </div>
 </template>
 <script>
