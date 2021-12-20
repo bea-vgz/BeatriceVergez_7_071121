@@ -205,11 +205,13 @@ button {
 .username {
   text-decoration: none;
 }
-.icone {
+.avatar {
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 100%;
     padding: 0.5rem;
+    object-fit: cover;
+    object-position: center;
     margin-right: 0.3rem;
 }
 input {

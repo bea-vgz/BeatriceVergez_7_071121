@@ -5,9 +5,24 @@
       <div class="row border-secondary text-justify">
         <div class="col">
           <div class="card-body">
-            <div class="userInfosPost">           
-              <img :src="post.UserId.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.UserId.username }}</h3>
+            <div class="menu-item" @click="isOpen = !isOpen" >
+            <button class="accessUser">
+              <font-awesome-icon icon="ellipsis-v" class="ellipsis" />
+            </button>
+            <transition name="fade" apear>
+              <div class="sub-menu" v-if="isOpen">
+                <div class="menu-item">
+                  <button @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer</button>
+                </div>
+                <div class="menu-item">
+                  <button @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/>Modifier</button>
+                </div>
+              </div>
+            </transition>
+          </div>
+            <div class="UserAvatar" v-if="post.User">
+              <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
             </div>
             <div class="card-text">
               <p>Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
@@ -40,8 +55,6 @@
                 </button>
             </div>
             <div class="line mb-3"></div>
-            <button @click="deletePost(post)">Supprimer</button>
-            <button @click="modifyPost(post)">Modifier</button>
           </div>
         </div>
       </div>
@@ -57,8 +70,10 @@ import PostService from "../service/post.resource"
 export default {
   data() {
     return {
-      post: [],
+      post: {},
+      posts: [],
       UserId: "",
+      isOpen: false,
     };
   },
   components: { Header, Footer },
@@ -76,11 +91,37 @@ export default {
           this.post = res.data
           console.log(this.post.UserId)
       })
+    },
+  },
+  computed: {
+    user(){
+      return this.$store.getters["auth/user"];
     }
   }
 };
 </script>
 <style scoped>
+nav .menu-item, .sub-menu {
+  position: absolute;
+  background-color: #fff;
+  width: max-content;
+  padding: 1.5rem;
+  transform: translateX(170%);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .2s ease-out;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.sub-menu {
+  cursor: pointer;
+}
+.menu-item {
+  color:#242424;
+}
 .card-body {
     padding: 3.5rem;
     max-width: 100%;
@@ -98,7 +139,7 @@ export default {
     margin-top: 3rem;
     padding: 2rem;
 }
-img{
+.img {
     max-width: 100%;
     width: 100%;
     height: 350px;
@@ -130,5 +171,34 @@ svg {
 }
 .blue {
   color: rgb(32, 120, 244);
+}
+.container_button {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+.ellipsis:after {
+ font-size: 4em;
+ color: #2e2e2e;
+}
+.accessUser {
+  float: right;
+}
+.accessUser:hover {
+  background: none;
+  color: #fd2d01
+}
+.UserAvatar {
+  display: flex;
+  align-items: center;
+}
+.postUserPhoto {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+  padding-right: 2rem;
+  border-radius: 100%;
 }
 </style>
