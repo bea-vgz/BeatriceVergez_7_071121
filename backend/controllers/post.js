@@ -72,7 +72,9 @@ exports.getOnePost = (req, res, next) => {
   
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPosts = (req, res, next) => {
-    Post.findAll() 
+    Post.findAll({ 
+      include: { model: User, attributes: ["username", "photoProfil"]}, 
+    }) 
       .then(posts => res.status(200).json(posts))
       .catch(error => res.status(400).json({ error }));
 };

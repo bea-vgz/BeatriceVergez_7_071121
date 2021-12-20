@@ -72,7 +72,6 @@ export default {
     return {
       post: {},
       posts: [],
-      UserId: "",
       isOpen: false,
     };
   },
@@ -90,14 +89,9 @@ export default {
         .then((res) => {
           this.post = res.data
           console.log(this.post.UserId)
-      })
+        })
     },
   },
-  computed: {
-    user(){
-      return this.$store.getters["auth/user"];
-    }
-  }
 };
 </script>
 <style scoped>

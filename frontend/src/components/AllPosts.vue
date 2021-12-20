@@ -7,9 +7,9 @@
       >
         <div class="col">
           <div class="card-body">
-            <div class="userInfosPost">           
-              <img :src="post.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.username }}</h3>
+            <div class="UserAvatar" v-if="post.User">
+              <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
             </div>
             <div class="card-text">
               <p>Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
@@ -60,12 +60,8 @@ export default {
   name: 'AllPosts',
   data() {
     return {
-      posts: {
-        users: "",
-      },
+      posts: [],
     }
-  },
-  components: {
   },
   methods: {
     getAllPosts() {
@@ -132,5 +128,17 @@ svg {
 }
 .blue {
   color: rgb(32, 120, 244);
+}
+.UserAvatar {
+  display: flex;
+  align-items: center;
+}
+.postUserPhoto {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+  padding-right: 2rem;
+  border-radius: 100%;
 }
 </style>
