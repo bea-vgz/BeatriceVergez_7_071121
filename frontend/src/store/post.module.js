@@ -42,18 +42,6 @@ actions: {
     })
   },
 
-  getOnePost({ commit }, post_id) {
-    return PostService.getOnePost(post_id)
-    .then((response) => {
-      commit('getOnePost');
-      return Promise.resolve(response.data);
-    },
-    (error) => {
-      commit('getOnePostFailure')
-      return Promise.reject(error)
-    })
-  }
-
 },
 mutations: {
     createPostSuccess(state) {
@@ -89,7 +77,5 @@ getters : {
     return state.posts;
   },
 }
-
-
 
 }

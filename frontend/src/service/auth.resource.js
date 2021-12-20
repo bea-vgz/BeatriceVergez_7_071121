@@ -61,7 +61,8 @@ class AuthService {
     }
 
     getOneUser(id) {
-      return resource.get(`/users/${id}`, { headers: authHeader() })
+      return resource.get(`/users/${id}`, 
+      { headers: authHeader() })
     }
 }
 

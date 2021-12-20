@@ -83,8 +83,9 @@ export default {
       post.append('title', this.post.title);
       post.append('content', this.post.content);
       this.$store.dispatch("post/createPost", post)
-        .then(() => {
+        .then((data) => {
           console.log(this.post)
+          console.log(data.User)
           alert("Création du post réussi !")
         });
       event.target.reset();

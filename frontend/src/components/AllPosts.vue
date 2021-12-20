@@ -3,13 +3,16 @@
       <div
         class="row border-secondary text-justify"
         v-for="post in posts"
-        :key="post.id"
+        :key="post.id" :id="post.id"
       >
         <div class="col" v-if="`${post}`" >
           <div class="card-body">
-            <b> { userId: post.User.id }</b>
-            {{ getDateWithoutTime(date) }}
+            <div class="userInfosPost">           
+              <img :src="post.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.username }}</h3>
+            </div>
             <div class="card-text">
+              <p>{{ getDateWithoutTime(post.createdAt) }}</p>
               <h2> {{ post.title }} </h2>
               <p> {{ post.content }}</p>
             </div>
@@ -30,14 +33,14 @@
                         <path fill="currentColor" d="M5,9V21H1V9H5M9,21A2,2 0 0,1 7,19V9C7,8.45 7.22,7.95 7.59,7.59L14.17,1L15.23,2.06C15.5,2.33 15.67,2.7 15.67,3.11L15.64,3.43L14.69,8H21C22.11,8 23,8.9 23,10V12C23,12.26 22.95,12.5 22.86,12.73L19.84,19.78C19.54,20.5 18.83,21 18,21H9M9,19H18.03L21,12V10H12.21L13.34,4.68L9,9.03V19Z"
                         />
                     </svg>
-                    <span :class="`ml-2 ${likesPost ? 'blue' : ''}`">J'aime</span>
+                    <span class="aime">J'aime</span>
                 </button>
                 <button class="react-btn footer-btn btn-block" aria-label="Commenter" >
                     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z"
                         />
                     </svg>
-                    <span class="ml-2">Commenter</span>
+                    <span class="comment">Commenter</span>
                 </button>
             </div>
             <div class="line mb-3"></div>
@@ -54,11 +57,12 @@
 
 <script>
 export default {
-  name: 'Posts',
+  name: 'AllPosts',
   data() {
     return {
-      posts: {},
-      username: ''
+      posts: {
+        users: "",
+      },
     }
   },
   components: {
@@ -68,25 +72,13 @@ export default {
       this.$store.dispatch("post/getAllPosts")
       .then((res) => (this.posts = res.data))
     },
-  //method to chekc if user is at the bottom of the page
-    checkPosition() {
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-        this.feedPostsIndex += 10;
-      }
+    getDateWithoutTime(createdAt) {
+      return require("moment")(createdAt).format("HH:mm YYYY-MM-DD ");
     },
-    getDateWithoutTime(date) {
-      return require("moment")(date).format("HH:mm YYYY-MM-DD ");
-    },
-    user(post) {
-      if(post.user) {
-        return post.User.username
-      } else return this.username
-    }
   },
   mounted() {
 	this.getAllPosts();
-    window.addEventListener("scroll", this.checkPosition)
-  }
+  },
 }
 </script>
 
@@ -110,8 +102,8 @@ export default {
 }
 img{
     max-width: 100%;
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 350px;
     object-fit: cover;
     object-position: center;
 }
