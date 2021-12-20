@@ -19,5 +19,9 @@ class PostService {
         return resource.get('/posts', { headers: authHeader() })
     }
 
+    getAllPostsUser(userId){
+        return resource.get(`/posts/user/${userId}`, { headers: authHeader() })
+    }
+
 }
 export default new PostService();

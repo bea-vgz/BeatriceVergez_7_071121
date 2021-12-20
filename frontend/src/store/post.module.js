@@ -42,6 +42,18 @@ actions: {
     })
   },
 
+  getAllPostsUser({ commit }, userId) {
+    return PostService.getAllPosts(userId)
+    .then((posts) => {
+      commit('getPosts');
+      return Promise.resolve(posts);
+    },
+    (error) => {
+      commit('getPostsFailure')
+      return Promise.reject(error)
+    })
+  },
+
 },
 mutations: {
     createPostSuccess(state) {
@@ -77,5 +89,7 @@ getters : {
     return state.posts;
   },
 }
+
+
 
 }

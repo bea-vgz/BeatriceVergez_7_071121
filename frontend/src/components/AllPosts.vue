@@ -3,16 +3,16 @@
       <div
         class="row border-secondary text-justify"
         v-for="post in posts"
-        :key="post.id" :id="post.id"
+        :key="post.id"
       >
-        <div class="col" v-if="`${post}`" >
+        <div class="col">
           <div class="card-body">
             <div class="userInfosPost">           
               <img :src="post.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
               <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.username }}</h3>
             </div>
             <div class="card-text">
-              <p>{{ getDateWithoutTime(post.createdAt) }}</p>
+              <p>Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
               <h2> {{ post.title }} </h2>
               <p> {{ post.content }}</p>
             </div>
@@ -73,7 +73,7 @@ export default {
       .then((res) => (this.posts = res.data))
     },
     getDateWithoutTime(createdAt) {
-      return require("moment")(createdAt).format("HH:mm YYYY-MM-DD ");
+      return require("moment")(createdAt).format("YYYY-MM-DD HH:mm");
     },
   },
   mounted() {

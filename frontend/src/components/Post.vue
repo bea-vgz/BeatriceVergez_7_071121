@@ -1,25 +1,22 @@
 <template>
   <div class="container">
     <Header />
-      <div
-        class="row border-secondary text-justify"
-      >
+    <div class="container_post" v-if="post">
+      <div class="row border-secondary text-justify">
         <div class="col">
           <div class="card-body">
             <div class="userInfosPost">           
-              <img :src="post.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.username }}</h3>
+              <img :src="post.UserId.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.UserId.username }}</h3>
             </div>
             <div class="card-text">
-              <p>{{ getDateWithoutTime(post.createdAt) }}</p>
+              <p>Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
               <h2> {{ post.title }} </h2>
               <p> {{ post.content }}</p>
             </div>
             <div class="img_container">
                 <img :src="`${post.image}`" alt="image" class="img">
             </div>
-        
-            
             <div class="line"></div>
             <div class="footer d-flex justify-content-around">
                 <button class="react-btn footer-btn btn-block" aria-label="Liker ou disliker" >
@@ -43,9 +40,12 @@
                 </button>
             </div>
             <div class="line mb-3"></div>
+            <button @click="deletePost(post)">Supprimer</button>
+            <button @click="modifyPost(post)">Modifier</button>
           </div>
         </div>
       </div>
+    </div>
     <Footer />
   </div>
 </template>
@@ -58,8 +58,7 @@ export default {
   data() {
     return {
       post: [],
-      user: [],
-      userId: "",
+      UserId: "",
     };
   },
   components: { Header, Footer },
@@ -68,13 +67,14 @@ export default {
   },
   methods: {
     getDateWithoutTime(date) {
-      return require("moment")(date).format("HH:mm YYYY-MM-DD ");
+      return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
     getOnePost() {
       const postId = this.$route.params.id;
       PostService.getOnePost(postId)
         .then((res) => {
-          this.post = res.data;
+          this.post = res.data
+          console.log(this.post.UserId)
       })
     }
   }

@@ -39,11 +39,18 @@ const routes = [
     meta: { title:'Groupomania - modification Password' }
   },
 
-  // Route création post 
+  // Route OnePost 
   {
     path: "/posts/:id",
     name: "Post",
     component: () => import("../components/Post.vue"),
+    meta: { title:'Groupomania - post' }
+  },
+  // Route OnePost 
+  {
+    path: "/posts/user/:userId",
+    name: "Mes posts",
+    component: () => import("../components/PostsUser.vue"),
     meta: { title:'Groupomania - mes posts' }
   },
  /* {

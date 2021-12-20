@@ -9,7 +9,7 @@
 			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
     </h1>
     
-    <PostFormulaire/>
+    <PostFormulaire />
     <AllPosts />
 
     </div>
