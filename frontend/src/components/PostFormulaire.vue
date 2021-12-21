@@ -83,12 +83,12 @@ export default {
       post.append('title', this.post.title);
       post.append('content', this.post.content);
       this.$store.dispatch("post/createPost", post)
-        .then((data) => {
+        .then(() => {
           console.log(this.post)
-          console.log(data.User)
           alert("Création du post réussi !")
         });
       event.target.reset();
+      location.reload()
     },
   },
 }
@@ -110,9 +110,12 @@ export default {
   padding: 2rem
 }
 .avatar {
-  width: 12%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
   border-radius: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 #preview img {
   max-width: 100%;

@@ -133,12 +133,14 @@ svg {
   display: flex;
   align-items: center;
 }
+h3 {
+  padding-left: 1rem;
+}
 .postUserPhoto {
   width: 50px;
   height: 50px;
   object-fit: cover;
   object-position: center;
-  padding-right: 2rem;
   border-radius: 100%;
 }
 </style>

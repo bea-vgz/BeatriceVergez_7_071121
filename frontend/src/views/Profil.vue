@@ -151,8 +151,11 @@ h1 {
     flex-direction: column;
 }
 .avatar {
-    width: 35%;
-    border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 100%;
 }
 .bg-white {
   background-color: #fff;
