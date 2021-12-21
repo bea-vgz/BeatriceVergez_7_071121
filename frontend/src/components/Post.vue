@@ -5,13 +5,13 @@
       <div class="row border-secondary text-justify">
         <div class="col">
           <div class="card-body">
-            <div class="menu-item" @click="isOpen = !isOpen" >
+            <div class="menu-item" @click="isOpen = !isOpen" v-if="currentUser.username == post.User.username" >
             <button class="accessUser">
               <font-awesome-icon icon="ellipsis-v" class="ellipsis" />
             </button>
             <transition name="fade" apear>
               <div class="sub-menu" v-if="isOpen">
-                <div class="menu-item" v-if="currentUser.username == post.User.username">
+                <div class="menu-item">
                   <button @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer</button>
                   
                 </div>
@@ -208,12 +208,14 @@ svg {
   display: flex;
   align-items: center;
 }
+h3 {
+  padding-left: 1.5rem;
+}
 .postUserPhoto {
   width: 50px;
   height: 50px;
   object-fit: cover;
   object-position: center;
-  padding-right: 2rem;
   border-radius: 100%;
 }
 </style>

@@ -16,11 +16,10 @@
               <h2> {{ post.title }} </h2>
               <p> {{ post.content }}</p>
             </div>
-            <div class="img_container">
+            <a class="img_container" @click="$router.push(`posts/${post.id}`)">
                 <img :src="`${post.image}`" alt="image" class="img">
-            </div>
-        
-            
+                <span class="a-txt"><font-awesome-icon icon="eye"/> Voir le post </span>
+            </a>
             <div class="line"></div>
             <div class="footer d-flex justify-content-around">
                 <button class="react-btn footer-btn btn-block" aria-label="Liker ou disliker" >
@@ -43,12 +42,6 @@
                     <span class="comment">Commenter</span>
                 </button>
             </div>
-            <div class="line mb-3"></div>
-                
-
-            <button @click="$router.push(`posts/${post.id}`)" class="btn btn-secondary">
-              Voir le post
-            </button>
           </div>
         </div>
       </div>
@@ -142,5 +135,37 @@ h3 {
   object-fit: cover;
   object-position: center;
   border-radius: 100%;
+}
+.opacity1 div img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.opacity1 div:hover img {
+	opacity: .5;
+}
+.img_container{
+  display:grid;
+}
+.img_container>*{
+  grid-area:1/1/-1/-1; 
+  /* raccourci pour grid-row et grid-column */
+}
+.a-txt{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#000;
+  background:#ffffff8f;
+  opacity: 0;
+  transition:opacity .8s;
+  font-weight: 700;
+}
+.a-txt:hover{
+  opacity: 1;
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
 }
 </style>
