@@ -11,8 +11,9 @@
             </button>
             <transition name="fade" apear>
               <div class="sub-menu" v-if="isOpen">
-                <div class="menu-item">
+                <div class="menu-item" v-if="currentUser.username == post.User.username">
                   <button @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer</button>
+                  
                 </div>
                 <div class="menu-item">
                   <button @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/>Modifier</button>
@@ -64,9 +65,10 @@
 </template>
 
 <script>
+import router from "../router";
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import PostService from "../service/post.resource"
+import PostService from "../service/post.resource";
 export default {
   data() {
     return {
@@ -75,7 +77,15 @@ export default {
       isOpen: false,
     };
   },
-  components: { Header, Footer },
+  components: { 
+    Header, 
+    Footer, 
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   mounted() {
     this.getOnePost();
   },
@@ -91,7 +101,18 @@ export default {
           console.log(this.post.UserId)
         })
     },
-  },
+    async deletePost() {
+        const postId = this.$route.params.id;
+        this.$store.dispatch("post/deletePost", postId)
+        .then(() => {
+          console.log("Post supprimé !");
+          router.push('/home');
+        },
+        error => {
+          console.log(error);
+        });
+    },
+  }
 };
 </script>
 <style scoped>

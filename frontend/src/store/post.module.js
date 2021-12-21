@@ -54,6 +54,19 @@ actions: {
     })
   },
 
+  deletePost({commit}, post) {
+    return PostService.deletePost(post).then(
+      (response) => {
+        commit ('deleteSuccess')
+        return Promise.resolve(response);
+      },
+      (error) => {
+        commit ('deleteFailure')
+        return Promise.reject(error)
+      }
+    )
+  },
+
 },
 mutations: {
     createPostSuccess(state) {
@@ -79,6 +92,12 @@ mutations: {
     getOnePostFailure(state) {
       state.post = null;
       state.message = "Post non récupéré !";
+    },
+    deleteSuccess(state) {
+      state.post = null;
+      state.message = "Post supprimé !";
+    },
+    deleteFailure() {
     },
 },
 getters : {

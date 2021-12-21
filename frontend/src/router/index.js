@@ -53,6 +53,14 @@ const routes = [
     component: () => import("../components/PostsUser.vue"),
     meta: { title:'Groupomania - mes posts' }
   },
+
+  // Route OneUser 
+  {
+    path: "/users/:userId",
+    name: "profil user",
+    component: () => import("../components/OneUser.vue"),
+    meta: { title:'Groupomania - collègue' }
+  },
  /* {
     path: '/about',
     name: 'About',
