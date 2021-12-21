@@ -9,12 +9,14 @@
           <div class="card-body">
             <div class="UserAvatar" v-if="post.User">
               <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
+              <div class="infoPostuser">
+                <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
+                <p class="datePost">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+              </div>
             </div>
             <div class="card-text">
-              <p>Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
               <h2> {{ post.title }} </h2>
-              <p> {{ post.content }}</p>
+              <p class="contentPost"> {{ post.content }}</p>
             </div>
             <a class="img_container" @click="$router.push(`posts/${post.id}`)">
                 <img :src="`${post.image}`" alt="image" class="img">
@@ -126,7 +128,7 @@ svg {
   display: flex;
   align-items: center;
 }
-h3 {
+.infoPostuser {
   padding-left: 1rem;
 }
 .postUserPhoto {
@@ -167,5 +169,15 @@ h3 {
 }
 a{
   text-decoration: none;
+}
+.contentPost {
+  margin-top: -1rem;
+  margin-bottom: 1rem
+}
+.datePost {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #797979;
+  margin-top: -1rem
 }
 </style>

@@ -12,23 +12,25 @@
             <transition name="fade" apear>
               <div class="sub-menu" v-if="isOpen">
                 <div class="menu-item">
-                  <button @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer</button>
-                  
+                  <a @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer</a>
                 </div>
+                <div class="line"></div>
                 <div class="menu-item">
-                  <button @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/>Modifier</button>
+                  <a @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/>Modifier</a>
                 </div>
               </div>
             </transition>
           </div>
             <div class="UserAvatar" v-if="post.User">
               <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
+              <div class="infoPostuser">
+                <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
+                <p class="datePost">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+              </div>
             </div>
             <div class="card-text">
-              <p>Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
               <h2> {{ post.title }} </h2>
-              <p> {{ post.content }}</p>
+              <p class="contentPost"> {{ post.content }}</p>
             </div>
             <div class="img_container">
                 <img :src="`${post.image}`" alt="image" class="img">
@@ -79,7 +81,7 @@ export default {
   },
   components: { 
     Header, 
-    Footer, 
+    Footer,
   },
   computed: {
     currentUser() {
@@ -101,16 +103,16 @@ export default {
           console.log(this.post.UserId)
         })
     },
-    async deletePost() {
-        const postId = this.$route.params.id;
-        this.$store.dispatch("post/deletePost", postId)
-        .then(() => {
-          console.log("Post supprimé !");
-          router.push('/home');
-        },
-        error => {
-          console.log(error);
-        });
+    deletePost() {
+      const postId = this.$route.params.id;
+      this.$store.dispatch("post/deletePost", postId)
+      .then(() => {
+        console.log("Post supprimé !");
+        router.push('/home');
+      },
+      error => {
+        console.log(error);
+      });
     },
   }
 };
@@ -121,7 +123,7 @@ nav .menu-item, .sub-menu {
   background-color: #fff;
   width: max-content;
   padding: 1.5rem;
-  transform: translateX(170%);
+  transform: translateX(250%);
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -208,7 +210,7 @@ svg {
   display: flex;
   align-items: center;
 }
-h3 {
+.infoPostuser {
   padding-left: 1.5rem;
 }
 .postUserPhoto {
@@ -217,5 +219,18 @@ h3 {
   object-fit: cover;
   object-position: center;
   border-radius: 100%;
+}
+a:hover {
+  color:#fd2d01;
+}
+.contentPost {
+  margin-top: -1rem;
+  margin-bottom: 1rem
+}
+.datePost {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #797979;
+  margin-top: -1rem
 }
 </style>
