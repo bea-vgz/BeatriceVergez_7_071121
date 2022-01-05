@@ -24,9 +24,21 @@ class PostService {
         .then(() => localStorage.removeItem('post'))
     }
 
+    modifyPost(id) {
+        return resource.put(`/posts/${id}`, { headers: authHeader() })
+        .then(() => localStorage.removeItem('post'))
+    }
+
     getAllPostsUser(userId){
         return resource.get(`/posts/user/${userId}`, { headers: authHeader() })
     }
 
+    getPostsLikes(postId) {
+        return resource.get(`posts/${postId}/likes`, { headers: authHeader() })
+    }
+
+    likePost(postId) {
+        return resource.get(`posts/${postId}/likes`, { headers: authHeader() })
+    }
 }
 export default new PostService();

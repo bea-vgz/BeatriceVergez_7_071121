@@ -9,7 +9,7 @@
         <input
           v-model="post.title"
           id="title"
-          placeholder="Titre du post"
+          placeholder="Ajoutez un titre"
           aria-label="Écrire un titre"
           class="input"
         />

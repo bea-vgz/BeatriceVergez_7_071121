@@ -64,7 +64,16 @@ exports.deletePost = (req, res, next) => {
 // Afficher/Récupérer un post 
 exports.getOnePost = (req, res, next) => {
     Post.findOne({ where: { id: req.params.id },
-      include: { model: User, attributes: ["username", "photoProfil"]},
+      include: [
+        { 
+          model: User, 
+          attributes: ["username", "photoProfil"]
+        },
+        {
+          model: Comment, 
+          attributes: ["content"]
+        }
+      ],
     })
       .then((post) => res.status(200).json(post))
       .catch((error) => res.status(404).json({ error }));
@@ -73,8 +82,18 @@ exports.getOnePost = (req, res, next) => {
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPosts = (req, res, next) => {
     Post.findAll({ 
-      include: { model: User, attributes: ["username", "photoProfil"]}, 
-    }) 
+      include: [
+        { 
+          model: User, 
+          attributes: ["username", "photoProfil"]
+        },
+        {
+          model: Comment, 
+          attributes: ["content"]
+        }
+      ],
+      order: [["createdAt", "ASC"]]
+    })
       .then(posts => res.status(200).json(posts))
       .catch(error => res.status(400).json({ error }));
 };

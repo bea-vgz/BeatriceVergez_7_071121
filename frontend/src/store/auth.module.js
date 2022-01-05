@@ -81,24 +81,12 @@ export const auth = {
 
     getAllUsers({ commit }) {
       return AuthService.getAllUsers()
-      .then((response) => {
+      .then((users) => {
         commit('getUsers');
-        return Promise.resolve(response.data);
+        return Promise.resolve(users);
       },
       (error) => {
         commit('getUsersFailure')
-        return Promise.reject(error)
-      })
-    },
-
-    getOneUser({ commit }, id) {
-      return AuthService.getOneUser(id)
-      .then((response) => {
-        commit('getOneUser');
-        return Promise.resolve(response.data);
-      },
-      (error) => {
-        commit('getOneUserFailure')
         return Promise.reject(error)
       })
     },
@@ -144,14 +132,6 @@ export const auth = {
     getUsersFailure(state) {
       state.users = null;
       state.message = "Users non récupérés !";
-    },
-    getOneUser(state, user) {
-      state.user = user;
-      state.message = "User récupéré !";
-    },
-    getOneUserFailure(state) {
-      state.user = null;
-      state.message = "User non récupéré !";
     },
   },
 

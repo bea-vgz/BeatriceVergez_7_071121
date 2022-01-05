@@ -3,11 +3,7 @@
     <div class="navigation">
       <div class="nav_logo">
         <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-        <form class="form-search" method="get" action="/">
-          <div class="input-append">
-            <input type="text" class="input-medium search-query" name="s" placeholder="Rechercher un utilisateur" value="" aria-autocomplete="list" aria-label="rechercher un utilisateur">
-          </div>
-        </form>
+        <UserSearch />
       </div>
         <div class="accessPosts">
           <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Home</router-link> |
@@ -50,6 +46,7 @@
 <script>
 import router from "../router";
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
+import UserSearch from '../components/UserSearch';
 export default {
   
   name: 'Header',
@@ -61,7 +58,8 @@ export default {
     }
   },
   components: {
-    ConfirmDialogue
+    ConfirmDialogue,
+    UserSearch
   },
   computed: {
     currentUser() {

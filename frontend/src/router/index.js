@@ -46,7 +46,7 @@ const routes = [
     component: () => import("../components/Post.vue"),
     meta: { title:'Groupomania - post' }
   },
-  // Route OnePost 
+  // Route OnePostUser 
   {
     path: "/posts/user/:userId",
     name: "Mes posts",
@@ -56,8 +56,8 @@ const routes = [
 
   // Route OneUser 
   {
-    path: "/users/:userId",
-    name: "profil user",
+    path: "/users/:id",
+    name: "OneUser",
     component: () => import("../components/OneUser.vue"),
     meta: { title:'Groupomania - collègue' }
   },

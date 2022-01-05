@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt'); //package de cryptage pour les mdp
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/index');
+const { Post } = require('../models/index');
 const fs = require('fs');
 
 // Création d'un utilisateur dans la bdd
@@ -124,7 +125,9 @@ exports.getAllUsers = (req, res, next) => {
 
 // Afficher/Récupérer un user
 exports.getOneUser = (req, res, next) => {
-    User.findOne({ where: { id: req.params.id }})
+    User.findOne({ where: { id: req.params.id },
+        include: { model: Post, attributes: ["title", "content", "image"]},
+    })
       .then(user => res.status(200).json(user))
       .catch(error => res.status(400).json({ error }));
 };

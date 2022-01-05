@@ -45,7 +45,10 @@ exports.deleteComment = (req, res, next) => {
 
 // Afficher/Récupérer un commentaire 
 exports.getOneComment = (req, res, next) => {
-    Comment.findOne({ where: { id: req.params.id, PostId: req.params.postId } })
+    Comment.findOne({ where: { id: req.params.id, PostId: req.params.postId },
+      include: [{ model: User }],
+      order: [["createdAt", "ASC"]], 
+    })
       .then((comment) => res.status(200).json(comment))
       .catch((error) => res.status(404).json({ error }));
 };

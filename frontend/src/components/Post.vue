@@ -5,27 +5,20 @@
       <div class="row border-secondary text-justify">
         <div class="col">
           <div class="card-body">
-            <div class="menu-item" @click="isOpen = !isOpen" v-if="currentUser.username == post.User.username" >
-            <button class="accessUser">
-              <font-awesome-icon icon="ellipsis-v" class="ellipsis" />
-            </button>
-            <transition name="fade" apear>
-              <div class="sub-menu" v-if="isOpen">
-                <div class="menu-item">
-                  <a @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/>Supprimer</a>
-                </div>
-                <div class="line"></div>
-                <div class="menu-item">
-                  <a @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/>Modifier</a>
-                </div>
-              </div>
-            </transition>
-          </div>
             <div class="UserAvatar" v-if="post.User">
               <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              <div class="infoPostuser">
+              <div class="infoPostUser">
                 <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
-                <p class="datePost">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+                <p class="date">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+              </div>
+            </div>
+            <div class="menu" v-if="currentUser.userId == post.UserId" >
+              <div class="menu-item">
+                <a @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/></a>
+                <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+              </div>
+              <div class="menu-item">
+                <a @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/></a>
               </div>
             </div>
             <div class="card-text">
@@ -35,31 +28,52 @@
             <div class="img_container">
                 <img :src="`${post.image}`" alt="image" class="img">
             </div>
+
             <div class="line"></div>
-            <div class="footer d-flex justify-content-around">
-                <button class="react-btn footer-btn btn-block" aria-label="Liker ou disliker" >
-                    <svg v-if="likesPost" style="width:24px;height:24px" viewBox="0 0 24 24" >
-                        <path fill="rgb(32, 120, 244)"
-                        d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z"
-                        />
-                    </svg>
-                    <svg v-else style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M5,9V21H1V9H5M9,21A2,2 0 0,1 7,19V9C7,8.45 7.22,7.95 7.59,7.59L14.17,1L15.23,2.06C15.5,2.33 15.67,2.7 15.67,3.11L15.64,3.43L14.69,8H21C22.11,8 23,8.9 23,10V12C23,12.26 22.95,12.5 22.86,12.73L19.84,19.78C19.54,20.5 18.83,21 18,21H9M9,19H18.03L21,12V10H12.21L13.34,4.68L9,9.03V19Z"
-                        />
-                    </svg>
-                    <span class="aime">J'aime</span>
-                </button>
-                <button class="react-btn footer-btn btn-block" aria-label="Commenter" >
-                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z"
-                        />
-                    </svg>
-                    <span class="comment">Commenter</span>
-                </button>
-            </div>
-            <div class="line mb-3"></div>
-          </div>
-        </div>
+
+      <div class="footer d-flex justify-content-around">
+        <button
+          @click="likeOrDislikePost"
+          class="react-btn footer-btn btn-block"
+          aria-label="Liker ou disliker"
+        >
+          <svg
+            v-if="likePost"
+            style="width:24px;height:24px"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="rgb(32, 120, 244)"
+              d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z"
+            />
+          </svg>
+          <svg v-else style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M5,9V21H1V9H5M9,21A2,2 0 0,1 7,19V9C7,8.45 7.22,7.95 7.59,7.59L14.17,1L15.23,2.06C15.5,2.33 15.67,2.7 15.67,3.11L15.64,3.43L14.69,8H21C22.11,8 23,8.9 23,10V12C23,12.26 22.95,12.5 22.86,12.73L19.84,19.78C19.54,20.5 18.83,21 18,21H9M9,19H18.03L21,12V10H12.21L13.34,4.68L9,9.03V19Z"
+            />
+          </svg>
+
+          <span :class="`ml-2 ${likePost ? 'blue' : ''}`">J'aime</span>
+        </button>
+         <button
+          class="react-btn footer-btn btn-block"
+          @click="focusInput(post)"
+          aria-label="Commenter"
+        >
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z"
+            />
+          </svg>
+          <span class="ml-2">Commenter</span>
+        </button>
+      </div>
+      <div class="line mb-3"></div>
+      <AllComments :post="post" />
+      </div>
+      </div>
       </div>
     </div>
     <Footer />
@@ -70,18 +84,27 @@
 import router from "../router";
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
+import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import PostService from "../service/post.resource";
+import AllComments from "../components/AllComments.vue";
 export default {
   data() {
     return {
       post: {},
       posts: [],
-      isOpen: false,
+      likePost: false,
+      comments: [],
+      comment: {}
     };
   },
   components: { 
     Header, 
     Footer,
+    ConfirmDialogue,
+    AllComments,
+  },
+  props: {
+    likes: Number,
   },
   computed: {
     currentUser() {
@@ -95,6 +118,7 @@ export default {
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
+
     getOnePost() {
       const postId = this.$route.params.id;
       PostService.getOnePost(postId)
@@ -103,42 +127,44 @@ export default {
           console.log(this.post.UserId)
         })
     },
-    deletePost() {
-      const postId = this.$route.params.id;
-      this.$store.dispatch("post/deletePost", postId)
-      .then(() => {
-        console.log("Post supprimé !");
-        router.push('/home');
-      },
-      error => {
-        console.log(error);
-      });
+
+    async likeOrDislikePost () {
+      const res = await this.likePost()
+      if (res.like !== this.likePost) {
+        this.likesCount += res.like ? 1 : -1
+      }
+      this.likePost = res.like
+    },
+
+    focusInput(post) {
+      document.getElementById(`comment-area-${this.postId}`).focus(post)
+    },
+
+    async deletePost() {
+      const ok = await this.$refs.confirmDialogue.show({
+        title: 'Supprimer mon post',
+        message: 'Êtes-vous sur de vouloir supprimer ce post ?',
+        okButton: 'Oui, supprimer ce post',
+      })
+      if (ok) {
+        const postId = this.$route.params.id;
+        this.$store.dispatch("post/deletePost", postId)
+        .then(() => {
+          console.log("Post supprimé !");
+          router.push('/home');
+        },
+        error => {
+          console.log(error);
+        });
+        alert('Votre post a été supprimé !')
+      } else {
+        alert("Ce post n'a pas pu être supprimé")
+      }
     },
   }
 };
 </script>
 <style scoped>
-nav .menu-item, .sub-menu {
-  position: absolute;
-  background-color: #fff;
-  width: max-content;
-  padding: 1.5rem;
-  transform: translateX(250%);
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: all .2s ease-out;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-.sub-menu {
-  cursor: pointer;
-}
-.menu-item {
-  color:#242424;
-}
 .card-body {
     padding: 3.5rem;
     max-width: 100%;
@@ -210,7 +236,7 @@ svg {
   display: flex;
   align-items: center;
 }
-.infoPostuser {
+.infoPostUser {
   padding-left: 1.5rem;
 }
 .postUserPhoto {
@@ -222,15 +248,41 @@ svg {
 }
 a:hover {
   color:#fd2d01;
+  cursor: pointer;
 }
 .contentPost {
   margin-top: -1rem;
   margin-bottom: 1rem
 }
-.datePost {
+.date {
   font-size: 0.8rem;
   font-style: italic;
   color: #797979;
   margin-top: -1rem
+}
+.menu {
+  display: flex;
+  float: right;
+  padding: 1rem;
+}
+.react-btn {
+  background: white;
+  border: none;
+  margin: 3px;
+  color: #747474;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  padding: 0.375rem 0.75rem;
+}
+.react-btn:focus {
+  border: none !important;
+  outline: none !important;
+}
+.react-btn:hover {
+    color: #747474 !important;
+    background-color: rgba(108, 117, 125, 0.1) !important;
+  }
+.btn-block, .btn-block {
+  margin-top: 0px;
 }
 </style>

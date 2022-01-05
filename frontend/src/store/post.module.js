@@ -54,6 +54,18 @@ actions: {
     })
   },
 
+  getPostsLikes({ commit }, postId) {
+    return PostService.getPostsLikes(postId)
+    .then((posts) => {
+      commit('getPosts');
+      return Promise.resolve(posts);
+    },
+    (error) => {
+      commit('getPostsFailure')
+      return Promise.reject(error)
+    })
+  },
+
   deletePost({commit}, post) {
     return PostService.deletePost(post).then(
       (response) => {
@@ -66,6 +78,32 @@ actions: {
       }
     )
   },
+
+  modifyPost({commit}, post) {
+    return PostService.modifyPost(post).then(
+      (response) => {
+        commit ('updateSuccess')
+        return Promise.resolve(response);
+      },
+      (error) => {
+        commit ('updateFailure')
+        return Promise.reject(error)
+      }
+    )
+  },
+
+  likePost({ commit }, post) {
+    return PostService.likePost(post)
+    .then((response) => {
+      commit('likePostSuccess')
+      return Promise.resolve(response)
+    },
+    (error) => {
+      commit('likePostFailure')
+      return Promise.reject(error)
+    })
+  },
+  
 
 },
 mutations: {
@@ -98,6 +136,28 @@ mutations: {
       state.message = "Post supprimé !";
     },
     deleteFailure() {
+    },
+    updateSuccess(state, post) { 
+      state.post = post
+    },
+    updateFailure(state) {
+      state.user = null;
+    },
+    getPostsLikes(state, likes) {
+      state.post.likes = likes;
+      state.message = "Likes récupérés !";
+    },
+    getPostsLikesFailure(state) {
+      state.likes = null;
+      state.message = "Likes non récupérés !";
+    },
+    likePostSuccess(state) {
+      state.likePost.status = 'Created'
+      state.post = post
+    },
+    likePostFailure(state) {
+      state.likePost.status = 'Not created'
+      state.post = null
     },
 },
 getters : {

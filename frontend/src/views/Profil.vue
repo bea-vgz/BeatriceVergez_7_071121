@@ -256,6 +256,6 @@ a:hover{
   margin-bottom: 1rem;
 }
 .py-8 {
-   padding-bottom: 2rem;
+  padding-bottom: 2rem;
 }
 </style>

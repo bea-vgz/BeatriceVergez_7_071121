@@ -4,6 +4,7 @@
         class="row border-secondary text-justify"
         v-for="post in posts"
         :key="post.id"
+        :like="post.like"
       >
         <div class="col">
           <div class="card-body">
@@ -11,7 +12,7 @@
               <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
               <div class="infoPostuser">
                 <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
-                <p class="datePost">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+                <p class="date">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
               </div>
             </div>
             <div class="card-text">
@@ -56,6 +57,7 @@ export default {
   data() {
     return {
       posts: [],
+      like: "",
     }
   },
   methods: {
@@ -174,7 +176,7 @@ a{
   margin-top: -1rem;
   margin-bottom: 1rem
 }
-.datePost {
+.date {
   font-size: 0.8rem;
   font-style: italic;
   color: #797979;
