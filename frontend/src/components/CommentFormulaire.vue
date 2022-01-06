@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container_comments align-items-center mt-3">
-      <div class="d-flex mr-2 mb-2">
+      <div class="mr-2 mb-2">
         <router-link to="/profil" v-if="currentUser" class="container_user bg-white">
           <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" />
         </router-link>
@@ -43,11 +43,10 @@ export default {
   },
   methods: {
     createComment() {
-      const comment = this.content;
-      CommentService.createComment(comment)
-      .then(data => {
-        this.comment = data.comment;
-        console.log(this.comment)
+      const postId = this.$route.params.id;
+      CommentService.createComment(postId)
+      .then(() => {
+        console.log(this.comment.content)
         alert("Création du commentaire réussi !")
       })
     },
@@ -61,25 +60,25 @@ export default {
 .container_comments {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 .form_comment {
   width: 100%;
 }
 .comment-area {
-  background-color: rgba(108, 117, 125, 0.1);
+  background-color: #F2F2F2;
   width: 95%;
   height: 35px;
   border: none;
-  padding: 0.5rem;
-  margin: 0.2rem
+  padding-left: 0.8rem;
+  border-radius: 2rem;
 }
 .container_user {
-  width: 60px;
+  margin-right: 0.5rem;
   height: 45px;
-  margin-bottom: 0.5rem;
 }
 .avatar {
-  height: 45px;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
 }
 </style>

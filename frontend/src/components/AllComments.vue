@@ -5,12 +5,14 @@
     <div class="d-flex align-items-center position-relative">
       <div class="UserAvatar" v-if="comment.User">
         <img :src="comment.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
-        <h3 class="font postUsername" alt="Pseudo de l'user">{{ comment.User.username }}</h3>
       </div>
+      <div class="comments">
+        <h3 class="commentUsername" alt="Pseudo de l'user">{{ comment.User.username }}</h3>
         <p class="mb-0">{{ comment.content }}</p>
-      </div>
+      </div> 
+    </div>
     <p class="text-secondary comment-date">
-      {{ getDateWithoutTime(post.createdAt) }}
+      {{ getDateWithoutTime(comment.createdAt) }}
     </p>
   </div>
   </div>
@@ -86,19 +88,38 @@ export default {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
+.comments {
+  background-color: #F2F2F2;
+  border-radius: 1rem;
+  padding-left: 0.6rem;
+  padding-right: 1rem;
+  align-self: flex-start;
+  width: 100%;
+  margin-top: 0.7rem;
+}
 .comment-date {
-  margin-left: 58px;
-  font-size: 0.8rem;
+  margin-left: 40px;
+  font-size: 0.6rem;
+  color: #747474;
 }
 .UserAvatar {
   display: flex;
   align-items: center;
+  margin-right: 0.5rem;
+}
+.commentUsername {
+  font-size: 1rem;
+  margin-bottom: -0.8rem;
 }
 .commentUserPhoto {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   object-fit: cover;
   object-position: center;
   border-radius: 100%;
+}
+.d-flex {
+  display: flex;
+  align-self: flex-start;
 }
 </style>
