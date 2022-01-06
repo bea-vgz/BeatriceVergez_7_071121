@@ -14,5 +14,10 @@ class CommentService {
     getPostsComments(postId){
         return resource.get(`/posts/${postId}/comments`, { headers: authHeader() })
     }
+
+    deleteComment(postId, id) {
+        return resource.delete(`/posts/${postId}/comments/${id}`, { headers: authHeader() })
+        .then(() => localStorage.removeItem('comment'))
+    }
 }
 export default new CommentService();

@@ -9,13 +9,24 @@
         <p class="commentaire">{{ comment.content }}</p>
       </div> 
     </div>
-    <p class="text-secondary comment-date">
-      {{ getDateWithoutTime(comment.createdAt) }}
-    </p>
+    <div class="comment-info">
+      <p class="text-secondary comment-date">
+        {{ getDateWithoutTime(comment.createdAt) }}
+      </p>
+        <div class="menu-comment-item" v-if="currentUser.userId == comment.UserId">
+          <a @click="deleteComment(comment)">Supprimer</a>
+          <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+        </div>
+        <div class="menu-comment-item">
+          <a @click="modifyComment(comment)">Modifier</a>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
+import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
+import CommentService from "../service/comment.resource";
 export default {
   name: 'Comment',
   data () {
@@ -23,7 +34,10 @@ export default {
       isEditing: false,
     }
   },
-  props: ['comment', 'post'],
+  props: ['post', 'comment'],
+  components: {
+    ConfirmDialogue,
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -44,6 +58,29 @@ export default {
     },
     newline () {
       this.comment = `${this.comment}\n`
+    },
+
+    async deleteComment() {
+      const ok = await this.$refs.confirmDialogue.show({
+        title: 'Supprimer mon commentaire',
+        message: 'Êtes-vous sur de vouloir supprimer ce commentaire ?',
+        okButton: 'Oui, supprimer ce commentaire',
+      })
+      if (ok) {
+        const comment = this.comment.id
+        const postId = this.$route.params.id;
+        CommentService.deleteComment(postId, comment)
+        .then(() => {
+          console.log("Commentaire supprimé !");
+          location.reload
+        },
+        error => {
+          console.log(error);
+        });
+        alert('Votre post a été supprimé !')
+      } else {
+        alert("Ce post n'a pas pu être supprimé")
+      }
     },
   }
 }
@@ -120,5 +157,20 @@ export default {
 .d-flex {
   display: flex;
   align-self: flex-start;
+}
+.comment-info {
+  display: flex;
+  justify-content: space-between;
+}
+.menu-comment {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color:#747474
+}
+a:hover {
+  color:#fd2d01;
+  cursor: pointer;
 }
 </style>

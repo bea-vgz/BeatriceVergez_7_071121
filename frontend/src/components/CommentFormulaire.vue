@@ -49,9 +49,9 @@ export default {
         alert("Création du commentaire réussi !")
       })
       event.target.reset();
-      location.reload()
+      window.reload()
     },
-    
+
     newline () {
       this.comment = `${this.comment}\n`
     },
