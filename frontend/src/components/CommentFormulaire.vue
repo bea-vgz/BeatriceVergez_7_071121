@@ -31,27 +31,29 @@ export default {
   data () {
     return {
       comment: new Comment("", ""),
-      post:'',
-      content:''
     };
   },
+  props: ['post'],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
   methods: {
-    createComment() {
+    createComment: function(event) {
+      const comment = this.comment
       const postId = this.$route.params.id;
-      CommentService.createComment(this.comment, postId)
-      .then((res) => {
-        this.comment= res.data
+      CommentService.createComment(comment, postId)
+      .then(() => {
         console.log(this.comment)
         alert("Création du commentaire réussi !")
       })
+      event.target.reset();
+      location.reload()
     },
+    
     newline () {
-      this.comment.content = `${this.comment.content}\n`
+      this.comment = `${this.comment}\n`
     },
   }
 };
