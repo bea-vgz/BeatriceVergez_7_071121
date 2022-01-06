@@ -4,11 +4,7 @@ import authHeader from './auth.header'
 class CommentService {
 
     createComment(comment, postId) {
-        return resource.post(`/posts/${postId}/comments`, {
-            content: comment.content,
-        }, { 
-            headers: authHeader() 
-        })
+        return resource.post(`/posts/${postId}/comments`, comment, { headers: authHeader() })
         .then(response => {
             localStorage.setItem('comment', JSON.stringify(response.data));
             console.log(response)

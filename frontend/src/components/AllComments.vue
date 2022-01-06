@@ -8,7 +8,7 @@
       </div>
       <div class="comments">
         <h3 class="commentUsername" alt="Pseudo de l'user">{{ comment.User.username }}</h3>
-        <p class="mb-0">{{ comment.content }}</p>
+        <p class="commentaire">{{ comment.content }}</p>
       </div> 
     </div>
     <p class="text-secondary comment-date">
@@ -90,12 +90,15 @@ export default {
 }
 .comments {
   background-color: #F2F2F2;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding-left: 0.6rem;
   padding-right: 1rem;
   align-self: flex-start;
   width: 100%;
-  margin-top: 0.7rem;
+  margin-top: 0.3rem;
+}
+.commentaire {
+  font-size: 0.8rem;
 }
 .comment-date {
   margin-left: 40px;
@@ -108,7 +111,7 @@ export default {
   margin-right: 0.5rem;
 }
 .commentUsername {
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-bottom: -0.8rem;
 }
 .commentUserPhoto {

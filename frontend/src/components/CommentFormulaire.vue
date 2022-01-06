@@ -10,7 +10,7 @@
         <div>
           <input
             :id="`comment-area-${this.postId}`"
-            v-model="comment.content"
+            v-model="content"
             @keydown.enter.exact.prevent
             @keyup.enter.exact="createComment"
             @keydown.enter.shift.exact="newline"
@@ -25,15 +25,15 @@
 </template>
 <script>
 import CommentService from '../service/comment.resource'
-import Comment from '../models/comment'
 export default {
   name: 'CommentFormulaire',
   data () {
     return { 
-        comment: new Comment(''),
-        content:'',
+        comment: {
+          content:''
+        },
         post:'',
-        postId: this.$route.params.id,
+        content:''
     };
   },
   computed: {
@@ -44,22 +44,25 @@ export default {
   methods: {
     createComment() {
       const postId = this.$route.params.id;
-      CommentService.createComment(postId)
-      .then(() => {
-        console.log(this.comment.content)
+      const comment = this.content;
+      CommentService.createComment(comment, postId)
+      .then((res) => {
+        this.content = res.data
+        console.log(this.content)
         alert("Création du commentaire réussi !")
       })
     },
     newline () {
-      this.content = `${this.content}\n`
+      this.comment.content = `${this.comment.content}\n`
     },
   }
 };
 </script>
 <style scoped>
 .container_comments {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.3rem;
 }
 .form_comment {
   width: 100%;

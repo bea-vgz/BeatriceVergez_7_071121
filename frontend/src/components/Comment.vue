@@ -18,7 +18,7 @@
         <p v-else class="mb-0">{{ comment.content }}</p>
       </div>
     <p class="text-secondary comment-date">
-      {{ getDateWithoutTime(post.createdAt) }}
+      {{ getDateWithoutTime(comment.createdAt) }}
     </p>
   </div>
 </template>
