@@ -1,5 +1,6 @@
 import resource from './resource'
 import authHeader from './auth.header'
+import { post } from '../store/post.module';
 
 class PostService {
 
@@ -38,7 +39,12 @@ class PostService {
     }
 
     likePost(postId) {
-        return resource.get(`posts/${postId}/likes`, { headers: authHeader() })
+        return resource.post(`posts/${postId}/likes`, { 
+            UserId: post.UserId,
+            PostId: post.PostId,
+        },
+            { headers: authHeader() }
+        )
     }
 }
 export default new PostService();

@@ -45,6 +45,8 @@
                     <span class="comment">Commenter</span>
                 </button>
             </div>
+            <div class="line mb-3"></div>
+              <AllComments :post="post" />
           </div>
         </div>
       </div>
@@ -52,6 +54,7 @@
 </template>
 
 <script>
+import AllComments from "../components/AllComments.vue";
 export default {
   name: 'AllPosts',
   data() {
@@ -59,6 +62,9 @@ export default {
       posts: [],
       like: "",
     }
+  },
+  components: { 
+    AllComments,
   },
   methods: {
     getAllPosts() {

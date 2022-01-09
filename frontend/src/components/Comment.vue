@@ -13,13 +13,15 @@
       <p class="text-secondary comment-date">
         {{ getDateWithoutTime(comment.createdAt) }}
       </p>
-        <div class="menu-comment-item" v-if="currentUser.userId == comment.UserId">
+      <div class="menu-comment" v-if="currentUser.userId == comment.UserId">
+        <div class="menu-comment-item">
           <a @click="deleteComment(comment)">Supprimer</a>
           <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
         </div>
         <div class="menu-comment-item">
           <a @click="modifyComment(comment)">Modifier</a>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,18 +46,10 @@ export default {
     }
   },
   methods: {
-    toggleActions () {
-      this.areActionsVisible = !this.areActionsVisible
-    },
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
-    startEditing () {
-      this.isEditing = true
-      setTimeout(() => {
-        this.$refs.inputContent.focus()
-      }, 30)
-    },
+
     newline () {
       this.comment = `${this.comment}\n`
     },
@@ -72,14 +66,14 @@ export default {
         CommentService.deleteComment(postId, comment)
         .then(() => {
           console.log("Commentaire supprimé !");
-          location.reload
+          location.reload(true);
         },
         error => {
           console.log(error);
         });
-        alert('Votre post a été supprimé !')
+        alert('Votre commentaire a été supprimé !')
       } else {
-        alert("Ce post n'a pas pu être supprimé")
+        alert("Ce commentaire n'a pas été supprimé")
       }
     },
   }
@@ -160,14 +154,20 @@ export default {
 }
 .comment-info {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  width: 100%;
+  margin-top: -0.3rem;
 }
 .menu-comment {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
+}
+.menu-comment-item {
+  font-size: 0.7rem;
   font-weight: 600;
-  color:#747474
+  color:#747474;
+  margin-left: 1rem;
 }
 a:hover {
   color:#fd2d01;

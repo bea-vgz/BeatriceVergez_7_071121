@@ -1,8 +1,7 @@
 <template>
   <transition name="modal-fade">
-    <div class="fixed bottom-0 inset-x-0 flex" @click.stop>
     <div class="fixed inset-0 transition-opacity">
-    <form @submit.prevent="modifyUser" class="modifyProfil">
+    <form @submit.prevent="modifyUser" class="modifyProfil" v-if="currentUser">
         <div class="bg-primary"></div>
         <label class="img" for="selectImage">
             <img v-if="image || currentUser" :src="image || currentUser.photoProfil" alt="Avatar">
@@ -41,7 +40,6 @@
 
     </div>
     <router-view />
-    </div>
   </transition>
 </template>
 
@@ -49,13 +47,13 @@
 export default {
   name: "modifyProfil",
   data() {
-        return {
-            username: '',
-            bio: '',
-            disabledButton: true,
-            image: '',
-            file: '',
-        }
+    return {
+      username: '',
+      bio: '',
+      disabledButton: true,
+      image: '',
+      file: '',
+    }
   },
   computed: {
     currentUser() {
@@ -68,9 +66,7 @@ export default {
     }
   },
   methods: {
-    modifyUser(event) {
-      event.preventDefault();
-
+    modifyUser() {
       if(this.validateInput()) {
         const user = new FormData();
         if (typeof this.currentUser.newPhoto === 'object') {
@@ -123,7 +119,7 @@ export default {
       },
       close() {
         this.$emit("close");
-    },
+      },
   },
 }
 </script>

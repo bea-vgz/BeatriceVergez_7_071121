@@ -23,7 +23,7 @@
               <router-link to="/mesPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
             </div>
             <div class="option is-active">
-              <router-link @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </router-link>
+              <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
             <div class="option is-active" >
@@ -110,20 +110,19 @@ export default {
         alert('Votre compte a été supprimé !')
         router.push('/signup');
       } else {
-        alert("Vous n'avez pas été déconnecté")
+        alert("Votre compte n'a pas été supprimé")
       }
     },
       
     async logout() {
-      this.$store.dispatch('auth/logout');
       const ok = await this.$refs.confirmDialogue.show({
         title: 'Déconnexion',
         message: 'Êtes-vous sur de vouloir vous déconnecter ?',
         okButton: 'Se déconnecter',
       })
       if (ok) {
+        this.$store.dispatch('auth/logout');
         alert('Vous avez été déconnecté. Vous allez être redirigé.')
-        window.location.reload()
         router.push('/');
       } else {
         alert("Vous n'avez pas été déconnecté")

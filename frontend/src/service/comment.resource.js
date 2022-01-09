@@ -19,5 +19,13 @@ class CommentService {
         return resource.delete(`/posts/${postId}/comments/${id}`, { headers: authHeader() })
         .then(() => localStorage.removeItem('comment'))
     }
+
+    modifyComment(postId, id) {
+        return resource.put(`/posts/${postId}/comments/${id}`, { headers: authHeader() })
+        .then(response => {
+          localStorage.setItem('comment', JSON.stringify(response.data));
+          return response.data;
+        });
+      }
 }
 export default new CommentService();

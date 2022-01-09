@@ -12,33 +12,29 @@
                 <p class="date">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
               </div>
             </div>
-            <div class="menu" v-if="currentUser.userId == post.UserId" >
-              <div class="menu-item">
-                <a @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/></a>
-                <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
-              </div>
-              <div class="menu-item">
-                <a @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/></a>
-              </div>
-            </div>
             <div class="card-text">
+              <div class="menu" v-if="currentUser.userId == post.UserId" >
+                <div class="menu-item">
+                  <a @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/></a>
+                  <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+                </div>
+                <div class="menu-item">
+                  <a @click="modifyPost(post)"><font-awesome-icon icon="pencil-alt"/></a>
+                </div>
+              </div>
               <h2> {{ post.title }} </h2>
               <p class="contentPost"> {{ post.content }}</p>
             </div>
             <div class="img_container">
-                <img :src="`${post.image}`" alt="image" class="img">
+              <img :src="`${post.image}`" alt="image" class="img">
             </div>
 
             <div class="line"></div>
 
       <div class="footer d-flex justify-content-around">
-        <button
-          @click="likeOrDislikePost"
-          class="react-btn footer-btn btn-block"
-          aria-label="Liker ou disliker"
-        >
+         <button type="button" title="Liker" @click="likePost(post.id)">
           <svg
-            v-if="likePost"
+            v-if="postLiked"
             style="width:24px;height:24px"
             viewBox="0 0 24 24"
           >
@@ -56,6 +52,8 @@
 
           <span :class="`ml-2 ${likePost ? 'blue' : ''}`">J'aime</span>
         </button>
+
+
          <button
           class="react-btn footer-btn btn-block"
           @click="focusInput(post)"
@@ -92,9 +90,10 @@ export default {
     return {
       post: {},
       posts: [],
-      likePost: false,
       comments: [],
-      comment: {}
+      comment: {},
+      likes: '',
+      liked: false,
     };
   },
   components: { 
@@ -103,9 +102,6 @@ export default {
     ConfirmDialogue,
     AllComments,
   },
-  props: {
-    likes: Number,
-  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -113,6 +109,7 @@ export default {
   },
   mounted() {
     this.getOnePost();
+    this.getPostsLikes();
   },
   methods: {
     getDateWithoutTime(date) {
@@ -122,22 +119,10 @@ export default {
     getOnePost() {
       const postId = this.$route.params.id;
       PostService.getOnePost(postId)
-        .then((res) => {
-          this.post = res.data
+        .then((response) => {
+          this.post = response.data
           console.log(this.post.UserId)
         })
-    },
-
-    async likeOrDislikePost () {
-      const res = await this.likePost()
-      if (res.like !== this.likePost) {
-        this.likesCount += res.like ? 1 : -1
-      }
-      this.likePost = res.like
-    },
-
-    focusInput(post) {
-      document.getElementById(`comment-area-${this.postId}`).focus(post)
     },
 
     async deletePost() {
@@ -158,10 +143,29 @@ export default {
         });
         alert('Votre post a été supprimé !')
       } else {
-        alert("Ce post n'a pas pu être supprimé")
+        alert("Ce post n'a pas été supprimé")
       }
     },
-  }
+
+    likePost(postId) {
+      this.$store.dispatch("post/likePost", postId);
+    },
+
+    focusInput(post) {
+      document.getElementById(`comment-area-${this.postId}`).focus(post)
+    },
+
+    getPostsLikes(){
+      const postId = this.$route.params.id;
+      PostService.getPostsLikes(postId)
+      .then((response) => {
+        if(response.data === 0){
+          this.likes = 0;
+        }
+        this.likes = response.data;
+      })
+    },
+  },
 };
 </script>
 <style scoped>

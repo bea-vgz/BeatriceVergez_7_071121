@@ -2,12 +2,13 @@
   <div class="container">
     <Header />
       <div class="posts" v-if="posts">
-                <Post
-                    v-for="post in posts"
-                    :key="post" :post="post"
-                    :currentUser="currentUser"
-                ></Post>
-                </div>
+        <Post
+          v-for="post in posts"
+          :key="post" 
+          :post="post"
+          :currentUser="currentUser"
+        ></Post>
+      </div>
     <Footer />
   </div>
 </template>

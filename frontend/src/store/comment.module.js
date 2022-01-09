@@ -19,11 +19,19 @@ actions: {
     .then((response) => {
       commit('createCommentSuccess')
       return Promise.resolve(response.data)
-    },
-    (error) => {
-      commit('createCommentFailure')
-      return Promise.reject(error)
     })
+    .then(() => {
+      // Important pour maintenir le state à jour !
+      CommentService.getPostsComments()
+      .then(function(response) {
+        const comments = response.data;
+        commit('getComments', comments);
+        return Promise.resolve(response.data);
+      });
+    })
+    .catch(function(error) {
+      return Promise.reject(error);
+    });
   },
 
   getPostsComments({ commit }) {

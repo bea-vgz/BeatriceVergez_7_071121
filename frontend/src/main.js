@@ -24,7 +24,7 @@ import {
   faImage,
   faEye,
   faEyeSlash,
-  faEllipsisV
+  faEllipsisV,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faEllipsisV, faEye, faEyeSlash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faClone, faSearch, faUserLock, faTrashAlt, faBell, faUserEdit, faTimesCircle, faPencilAlt, faCheckCircle, faFileImport, faImage);

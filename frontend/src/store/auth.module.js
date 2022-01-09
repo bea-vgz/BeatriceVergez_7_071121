@@ -54,7 +54,7 @@ export const auth = {
     },
 
     modifyUser({commit}, payload) {
-      return AuthService.modify(payload).then(
+      return AuthService.modifyUser(payload).then(
         (response) => {
           commit ('updateSuccess')
           return Promise.resolve(response);

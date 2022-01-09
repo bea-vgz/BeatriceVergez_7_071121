@@ -49,7 +49,7 @@ export default {
         alert("Création du commentaire réussi !")
       })
       event.target.reset();
-      window.reload()
+      location.reload(true);
     },
 
     newline () {
