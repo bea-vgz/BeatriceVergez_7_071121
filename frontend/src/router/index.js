@@ -61,6 +61,14 @@ const routes = [
     component: () => import("../components/OneUser.vue"),
     meta: { title:'Groupomania - collègue' }
   },
+
+  // Route User profil 
+  {
+    path: '/profil/:userId',
+    name: 'ProfilUser',
+    component: () => import('../views/ProfilUser.vue'),
+    meta: { title:'Groupomania - profil collègue' }
+  }
  /* {
     path: '/about',
     name: 'About',

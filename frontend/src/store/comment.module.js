@@ -1,4 +1,5 @@
 import CommentService from '../service/comment.resource'
+import PostService from '../service/post.resource'
 
 export const comment = {
     namespaced: true,
@@ -22,10 +23,10 @@ actions: {
     })
     .then(() => {
       // Important pour maintenir le state à jour !
-      CommentService.getPostsComments()
+      PostService.getAllPosts()
       .then(function(response) {
-        const comments = response.data;
-        commit('getComments', comments);
+        const posts = response.data;
+        commit('getComments', posts);
         return Promise.resolve(response.data);
       });
     })
@@ -48,9 +49,9 @@ actions: {
 
 },
 mutations: {
-    createCommentSuccess(state) {
-      state.createdComment.status = 'Created'
-      state.comment = comment
+    createCommentSuccess(state, comment) {
+      state.posts = [comment, ...state.posts];
+      state.message = "Post commenté !";
     },
     createCommentFailure(state) {
       state.createdComment.status = 'Not created'

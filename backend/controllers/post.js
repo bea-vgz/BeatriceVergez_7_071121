@@ -72,7 +72,10 @@ exports.getOnePost = (req, res, next) => {
         {
           model: Comment, 
           attributes: ["content"]
-        }
+        },
+        { 
+          model: Like_post
+        },
       ],
     })
       .then((post) => res.status(200).json(post))
@@ -90,7 +93,11 @@ exports.getAllPosts = (req, res, next) => {
         {
           model: Comment, 
           attributes: ["content"]
-        }
+        },
+        { 
+          model: Like_post, 
+          attributes: ["UserId"]
+        },
       ],
       order: [["createdAt", "ASC"]]
     })

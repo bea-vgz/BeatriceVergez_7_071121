@@ -22,8 +22,8 @@ exports.likePost = async (req, res, next) => {
       }
     }
     catch (error) {
-          res.status(400).json({ error: error.message });
-      }
+      res.status(400).json({ error: error.message });
+    }
 };
 
 //Récupérer tous les likes d'un post

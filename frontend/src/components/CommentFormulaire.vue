@@ -9,11 +9,12 @@
       <form class="form_comment" @submit="createComment">
         <div>
           <input
-            :id="`comment-area-${this.postId}`"
+            :id="`comment-area-${this.post.id}`"
             v-model="comment.content"
             @keydown.enter.exact.prevent
             @keyup.enter.exact="createComment"
             @keydown.enter.shift.exact="newline"
+            rows="1"
             class="comment-area"
             placeholder="Écrire un commentaire..."
             aria-label="Écrire un commentaire"
@@ -40,20 +41,19 @@ export default {
     },
   },
   methods: {
-    createComment: function(event) {
+    createComment(){
       const comment = this.comment
       const postId = this.$route.params.id;
       CommentService.createComment(comment, postId)
       .then(() => {
         console.log(this.comment)
         alert("Création du commentaire réussi !")
+        location.reload(true);
       })
-      event.target.reset();
-      location.reload(true);
     },
 
     newline () {
-      this.comment = `${this.comment}\n`
+      this.comment.content = `${this.comment.content}\n`
     },
   }
 };
@@ -82,6 +82,8 @@ export default {
 .avatar {
   width: 35px;
   height: 35px;
+  object-fit: cover;
+  object-position: center;
   border-radius: 100%;
 }
 </style>

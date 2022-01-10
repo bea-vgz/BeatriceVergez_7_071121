@@ -20,8 +20,8 @@ class CommentService {
         .then(() => localStorage.removeItem('comment'))
     }
 
-    modifyComment(postId, id) {
-        return resource.put(`/posts/${postId}/comments/${id}`, { headers: authHeader() })
+    modifyComment(postId, id, comment) {
+        return resource.put(`/posts/${postId}/comments/${id}`, comment, { headers: authHeader() })
         .then(response => {
           localStorage.setItem('comment', JSON.stringify(response.data));
           return response.data;

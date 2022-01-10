@@ -37,7 +37,7 @@ export default {
     return {
       comments: [],
       count: null,
-      allCommentsDisplayed: false
+      allCommentsDisplayed : false
     }
   },
   mounted () {

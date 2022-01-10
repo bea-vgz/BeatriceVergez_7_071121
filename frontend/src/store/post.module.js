@@ -13,7 +13,7 @@ export const post = {
         image:'',
       },
       allPosts: {},
-      like:''
+      like:'',
       
     },
 
