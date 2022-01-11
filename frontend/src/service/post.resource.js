@@ -46,5 +46,9 @@ class PostService {
             { headers: authHeader() }
         )
     }
+
+    getLikeOnOnePost(postId) {
+        return resource.get(`posts/${postId}/like`, { headers: authHeader() })
+    }
 }
 export default new PostService();

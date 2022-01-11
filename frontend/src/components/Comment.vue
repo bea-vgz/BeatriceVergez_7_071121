@@ -39,7 +39,7 @@
       </div>
     </div>
     <p class="comment-date">
-      {{ getDateWithoutTime(comment.createdAt) }}
+      {{ getDateWithoutTime(comment.updatedAt) }}
     </p>
   </div>
 </template>
@@ -72,10 +72,10 @@ export default {
       this.areActionsVisible = !this.areActionsVisible
     },
 
-    startEditing () {
+    startEditing(comment) {
       this.isEditing = true
       setTimeout(() => {
-        this.$refs.inputContent
+        this.$refs.inputContent.focus(comment)
       }, 30)
     },
 
@@ -128,12 +128,11 @@ export default {
   top: 40px;
   width: 50px;
 }
-.input-content {
-  border-radius: 0.2rem;
+.input-content:focus {
+  border-radius: 0.25rem;
   outline: none;
-  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
-  width: 80%;
-}
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+} 
 .comment-date {
   margin-left: 45px;
   font-size: 0.8rem;

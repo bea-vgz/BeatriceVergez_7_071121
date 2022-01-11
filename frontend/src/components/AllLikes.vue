@@ -1,6 +1,7 @@
 <template>
   <div>
     <button
+      modal="`modal-likes-${post.id}`"
       @click="fetchAllLikes"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
@@ -15,7 +16,9 @@
           />
         </svg>
       </div>
+      <p>{{likes.length}}</p>
     </button>
+  
     <div :id="`modal-likes-${post.id}`" :title="`J'aime`">
       <div v-for="like in likes" :key="like.id">
         <router-link :to="{ name: 'ProfilUser', params: { userId: like.User.id } }" >
@@ -38,7 +41,6 @@ export default {
   data () {
     return {
       likes: [],
-      likePost: false,
     }
   },
   methods: {
@@ -46,11 +48,7 @@ export default {
       const postId = this.$route.params.id;
       PostService.getPostsLikes(postId)
       .then((response) => {
-        if(response.data === 0){
-          this.likes = 0;
-        }
-        this.likes = response.data;
-        this.likes = response.allLikes
+         this.likes = response.data.likes;
       })
     }
   }

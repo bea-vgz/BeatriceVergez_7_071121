@@ -21,7 +21,7 @@
             class="text-left w-100"
             v-if="editingPost && isCreator"
             block
-            v-b-modal="`modal-${elementId}`"
+            b-modal="`modal-${elementId}`"
             aria-label="Modifier"
           >
             <span>{{ modifyText }}</span></button

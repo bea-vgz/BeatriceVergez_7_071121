@@ -14,6 +14,7 @@ export const post = {
       },
       allPosts: {},
       like:'',
+      likes: [],
       
     },
 
@@ -57,12 +58,12 @@ actions: {
 
   getPostsLikes({ commit }, postId) {
     return PostService.getPostsLikes(postId)
-    .then((posts) => {
-      commit('getPosts');
-      return Promise.resolve(posts);
+    .then((likes) => {
+      commit('getPostsLikes');
+      return Promise.resolve(likes);
     },
     (error) => {
-      commit('getPostsFailure')
+      commit('getPostsLikesFailure')
       return Promise.reject(error)
     })
   },
@@ -92,28 +93,6 @@ actions: {
       }
     )
   },
-
-  likePost({ commit }, postId) {
-    return PostService.likePost(postId)
-    .then((response) => {
-      const like = response.data;
-      commit('addLike', like)
-      return Promise.resolve(response)
-    }) 
-    .then(() => {
-      // Important pour maintenir le state à jour !
-      PostService.getAllPosts()
-      .then(function(response) {
-        const posts = response.data;
-        commit('getPosts', posts);
-        return Promise.resolve(response.data);
-      });
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });
-  },
-  
 
 },
 mutations: {
@@ -160,10 +139,6 @@ mutations: {
     getPostsLikesFailure(state) {
       state.likes = null;
       state.message = "Likes non récupérés !";
-    },
-    addLike(state, like) {
-      state.posts = [like, ...state.posts];
-      state.message = "Post liké / disliké";
     },
 },
 getters : {
