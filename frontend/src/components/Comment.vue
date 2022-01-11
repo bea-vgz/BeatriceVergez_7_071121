@@ -7,12 +7,11 @@
         </div>
       </router-link>
       <div class="comment-box">
-        <router-link
-          :to="{ name: 'ProfilUser', params: { userId: comment.User.id } }"
-          >
+        <router-link :to="{ name: 'ProfilUser', params: { userId: comment.User.id } }">
           <p class="comment-username">
             {{ comment.User.username }}
-          </p></router-link>
+          </p>
+        </router-link>
         <input
           v-if="isEditing"
           ref="inputContent"

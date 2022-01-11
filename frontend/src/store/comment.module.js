@@ -1,5 +1,4 @@
 import CommentService from '../service/comment.resource'
-import PostService from '../service/post.resource'
 
 export const comment = {
     namespaced: true,
@@ -21,32 +20,10 @@ actions: {
       commit('createCommentSuccess')
       return Promise.resolve(response.data)
     })
-    .then(() => {
-      // Important pour maintenir le state à jour !
-      PostService.getAllPosts()
-      .then(function(response) {
-        const posts = response.data;
-        commit('getComments', posts);
-        return Promise.resolve(response.data);
-      });
-    })
     .catch(function(error) {
       return Promise.reject(error);
     });
   },
-
-  getPostsComments({ commit }) {
-    return CommentService.getPostsComments()
-    .then((comments) => {
-      commit('getComments');
-      return Promise.resolve(comments);
-    },
-    (error) => {
-      commit('getCommentsFailure')
-      return Promise.reject(error)
-    })
-  },
-
 },
 mutations: {
     createCommentSuccess(state, comment) {

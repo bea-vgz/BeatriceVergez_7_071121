@@ -1,13 +1,12 @@
 <template>
   <div>
     <button
-      v-if="count > 1 && !allCommentsDisplayed"
-      @click="fetchAllComments"
-      class="display-comments mb-2 pt-0 d-flex text-left"
-      aria-label="Afficher les autres commentaires"
+      v-if="!allCommentsDisplayed"
+      @click="AllPostsComments"
+      class="display-comments"
+      aria-label="Afficher les commentaires"
     >
-      <span v-if="count > 2">Afficher {{ count - 1 }} autres commentaires</span>
-      <span v-else>Afficher {{ count - 1 }} autre commentaire</span>
+      <span>Afficher les commentaires</span>
     </button>
     <div class="comment mb-2 text-left" v-for="comment in comments" :key="comment.id">
       <Comment
@@ -42,16 +41,13 @@ export default {
       allCommentsDisplayed : false
     }
   },
-  mounted () {
-	this.getPostsComments();
-  },
-
   methods: {
-    getPostsComments() {
+    AllPostsComments() {
       const postId = this.$route.params.id;
       CommentService.getPostsComments(postId)
-      .then((res) => (this.comments = res.data))
-      this.allCommentsDisplayed = true
+      .then((res) => (
+        this.comments = res.data,
+        this.allCommentsDisplayed = true ))
     },
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
@@ -65,3 +61,21 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.display-comments {
+  color: #747474;
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+  padding: 1rem 1rem;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #fd2d01
+  }
+  &:focus {
+    background: none;
+    outline: none;
+  }
+}
+</style>
