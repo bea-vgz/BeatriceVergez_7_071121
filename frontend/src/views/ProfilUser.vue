@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <row class="text-center justify-content-center">
+    <div class="text-center justify-content-center">
       <div class="d-flex align-items-center flex-column">
         <div class="UserAvatar">
           <img :src="user.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
@@ -16,7 +16,7 @@
           {{ user.bio }}
         </p>
       </div>
-    </row>
+    </div>
 
     <AllPosts :userId="this.$route.params.userId" />
     <Footer />

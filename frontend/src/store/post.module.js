@@ -3,6 +3,7 @@ import PostService from '../service/post.resource'
 export const post = {
     namespaced: true,
     state: {
+      errorMessage: '',
       createdPost: { status: '' },
       modifyPost: { status: '' },
       deletedPost: { status: '' },
@@ -14,7 +15,7 @@ export const post = {
       },
       like: {},
       likes: [],
-      
+      comments: []
     },
 
 actions: {

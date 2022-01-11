@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Header />
     <div class="container_post" v-if="post">
       <div class="row border-secondary text-justify">
         <div class="col">
@@ -23,9 +22,10 @@
               <h2> {{ post.title }} </h2>
               <p class="contentPost"> {{ post.content }}</p>
             </div>
-            <div class="img_container">
-              <img :src="`${post.image}`" alt="image" class="img">
-            </div>
+            <a class="img_container" @click="$router.push(`posts/${post.id}`)">
+                <img :src="`${post.image}`" alt="image" class="img">
+                <span class="a-txt"><font-awesome-icon icon="eye"/> Voir le post </span>
+            </a>
 
             <AllLikes :post="post" />
 
@@ -77,14 +77,11 @@
       </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
 import router from "../router";
-import Header from "../components/Header.vue";
-import Footer from "../components/Footer.vue";
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import PostService from "../service/post.resource";
 import AllComments from "../components/AllComments.vue";
@@ -92,15 +89,13 @@ import AllLikes from "../components/AllLikes.vue";
 export default {
   data() {
     return {
-      post: {},
       comments: [],
       comment: {},
       likeThisPost: false,
     };
   },
+  props: ['post'],
   components: { 
-    Header, 
-    Footer,
     ConfirmDialogue,
     AllComments,
     AllLikes,
@@ -111,21 +106,11 @@ export default {
     }
   },
   mounted() {
-    this.getOnePost();
     this.getLikeOnOnePost();
   },
   methods: {
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
-    },
-
-    getOnePost() {
-      const postId = this.$route.params.id;
-      PostService.getOnePost(postId)
-        .then((response) => {
-          this.post = response.data
-          console.log(this.post.UserId)
-        })
     },
 
     getLikeOnOnePost() {
@@ -295,5 +280,37 @@ a:hover {
 }
 .menu-post {
   margin-top: 0.5rem;
+}
+.opacity1 div img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.opacity1 div:hover img {
+	opacity: .5;
+}
+.img_container{
+  display:grid;
+}
+.img_container>*{
+  grid-area:1/1/-1/-1; 
+  /* raccourci pour grid-row et grid-column */
+}
+.a-txt{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#000;
+  background:#ffffff8f;
+  opacity: 0;
+  transition:opacity .8s;
+  font-weight: 700;
+}
+.a-txt:hover{
+  opacity: 1;
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
 }
 </style>

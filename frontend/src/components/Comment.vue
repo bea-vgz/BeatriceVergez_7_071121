@@ -30,7 +30,7 @@
         <EditButton
           customClass="comment-button"
           classCollapse="comment-btn-collapsed"
-          :isCreator="currentUser.userId == comment.UserId"
+          :isCreator="comment.User.id == currentUser.userId"
           @clickedEditButton="startEditing"
           @onDelete="deleteComment"
           modifyText="Modifier"
@@ -89,12 +89,12 @@ export default {
         CommentService.deleteComment(postId, comment)
         .then(() => {
           console.log("Commentaire supprimé !");
-          location.reload(true);
+          this.$emit('commentDeleted', this.comment)
+          alert('Votre commentaire a été supprimé !')
         },
         error => {
           console.log(error);
         });
-        alert('Votre commentaire a été supprimé !')
     },
 
     modifyComment() {
@@ -104,8 +104,8 @@ export default {
         { content: this.comment.content })
         .then(() => {
           this.comment.updatedAt = comment.updatedAt
+          this.isEditing = false
           alert("Commentaire modifié !");
-          location.reload(true);
         },
         error => {
           console.log(error);

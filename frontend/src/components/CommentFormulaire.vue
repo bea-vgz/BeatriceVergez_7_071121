@@ -14,7 +14,6 @@
             @keydown.enter.exact.prevent
             @keyup.enter.exact="createComment"
             @keydown.enter.shift.exact="newline"
-            rows="1"
             class="comment-area"
             placeholder="Écrire un commentaire..."
             aria-label="Écrire un commentaire"
@@ -46,9 +45,9 @@ export default {
       const postId = this.$route.params.id;
       CommentService.createComment(comment, postId)
       .then(() => {
-        console.log(this.comment)
+        this.comment = ''
+        this.$emit('commentCreated', comment)
         alert("Création du commentaire réussi !")
-        location.reload(true);
       })
     },
 
