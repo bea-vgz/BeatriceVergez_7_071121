@@ -42,7 +42,7 @@ export default {
   methods: {
     createComment(){
       const comment = this.comment
-      const postId = this.$route.params.id;
+      const postId = this.post.id;
       CommentService.createComment(comment, postId)
       .then(() => {
         this.comment = ''

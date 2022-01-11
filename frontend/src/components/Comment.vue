@@ -84,7 +84,7 @@ export default {
 
     deleteComment() {
         const comment = this.comment.id
-        const postId = this.$route.params.id;
+        const postId = this.post.id;
         CommentService.deleteComment(postId, comment)
         .then(() => {
           console.log("Commentaire supprimé !");
@@ -97,7 +97,7 @@ export default {
     },
 
     modifyComment() {
-        const postId = this.$route.params.id;
+        const postId = this.post.id;
         const comment = this.comment.id
         CommentService.modifyComment(postId, comment,
         { content: this.comment.content })

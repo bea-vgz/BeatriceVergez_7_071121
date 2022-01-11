@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     AllPostsComments() {
-      const postId = this.$route.params.id;
+      const postId = this.post.id;
       CommentService.getPostsComments(postId)
       .then((res) => (
         this.comments = res.data,
