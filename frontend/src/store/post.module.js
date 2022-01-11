@@ -12,8 +12,7 @@ export const post = {
         content:'',
         image:'',
       },
-      allPosts: {},
-      like:'',
+      like: {},
       likes: [],
       
     },
@@ -52,18 +51,6 @@ actions: {
     },
     (error) => {
       commit('getPostsFailure')
-      return Promise.reject(error)
-    })
-  },
-
-  getPostsLikes({ commit }, postId) {
-    return PostService.getPostsLikes(postId)
-    .then((likes) => {
-      commit('getPostsLikes');
-      return Promise.resolve(likes);
-    },
-    (error) => {
-      commit('getPostsLikesFailure')
       return Promise.reject(error)
     })
   },

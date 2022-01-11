@@ -34,7 +34,7 @@ class PostService {
         return resource.get(`/posts/user/${userId}`, { headers: authHeader() })
     }
 
-    getPostsLikes(postId) {
+    getAllLikesOnePost(postId) {
         return resource.get(`posts/${postId}/likes`, { headers: authHeader() })
     }
 

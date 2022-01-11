@@ -38,7 +38,7 @@
           aria-label="Liker ou disliker"
         >
           <svg
-            v-if="likesThisPost"
+            v-if="likeThisPost"
             style="width:24px;height:24px"
             viewBox="0 0 24 24"
           >
@@ -54,7 +54,7 @@
             />
           </svg>
 
-          <span :class="`ml-2 ${likesThisPost ? 'blue' : ''}`">J'aime</span>
+          <span :class="`ml-2 ${likeThisPost ? 'blue' : ''}`">J'aime</span>
         </button>
         
          <button
@@ -95,8 +95,7 @@ export default {
       post: {},
       comments: [],
       comment: {},
-      likes: [],
-      likesThisPost: false,
+      likeThisPost: false,
     };
   },
   components: { 
@@ -111,7 +110,7 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  async mounted() {
+  mounted() {
     this.getOnePost();
     this.getLikeOnOnePost();
   },
@@ -131,8 +130,10 @@ export default {
 
     getLikeOnOnePost() {
       const postId = this.$route.params.id;
-      const res = PostService.getLikeOnOnePost(postId)
-      this.likesThisPost = res.like
+      PostService.getLikeOnOnePost(postId)
+      .then((res) => {
+        this.likeThisPost = res.like
+      })
     },
 
     async deletePost() {
@@ -159,12 +160,14 @@ export default {
 
     async likeOrUnlikePost() {
       const postId = this.$route.params.id;
-      const res = await PostService.likePost(postId)
-      this.likesThisPost = res.like
+      PostService.likePost(postId)
+      .then((res) => {
+        this.likeThisPost = res.like
+      })
     },
 
-    focusInput(post) {
-      document.getElementById(`comment-area-${this.post.id}`).focus(post)
+    focusInput() {
+      document.getElementById(`comment-area-${this.post.id}`).focus()
     },
   },
 };
@@ -215,7 +218,7 @@ button:hover {
     background-color: rgba(192, 192, 192, 0.5);
 }
 svg {
-    padding-right: 0.5rem;
+  padding-right: 0.5rem;
 }
 .blue {
   color: rgb(32, 120, 244);

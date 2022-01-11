@@ -121,7 +121,6 @@ export default {
 }
 .comment-button {
   position: static !important;
-  margin-left: 10px;
 }
 .comment-btn-collapsed {
   left: 14px;

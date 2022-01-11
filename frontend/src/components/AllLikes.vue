@@ -16,11 +16,11 @@
           />
         </svg>
       </div>
-      <p>{{likes.length}}</p>
+      <p>{{likesList.length}}</p>
     </button>
   
     <div :id="`modal-likes-${post.id}`" :title="`J'aime`">
-      <div v-for="like in likes" :key="like.id">
+      <div v-for="like in likesList" :key="like.id">
         <router-link :to="{ name: 'ProfilUser', params: { userId: like.User.id } }" >
         <div class="UserAvatar" v-if="like.User">
           <img :src="like.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
@@ -40,16 +40,14 @@ export default {
   props: ['post'],
   data () {
     return {
-      likes: [],
+      likesList: [],
     }
   },
   methods: {
     async fetchAllLikes () {
       const postId = this.$route.params.id;
-      PostService.getPostsLikes(postId)
-      .then((response) => {
-         this.likes = response.data.likes;
-      })
+      const res = await PostService.getAllLikesOnePost(postId)
+      this.likesList = res.allLikes;
     }
   }
 }
