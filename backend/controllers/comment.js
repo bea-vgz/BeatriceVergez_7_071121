@@ -4,16 +4,16 @@ const { User } = require('../models/index');
 // Création d'un commentaire :
 exports.createComment = async (req, res, next) => {
     try { 
-      const newComment = await Comment.create({
+      let comment = await Comment.create({
       ...req.body,
       UserId: req.user,
       PostId: req.params.postId
     })
-      res.status(201).json({ 
-        message: "Nouveau commentaire ajouté !",
-        content: newComment.content,
-        CommentId: newComment.id
-      })
+    comment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [{ model: User }]
+    })
+      res.status(201).json({ comment })
     }
     catch (error) {
       res.status(400).json({ error: error.message });

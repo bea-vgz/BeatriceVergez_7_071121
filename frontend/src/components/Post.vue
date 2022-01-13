@@ -5,20 +5,19 @@
         <div class="col">
           <div class="card-body">
             <div class="UserAvatar" v-if="post.User">
-              <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <router-link :to="{ name: 'ProfilUser', params: { userId: post.UserId } }">
+                <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              </router-link>
               <div class="infoPostUser">
                 <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
-                <p class="date">Créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+                <p class="date">Post créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+              </div>
+              <div class="modifPost">
+                <ModifyPost :post="post" />
               </div>
             </div>
+      
             <div class="card-text">
-              <div class="menu" v-if="currentUser.userId == post.UserId" >
-                <div class="menu-item">
-                  <a @click="deletePost(post)"><font-awesome-icon icon="trash-alt" class="icon ml-5 mr-2"/></a>
-                  <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
-                </div>
-                
-              </div>
               <h2> {{ post.title }} </h2>
               <p class="contentPost"> {{ post.content }}</p>
             </div>
@@ -31,7 +30,7 @@
 
             <div class="line"></div>
 
-            <div class="menu-post d-flex">
+            <div class="menu-post">
         <button
           @click="likeOrUnlikePost"
           class="react-btn footer-btn btn-block"
@@ -81,11 +80,10 @@
 </template>
 
 <script>
-import router from "../router";
-import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import PostService from "../service/post.resource";
 import AllComments from "../components/AllComments.vue";
 import AllLikes from "../components/AllLikes.vue";
+import ModifyPost from '../components/ModifyPost'
 export default {
   data() {
     return {
@@ -95,10 +93,10 @@ export default {
     };
   },
   props: ['post'],
-  components: { 
-    ConfirmDialogue,
+  components: {
     AllComments,
     AllLikes,
+    ModifyPost
   },
   computed: {
     currentUser() {
@@ -114,37 +112,15 @@ export default {
     },
 
     getLikeOnOnePost() {
-      const postId = this.$route.params.id;
+      const postId = this.post.id;
       PostService.getLikeOnOnePost(postId)
       .then((res) => {
         this.likeThisPost = res.like
       })
     },
 
-    async deletePost() {
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Supprimer mon post',
-        message: 'Êtes-vous sur de vouloir supprimer ce post ?',
-        okButton: 'Oui, supprimer ce post',
-      })
-      if (ok) {
-        const postId = this.$route.params.id;
-        this.$store.dispatch("post/deletePost", postId)
-        .then(() => {
-          console.log("Post supprimé !");
-          router.push('/home');
-        },
-        error => {
-          console.log(error);
-        });
-        alert('Votre post a été supprimé !')
-      } else {
-        alert("Ce post n'a pas été supprimé")
-      }
-    },
-
     async likeOrUnlikePost() {
-      const postId = this.$route.params.id;
+      const postId = this.post.id;
       PostService.likePost(postId)
       .then((res) => {
         this.likeThisPost = res.like
@@ -168,7 +144,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    width: 40%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3rem;
@@ -201,9 +177,6 @@ button:hover {
     margin-top: 0.8rem;
     margin-bottom: O.8rem;
     background-color: rgba(192, 192, 192, 0.5);
-}
-svg {
-  padding-right: 0.5rem;
 }
 .blue {
   color: rgb(32, 120, 244);

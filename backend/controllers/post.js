@@ -9,24 +9,23 @@ require('dotenv').config();
 // Création d'un post :
 exports.createPost = async (req, res, next) => {
   try { 
-    const newPost = await Post.create({
+    let post = await Post.create({
     ...req.body,
     UserId: req.user,
     image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`, //On génère l'url de l'image
     likes: 0,
     comments: 0,
   })
-    res.status(201).json({ 
-      message: "Nouveau post créé !",
-      title: newPost.title,
-      content: newPost.content,
-      image: newPost.image,
-      postId: newPost.id
-    })
-  }
+  post = await Post.findOne({ 
+    where: { id: post.id }, 
+    include: [{ model: User }] 
+  })
+  res.status(201).json({ post })
+  } 
   catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+    console.log(error)
+    res.status(400).json({ error })
+  }
 };
 
 //Modifier un post

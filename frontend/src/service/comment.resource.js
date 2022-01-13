@@ -26,6 +26,6 @@ class CommentService {
           localStorage.setItem('comment', JSON.stringify(response.data));
           return response.data;
         });
-      }
+    }
 }
 export default new CommentService();

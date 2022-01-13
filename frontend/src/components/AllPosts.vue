@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="row justify-content-center align-items-center flex-column">
-      <div cols="12" lg="6" v-for="post in posts" :key="post.id">
+    <b-row class="row justify-content-center align-items-center flex-column">
+      <b-col cols="12" lg="6" v-for="post in posts" :key="post.id">
         <Post :post="post" />
-      </div>
-    </div>
+      </b-col>
+    </b-row>
 
     <p class="mx-2">{{ posts.errorMessage }}</p>
   </div>

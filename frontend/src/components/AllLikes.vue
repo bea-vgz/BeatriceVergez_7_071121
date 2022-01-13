@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     async fetchAllLikes () {
-      const postId = this.$route.params.id;
+      const postId = this.post.id;
       const res = await PostService.getAllLikesOnePost(postId)
       this.likesList = res.allLikes;
     }

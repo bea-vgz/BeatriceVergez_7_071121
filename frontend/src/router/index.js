@@ -54,14 +54,6 @@ const routes = [
     meta: { title:'Groupomania - mes posts' }
   },
 
-  // Route OneUser 
-  {
-    path: "/users/:id",
-    name: "OneUser",
-    component: () => import("../components/OneUser.vue"),
-    meta: { title:'Groupomania - collègue' }
-  },
-
   // Route User profil 
   {
     path: '/profil/:userId',

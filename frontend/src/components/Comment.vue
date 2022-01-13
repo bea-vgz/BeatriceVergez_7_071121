@@ -1,13 +1,13 @@
 <template>
   <div v-if="comment" class="comment">
     <div class="d-flex">
-      <router-link :to="{ name: 'ProfilUser', params: { userId: comment.User.id } }" >
+      <router-link :to="{ name: 'ProfilUser', params: { userId: comment.UserId } }" >
         <div class="UserAvatar" v-if="comment.User">
           <img :src="comment.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
         </div>
       </router-link>
-      <div class="comment-box">
-        <router-link :to="{ name: 'ProfilUser', params: { userId: comment.User.id } }">
+      <div class="comment-box" v-if="comment.User">
+        <router-link :to="{ name: 'ProfilUser', params: { userId: comment.UserId } }">
           <p class="comment-username">
             {{ comment.User.username }}
           </p>
@@ -29,7 +29,7 @@
         <EditButton
           customClass="comment-button"
           classCollapse="comment-btn-collapsed"
-          :isCreator="comment.User.id == currentUser.userId"
+          :isCreator="comment.UserId == currentUser.userId"
           @clickedEditButton="startEditing"
           @onDelete="deleteComment"
           modifyText="Modifier"
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import CommentService from "../service/comment.resource";
 import EditButton from '../components/EditButton.vue'
 export default {
@@ -63,6 +64,8 @@ export default {
     }
   },
   methods: {
+     ...mapActions(['displayNotification']),
+
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
@@ -87,9 +90,8 @@ export default {
         const postId = this.post.id;
         CommentService.deleteComment(postId, comment)
         .then(() => {
-          console.log("Commentaire supprimé !");
           this.$emit('commentDeleted', this.comment)
-          alert('Votre commentaire a été supprimé !')
+          this.displayNotification('Commentaire supprimé !')
         },
         error => {
           console.log(error);
@@ -104,7 +106,7 @@ export default {
         .then(() => {
           this.comment.updatedAt = comment.updatedAt
           this.isEditing = false
-          alert("Commentaire modifié !");
+          this.displayNotification('Commentaire modifié !')
         },
         error => {
           console.log(error);

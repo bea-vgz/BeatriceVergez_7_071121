@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      v-if="!allCommentsDisplayed"
+      v-if="comments && !allCommentsDisplayed"
       @click="AllPostsComments"
       class="display-comments"
       aria-label="Afficher les commentaires"
@@ -37,7 +37,6 @@ export default {
   data () {
     return {
       comments: [],
-      count: null,
       allCommentsDisplayed : false
     }
   },

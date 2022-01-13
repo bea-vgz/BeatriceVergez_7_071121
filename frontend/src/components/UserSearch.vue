@@ -1,37 +1,50 @@
 <template>
-  <div class="search">
-    <div :class="`search-bar ${visible ? '' : 'position-fixed d-none'} d-lg-block`">
+  <div>
+    <div
+      :class="`search-bar ${visible ? '' : 'position-fixed d-none'} d-lg-block`"
+    >
       <div class="search-bar__content input-group d-flex align-items-center">
+        <span class="search-btn input-group-append bg-transparent border-0 p-0">
+          <font-awesome-icon icon="search"/>
+        </span>
         <input
-          class="search-text"
+          class="search-text border-0 bg-transparent"
           type="text"
           v-model="search"
-          placeholder="Chercher un utilisateur..."
+          placeholder="Rechercher un utilisateur..."
           ref="searchInput"
           aria-label="Chercher un utilisateur"
         />
       </div>
     </div>
-    <div v-if="users.length" class="users-list card border-0 position-fixed">
-      <div v-for="user in users" :key="user.id">
-        <a @click="$router.push(`users/${user.id}`)">
-          <div class="profil-user d-flex align-items-center">
-            <img :src="user.photoProfil" alt="Photo de profil de l'user" class="profil-img">
-            <p>{{ user.username }}</p>
-          </div></a>
-      </div>
-    </div>
     <button
-      class="button-search search-btn-mobile"
+      class="search-btn-mobile position-fixed border-0 p-0 bg-transparent d-lg-none d-xl-none"
       type="button"
       @click="triggerInput"
       aria-label="Chercher"
     >
       <font-awesome-icon icon="search"/>
     </button>
+
+    <div
+      v-if="users.length"
+      class="users-list card border-0 position-fixed"
+    >
+      <div v-for="user in users" :key="user.id">
+        <router-link :to="{ name: 'ProfilUser', params: { userId: user.id } }">
+          <div class="d-flex align-items-center">
+            <div class="d-flex text-center">
+              <div class="profil-user d-flex align-items-center">
+                <img :src="user.photoProfil" alt="Photo de profil de l'user" class="profil-img">
+                <p>{{ user.username }}</p>
+              </div>
+            </div>
+          </div>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -97,6 +110,9 @@ export default {
       }
     }
   }
+}
+.search-btn {
+  color: #747474;
 }
 .button-search {
   border: none;

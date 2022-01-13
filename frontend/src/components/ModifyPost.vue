@@ -1,43 +1,48 @@
 <template>
-  <div>
+  <div class="fixed inset-0 transition-opacity">
     <EditButton
       :editingPost="true"
-      :isCreator="currentUser.userId == post.UserId"
+      :isCreator="post.UserId == currentUser.userId"
+      @onDelete="deletePost"
       :elementId="post.id"
       modifyText="Modifier la publication"
+      deleteText="Supprimer la publication"
     >
-      <div
+      <b-modal
         :id="`modal-${post.id}`"
         title="Modifier la publication"
+        ok-title="Enregistrer"
+        ok-variant="light"
         @ok="onUpload"
         ok-only
       >
-        <form>
+        <b-form>
           <PostFormulaire
-            :image="post.image"
+          :image="post.image"
             @onFileSelected="onFileSelected"
             v-model="content"
           />
-        </form>
-      </div>
+        </b-form>
+      </b-modal>
     </EditButton>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import PostFormulaire from './PostFormulaire'
 import EditButton from './EditButton'
 export default {
   name: 'ModifyPost',
   components: {
     PostFormulaire,
-    EditButton
+    EditButton,
   },
   props: ['post'],
   data () {
     return {
       content: this.post.content,
-      selectedFile: null
+      selectedFile: null,
     }
   },
   computed: {
@@ -46,25 +51,39 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['displayNotification']),
+
     toggleActions () {
       this.areActionsVisible = !this.areActionsVisible
     },
     onFileSelected (file) {
       this.selectedFile = file
     },
-    async onUpload () {
-      this.$store.dispatch("post/modifyPost", {
-        postId: this.post.id,
-        selectedFile: this.selectedFile,
-        content: this.content
-      })
-      alert('Votre post a été modifié !')
+
+    async onUpload() {
+      const postId = this.post.id
+      await this.$store.dispatch("post/modifyPost", postId)
+      this.displayNotification('Post modifié !')
+    },
+
+    deletePost() {
+      const postId = this.post.id
+      this.$store.dispatch("post/deletePost", postId)
+      this.displayNotification('Post supprimé !')
     },
   }
 }
 </script>
 
 <style lang="scss">
+.modal-fade-enter,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
 .modal-body {
   padding: 1rem 1rem 0 1rem;
 }

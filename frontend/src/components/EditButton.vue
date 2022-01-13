@@ -9,44 +9,49 @@
     >
       ...
     </button>
-    <div
+    <b-collapse
       v-bind:class="
         `${classCollapse || ''} btn-collapsed collapsed mt-2 position-absolute 
         ${areActionsVisible && 'visible'}`
       "
     >
-      <div class="border-0" @click="toggleActions">
+      <b-card class="border-0" @click="toggleActions">
         <p class="card-text" v-if="isCreator">
-          <button
+          <b-button
             class="text-left w-100"
             v-if="editingPost && isCreator"
             block
-            b-modal="`modal-${elementId}`"
+            v-b-modal="`modal-${elementId}`"
             aria-label="Modifier"
           >
-            <span>{{ modifyText }}</span></button
+            <b-icon icon="pencil" class="mr-2 mr-lg-3"></b-icon
+            ><span>{{ modifyText }}</span></b-button
           >
-          <button
+          <b-button
             class="text-left w-100"
             v-if="!editingPost && isCreator"
             block
             @click="clickedEditButton"
             aria-label="Modifier"
           >
-            <span>{{ modifyText }}</span></button>
+            <b-icon icon="pencil" class="mr-2 mr-lg-3"></b-icon
+            ><span>{{ modifyText }}</span></b-button
+          >
           <slot></slot>
         </p>
         <p class="card-text">
-          <button
+          <b-button
             class="text-left w-100"
             v-if="!editingPost && isCreator"
             block
             @click="onDelete"
             aria-label="Supprimer">
-            <span>{{ deleteText }}</span></button>
+            <b-icon icon="trash" class="mr-2 mr-lg-3"></b-icon
+            >
+            <span>{{ deleteText }}</span></b-button>
         </p>
-      </div>
-    </div>
+      </b-card>
+    </b-collapse>
   </div>
 </template>
 
@@ -103,7 +108,7 @@ export default {
   }
 }
 .btn-secondary {
-  font-weight: 500;
+  font-weight: 600;
   color: #000;
   background-color: white;
   border: none;
@@ -111,8 +116,8 @@ export default {
 .btn-outline-secondary,
 .btn-secondary {
   &:hover {
-    color: #000 !important;
-    background-color: rgba(108, 117, 125, 0.1) !important;
+    color: #fd2d01 !important;
+    background-color: #FFF !important;
     box-shadow: none !important;
   }
 }

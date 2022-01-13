@@ -15,7 +15,7 @@ export const post = {
       },
       like: {},
       likes: [],
-      comments: []
+      comments: [],
     },
 
 actions: {
@@ -23,7 +23,7 @@ actions: {
   createPost({ commit }, post) {
     return PostService.createPost(post)
     .then((response) => {
-      commit('createPostSuccess')
+      commit('createPostSuccess', post)
       return Promise.resolve(response)
     },
     (error) => {
@@ -56,23 +56,19 @@ actions: {
     })
   },
 
-  deletePost({commit}, post) {
-    return PostService.deletePost(post).then(
-      (response) => {
-        commit ('deleteSuccess')
-        return Promise.resolve(response);
-      },
-      (error) => {
-        commit ('deleteFailure')
-        return Promise.reject(error)
-      }
-    )
+  deletePost({commit}, postId) {
+    return PostService.deletePost(postId)
+    .then(() => commit('deleteSuccess', postId))
+    .catch(error => {
+      console.log({ error: error })
+      commit('deleteFailure', 'Problème de connexion')
+    })
   },
 
-  modifyPost({commit}, post) {
-    return PostService.modifyPost(post).then(
+  modifyPost({commit}, postId) {
+    return PostService.modifyPost(postId).then(
       (response) => {
-        commit ('updateSuccess')
+        commit ('updateSuccess', post)
         return Promise.resolve(response);
       },
       (error) => {
@@ -108,11 +104,11 @@ mutations: {
       state.post = null;
       state.message = "Post non récupéré !";
     },
-    deleteSuccess(state) {
-      state.post = null;
-      state.message = "Post supprimé !";
+    deleteSuccess(state, postId) {
+      state.posts = state.posts.filter(post => post.id !== postId)
     },
-    deleteFailure() {
+    deleteFailure(state, message) {
+      state.message = message
     },
     updateSuccess(state, post) { 
       state.post = post
@@ -137,7 +133,5 @@ getters : {
     return state.posts;
   },
 }
-
-
 
 }

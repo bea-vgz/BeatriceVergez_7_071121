@@ -2,14 +2,16 @@
   <div>
     <div class="container_comments align-items-center mt-3">
       <div class="mr-2 mb-2">
-        <router-link to="/profil" v-if="currentUser" class="container_user bg-white">
-          <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" />
+        <router-link :to="{ name: 'Profil' }" >
+          <div class="UserAvatar">
+            <img :src="currentUser.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
+          </div>
         </router-link>
       </div>
-      <form class="form_comment" @submit="createComment">
+      <form class="form_comment" @submit.prevent="createComment">
         <div>
           <input
-            :id="`comment-area-${this.post.id}`"
+            :id="`comment-area-${post.id}`"
             v-model="comment.content"
             @keydown.enter.exact.prevent
             @keyup.enter.exact="createComment"
@@ -45,9 +47,8 @@ export default {
       const postId = this.post.id;
       CommentService.createComment(comment, postId)
       .then(() => {
-        this.comment = ''
+        comment
         this.$emit('commentCreated', comment)
-        alert("Création du commentaire réussi !")
       })
     },
 

@@ -4,15 +4,16 @@ import Vuex from 'vuex'
 import { auth } from './auth.module';
 import { post } from './post.module';
 import { comment } from './comment.module';
+import notificationAlert from './notification-module';
 
-//Axios permet d'effectuer des requêtes
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     auth,
     post,
-    comment
+    comment,
+    notificationAlert
   }
 })
 

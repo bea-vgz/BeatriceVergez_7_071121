@@ -2,12 +2,13 @@
   <header id="nav" class="border_nav bg-white" >
     <div class="navigation">
       <div class="nav_logo">
-        <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
+        <router-link to="/home">
+          <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
+        </router-link>
         <UserSearch />
       </div>
         <div class="accessPosts">
-          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Home</router-link> |
-          <router-link to="/post" class="nav_centrale text-decoration-none">Créer un post</router-link>
+          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Accueil</router-link>
         </div>
 
         <div class="notifUser">
@@ -32,8 +33,7 @@
                   <router-link to="/profil"><font-awesome-icon icon="clone" class="profil_icon ml-5 mr-2"/>Mes posts</router-link>
                 </div>
                 <div class="menu-item">
-                  <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
-                  <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+                  <a @click="logout" aria-label="Se déconnecter" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
                 </div>
               </div>
             </transition>
@@ -45,7 +45,6 @@
 </template>
 <script>
 import router from "../router";
-import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import UserSearch from '../components/UserSearch';
 export default {
   
@@ -58,7 +57,6 @@ export default {
     }
   },
   components: {
-    ConfirmDialogue,
     UserSearch
   },
   computed: {
@@ -70,20 +68,11 @@ export default {
     }
   },
   methods: {
-    async logout() {
+    logout() {
       this.$store.dispatch('auth/logout');
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Déconnexion',
-        message: 'Êtes-vous sur de vouloir vous déconnecter ?',
-        okButton: 'Se déconnecter',
-      })
-      if (ok) {
-        alert('Vous avez été déconnecté. Vous allez être redirigé.')
-        window.location.reload()
-        router.push('/');
-      } else {
-        alert("Vous n'avez pas été déconnecté")
-      }
+      alert('Vous avez été déconnecté. Vous allez être redirigé.')
+      localStorage.clear()
+      router.push('/');
     },
 
     checkResearch(){ // Recherche d'utilisateur
@@ -153,7 +142,7 @@ nav .menu-item, .sub-menu {
 }
 .logo {
   display: block;
-  width: 25%;
+  width: 35%;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }

@@ -100,9 +100,6 @@ button:hover {
     margin-bottom: O.8rem;
     background-color: rgba(192, 192, 192, 0.5);
 }
-svg {
-    padding-right: 0.5rem;
-}
 .blue {
   color: rgb(32, 120, 244);
 }

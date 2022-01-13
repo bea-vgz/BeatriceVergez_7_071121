@@ -17,21 +17,20 @@
         </p>
       </div>
     </div>
-
-    <AllPosts :userId="this.$route.params.userId" />
+    <div class="posts-user">
+      {{ user.Posts }}
+    </div>
     <Footer />
   </div>
 </template>
 
 <script>
 import AuthService from '../service/auth.resource'
-import AllPosts from '../components/AllPosts.vue'
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 export default {
   name: 'ProfilUser',
   components: {
-    AllPosts,
     Header,
     Footer
   },
@@ -52,9 +51,8 @@ export default {
     getOneUser() {
       const userId = this.$route.params.userId;
       AuthService.getOneUser(userId)
-        .then((response) => {
-          this.user = response.data
-          console.log(this.user)
+        .then((res) => {
+          this.user = res.data
         })
     },
   }

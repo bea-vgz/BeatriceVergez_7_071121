@@ -20,13 +20,12 @@ class PostService {
         return resource.get('/posts', { headers: authHeader() })
     }
 
-    deletePost(id) {
-        return resource.delete(`/posts/${id}`, { headers: authHeader() })
-        .then(() => localStorage.removeItem('post'))
+    deletePost(postId) {
+        return resource.delete(`/posts/${postId}`, { headers: authHeader() })
     }
 
-    modifyPost(id) {
-        return resource.put(`/posts/${id}`, { headers: authHeader() })
+    modifyPost(postId, post) {
+        return resource.put(`/posts/${postId}`, post, { headers: authHeader() })
         .then(() => localStorage.removeItem('post'))
     }
 

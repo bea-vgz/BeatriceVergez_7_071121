@@ -26,7 +26,7 @@
       </div>
       <div class="file">
         <label class="sr-only" for="image" title="image" role="button">image</label>
-        <input class='buttonFile' type="file" accept=".png, .jpg, .jpeg, .gif, .webp" @change="onSelect" ref="file" aria-required="true" id="image" />
+        <input class='buttonFile' type="file" accept="image/png, image/jpeg, image/gif" @change="onSelect" ref="file" aria-required="true" id="image" />
       </div>
       <div>
         <button
@@ -46,6 +46,7 @@
 
 <script>
 import Post from '../models/post'
+import { mapActions } from 'vuex'
 export default {
   name: 'PostFormulaire',
   data () {
@@ -63,6 +64,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['displayNotification']),
+
     onSelect() {
       const file = this.$refs.file.files[0];
       this.file = file;
@@ -84,13 +87,13 @@ export default {
       post.append('content', this.post.content);
       this.$store.dispatch("post/createPost", post)
         .then(() => {
-          console.log(this.post)
-          alert("Création du post réussi !")
+          this.displayNotification('Post créé !')
         });
       event.target.reset();
-      location.reload()
     },
   },
+
+
 }
 </script>
 
@@ -103,7 +106,7 @@ export default {
   background-color: #fff;
   border-radius: 2rem;
   max-width: 100%;
-  width: 30%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 3rem;
