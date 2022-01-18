@@ -21,8 +21,7 @@
         </a>
       </div>
       <div class="button-dis-like d-flex">
-        <AllLikes :post="post" />
-        <AllDislikes :post="post" />
+        <AllLikesPost :post="post" :likesNumber="likesNumber" />
       </div>
 
       <div class="line"></div>
@@ -100,8 +99,7 @@
 import LikePostService from "../service/like_post.resource";
 import DislikePostService from "../service/dislike_post.resource";
 import AllComments from "../components/AllComments.vue";
-import AllLikes from "./AllLikesPost.vue";
-import AllDislikes from "./AllDislikesPost.vue";
+import AllLikesPost from "./AllLikesPost.vue";
 import ModifyPost from '../components/ModifyPost.vue';
 export default {
   data() {
@@ -110,14 +108,14 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
+      likesNumber: this.post.Like_posts.length
     };
   },
   props: ['post'],
   components: {
     AllComments,
-    AllLikes,
+    AllLikesPost,
     ModifyPost,
-    AllDislikes
   },
   computed: {
     currentUser() {
@@ -143,10 +141,11 @@ export default {
 
     DislikeOrNotPost() {
       const postId = this.post.id;
-      DislikePostService.dislikePost(postId)
-      .then((res) => (
-        this.dislikeThisPost = res.data.dislike
-      ))
+      const res = DislikePostService.dislikePost(postId)
+      if (res.dislike !== this.dislikeThisPost) {
+        this.likesNumber += res.dislike ? +1 : -1
+      }
+      this.likeThisPost = res.dislike
     },
 
     getLikeOnOnePost() {

@@ -1,13 +1,15 @@
 <template>
   <div>
+    <div class="buttons-likeDislike d-flex">
     <button
       v-b-modal="`modal-likes-${post.id}`"
       @click="fetchAllLikes"
+      v-if="post.Like_posts.length > 0"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
     >
       <div
-        class="svg-container d-flex justify-content-center align-items-center"
+        class="svg-container-like d-flex justify-content-center align-items-center"
       >
         <svg style="width:17px;height:17px" viewBox="0 0 24 24">
           <path
@@ -16,9 +18,29 @@
           />
         </svg>
       </div>
+      <span class="likes-number ml-2">{{ post.Like_posts.length }} </span>
     </button>
-  
-    <b-modal :id="`modal-likes-${post.id}`" :title="`Personnes aimant ce post`">
+    <button
+      v-b-modal="`modal-dislikes-${post.id}`"
+      @click="fetchAllDislikes"
+      v-if="post.Dislike_posts.length > 0"
+      class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
+      aria-label="Afficher les likes"
+    >
+      <div
+        class="svg-container-dislike d-flex justify-content-center align-items-center"
+      >
+        <svg style="width:17px;height:17px" viewBox="0 0 24 24">
+          <path
+            fill="#fff"
+            d="M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z"
+          />
+        </svg>
+      </div>
+      <span class="likes-number ml-2">{{ post.Dislike_posts.length }} </span>
+    </button>
+    </div>
+    <b-modal :id="`modal-likes-${post.id}`" :title="`${post.Like_posts.length} personne(s) aime(nt) ce post`">
       <div v-for="like_post in likes" :key="like_post.id">
         <router-link
           :to="{ name: 'ProfilUser', params: { userId: like_post.UserId } }"
@@ -34,21 +56,40 @@
       </div>
       <div slot="modal-footer"></div>
     </b-modal>
+    <b-modal :id="`modal-dislikes-${post.id}`" :title="`Personnes n'aimant pas ce post`">
+      <div v-for="dislike_post in dislikes" :key="dislike_post.id">
+        <router-link
+          :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }"
+          ><div class="d-flex align-items-center">
+            <div class="d-flex UserAvatar">
+              <router-link :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }">
+                <img :src="dislike_post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              </router-link>
+            </div>
+            <p>{{ dislike_post.User.username }} </p>
+          </div>
+        </router-link>
+      </div>
+      <div slot="modal-footer"></div>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import DislikePostService from '../service/dislike_post.resource'
 import LikePostService from '../service/like_post.resource'
 export default {
-  name: 'AllLikes',
-  props: ['post'],
+  name: 'AllLikesPost',
+  props: ['post', 'likesNumber'],
   data () {
     return {
       likes: [],
+      dislikes: []
     }
   },
   mounted() {
-    this.fetchAllLikes ()
+    this.fetchAllLikes()
+    this.fetchAllDislikes()
   },
   methods: {
     fetchAllLikes () {
@@ -56,6 +97,14 @@ export default {
       LikePostService.getAllLikesOnePost(postId)
       .then((res) => (
         this.likes = res.data.allLikes
+      ))
+    },
+
+    fetchAllDislikes () {
+      const postId = this.post.id;
+      DislikePostService.getAllDislikesOnePost(postId)
+      .then((res) => (
+        this.dislikes = res.data.allDislikes
       ))
     }
   }
@@ -116,11 +165,21 @@ a {
   object-position: center;
   border-radius: 100%;
 }
-.svg-container {
+.svg-container-like {
   border-radius: 100%;
   background-color: rgb(32, 120, 244);
   width: 25px;
   height: 25px;
+}
+.svg-container-dislike {
+  border-radius: 100%;
+  background-color: rgb(239, 42, 16);
+  width: 25px;
+  height: 25px;
+}
+.buttons-likeDislike{
+  display: flex;
+  justify-content: center;
 }
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .modal-title {

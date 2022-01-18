@@ -1,12 +1,12 @@
 <template>
   <div>
     <button
-      v-if="comments && !allCommentsDisplayed"
+      v-if="post.Comments.length > 1 && !allCommentsDisplayed"
       @click="AllPostsComments"
       class="display-comments"
       aria-label="Afficher les commentaires"
     >
-      <span>Afficher les commentaires</span>
+      <span>Afficher le(s) {{ post.Comments.length }} commentaire(s)</span>
     </button>
     <div class="comment mb-2 text-left" v-for="comment in comments" :key="comment.id">
       <Comment

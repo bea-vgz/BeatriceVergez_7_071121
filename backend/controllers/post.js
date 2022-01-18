@@ -97,6 +97,10 @@ exports.getAllPosts = (req, res, next) => {
           model: Like_post, 
           attributes: ["UserId"]
         },
+        { 
+          model: Dislike_post, 
+          attributes: ["UserId"]
+        },
       ],
       order: [["createdAt", "DESC"]]
     })
