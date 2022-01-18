@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      :class="`search-bar ${visible ? '' : 'position-fixed d-none'} d-lg-block`"
+      :class="`search-bar ${visible ? '' : 'd-none'} d-lg-block`"
     >
       <div class="search-bar__content input-group d-flex align-items-center">
         <span class="search-btn input-group-append bg-transparent border-0 p-0">
@@ -90,8 +90,8 @@ export default {
   display: flex;
 }
 .search-bar {
-  top: 20px;
-  left: 45px;
+  top: 25px;
+  left: 150px;
   z-index: 2;
   .input-group {
     flex-wrap: nowrap;
@@ -99,7 +99,7 @@ export default {
   &__content {
     padding: 10px 18px;
     background-color: rgba(108, 117, 125, 0.1) !important;
-    border-radius: 40px;
+    border-radius: 2rem;
     border: none;
     .search-text {
       border: none;
@@ -113,14 +113,6 @@ export default {
 }
 .search-btn {
   color: #747474;
-}
-.button-search {
-  border: none;
-  background: none;
-}
-.button-search:hover {
-  cursor: pointer;
-  color: #fd2d01;
 }
 .users-list {
   background: white;
@@ -145,5 +137,37 @@ export default {
   object-position: center;
   border-radius: 100%;
   margin-right: 0.6rem;
+}
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  .search-bar {
+    margin: 0 10px 15px 15px;
+    &__content {
+      padding: 5px 13px;
+      .search-text {
+        width: 100%;
+      }
+    }
+  }
+  .search-btn-mobile {
+    top: 20px;
+    right: 110px;
+    color: #747474;
+    font-size: 1.1rem;
+    z-index: 2;
+    &:focus {
+      outline: none;
+    }
+  }
+  .users-list {
+    top: 119px;
+    left: 15px;
+    background: white;
+    box-shadow: 0rem 0.2rem 0.5rem rgba(0, 0, 0, 0.08) !important;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .search-bar {
+    display: block !important;
+  }
 }
 </style>

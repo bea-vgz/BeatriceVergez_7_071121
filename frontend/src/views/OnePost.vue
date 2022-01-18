@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <Header />
     <div class="container_post">
       <Post v-if="post" :post="post"/>
@@ -30,7 +30,7 @@ export default {
       this.getOnePost()
     }
   },
-  mounted () {
+  async mounted () {
     this.getOnePost()
   },
   methods: {

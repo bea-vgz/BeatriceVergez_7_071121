@@ -5,11 +5,12 @@
       <Header />
     </div>
     <div class="container_home">
-    <h1 v-if="currentUser">
-			Bienvenue sur votre fil d'actualité {{ currentUser.username }} ! 😁 
+    <h1 v-if="currentUser" class="text-align">
+			Bienvenue sur votre fil d'actualité <br />
+      {{ currentUser.username }} ! 😁 
     </h1>
     
-    <PostFormulaire />
+    <CreatePost />
     <AllPosts />
 
     </div>
@@ -24,7 +25,7 @@
 <script>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import PostFormulaire from '@/components/PostFormulaire.vue';
+import CreatePost from '@/components/CreatePost.vue';
 import AllPosts from '@/components/AllPosts.vue';
 export default {
   name: 'HomePage',
@@ -36,7 +37,7 @@ export default {
   components: {
     Header,
     Footer,
-    PostFormulaire,
+    CreatePost,
     AllPosts
   },
   computed: {
@@ -94,6 +95,9 @@ h1 {
 }
 .form-control:focus {
     border: none;
+}
+.text-align {
+  text-align:center;
 }
 .line {
   display: block;

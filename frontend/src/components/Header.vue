@@ -8,32 +8,25 @@
         <UserSearch />
       </div>
         <div class="accessPosts">
-          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">Accueil</router-link>
+          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">ACCUEIL</router-link>
         </div>
 
         <div class="notifUser">
-          <a class="nav_centrale bell_notif text-decoration-none" aria-label="Notitfications"><font-awesome-icon icon="bell" class="icon ml-5 mr-2"/></a>
           <div class="menu-item" @click="isOpen = !isOpen" >
             <button class="accessUser">
               <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar icone" alt="Avatar" ref="file" type="file"/>
               <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar icone" alt="Avatar"/>
-              <span v-if="currentUser" class="username bg-white text-decoration-none red-text ">
+              <span v-if="currentUser" class="username">
                 <strong style="text-transform: uppercase"> {{ currentUser.username }} </strong>
               </span>
-              <svg class="flecheMenu bg-white" viewBox="0 0 1030 638" width="10">
-                <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#fff"></path>
-              </svg>
             </button>
             <transition name="fade" apear>
               <div class="sub-menu" v-if="isOpen">
                 <div class="menu-item">
-                  <router-link to="/profil"><font-awesome-icon icon="user" class="profil_icon ml-5 mr-2"/>Mon compte</router-link>
+                  <router-link to="/profil"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon>Mon compte</router-link>
                 </div>
                 <div class="menu-item">
-                  <router-link to="/profil"><font-awesome-icon icon="clone" class="profil_icon ml-5 mr-2"/>Mes posts</router-link>
-                </div>
-                <div class="menu-item">
-                  <a @click="logout" aria-label="Se déconnecter" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+                  <a @click="logout" aria-label="Se déconnecter" to="/" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
                 </div>
               </div>
             </transition>
@@ -105,12 +98,6 @@ nav .menu-item, .sub-menu {
 .sub-menu {
   cursor: pointer;
 }
-.flecheMenu {
-  padding-left : 0.7rem;
-}
-.flecheMenu:hover {
-  cursor: pointer;
-}
 .menu-item {
   padding: 0.7rem;
   margin-right: 2rem;
@@ -142,7 +129,6 @@ nav .menu-item, .sub-menu {
 }
 .logo {
   display: block;
-  width: 35%;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
@@ -174,13 +160,11 @@ button {
   border: solid 0.15rem #fd2d01;
   background-color: #fd2d01;
 }
-.accessUser, .accessPosts {
+.accessUser{
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-right: 1rem;
-}
-.accessUser {
   color: #fff;
 }
 .profil, .deconnexion {
@@ -193,8 +177,8 @@ button {
   text-decoration: none;
 }
 .avatar {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 100%;
     padding: 0.5rem;
     object-fit: cover;

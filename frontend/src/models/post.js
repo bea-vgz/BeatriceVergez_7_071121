@@ -1,7 +1,6 @@
 // modèle de données
 export default class Post {
-    constructor(title, content, image, postId) {
-      this.title = title;  
+    constructor(content, image, postId) {
       this.content = content;
       this.image = image;
       this.postId = postId;

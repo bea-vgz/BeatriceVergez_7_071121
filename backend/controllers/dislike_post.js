@@ -1,14 +1,15 @@
 const { Dislike_post } = require('../models/index');
 const { User } = require('../models/index');
-const { Post } = require('../models/index');
 
 // Création d'un like post :
 exports.dislikePost = async (req, res, next) => {
   try {
-    const existDislike = await Dislike_post.findOne({ where: { UserId: req.user, PostId: req.params.postId } });
+    const existDislike = await Dislike_post.findOne({ 
+      where: { UserId: req.user, PostId: req.params.postId } 
+    });
       if (existDislike) {
-        await Dislike_post.destroy( { truncate: true } );
-        res.status(200).send({ message : "Vous ne dislikez plus ce post !", dislike: false });
+        await existDislike.destroy();
+        res.status(200).json({ message : "Vous ne dislikez plus ce post !", dislike: false });
       } else {
         const newDislike = await Dislike_post.create({
           UserId: req.user,
@@ -22,18 +23,32 @@ exports.dislikePost = async (req, res, next) => {
       }
     }
     catch (error) {
-          res.status(400).json({ error: error.message });
-      }
+      res.status(400).json({ error: error.message });
+    }
 };
 
 //Récupérer tous les dislikes d'un post
-exports.getPostsDislikes = (req, res, next) => {
-  Dislike_post.findAll({ where: { PostId: req.params.postId },
-  include: [
-    { model: User, attributes: ["username"] },
-    { model: Post, attributes: ["title"] },
-  ],
-  order: [["createdAt", "ASC"]] })
-    .then((dislike) => res.status(200).json(dislike))
-    .catch((error) => res.status(404).json({ error }));
+exports.getAllDislikesOnePost = async (req, res, next) => {
+  try {
+    const allDislikes = await Dislike_post.findAll({ 
+      where: { PostId: req.params.postId },
+      include: { model: User }
+    })
+    res.status(200).json({ allDislikes })
+  } catch (error) {
+    res.status(400).json({ error })
+  }
 };
+
+//Récupérer un dislike d'un post d'un user
+exports.getDislikeOnOnePost = async (req, res, next) => {
+  try {
+    const existDislike = await Dislike_post.findOne(
+      { where: { PostId: req.params.postId, UserId: req.user },
+      include: { model: User }
+    })
+    res.status(200).json({ dislike: existDislike ? true : false })
+  } catch (error) {
+    res.status(400).json({ error })
+  }
+}

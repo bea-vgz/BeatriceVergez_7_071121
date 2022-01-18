@@ -1,39 +1,36 @@
 <template>
-  <div class="container">
-    <div class="container_post" v-if="post">
-      <div class="row border-secondary text-justify">
-        <div class="col">
-          <div class="card-body">
-            <div class="UserAvatar" v-if="post.User">
-              <router-link :to="{ name: 'ProfilUser', params: { userId: post.UserId } }">
-                <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
-              </router-link>
-              <div class="infoPostUser">
-                <h3 class="font postUsername" alt="Pseudo de l'user">{{ post.User.username }}</h3>
-                <p class="date">Post créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
-              </div>
-              <div class="modifPost">
-                <ModifyPost :post="post" />
-              </div>
-            </div>
-      
-            <div class="card-text">
-              <h2> {{ post.title }} </h2>
-              <p class="contentPost"> {{ post.content }}</p>
-            </div>
-            <a class="img_container" @click="$router.push(`posts/${post.id}`)">
-                <img :src="`${post.image}`" alt="image" class="img">
-                <span class="a-txt"><font-awesome-icon icon="eye"/> Voir le post </span>
-            </a>
+  <div class="container_post" v-if="post">
+    <div class="card-body">
+      <div class="user">
+        <div class="UserAvatar" v-if="post.User">
+          <router-link :to="{ name: 'ProfilUser', params: { userId: post.UserId } }">
+            <img :src="post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+          </router-link>
+          <div class="infoPostUser">
+            <p class="font-weight-bold mb-0" alt="Pseudo de l'user">{{ post.User.username }}</p>
+            <p class="date">Post créé le : {{ getDateWithoutTime(post.createdAt) }}</p>
+          </div>
+        </div>
+        <ModifyPost :post="post" />
+        <div class="card-text">
+          <p class="contentPost"> {{ post.content }}</p>
+        </div>
+        <a class="img_container" @click="$router.push(`posts/${post.id}`)">
+          <img :src="`${post.image}`" alt="image" class="img">
+          <span class="a-txt"><font-awesome-icon icon="eye"/> Voir le post </span>
+        </a>
+      </div>
+      <div class="button-dis-like d-flex">
+        <AllLikes :post="post" />
+        <AllDislikes :post="post" />
+      </div>
 
-            <AllLikes :post="post" />
+      <div class="line"></div>
 
-            <div class="line"></div>
-
-            <div class="menu-post">
+      <div class="footer d-flex">
         <button
-          @click="likeOrUnlikePost"
-          class="react-btn footer-btn btn-block"
+          @click="likeOrNotPost"
+          class="react-btn footer-btn "
           aria-label="Liker ou disliker"
         >
           <svg
@@ -55,9 +52,32 @@
 
           <span :class="`ml-2 ${likeThisPost ? 'blue' : ''}`">J'aime</span>
         </button>
-        
-         <button
-          class="react-btn footer-btn btn-block"
+        <button
+          @click="DislikeOrNotPost"
+          class="react-btn footer-btn "
+          aria-label="Disliker"
+        >
+          <svg
+            v-if="dislikeThisPost"
+            style="width:24px;height:24px"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="rgb(239, 42, 16)"
+              d="M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z"
+            />
+          </svg>
+          <svg v-else style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M19,15V3H23V15H19M15,3A2,2 0 0,1 17,5V15C17,15.55 16.78,16.05 16.41,16.41L9.83,23L8.77,21.94C8.5,21.67 8.33,21.3 8.33,20.88L8.36,20.57L9.31,16H3C1.89,16 1,15.1 1,14V12C1,11.74 1.05,11.5 1.14,11.27L4.16,4.22C4.46,3.5 5.17,3 6,3H15M15,5H5.97L3,12V14H11.78L10.65,19.32L15,14.97V5Z"
+            />
+          </svg>
+
+          <span :class="`ml-2 ${dislikeThisPost ? 'red' : ''}`">Je n'aime pas</span>
+        </button>
+        <button
+          class="react-btn footer-btn "
           @click="focusInput(post)"
           aria-label="Commenter"
         >
@@ -72,31 +92,32 @@
       </div>
       <div class="line mb-3"></div>
       <AllComments :post="post" />
-      </div>
-      </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import PostService from "../service/post.resource";
+import LikePostService from "../service/like_post.resource";
+import DislikePostService from "../service/dislike_post.resource";
 import AllComments from "../components/AllComments.vue";
-import AllLikes from "../components/AllLikes.vue";
-import ModifyPost from '../components/ModifyPost'
+import AllLikes from "./AllLikesPost.vue";
+import AllDislikes from "./AllDislikesPost.vue";
+import ModifyPost from '../components/ModifyPost.vue';
 export default {
   data() {
     return {
       comments: [],
       comment: {},
       likeThisPost: false,
+      dislikeThisPost: false,
     };
   },
   props: ['post'],
   components: {
     AllComments,
     AllLikes,
-    ModifyPost
+    ModifyPost,
+    AllDislikes
   },
   computed: {
     currentUser() {
@@ -104,27 +125,44 @@ export default {
     }
   },
   mounted() {
-    this.getLikeOnOnePost();
+    this.getLikeOnOnePost()
+    this.getDislikeOnOnePost()
   },
   methods: {
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
 
-    getLikeOnOnePost() {
+    likeOrNotPost() {
       const postId = this.post.id;
-      PostService.getLikeOnOnePost(postId)
-      .then((res) => {
-        this.likeThisPost = res.like
-      })
+      LikePostService.likePost(postId)
+      .then((res) => (
+        this.likeThisPost = res.data.like
+      ))
     },
 
-    async likeOrUnlikePost() {
+    DislikeOrNotPost() {
       const postId = this.post.id;
-      PostService.likePost(postId)
-      .then((res) => {
-        this.likeThisPost = res.like
-      })
+      DislikePostService.dislikePost(postId)
+      .then((res) => (
+        this.dislikeThisPost = res.data.dislike
+      ))
+    },
+
+    getLikeOnOnePost() {
+    const postId = this.post.id;
+      LikePostService.getLikeOnOnePost(postId)
+      .then((res) => (
+        this.likeThisPost = res.data.like
+      ))
+    },
+
+    getDislikeOnOnePost() {
+    const postId = this.post.id;
+      DislikePostService.getDislikeOnOnePost(postId)
+      .then((res) => (
+        this.dislikeThisPost = res.data.dislike
+      ))
     },
 
     focusInput() {
@@ -136,7 +174,6 @@ export default {
 <style scoped>
 .card-body {
     padding: 3.5rem;
-    max-width: 100%;
     border-radius: 1.25rem;
     box-shadow: 0 0 6px #0000002e;
     background: #fff;
@@ -144,11 +181,9 @@ export default {
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    width: 50%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3rem;
-    margin-top: 3rem;
     padding: 2rem;
 }
 .img {
@@ -157,18 +192,6 @@ export default {
     height: 350px;
     object-fit: cover;
     object-position: center;
-}
-button {
-    justify-content: center;
-    flex-wrap: nowrap;
-    background: none;
-    border: none;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-button:hover {
-    background: #F2F2F2;
-    cursor: pointer;
 }
 .line {
     display: block;
@@ -181,15 +204,14 @@ button:hover {
 .blue {
   color: rgb(32, 120, 244);
 }
+.red {
+  color: rgb(239, 42, 16);
+}
 .container_button {
   display: flex;
   justify-content: center;
   justify-items: center;
   text-align: center;
-}
-.ellipsis:after {
- font-size: 4em;
- color: #2e2e2e;
 }
 .accessUser {
   float: right;
@@ -217,24 +239,18 @@ a:hover {
   cursor: pointer;
 }
 .contentPost {
-  margin-top: -1rem;
+  margin-top: 1rem;
   margin-bottom: 1rem
 }
 .date {
   font-size: 0.8rem;
   font-style: italic;
   color: #797979;
-  margin-top: -1rem
-}
-.menu {
-  display: flex;
-  float: right;
-  padding: 1rem;
 }
 .react-btn {
   background: white;
   border: none;
-  margin: 3px;
+  margin-top: 1rem;
   color: #747474;
   border-radius: 0.25rem;
   font-weight: bold;
@@ -247,12 +263,6 @@ a:hover {
 .react-btn:hover {
     color: #747474 !important;
     background-color: rgba(108, 117, 125, 0.1) !important;
-  }
-.btn-block, .btn-block {
-  margin-top: 0px;
-}
-.menu-post {
-  margin-top: 0.5rem;
 }
 .opacity1 div img {
 	opacity: 1;

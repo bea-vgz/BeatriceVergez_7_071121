@@ -98,7 +98,7 @@ exports.getAllPosts = (req, res, next) => {
           attributes: ["UserId"]
         },
       ],
-      order: [["createdAt", "ASC"]]
+      order: [["createdAt", "DESC"]]
     })
       .then(posts => res.status(200).json(posts))
       .catch(error => res.status(400).json({ error }));
@@ -107,7 +107,7 @@ exports.getAllPosts = (req, res, next) => {
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPostsUser = (req, res, next) => {
   Post.findAll({ where: { UserId: req.params.userId },
-    include: { model: User, attributes: ["username"]},
+    include: { model: User },
     order: [["createdAt", "ASC"]]
   })
     .then(posts => res.status(200).json(posts))

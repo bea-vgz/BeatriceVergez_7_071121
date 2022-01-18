@@ -9,26 +9,36 @@ export const post = {
       deletedPost: { status: '' },
       posts: [],
       post: {
-        title:'',
         content:'',
         image:'',
       },
       like: {},
       likes: [],
       comments: [],
+      comment: {}
     },
 
 actions: {
 
   createPost({ commit }, post) {
-    return PostService.createPost(post)
-    .then((response) => {
+    return new Promise((resolve, reject) => {
+    PostService.createPost(post)
+    .then(response => {
       commit('createPostSuccess', post)
-      return Promise.resolve(response)
-    },
-    (error) => {
-      commit('createPostFailure')
-      return Promise.reject(error)
+      resolve(response);
+    })
+    .then(() => {
+      PostService.getAllPosts()
+        .then(response => {
+          const posts = response.data;
+          console.log(posts);
+          commit("getPosts", posts);
+          resolve(response.data);
+        })
+    })
+    .catch(function(error) {
+      reject(error);
+    });
     })
   },
 
@@ -44,14 +54,14 @@ actions: {
     })
   },
 
-  getAllPostsUser({ commit }, userId) {
-    return PostService.getAllPosts(userId)
-    .then((posts) => {
-      commit('getPosts');
-      return Promise.resolve(posts);
+  getOnePost({ commit }) {
+    return PostService.getOnePost()
+    .then((post) => {
+      commit('getOnePost');
+      return Promise.resolve(post);
     },
     (error) => {
-      commit('getPostsFailure')
+      commit('getOnePostFailure')
       return Promise.reject(error)
     })
   },
@@ -61,23 +71,9 @@ actions: {
     .then(() => commit('deleteSuccess', postId))
     .catch(error => {
       console.log({ error: error })
-      commit('deleteFailure', 'Problème de connexion')
+      commit('messageFailure', 'Problème de connexion')
     })
   },
-
-  modifyPost({commit}, postId) {
-    return PostService.modifyPost(postId).then(
-      (response) => {
-        commit ('updateSuccess', post)
-        return Promise.resolve(response);
-      },
-      (error) => {
-        commit ('updateFailure')
-        return Promise.reject(error)
-      }
-    )
-  },
-
 },
 mutations: {
     createPostSuccess(state) {
@@ -107,10 +103,10 @@ mutations: {
     deleteSuccess(state, postId) {
       state.posts = state.posts.filter(post => post.id !== postId)
     },
-    deleteFailure(state, message) {
+    messageFailure(state, message) {
       state.message = message
     },
-    updateSuccess(state, post) { 
+    updateSuccess(state) { 
       state.post = post
     },
     updateFailure(state) {

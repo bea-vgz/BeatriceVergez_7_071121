@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container_comments align-items-center mt-3">
-      <div class="mr-2 mb-2">
+    <div class="container_comments">
+      <div>
         <router-link :to="{ name: 'Profil' }" >
           <div class="UserAvatar">
             <img :src="currentUser.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
@@ -27,6 +27,7 @@
 </template>
 <script>
 import CommentService from '../service/comment.resource'
+import { mapActions } from 'vuex'
 import Comment from '../models/comment'
 export default {
   name: 'CommentFormulaire',
@@ -42,18 +43,20 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['displayNotification']),
+
     createComment(){
       const comment = this.comment
       const postId = this.post.id;
       CommentService.createComment(comment, postId)
       .then(() => {
-        comment
         this.$emit('commentCreated', comment)
+        this.displayNotification('Commentaire posté !')
       })
     },
 
     newline () {
-      this.comment.content = `${this.comment.content}\n`
+      this.comment= `${this.comment}\n`
     },
   }
 };
@@ -61,7 +64,6 @@ export default {
 <style scoped>
 .container_comments {
   display: flex;
-  justify-content: center;
   margin-top: 0.3rem;
 }
 .form_comment {

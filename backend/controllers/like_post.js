@@ -1,6 +1,5 @@
 const { Like_post } = require('../models/index');
 const { User } = require('../models/index');
-const { Post } = require('../models/index');
 
 // Création d'un like post :
 exports.likePost = async (req, res, next) => {
@@ -33,7 +32,7 @@ exports.getAllLikesOnePost = async (req, res, next) => {
   try {
     const allLikes = await Like_post.findAll({ 
       where: { PostId: req.params.postId },
-      include: { model: User, attributes: ["username"] }
+      include: { model: User }
     })
   res.status(200).json({ allLikes })
   } catch (error) {
@@ -41,11 +40,12 @@ exports.getAllLikesOnePost = async (req, res, next) => {
   }
 };
 
-//Récupérer un like d'un post
+//Récupérer un like d'un post d'un user
 exports.getLikeOnOnePost = async (req, res, next) => {
   try {
     const existLike = await Like_post.findOne(
-      { where: { PostId: req.params.postId , UserId: req.user }
+      { where: { PostId: req.params.postId, UserId: req.user },
+      include: { model: User }
     })
     res.status(200).json({ like: existLike ? true : false })
   } catch (error) {

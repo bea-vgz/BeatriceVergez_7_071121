@@ -4,6 +4,6 @@ const auth = require('../middleware/auth')
 const dislikeCtrl = require('../controllers/dislike_comment');
 
 router.post ('/:commentId/dislikes', auth, dislikeCtrl.dislikeComment);
-router.get ('/:commentId/dislikes', auth, dislikeCtrl.getCommentsDislikes);
+router.get ('/:commentId/dislike', auth, dislikeCtrl.getDislikeOneComment);
 
 module.exports = router;

@@ -68,13 +68,33 @@ export default {
   font-weight: 600;
   padding: 1rem 1rem;
   &:hover {
-    text-decoration: underline;
     cursor: pointer;
     color: #fd2d01
   }
   &:focus {
     background: none;
     outline: none;
+  }
+}
+.underline{
+  position: relative;
+}
+.underline::before{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fd2d01;
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .underline:hover::before{
+    left: 0;
+    right: auto;
+    width: 100%;
   }
 }
 </style>

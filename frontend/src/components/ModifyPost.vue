@@ -1,12 +1,14 @@
 <template>
   <div class="fixed inset-0 transition-opacity">
     <EditButton
+      customClass="post-button"
+      classCollapse="post-btn-collapsed"
       :editingPost="true"
       :isCreator="post.UserId == currentUser.userId"
       @onDelete="deletePost"
       :elementId="post.id"
-      modifyText="Modifier la publication"
-      deleteText="Supprimer la publication"
+      modifyText="Modifier le post"
+      deleteText="Supprimer le post"
     >
       <b-modal
         :id="`modal-${post.id}`"
@@ -18,9 +20,9 @@
       >
         <b-form>
           <PostFormulaire
-          :image="post.image"
+            :image="post.image"
             @onFileSelected="onFileSelected"
-            v-model="content"
+            v-model="post.content"
           />
         </b-form>
       </b-modal>
@@ -29,9 +31,10 @@
 </template>
 
 <script>
+import PostService from "../service/post.resource";
 import { mapActions } from 'vuex'
-import PostFormulaire from './PostFormulaire'
-import EditButton from './EditButton'
+import PostFormulaire from '../components/PostFormulaire.vue'
+import EditButton from '../components/EditButton.vue'
 export default {
   name: 'ModifyPost',
   components: {
@@ -41,8 +44,7 @@ export default {
   props: ['post'],
   data () {
     return {
-      content: this.post.content,
-      selectedFile: null,
+      image: null
     }
   },
   computed: {
@@ -56,34 +58,36 @@ export default {
     toggleActions () {
       this.areActionsVisible = !this.areActionsVisible
     },
-    onFileSelected (file) {
-      this.selectedFile = file
+
+    onFileSelected(file) {
+      this.image = file
     },
 
-    async onUpload() {
+    onUpload(){
       const postId = this.post.id
-      await this.$store.dispatch("post/modifyPost", postId)
-      this.displayNotification('Post modifié !')
+      const post = new FormData();
+      post.append('image', this.image);
+      post.append('content', this.post.content);
+      PostService.modifyPost(postId, post)
+      .then(() => {
+        this.displayNotification('Post modifié !')
+      })
     },
 
     deletePost() {
       const postId = this.post.id
       this.$store.dispatch("post/deletePost", postId)
-      this.displayNotification('Post supprimé !')
+      .then(() => {
+        this.displayNotification('Post supprimé !')
+        location.reload()
+      })
     },
   }
 }
 </script>
 
 <style lang="scss">
-.modal-fade-enter,
-.modal-fade-leave-to {
-  opacity: 0;
-}
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.5s ease-in-out;
-}
+
 .modal-body {
   padding: 1rem 1rem 0 1rem;
 }
@@ -96,9 +100,9 @@ export default {
   font-weight: 500;
   display: block;
   width: 100%;
-  margin: 0 1rem 1rem 1rem;
 }
 .modal-content {
+  font-family: "Barlow", sans-serif;
   border: none;
   box-shadow: 0px 1px 5px 4px rgba(204, 204, 204, 0.2);
 }

@@ -98,6 +98,12 @@ h1{
     font-weight: 600;
     margin-top : -0.5rem;
 }
+h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top : 1rem;
+    margin-bottom: 1rem
+}
 .champs {
     font-size: 0.7rem;
     color: #fd2d01;

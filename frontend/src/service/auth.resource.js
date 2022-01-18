@@ -36,8 +36,8 @@ class AuthService {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modifyUser(payload) {
-      return resource.put(`/users/${payload.userId}`, payload.data,
+    modifyUser(id, data) {
+      return resource.put(`/users/${id}`, data,
       { headers: authHeader() }
     )
       .then(response => {
@@ -46,8 +46,8 @@ class AuthService {
       });
     }
 
-    modifyPassword(id) {
-      return resource.put(`/users/${id}/password`, { headers: authHeader() })
+    modifyPassword(payload) {
+      return resource.put(`/users/${payload.userId}/password`, { headers: authHeader() })
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response)

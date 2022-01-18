@@ -14,27 +14,24 @@
         </div>
         <div class="optionsProfil bg-white">
             <div class="option is-active"> 
-              <router-link to="/profil" class="nav_centrale"><font-awesome-icon icon="user" class="icon ml-5 mr-2"/> Mon compte</router-link>
+              <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon> Mon compte</router-link>
             </div>
             <div class="option is-active">
-              <router-link to="/password" class="nav_centrale"><font-awesome-icon icon="user-lock" class="icon ml-5 mr-2"/>Modifier mot de passe</router-link>
+              <router-link to="/password" class="nav_centrale underline"><b-icon icon="pencil-square" class="mr-2 mr-lg-3"></b-icon> Modifier mot de passe</router-link>
             </div>
             <div class="option is-active">
-              <router-link to="/mesPosts" class="nav_centrale"><font-awesome-icon icon="clone" class="icon ml-5 mr-2"/>Mes posts</router-link>
-            </div>
-            <div class="option is-active">
-              <a @click="logout" to="/" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="icon ml-5 mr-2"/> Me déconnecter </a>
+              <a @click="logout" to="/" class="text-decoration-none underline"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
-            <div class="option is-active" >
-              <a to="/" class="nav_centrale delete_user" @click="deleteUser"><font-awesome-icon icon="trash-alt" class="delete_icon ml-5 mr-2"/>Supprimer mon compte</a>
+            <div class="option is-active">
+              <a to="/" class="nav_centrale delete_user underline" @click="deleteUser"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
         </div>
     </aside>
-    <div class="text-justify infoUser bg-white">
-      <h2><strong>Mon compte : </strong> </h2>
-      <div>
+    <div class="infoUser bg-white">
+      <h1><strong>Mon compte : </strong> </h1>
+      <div class="userInfo">
         <p v-if="currentUser"><strong>Pseudo : </strong>{{currentUser.username}}</p>
         <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
         <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
@@ -150,11 +147,12 @@ h1 {
     flex-direction: column;
 }
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   object-fit: cover;
   object-position: center;
   border-radius: 100%;
+  margin-bottom: 1rem;
 }
 .bg-white {
   background-color: #fff;
@@ -166,7 +164,7 @@ h1 {
 .infoUser {
     padding: 3.5rem;
     max-width: 100%;
-    width: 30rem;
+    width: 40rem;
     height: auto;
     border-radius: 1.25rem;
     box-shadow: 0 0 16px #0000002e;
@@ -177,6 +175,9 @@ h1 {
     margin-right: auto;
     margin-top: 6rem;
     margin-bottom: 6rem;
+}
+.userInfo{
+  margin-top: 1rem;
 }
 input {
     font-family: 'Barlow', sans-serif;
@@ -196,7 +197,6 @@ input {
     border-color: rgba(231, 233, 244);
 }
 .profil_account {
-    width: 20%;
     padding: 4rem;
     border-right-width: 1px;
     display: flex;
@@ -210,7 +210,6 @@ input {
 }
 .delete_icon, .modif_icon {
   color: #fd2d01;
-  padding-right: 0.7rem;
 }
 .option {
     display: flex;
@@ -226,7 +225,7 @@ input {
     margin-bottom: 0.5rem;
     width: 100%;
 }
-a {
+a{
     text-decoration: none;
     color:#242424;
     font-size : 1rem;
@@ -234,8 +233,9 @@ a {
     cursor: pointer;
 }
 a:hover{
-    color: #fff;
+    color: #fd2d01;
     cursor: pointer;
+    text-decoration: none;
 }
 .icon {
   padding-right: 0.7rem;
@@ -256,5 +256,26 @@ a:hover{
 }
 .py-8 {
   padding-bottom: 2rem;
+}
+.underline{
+  position: relative;
+}
+.underline::before{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fd2d01;
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .underline:hover::before{
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
 }
 </style>

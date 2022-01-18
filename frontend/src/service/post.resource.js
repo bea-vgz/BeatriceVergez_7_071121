@@ -1,6 +1,5 @@
 import resource from './resource'
 import authHeader from './auth.header'
-import { post } from '../store/post.module';
 
 class PostService {
 
@@ -24,30 +23,16 @@ class PostService {
         return resource.delete(`/posts/${postId}`, { headers: authHeader() })
     }
 
-    modifyPost(postId, post) {
-        return resource.put(`/posts/${postId}`, post, { headers: authHeader() })
-        .then(() => localStorage.removeItem('post'))
+    modifyPost(postId, data) {
+        return resource.put(`/posts/${postId}`, data, { headers: authHeader() })
+        .then(response => {
+            localStorage.setItem('post', JSON.stringify(response.data));
+            console.log(response)
+        });
     }
 
     getAllPostsUser(userId){
         return resource.get(`/posts/user/${userId}`, { headers: authHeader() })
-    }
-
-    getAllLikesOnePost(postId) {
-        return resource.get(`posts/${postId}/likes`, { headers: authHeader() })
-    }
-
-    likePost(postId) {
-        return resource.post(`posts/${postId}/likes`, { 
-            UserId: post.UserId,
-            PostId: post.PostId,
-        },
-            { headers: authHeader() }
-        )
-    }
-
-    getLikeOnOnePost(postId) {
-        return resource.get(`posts/${postId}/like`, { headers: authHeader() })
     }
 }
 export default new PostService();

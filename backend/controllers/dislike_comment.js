@@ -7,8 +7,8 @@ exports.dislikeComment = async (req, res, next) => {
     try {
       const existDislike = await Dislike_comment.findOne({ where: { UserId: req.user, CommentId: req.params.commentId } });
       if (existDislike) {
-        await Dislike_comment.destroy( { truncate: true } );
-        res.status(200).send({ message : "Vous ne dislikez plus ce commentaire !", dislike: false });
+        await existDislike.destroy();
+        res.status(200).json({ message : "Vous ne dislikez plus ce commentaire !", dislike: false });
       } else {
         const newDislike = await Dislike_comment.create({
           UserId: req.user,
@@ -22,18 +22,19 @@ exports.dislikeComment = async (req, res, next) => {
       }
     }
     catch (error) {
-          res.status(400).json({ error: error.message });
-      }
+      res.status(400).json({ error: error.message });
+    }
 };
 
 //Récupérer tous les dislikes d'un commentaire
-exports.getCommentsDislikes = (req, res, next) => {
-  Dislike_comment.findAll({ where: { CommentId: req.params.commentId },
-  include: [
-    { model: User, attributes: ["username"] },
-    { model: Comment, attributes: ["content"] },
-  ],
-  order: [["createdAt", "ASC"]] })
-    .then((dislike) => res.status(200).json(dislike))
-    .catch((error) => res.status(404).json({ error }));
+exports.getDislikeOneComment = async (req, res, next) => {
+  try {
+    const existDislike = await Dislike_comment.findOne(
+      { where: { CommentId: req.params.commentId },
+      include: { model: User }
+    })
+    res.status(200).json({ dislike: existDislike ? true : false })
+  } catch (error) {
+    res.status(400).json({ error })
+  }
 };

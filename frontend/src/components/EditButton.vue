@@ -11,8 +11,9 @@
     </button>
     <b-collapse
       v-bind:class="
-        `${classCollapse || ''} btn-collapsed collapsed mt-2 position-absolute 
-        ${areActionsVisible && 'visible'}`
+        `${classCollapse ||
+          ''} btn-collapsed collapsed mt-2 position-absolute ${areActionsVisible &&
+          'visible'}`
       "
     >
       <b-card class="border-0" @click="toggleActions">
@@ -42,19 +43,18 @@
         <p class="card-text">
           <b-button
             class="text-left w-100"
-            v-if="!editingPost && isCreator"
+            v-if="isAdmin || isCreator"
             block
-            @click="onDelete"
-            aria-label="Supprimer">
-            <b-icon icon="trash" class="mr-2 mr-lg-3"></b-icon
-            >
-            <span>{{ deleteText }}</span></b-button>
+            v-on:click="onDelete"
+            aria-label="Supprimer"
+            ><b-icon icon="trash" class="mr-2 mr-lg-3"></b-icon>
+            <span>{{ deleteText }}</span></b-button
+          >
         </p>
       </b-card>
     </b-collapse>
   </div>
 </template>
-
 <script>
 export default {
   name: 'EditButton',
@@ -91,7 +91,7 @@ export default {
 <style lang="scss">
 .post-button {
   top: 20px;
-  right: 15px;
+  right: 50px;
   padding: 1px 15px 7px !important;
   background-color: transparent;
   border: 0;
@@ -108,7 +108,7 @@ export default {
   }
 }
 .btn-secondary {
-  font-weight: 600;
+  font-weight: 500;
   color: #000;
   background-color: white;
   border: none;
@@ -117,7 +117,7 @@ export default {
 .btn-secondary {
   &:hover {
     color: #fd2d01 !important;
-    background-color: #FFF !important;
+    background-color: rgba(108, 117, 125, 0.1) !important;
     box-shadow: none !important;
   }
 }

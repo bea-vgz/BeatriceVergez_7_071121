@@ -5,5 +5,6 @@ const likeCtrl = require('../controllers/like_comment');
 
 router.post ('/:commentId/likes', auth, likeCtrl.likeComment);
 router.get ('/:commentId/likes', auth, likeCtrl.getCommentsLikes);
+router.get ('/:commentId/like', auth, likeCtrl.getLikeOneComment);
 
 module.exports = router;

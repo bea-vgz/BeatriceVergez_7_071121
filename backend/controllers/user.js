@@ -126,7 +126,7 @@ exports.getAllUsers = (req, res, next) => {
 // Afficher/Récupérer un user
 exports.getOneUser = (req, res, next) => {
     User.findOne({ where: { id: req.params.id },
-        include: { model: Post, attributes: ["title", "content", "image"]},
+        include: { model: Post },
     })
       .then(user => res.status(200).json(user))
       .catch(error => res.status(400).json({ error }));

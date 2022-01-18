@@ -1,7 +1,7 @@
 <template>
     <footer>
       <!-- Copyright -->
-      <div class=" footer text-center p-4 text-white footer">
+      <div class="footer">
         © 2021 Copyright – Groupomania
       </div>
       <!-- Copyright -->

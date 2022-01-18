@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      modal="`modal-likes-${post.id}`"
+      v-b-modal="`modal-likes-${post.id}`"
       @click="fetchAllLikes"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
@@ -16,38 +16,47 @@
           />
         </svg>
       </div>
-      <p>{{likesList.length}}</p>
     </button>
   
-    <div :id="`modal-likes-${post.id}`" :title="`J'aime`">
-      <div v-for="like in likesList" :key="like.id">
-        <router-link :to="{ name: 'ProfilUser', params: { userId: like.User.id } }" >
-        <div class="UserAvatar" v-if="like.User">
-          <img :src="like.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
-          <p>{{ like.User.username }}</p>
-        </div>
-      </router-link>
+    <b-modal :id="`modal-likes-${post.id}`" :title="`Personnes aimant ce post`">
+      <div v-for="like_post in likes" :key="like_post.id">
+        <router-link
+          :to="{ name: 'ProfilUser', params: { userId: like_post.UserId } }"
+          ><div class="d-flex align-items-center">
+            <div class="d-flex UserAvatar">
+              <router-link :to="{ name: 'ProfilUser', params: { userId: like_post.UserId } }">
+                <img :src="like_post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              </router-link>
+            </div>
+            <p>{{ like_post.User.username }} </p>
+          </div></router-link
+        >
       </div>
       <div slot="modal-footer"></div>
-    </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import PostService from '../service/post.resource'
+import LikePostService from '../service/like_post.resource'
 export default {
   name: 'AllLikes',
   props: ['post'],
   data () {
     return {
-      likesList: [],
+      likes: [],
     }
   },
+  mounted() {
+    this.fetchAllLikes ()
+  },
   methods: {
-    async fetchAllLikes () {
+    fetchAllLikes () {
       const postId = this.post.id;
-      const res = await PostService.getAllLikesOnePost(postId)
-      this.likesList = res.allLikes;
+      LikePostService.getAllLikesOnePost(postId)
+      .then((res) => (
+        this.likes = res.data.allLikes
+      ))
     }
   }
 }
@@ -61,6 +70,7 @@ a {
   &:visited {
     color: #212529;
     text-decoration: underline;
+    font-weight:600;
   }
 }
 .like-btn {
@@ -78,12 +88,11 @@ a {
   font-size: 16px;
 }
 .modal-content {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   border: none;
   box-shadow: 0px 1px 5px 4px rgba(204, 204, 204, 0.2);
 }
 .modal-backdrop {
-  background-color: rgba(108, 117, 125, 0.2);
+  background-color: rgba(69, 76, 82, 0.2);
 }
 .modal-footer {
   padding: 0;
@@ -91,6 +100,27 @@ a {
 }
 .likes-number {
   font-size: 14px;
+}
+.UserAvatar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.infoPostUser {
+  padding-left: 1.5rem;
+}
+.postUserPhoto {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 100%;
+}
+.svg-container {
+  border-radius: 100%;
+  background-color: rgb(32, 120, 244);
+  width: 25px;
+  height: 25px;
 }
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .modal-title {

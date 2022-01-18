@@ -5,7 +5,12 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+// Import Bootstrap an BootstrapVue CSS files
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import { LayoutPlugin } from  'bootstrap-vue'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faHome,
@@ -38,6 +43,7 @@ Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(LayoutPlugin) // Ceci importe <b -modal> ainsi que la directive vb-modal
 
 new Vue({
   router,

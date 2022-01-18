@@ -16,7 +16,6 @@
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import PostService from "../service/post.resource"
 export default {
   data() {
     return {
@@ -31,23 +30,15 @@ export default {
   },
   components: { Header, Footer },
   mounted() {
-    this.getAllPostsUser();
     this.getOneUser();
   },
   methods: {
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
-    getAllPostsUser() {
-      const userId = this.$route.params.id;
-      PostService.getAllPostsUser(userId)
-        .then(() => {
-          this.posts = this.getAllPostsUser(this.$route.params.id);
-      })
-    },
     getOneUser() {
       const userId = this.$route.params.id;
-      PostService.getOneUser(userId)
+      this.$store.dispatch('auth/getOneUser', userId)
         .then((res) => {
           this.user = res.data
       })

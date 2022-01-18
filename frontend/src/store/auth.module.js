@@ -53,15 +53,15 @@ export const auth = {
       )
     },
 
-    modifyUser({commit}, payload) {
-      return AuthService.modifyUser(payload).then(
+    modifyUser({commit}, user) {
+      return AuthService.modifyUser(user).then(
         (response) => {
-          commit ('updateSuccess')
-          return Promise.resolve(response);
+          commit ('updateSuccess', user)
+          return Promise.resolve(response.data);
         },
         (error) => {
           commit ('updateFailure')
-          return Promise.reject(error)
+          return Promise.reject(error.response.data)
         }
       )
     },
@@ -87,6 +87,18 @@ export const auth = {
       },
       (error) => {
         commit('getUsersFailure')
+        return Promise.reject(error)
+      })
+    },
+
+    getOneUser({ commit }) {
+      return AuthService.getOneUser()
+      .then((user) => {
+        commit('getUser');
+        return Promise.resolve(user);
+      },
+      (error) => {
+        commit('getUserFailure')
         return Promise.reject(error)
       })
     },
@@ -128,6 +140,14 @@ export const auth = {
     getUsersFailure(state) {
       state.users = null;
       state.message = "Users non récupérés !";
+    },
+    getUser(state, user) {
+      state.user = user;
+      state.message = "User récupéré !";
+    },
+    getUserFailure(state) {
+      state.user = null;
+      state.message = "User non récupéré !";
     },
   },
 
