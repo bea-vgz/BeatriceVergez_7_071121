@@ -101,6 +101,7 @@ import DislikePostService from "../service/dislike_post.resource";
 import AllComments from "../components/AllComments.vue";
 import AllLikesPost from "./AllLikesPost.vue";
 import ModifyPost from '../components/ModifyPost.vue';
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -127,6 +128,8 @@ export default {
     this.getDislikeOnOnePost()
   },
   methods: {
+    ...mapActions(['displayNotification']),
+
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
@@ -135,17 +138,18 @@ export default {
       const postId = this.post.id;
       LikePostService.likePost(postId)
       .then((res) => (
-        this.likeThisPost = res.data.like
+        this.likeThisPost = res.data.like,
+        this.displayNotification('Like !')
       ))
     },
 
     DislikeOrNotPost() {
       const postId = this.post.id;
-      const res = DislikePostService.dislikePost(postId)
-      if (res.dislike !== this.dislikeThisPost) {
-        this.likesNumber += res.dislike ? +1 : -1
-      }
-      this.likeThisPost = res.dislike
+      DislikePostService.dislikePost(postId)
+      .then((res) => (
+        this.dislikeThisPost = res.data.dislike,
+        this.displayNotification('Dislike !')
+      ))
     },
 
     getLikeOnOnePost() {

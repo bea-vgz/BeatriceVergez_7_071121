@@ -1,36 +1,33 @@
 <template>
   <transition name="modal-fade">
     <div class="fixed inset-0 transition-opacity">
-    <form @submit.prevent="update" class="modifyProfil" v-if="currentUser">
+      <form @submit.prevent="update" class="modifyProfil" v-if="currentUser">
+        <button type="button" aria-label="fermer" @click="close" class="button_close" >
+          <font-awesome-icon icon="times-circle"/>
+        </button>
         <div class="bg-white"></div>
-        <label class="img" for="selectImage">
-            <img v-if="image || currentUser" :src="image || currentUser.photoProfil" alt="Avatar">
-            <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png" alt="Avatar">
-            <div class="indication"><font-awesome-icon icon="pencil-alt"/></div>
-            <input ref="file" type="file" id="selectImage" @click="triggerInput">
-        </label>
-        <b-form>
+          <div class="img">
+            <img :src="file || currentUser.photoProfil" alt="Avatar" ref="file" type="file">
+          </div>
+          <b-form>
               <button
-                class="create-button btn-block w-50 mx-auto mb-3 d-flex align-items-center justify-content-center"
+                class="btn-change btn-block w-50 mx-auto mb-3 mt-3 d-flex align-items-center justify-content-center"
                 @click="triggerInput"
                 type="button"
                 aria-label="Changer ma photo de profil"
               >
-                <span class="button-text mr-2 d-none d-md-block"
-                  >Changer ma photo de profil</span
-                >
-                <span class="button-text mr-2 d-md-none d-lg-none d-xl-none"
-                  >Modifier</span
-                >
                 <svg
                   style="width:24px;height:24px;margin-bottom:5px"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    fill="rgba(253, 45, 6, 0.5)"
+                    fill="rgb(239, 42, 16)"
                     d="M15.5,9C16.2,9 16.79,8.76 17.27,8.27C17.76,7.79 18,7.2 18,6.5C18,5.83 17.76,5.23 17.27,4.73C16.79,4.23 16.2,4 15.5,4C14.83,4 14.23,4.23 13.73,4.73C13.23,5.23 13,5.83 13,6.5C13,7.2 13.23,7.79 13.73,8.27C14.23,8.76 14.83,9 15.5,9M19.31,8.91L22.41,12L21,13.41L17.86,10.31C17.08,10.78 16.28,11 15.47,11C14.22,11 13.16,10.58 12.3,9.7C11.45,8.83 11,7.77 11,6.5C11,5.27 11.45,4.2 12.33,3.33C13.2,2.45 14.27,2 15.5,2C16.77,2 17.83,2.45 18.7,3.33C19.58,4.2 20,5.27 20,6.5C20,7.33 19.78,8.13 19.31,8.91M16.5,18H5.5L8.25,14.5L10.22,16.83L12.94,13.31L16.5,18M18,13L20,15V20C20,20.55 19.81,21 19.41,21.4C19,21.79 18.53,22 18,22H4C3.45,22 3,21.79 2.6,21.4C2.21,21 2,20.55 2,20V6C2,5.47 2.21,5 2.6,4.59C3,4.19 3.45,4 4,4H9.5C9.2,4.64 9.03,5.31 9,6H4V20H18V13Z"
                   />
                 </svg>
+                <span class="button-text ml-2 d-none d-md-block"
+                  >Changer ma photo de profil</span
+                >
               </button>
               <div class="d-flex align-items-center">
                 <b-col sm="10">
@@ -44,7 +41,7 @@
               </div>
               <div class="d-flex align-items-center">
                 <b-col sm="2" class="d-none d-lg-block p-0">
-                  <label for="username"> Prénom </label>
+                  <label for="username"> Pseudo </label>
                 </b-col>
                 <b-col sm="10">
                   <b-form-input
@@ -70,21 +67,15 @@
                   ></b-form-input>
                 </b-col>
               </div>
-            </b-form>
+          </b-form>
             <button
               type="submit"
-              class="save-btn" 
+              class="save-btn d-lg-block" 
               aria-label="Enregistrer"
             >
               Enregistrer
             </button>
-    </form>
-    <div>
-      <button type="button" aria-label="fermer" @click="close" class="button_close" >
-        <font-awesome-icon icon="times-circle"/>
-      </button>
-    </div>
-    
+      </form>
     </div>
   </transition>
 </template>
@@ -95,10 +86,8 @@ export default {
   name: "modifyProfil",
   data() {
     return {
-      username: '',
-      bio: '',
-      disabledButton: true,
       image: null,
+      file: null,
       photoProfil: null
     }
   },
@@ -107,39 +96,33 @@ export default {
       return this.$store.state.auth.user;
     },
   },
-  watch: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
-  },
   methods: {
     update() {
-        const user = new FormData();
-        if (typeof this.file === 'object') {
-          user.append('image', this.currentUser.photoProfil);
-        }
+
+      const user = new FormData();
+        user.append('image', this.currentUser.photoProfil);
         user.append('bio', this.currentUser.bio);
         user.append('username', this.currentUser.username);
 
-        const userId = this.currentUser.userId
-        AuthService.modifyUser(userId, user)
-          .then(()=> {
-            alert("Modification de votre profil réussi !")
-            location.reload()
-          })
-      },
-      onFileChange(event) {
-        this.file = URL.createObjectURL(event.target.files[0])
-        this.photoProfil = event.target.files[0]
-      },
+      const userId = this.currentUser.userId
+      AuthService.modifyUser(userId, user)
+      .then(()=> {
+        alert("Modification de votre profil réussi !")
+        location.reload()
+      })
+    },
+    onFileChange(event) {
+      this.file = URL.createObjectURL(event.target.files[0])
+      this.currentUser.photoProfil = event.target.files[0]
+    },
 
-      triggerInput () {
-        this.$refs.fileUpload.click()
-      },
+    triggerInput () {
+      this.$refs.fileUpload.click()
+    },
 
-      close() {
-        this.$emit("close");
-      },
+    close() {
+      this.$emit("close");
+    },
   },
 }
 </script>
@@ -153,14 +136,8 @@ export default {
 .modal-fade-leave-active {
   transition: opacity 0.5s ease-in-out;
 }
-.modifyProfil {
-    box-shadow: 0 0 10px -5px rgb(0 0 0 / 30%);
-    border-radius: 10px;
-    overflow: hidden;
-}
 .modifyProfil .bg-white {
     height: 150px;
-    width: 100%;
 }
 .modifyProfil .img {
     display: block;
@@ -184,7 +161,6 @@ export default {
 .modifyProfil .img .indication {
     position: absolute;
     bottom: -70px;
-    width: 100%;
     height: 40%;
     display: flex;
     justify-content: center;
@@ -200,8 +176,15 @@ export default {
 .modifyProfil .inputs {
     padding: 20px;
 }
-button {
-  border: none
+.btn-change {
+  border: none;
+  background: none;
+}
+.btn-change:hover {
+  background:#F2F2F2;
+}
+button{
+  border:none;
 }
 .save-btn {
   background-color: rgba(253, 45, 6, 0.8);

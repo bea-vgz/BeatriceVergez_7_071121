@@ -71,14 +71,11 @@ exports.modifyUser = (req, res, next) => {
         const User = req.file ? {
             ...req.body,
             photoProfil: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-        } : { 
-                username: req.body.username, 
-                bio: req.body.bio 
-            };
+        } : { ...req.body };
         const filename = user.photoProfil.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
-            user.update({ ...User, id: req.params.id })
-            .then(() => res.status(200).json({ message: "User modifié ! ", user }))
+            user.update({ ...User, id: req.params.id})
+            .then(user => res.status(200).json({ message: "User modifié ! ", user }))
             .catch((error) => res.status(400).json({ error }));
         })
     })

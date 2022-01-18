@@ -23,8 +23,8 @@
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : 
           <button type="button" class="buttonEyes" @click="show = !show" >
-            <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
-            <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+            <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes" v-show="show" />
+            <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes" v-show="!show" />
           </button>
         </label>
         <input id="password" name="password" v-model="user.password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
@@ -179,12 +179,12 @@ input {
     cursor: pointer
 }
 .buttonEyes {
-  background: #F2F2F2;;
   border: none;
   cursor: pointer;
   color: #fd2d01;
   padding: 0.3rem;
   border-radius: 100%;
   margin-left: 0.7rem;
+  background: none
 }
-</style >
+</style>

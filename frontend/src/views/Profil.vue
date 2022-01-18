@@ -13,18 +13,18 @@
           <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
         </div>
         <div class="optionsProfil bg-white">
-            <div class="option is-active"> 
+            <div class="option"> 
               <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon> Mon compte</router-link>
             </div>
-            <div class="option is-active">
+            <div class="option">
               <router-link to="/password" class="nav_centrale underline"><b-icon icon="pencil-square" class="mr-2 mr-lg-3"></b-icon> Modifier mot de passe</router-link>
             </div>
-            <div class="option is-active">
-              <a @click="logout" to="/" class="text-decoration-none underline"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
+            <div class="option">
+              <a @click="logout" class="text-decoration-none underline"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
-            <div class="option is-active">
-              <a to="/" class="nav_centrale delete_user underline" @click="deleteUser"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
+            <div class="option">
+              <a @click="deleteUser" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
         </div>
@@ -35,10 +35,11 @@
         <p v-if="currentUser"><strong>Pseudo : </strong>{{currentUser.username}}</p>
         <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
         <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
-        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
+        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.id }}</p>      
       </div>
-      <a title="Modifier mon profil" @click="displayModal" class="icone" >
-        <span><font-awesome-icon icon="user-edit" class="modif_icon"/> Modifier mon compte</span>
+      <div class="line mb-3"></div>
+      <a title="Modifier mon profil" @click="displayModal" class="icone underline">
+        <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> Modifier mon compte
       </a>
       <modify-profil v-show="modifyProfil" @close="closeModal" />
     </div>
@@ -57,7 +58,6 @@ import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import modifyProfil from '@/components/ModifyProfil.vue'
-
 export default {
   name: "Profil",
   components: {
@@ -179,6 +179,14 @@ h1 {
 .userInfo{
   margin-top: 1rem;
 }
+.line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
 input {
     font-family: 'Barlow', sans-serif;
     border: solid 2px #F2F2F2;
@@ -246,9 +254,6 @@ a:hover{
 }
 .icone {
     color: #fd2d01;
-    padding-top: 2rem;
-    border-top: 1px solid #ccc;
-    margin-top: 1rem;
 }
 .border-b {
   border-bottom: 1px solid #ccc;
@@ -268,7 +273,7 @@ a:hover{
   width: 0;
   height: 2px;
   background-color: #fd2d01;
-  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {

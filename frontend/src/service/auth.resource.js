@@ -41,8 +41,8 @@ class AuthService {
       { headers: authHeader() }
     )
       .then(response => {
-        localStorage.setItem('user', JSON.stringify(response.data));
-        return response.data;
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        return response.data.user;
       });
     }
 
