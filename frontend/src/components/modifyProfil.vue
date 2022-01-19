@@ -41,7 +41,7 @@
               </div>
               <div class="d-flex align-items-center">
                 <b-col sm="2" class="d-none d-lg-block p-0">
-                  <label for="username"> Pseudo </label>
+                  <label for="username"><strong> Pseudo </strong></label>
                 </b-col>
                 <b-col sm="10">
                   <b-form-input
@@ -55,7 +55,7 @@
               </div>
               <div class="d-flex align-items-center">
                 <b-col sm="2" class="d-none d-lg-block p-0">
-                  <label for="email"> Biographie </label>
+                  <label for="email"><strong> Biographie </strong></label>
                 </b-col>
                 <b-col sm="10">
                   <b-form-input
@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AuthService from "../service/auth.resource";
 export default {
   name: "modifyProfil",
@@ -97,20 +98,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['displayNotification']),
     update() {
-
       const user = new FormData();
-        user.append('image', this.currentUser.photoProfil);
-        user.append('bio', this.currentUser.bio);
-        user.append('username', this.currentUser.username);
+      user.append('image', this.currentUser.photoProfil);
+      user.append('bio', this.currentUser.bio);
+      user.append('username', this.currentUser.username);
 
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then(()=> {
-        alert("Modification de votre profil réussi !")
+        this.displayNotification('Profil modifié !')
         location.reload()
       })
     },
+
     onFileChange(event) {
       this.file = URL.createObjectURL(event.target.files[0])
       this.currentUser.photoProfil = event.target.files[0]
@@ -184,7 +186,7 @@ export default {
   background:#F2F2F2;
 }
 button{
-  border:none;
+  border: none;
 }
 .save-btn {
   background-color: rgba(253, 45, 6, 0.8);

@@ -20,7 +20,7 @@
       >
         <b-form>
           <PostFormulaire
-            :image="post.image"
+            :imageUrl="post.image"
             @onFileSelected="onFileSelected"
             v-model="post.content"
           />
@@ -44,7 +44,8 @@ export default {
   props: ['post'],
   data () {
     return {
-      image: null
+      image: '',
+      file: '',
     }
   },
   computed: {
@@ -60,14 +61,28 @@ export default {
     },
 
     onFileSelected(file) {
+      this.post.image = "";
       this.image = file
     },
 
     onUpload(){
+      let post;
+      console.log();
+      if(this.post.image != "") {
+        post = {
+          content: this.post.content,
+          image: this.post.image
+        }
+      }
+      else if(this.image != "") {
+        post = new FormData();
+        post.append('image', this.image);
+        post.append('content', this.post.content);
+      }
+      else {
+        console.log("Erreur : la publication ne peut être vide !");
+      }
       const postId = this.post.id
-      const post = new FormData();
-      post.append('image', this.image);
-      post.append('content', this.post.content);
       PostService.modifyPost(postId, post)
       .then(() => {
         this.displayNotification('Post modifié !')

@@ -30,7 +30,7 @@
         </div>
     </aside>
     <div class="infoUser bg-white">
-      <h1><strong>Mon compte : </strong> </h1>
+      <h1><strong>Mon profil : </strong> </h1>
       <div class="userInfo">
         <p v-if="currentUser"><strong>Pseudo : </strong>{{currentUser.username}}</p>
         <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
@@ -39,7 +39,8 @@
       </div>
       <div class="line mb-3"></div>
       <a title="Modifier mon profil" @click="displayModal" class="icone underline">
-        <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> Modifier mon compte
+        <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
+        Modifier mon profil
       </a>
       <modify-profil v-show="modifyProfil" @close="closeModal" />
     </div>

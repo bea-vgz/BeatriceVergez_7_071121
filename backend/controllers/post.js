@@ -13,14 +13,12 @@ exports.createPost = async (req, res, next) => {
     ...req.body,
     UserId: req.user,
     image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`, //On génère l'url de l'image
-    likes: 0,
-    comments: 0,
   })
   post = await Post.findOne({ 
     where: { id: post.id }, 
-    include: [{ model: User }] 
+    include: { model: User }
   })
-  res.status(201).json({ post })
+  res.status(201).json({ message: 'Post crée !', post })
   } 
   catch (error) {
     console.log(error)
@@ -36,13 +34,10 @@ exports.modifyPost = (req, res, next) => {
         ...req.body,
         image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
       } : { ...req.body };
-      const filename = post.image.split("/images/")[1];
-      fs.unlink(`images/${filename}`, () => {
         post.update({ ...Post, id: req.params.id })
-        .then(() => res.status(200).json({ message: "Post modifié ! ", post }))
+        .then(post => res.status(200).json({ message: "Post modifié ! ", post }))
         .catch((error) => res.status(400).json({ error }));
-      })
-  })
+    })
     .catch((error) => res.status(500).json({ error }));
 } 
 
@@ -59,6 +54,7 @@ exports.deletePost = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
 
 // Afficher/Récupérer un post 
 exports.getOnePost = (req, res, next) => {

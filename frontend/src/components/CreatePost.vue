@@ -37,9 +37,7 @@ export default {
 
     onSubmit(event) {
       const post = new FormData();
-      if (typeof this.file === 'object') {
-        post.append('image', this.image);
-      }
+      post.append('image', this.image);
       post.append('content', this.post.content);
       this.$store.dispatch("post/createPost", post)
       .then(() => {
