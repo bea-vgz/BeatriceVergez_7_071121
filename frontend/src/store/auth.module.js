@@ -53,19 +53,6 @@ export const auth = {
       )
     },
 
-    modifyUser({commit}, user) {
-      return AuthService.modifyUser(user).then(
-        (response) => {
-          commit ('updateSuccess', user)
-          return Promise.resolve(response.data);
-        },
-        (error) => {
-          commit ('updateFailure')
-          return Promise.reject(error.response.data)
-        }
-      )
-    },
-
     modifyPassword({commit}, payload) {
       return AuthService.modifyPassword(payload).then(
         (response) => {

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt'); //package de cryptage pour les mdp
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/index');
 const { Post } = require('../models/index');
+const Sequelize = require('sequelize');
 const fs = require('fs');
 
 // Création d'un utilisateur dans la bdd
@@ -111,11 +112,22 @@ exports.deleteUser = (req, res, next) => {
 };
 
 // Afficher/Récupérer tous les users / renvoie un tableau contenant tous les users de la BDD
+
+
 exports.getAllUsers = (req, res, next) => {
-    User.findAll() 
-      .then(users => res.status(200).json(users))
-      .catch(error => res.status(400).json({ error }));
-};
+    const options = {
+        where: Sequelize.where(Sequelize.fn("concat", Sequelize.col("username")), {
+          [Sequelize.Op.like]: `%${req.query.search}%`,
+        }),
+        limit: 10,
+      };
+    
+      User.findAll(options)
+        .then(users => res.status(200).json(users))
+        .catch(error => { console.log(error)
+          res.status(400).json({ error })
+      })
+    };
 
 // Afficher/Récupérer un user
 exports.getOneUser = (req, res, next) => {

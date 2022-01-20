@@ -1,11 +1,11 @@
 <template>
   <div v-if="comment" class="comment">
     <div class="d-flex">
-      <router-link :to="{ name: 'ProfilUser', params: { userId: comment.UserId } }" >
-        <div class="UserAvatar" v-if="comment.User">
+      <div class="UserAvatar" v-if="comment.User">
+        <router-link :to="{ name: 'ProfilUser', params: { userId: comment.UserId } }" >
           <img :src="comment.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
-        </div>
-      </router-link>
+        </router-link>
+      </div>
       <div class="comment-box" v-if="comment.User">
         <router-link :to="{ name: 'ProfilUser', params: { userId: comment.UserId } }">
           <p class="comment-username">

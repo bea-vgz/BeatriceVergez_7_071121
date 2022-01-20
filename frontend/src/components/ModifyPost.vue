@@ -53,6 +53,10 @@ export default {
       return this.$store.state.auth.user;
     }
   },
+  mounted() {
+    this.content = this.post.description,
+    this.image = this.post.image
+  },
   methods: {
     ...mapActions(['displayNotification']),
 

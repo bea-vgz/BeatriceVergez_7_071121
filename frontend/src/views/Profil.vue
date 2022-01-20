@@ -32,10 +32,9 @@
     <div class="infoUser bg-white">
       <h1><strong>Mon profil : </strong> </h1>
       <div class="userInfo">
-        <p v-if="currentUser"><strong>Pseudo : </strong>{{currentUser.username}}</p>
-        <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
+        <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
         <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
-        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.id }}</p>      
+        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
       </div>
       <div class="line mb-3"></div>
       <a title="Modifier mon profil" @click="displayModal" class="icone underline">
@@ -45,6 +44,7 @@
       <modify-profil v-show="modifyProfil" @close="closeModal" />
     </div>
   </div>
+  <AllPosts :UserId="this.$route.params.userId" />
   <!-- Footer -->
     <div class="footer">
         <Footer />
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import AllPosts from "../components/AllPosts.vue";
 import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
@@ -65,7 +66,8 @@ export default {
     Header,
     Footer,
     ConfirmDialogue,
-    modifyProfil
+    modifyProfil,
+    AllPosts
   },
   data() {
     return {

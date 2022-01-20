@@ -12,8 +12,11 @@
             <p><strong>Identifiant :</strong> {{ user.id }}</p>
           </div>
         <div class="line mb-3"></div>
-        <p><strong>SES POSTS</strong></p>
-        {{user.Posts}}      
+        <div class="posts" v-if="posts">
+          <p><strong>SES POSTS</strong></p>
+          {{user.Posts}}
+          </div>
+          <p v-else>Ce membre n'a rien publié pour l'instant</p>
         </div>
       </div>
     </b-row>
@@ -23,29 +26,28 @@
 
 <script>
 import AuthService from '../service/auth.resource'
-import PostService from '../service/post.resource'
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 export default {
   name: 'ProfilUser',
   components: {
     Header,
-    Footer
+    Footer,
   },
   watch: {
-    $route () {
+    $route() {
       window.location.reload()
     }
   },
   data () {
     return {
+      userId:'',
       user: {},
       posts: []
     }
   },
   async mounted () {
     this.getOneUser()
-    this.getAllPostsUser();
   },
   methods: {
     getOneUser() {
@@ -55,14 +57,6 @@ export default {
           this.user = res.data
         })
     },
-
-    getAllPostsUser() {
-      const userId = this.$route.params.userId;
-      PostService.getAllPostsUser(userId)
-      .then(res => {
-        this.posts = res.data.posts;
-      })
-    }
   }
 }
 </script>

@@ -61,15 +61,16 @@ exports.getOnePost = (req, res, next) => {
     Post.findOne({ where: { id: req.params.id },
       include: [
         { 
-          model: User, 
-          attributes: ["username", "photoProfil"]
+          model: User
         },
         {
-          model: Comment, 
-          attributes: ["content"]
+          model: Comment
         },
         { 
           model: Like_post
+        },
+        { 
+          model: Dislike_post
         },
       ],
     })
@@ -82,20 +83,16 @@ exports.getAllPosts = (req, res, next) => {
     Post.findAll({ 
       include: [
         { 
-          model: User, 
-          attributes: ["username", "photoProfil"]
+          model: User,
         },
         {
-          model: Comment, 
-          attributes: ["content"]
+          model: Comment,
         },
         { 
           model: Like_post, 
-          attributes: ["UserId"]
         },
         { 
-          model: Dislike_post, 
-          attributes: ["UserId"]
+          model: Dislike_post,
         },
       ],
       order: [["createdAt", "DESC"]]
@@ -107,7 +104,20 @@ exports.getAllPosts = (req, res, next) => {
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPostsUser = (req, res, next) => {
   Post.findAll({ where: { UserId: req.params.userId },
-    include: { model: User },
+    include: [
+      { 
+        model: User
+      },
+      {
+        model: Comment
+      },
+      { 
+        model: Like_post
+      },
+      { 
+        model: Dislike_post
+      },
+    ],
     order: [["createdAt", "ASC"]]
   })
     .then(posts => res.status(200).json(posts))

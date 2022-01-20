@@ -84,7 +84,7 @@
 import { mapActions } from 'vuex'
 import AuthService from "../service/auth.resource";
 export default {
-  name: "modifyProfil",
+  name: "ModifyProfil",
   data() {
     return {
       image: null,
@@ -99,23 +99,37 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-    update() {
-      const user = new FormData();
-      user.append('image', this.currentUser.photoProfil);
-      user.append('bio', this.currentUser.bio);
-      user.append('username', this.currentUser.username);
 
+    update(){
+      let user;
+      console.log();
+      if(this.currentUser.photoProfil != "") {
+        user = {
+          username: this.currentUser.username,
+          photoProfil: this.currentUser.photoProfil,
+          bio: this.currentUser.bio
+        }
+      }
+      else if(this.photoProfil != "") {
+        user = new FormData();
+        user.append('photoProfil', this.photoProfil);
+        user.append('username', this.currentUser.username);
+        user.append('bio', this.currentUser.bio);
+      }
+      else {
+        console.log("Ne peut être vide !");
+      }
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
-      .then(()=> {
-        this.displayNotification('Profil modifié !')
-        location.reload()
+      .then(() => {
+        this.displayNotification('User modifié !')
       })
     },
 
     onFileChange(event) {
       this.file = URL.createObjectURL(event.target.files[0])
-      this.currentUser.photoProfil = event.target.files[0]
+      this.photoProfil = event.target.files[0]
+      this.currentUser.photoProfil = ''
     },
 
     triggerInput () {

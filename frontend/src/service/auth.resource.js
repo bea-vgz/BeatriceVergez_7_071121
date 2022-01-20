@@ -54,8 +54,8 @@ class AuthService {
       });
     }
 
-    getAllUsers() {
-      return resource.get('/users', { headers: authHeader() });
+    getAllUsers(value) {
+      return resource.get(`/users?search=${value}`, { headers: authHeader() });
     }
 
     getOneUser(id){

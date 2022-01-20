@@ -5,7 +5,7 @@
     >
       <div class="search-bar__content input-group d-flex align-items-center">
         <span class="search-btn input-group-append bg-transparent border-0 p-0">
-          <font-awesome-icon icon="search"/>
+          <b-icon icon="search" class="mr-2"></b-icon>
         </span>
         <input
           class="search-text border-0 bg-transparent"
@@ -23,15 +23,15 @@
       @click="triggerInput"
       aria-label="Chercher"
     >
-      <font-awesome-icon icon="search"/>
+      <b-icon icon="search"></b-icon>
     </button>
 
     <div
       v-if="users.length"
       class="users-list card border-0 position-fixed"
     >
-      <div v-for="user in users" :key="user.id">
-        <router-link :to="{ name: 'ProfilUser', params: { userId: user.id } }">
+      <div v-for="user in users" :key="user.username">
+        <router-link :to="{ name: 'ProfilUser', params: { userId: user.id }}">
           <div class="d-flex align-items-center">
             <div class="d-flex text-center">
               <div class="profil-user d-flex align-items-center">
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import AuthService from '../service/auth.resource'
 export default {
   name:'UserSearch',
   data() {
@@ -58,15 +59,6 @@ export default {
     }
   },
   methods: {
-    getAllUsers() {
-      this.$store.dispatch("auth/getAllUsers")
-      .then((res) => {
-        this.users = res.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    },
     triggerInput () {
       this.visible = true
       this.$refs.searchInput.click()
@@ -74,12 +66,12 @@ export default {
   },
   watch: {
     async search(value) {
-      if (value.length < 1) {
+      if (value.length < 2) {
         this.users = []
         return
       }
-      const res = await this.getAllUsers()
-      this.users = res.users
+      const res = await AuthService.getAllUsers(value)
+      this.users = res.data
     }
   },
 }
@@ -90,6 +82,7 @@ export default {
   display: flex;
 }
 .search-bar {
+  border-bottom: 1px solid #ccc;
   top: 25px;
   left: 150px;
   z-index: 2;
@@ -98,13 +91,9 @@ export default {
   }
   &__content {
     padding: 10px 18px;
-    background-color: rgba(108, 117, 125, 0.1) !important;
-    border-radius: 2rem;
-    border: none;
     .search-text {
       border: none;
-      background: #F2F2F2;
-      width: 180px;
+      width: 210px;
       &:focus {
         outline: none;
       }
