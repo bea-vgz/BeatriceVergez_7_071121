@@ -80,28 +80,41 @@ exports.getOnePost = (req, res, next) => {
   
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPosts = (req, res, next) => {
-    Post.findAll({ 
-      include: [
-        { 
-          model: User,
-        },
-        {
-          model: Comment,
-        },
-        { 
-          model: Like_post, 
-        },
-        { 
-          model: Dislike_post,
-        },
-      ],
-      order: [["createdAt", "DESC"]]
-    })
-      .then(posts => res.status(200).json(posts))
-      .catch(error => res.status(400).json({ error }));
-};
+  const limit = 4
+  const page = parseInt(req.query.page) || 1
 
-// Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
+  const options = {
+    include: [
+      { 
+        model: User,
+      },
+      {
+        model: Comment,
+      },
+      { 
+        model: Like_post, 
+      },
+      { 
+        model: Dislike_post,
+      },
+    ],
+    limit,
+    offset: limit * (page - 1),
+    order: [['createdAt', 'DESC']]
+  }
+
+  if (req.query.userId) {
+    options.where = {
+      userId: parseInt(req.query.userId)
+    }
+  }
+
+  Post.findAll(options)
+    .then(posts => res.status(200).json(posts))
+    .catch(error => res.status(400).json({ error }))
+}
+
+/* Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPostsUser = (req, res, next) => {
   Post.findAll({ where: { UserId: req.params.userId },
     include: [
@@ -122,4 +135,4 @@ exports.getAllPostsUser = (req, res, next) => {
   })
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }));
-};
+}; */

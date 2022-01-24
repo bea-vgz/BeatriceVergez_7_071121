@@ -59,16 +59,13 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-
     toggleActions () {
       this.areActionsVisible = !this.areActionsVisible
     },
-
     onFileSelected(file) {
       this.post.image = "";
       this.image = file
     },
-
     onUpload(){
       let post;
       console.log();
@@ -92,7 +89,7 @@ export default {
         this.displayNotification('Post modifié !')
       })
     },
-
+    
     deletePost() {
       const postId = this.post.id
       this.$store.dispatch("post/deletePost", postId)
@@ -106,7 +103,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .modal-body {
   padding: 1rem 1rem 0 1rem;
 }

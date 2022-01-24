@@ -8,16 +8,16 @@
           </div>
         </router-link>
       </div>
-      <form class="form_comment" @submit.prevent="createComment">
+      <form class="w-100" @submit="createComment">
         <div>
           <input
             :id="`comment-area-${post.id}`"
-            v-model="comment.content"
+            v-model="content"
             @keydown.enter.exact.prevent
             @keyup.enter.exact="createComment"
             @keydown.enter.shift.exact="newline"
-            class="comment-area"
-            placeholder="Écrire un commentaire..."
+            class="comment-area border-0"
+            placeholder="Écrivez un commentaire ici..."
             aria-label="Écrire un commentaire"
           >
         </div>
@@ -28,12 +28,11 @@
 <script>
 import CommentService from '../service/comment.resource'
 import { mapActions } from 'vuex'
-import Comment from '../models/comment'
 export default {
   name: 'CommentFormulaire',
   data () {
     return {
-      comment: new Comment("", ""),
+        content: ''
     };
   },
   props: ['post'],
@@ -46,17 +45,16 @@ export default {
     ...mapActions(['displayNotification']),
 
     createComment(){
-      const comment = this.comment
       const postId = this.post.id;
-      CommentService.createComment(comment, postId)
-      .then(() => {
+      const { comment } = CommentService.createComment(
+      { content: this.content }, postId )
+        this.content = ''
         this.$emit('commentCreated', comment)
-        this.displayNotification('Commentaire posté !')
-      })
+        this.displayNotification('Comment créé !')
     },
 
     newline () {
-      this.comment= `${this.comment}\n`
+      this.comment.content= `${this.comment.content}\n`
     },
   }
 };

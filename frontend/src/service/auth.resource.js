@@ -36,18 +36,16 @@ class AuthService {
       .then(() => localStorage.removeItem('user'))
     }
 
-    modifyUser(id, data) {
-      return resource.put(`/users/${id}`, data,
-      { headers: authHeader() }
-    )
+    modifyUser(userId, data) {
+      return resource.put(`/users/${userId}`, data, { headers: authHeader() })
       .then(response => {
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        return response.data.user;
+        localStorage.setItem('user', JSON.stringify(response.data));
+        console.log(response)
       });
     }
 
-    modifyPassword(payload) {
-      return resource.put(`/users/${payload.userId}/password`, { headers: authHeader() })
+    modifyPassword(id, data) {
+      return resource.put(`/users/${id}/password`, data, { headers: authHeader() })
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response)

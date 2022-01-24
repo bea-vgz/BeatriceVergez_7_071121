@@ -3,7 +3,7 @@
     <div class="buttons-likeDislike d-flex">
     <button
       v-b-modal="`modal-likes-${post.id}`"
-      @click="fetchAllLikes"
+      @click="getAllLikes"
       v-if="post.Like_posts.length > 0"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
@@ -22,7 +22,7 @@
     </button>
     <button
       v-b-modal="`modal-dislikes-${post.id}`"
-      @click="fetchAllDislikes"
+      @click="getAllDislikes"
       v-if="post.Dislike_posts.length > 0"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
@@ -40,6 +40,7 @@
       <span class="likes-number ml-2">{{ post.Dislike_posts.length }} </span>
     </button>
     </div>
+
     <b-modal :id="`modal-likes-${post.id}`" :title="`${post.Like_posts.length} personne(s) aime(nt) ce post`">
       <div v-for="like_post in likes" :key="like_post.id">
         <router-link
@@ -56,7 +57,7 @@
       </div>
       <div slot="modal-footer"></div>
     </b-modal>
-    <b-modal :id="`modal-dislikes-${post.id}`" :title="`Personnes n'aimant pas ce post`">
+    <b-modal :id="`modal-dislikes-${post.id}`" :title="`${post.Dislike_posts.length} personne(s) n'aime(nt) pas ce post`">
       <div v-for="dislike_post in dislikes" :key="dislike_post.id">
         <router-link
           :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }"
@@ -80,7 +81,7 @@ import DislikePostService from '../service/dislike_post.resource'
 import LikePostService from '../service/like_post.resource'
 export default {
   name: 'AllLikesPost',
-  props: ['post', 'likesNumber'],
+  props: ['post', 'post.Like_posts.length'],
   data () {
     return {
       likes: [],
@@ -88,11 +89,11 @@ export default {
     }
   },
   mounted() {
-    this.fetchAllLikes()
-    this.fetchAllDislikes()
+    this.getAllLikes()
+    this.getAllDislikes()
   },
   methods: {
-    fetchAllLikes () {
+    getAllLikes () {
       const postId = this.post.id;
       LikePostService.getAllLikesOnePost(postId)
       .then((res) => (
@@ -100,7 +101,7 @@ export default {
       ))
     },
 
-    fetchAllDislikes () {
+    getAllDislikes () {
       const postId = this.post.id;
       DislikePostService.getAllDislikesOnePost(postId)
       .then((res) => (

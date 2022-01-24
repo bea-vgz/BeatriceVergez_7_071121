@@ -26,7 +26,8 @@
                   <router-link to="/profil"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon>Mon compte</router-link>
                 </div>
                 <div class="menu-item">
-                  <a @click="logout" aria-label="Se déconnecter" to="/" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
+                  <a @click="logout" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
+                  <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
                 </div>
               </div>
             </transition>
@@ -39,6 +40,7 @@
 <script>
 import router from "../router";
 import UserSearch from '../components/UserSearch';
+import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 export default {
   
   name: 'Header',
@@ -50,7 +52,8 @@ export default {
     }
   },
   components: {
-    UserSearch
+    UserSearch,
+    ConfirmDialogue,
   },
   computed: {
     currentUser() {
@@ -61,11 +64,19 @@ export default {
     }
   },
   methods: {
-    logout() {
-      this.$store.dispatch('auth/logout');
-      alert('Vous avez été déconnecté. Vous allez être redirigé.')
-      localStorage.clear()
-      router.push('/');
+    async logout() {
+      const ok = await this.$refs.confirmDialogue.show({
+        title: 'Déconnexion',
+        message: 'Êtes-vous sur de vouloir vous déconnecter ?',
+        okButton: 'Se déconnecter',
+      })
+      if (ok) {
+        this.$store.dispatch('auth/logout');
+        alert('Vous avez été déconnecté. Vous allez être redirigé.')
+        router.push('/');
+      } else {
+        alert("Vous n'avez pas été déconnecté")
+      }
     },
 
     checkResearch(){ // Recherche d'utilisateur

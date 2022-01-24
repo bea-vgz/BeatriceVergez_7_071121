@@ -1,40 +1,53 @@
 <template>
   <div>
     <b-row class="row justify-content-center align-items-center flex-column">
-      <b-col cols="12" lg="6" v-for="post in posts" :key="post.id">
+      <b-col cols="12" lg="6" v-for="post in post.list" :key="post.id">
         <Post :post="post" />
       </b-col>
     </b-row>
-
-    <p class="mx-2">{{ posts.errorMessage }}</p>
+    <p class="mx-2">{{ post.errorMessage }}</p>
   </div>
 </template>
 
 
 <script>
 import Post from "../components/Post.vue";
+import { mapState } from 'vuex'
 export default {
   name: 'AllPosts',
-  data() {
-    return {
-      posts: [],
-    }
+  components: {
+    Post
   },
-  components: { 
-    Post,
+  props: ['userId'],
+  async mounted () {
+    await this.$store.dispatch('post/initializePostStore', this.queryParams)
+  },
+  created () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
-    getAllPosts() {
-      this.$store.dispatch("post/getAllPosts")
-      .then((res) => (this.posts = res.data))
-    },
-    getDateWithoutTime(createdAt) {
-      return require("moment")(createdAt).format("YYYY-MM-DD HH:mm");
-    },
+    handleScroll () {
+      const totalHeight = document.documentElement.scrollHeight
+      const scrollHeight = window.scrollY + window.innerHeight
+      const remainingOffset = totalHeight - scrollHeight
+      if (remainingOffset < 300) {
+        this.$store.dispatch('post/loadMore', this.queryParams)
+      }
+    }
   },
-  mounted() {
-	this.getAllPosts();
-  },
+  computed: {
+    ...mapState(['post']),
+    queryParams () {
+      if (this.userId) {
+        return { userId: this.userId }
+      } else {
+        return {}
+      }
+    }
+  }
 }
 </script>
 

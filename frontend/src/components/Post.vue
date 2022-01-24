@@ -1,5 +1,5 @@
 <template>
-  <div class="container_post" v-if="post">
+  <div class="container_post">
     <div class="card-body">
       <div class="user">
         <div class="UserAvatar" v-if="post.User">
@@ -21,7 +21,7 @@
         </a>
       </div>
       <div class="button-dis-like d-flex">
-        <AllLikesPost :post="post" :likesNumber="likesNumber" />
+        <AllLikesPost :post="post" />
       </div>
 
       <div class="line"></div>
@@ -109,7 +109,6 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
-      likesNumber: this.post.Like_posts.length
     };
   },
   props: ['post'],
@@ -129,20 +128,20 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
-
     likeOrNotPost() {
       const postId = this.post.id;
       LikePostService.likePost(postId)
-      .then((res) => (
+      .then((res) => {
+        for (let i = 0; i < res.data.like; i++) {
+          res.data.like
+        }
         this.likeThisPost = res.data.like,
         this.displayNotification('Like !')
-      ))
+      })
     },
-
     DislikeOrNotPost() {
       const postId = this.post.id;
       DislikePostService.dislikePost(postId)
@@ -151,7 +150,6 @@ export default {
         this.displayNotification('Dislike !')
       ))
     },
-
     getLikeOnOnePost() {
     const postId = this.post.id;
       LikePostService.getLikeOnOnePost(postId)
@@ -159,7 +157,6 @@ export default {
         this.likeThisPost = res.data.like
       ))
     },
-
     getDislikeOnOnePost() {
     const postId = this.post.id;
       DislikePostService.getDislikeOnOnePost(postId)
@@ -167,7 +164,6 @@ export default {
         this.dislikeThisPost = res.data.dislike
       ))
     },
-
     focusInput() {
       document.getElementById(`comment-area-${this.post.id}`).focus()
     },

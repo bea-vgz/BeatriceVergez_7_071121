@@ -15,12 +15,9 @@ class PostService {
         return resource.get(`/posts/${id}`, { headers: authHeader() })
     }
 
-    getAllPosts(){
-        return resource.get('/posts', { headers: authHeader() })
-    }
-
-    deletePost(postId) {
-        return resource.delete(`/posts/${postId}`, { headers: authHeader() })
+    deletePost(id) {
+        return resource.delete(`/posts/${id}`, { headers: authHeader() })
+        .then(() => localStorage.removeItem('post'))
     }
 
     modifyPost(postId, data) {
@@ -31,8 +28,10 @@ class PostService {
         });
     }
 
-    getAllPostsUser(userId){
+    /* getAllPostsUser(userId){
         return resource.get(`/posts/user/${userId}`, { headers: authHeader() })
     }
+    */
 }
-export default new PostService();
+
+export default new PostService(); 

@@ -1,12 +1,12 @@
 <template>
   <div>
     <button
-      v-if="post.Comments.length > 1 && !allCommentsDisplayed"
+      v-if="post.Comments.length > 0 && !allCommentsDisplayed"
       @click="AllPostsComments"
       class="display-comments"
       aria-label="Afficher les commentaires"
     >
-      <span>Afficher le(s) {{ post.Comments.length }} commentaire(s)</span>
+      <span>{{ post.Comments.length }} commentaire(s)</span>
     </button>
     <div class="comment mb-2 text-left" v-for="comment in comments" :key="comment.id">
       <Comment
@@ -89,7 +89,6 @@ export default {
   background-color: #fd2d01;
   transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 @media (hover: hover) and (pointer: fine) {
   .underline:hover::before{
     left: 0;

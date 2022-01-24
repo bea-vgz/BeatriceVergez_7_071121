@@ -92,6 +92,7 @@ export default {
       photoProfil: null
     }
   },
+  props: ['user'],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -99,7 +100,6 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-
     update(){
       let user;
       console.log();
@@ -110,9 +110,9 @@ export default {
           bio: this.currentUser.bio
         }
       }
-      else if(this.photoProfil != "") {
+      else if(this.image != "") {
         user = new FormData();
-        user.append('photoProfil', this.photoProfil);
+        user.append('image', this.image);
         user.append('username', this.currentUser.username);
         user.append('bio', this.currentUser.bio);
       }
@@ -125,17 +125,14 @@ export default {
         this.displayNotification('User modifié !')
       })
     },
-
     onFileChange(event) {
       this.file = URL.createObjectURL(event.target.files[0])
-      this.photoProfil = event.target.files[0]
+      this.image = event.target.files[0]
       this.currentUser.photoProfil = ''
     },
-
     triggerInput () {
       this.$refs.fileUpload.click()
     },
-
     close() {
       this.$emit("close");
     },

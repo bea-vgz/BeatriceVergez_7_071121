@@ -52,20 +52,7 @@ export const auth = {
         }
       )
     },
-
-    modifyPassword({commit}, payload) {
-      return AuthService.modifyPassword(payload).then(
-        (response) => {
-          commit ('updateSuccess')
-          return Promise.resolve(response);
-        },
-        (error) => {
-          commit ('updateFailure')
-          return Promise.reject(error)
-        }
-      )
-    },
-
+    
     getAllUsers({ commit }) {
       return AuthService.getAllUsers()
       .then((users) => {

@@ -131,22 +131,18 @@ export default {
   },
   methods: {
      ...mapActions(['displayNotification']),
-
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
-
     startEditing(comment) {
       this.isEditing = true
       setTimeout(() => {
         this.$refs.inputContent.focus(comment)
       }, 30)
     },
-
     newline () {
       this.comment.content = `${this.comment.content}\n`
     },
-
     deleteComment() {
         const comment = this.comment.id
         const postId = this.post.id;
@@ -159,7 +155,6 @@ export default {
           console.log(error);
         });
     },
-
     modifyComment() {
       const postId = this.post.id;
       const comment = this.comment.id
@@ -174,7 +169,6 @@ export default {
         console.log(error);
       });
     },
-
     likeOrNotComment() {
       const commentId = this.comment.id;
       LikeCommentService.likeComment(commentId)
@@ -182,7 +176,6 @@ export default {
         this.likeThisComment = res.data.like
       ))
     },
-
     dislikeOrNotComment() {
       const commentId = this.comment.id;
       DislikeCommentService.dislikeComment(commentId)
@@ -190,7 +183,6 @@ export default {
         this.dislikeThisComment = res.data.dislike
       ))
     },
-
     getLikeOneComment(){
     const commentId = this.comment.id;
       LikeCommentService.getLikeOneComment(commentId)
@@ -198,7 +190,6 @@ export default {
         this.likeThisComment = res.data.like
       ))
     },
-
     getDislikeOneComment(){
     const commentId = this.comment.id;
       DislikeCommentService.getDislikeOneComment(commentId)

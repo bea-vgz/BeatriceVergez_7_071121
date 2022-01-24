@@ -22,6 +22,7 @@ export default {
   },
   data () {
     return {
+      posts: [],
       post: new Post("", ""),
       file: null,
       image: null,
@@ -43,17 +44,15 @@ export default {
       .then(() => {
         this.displayNotification('Post créé !')
         this.resetForm(event)
-        location.reload()
       })
     },
 
     resetForm(event) {
       event.target.reset()
       this.post.content = ''
-      this.file = null
       this.image = null
       this.didSubmitForm = !this.didSubmitForm
-    }
+    },
   }
 }
 </script>

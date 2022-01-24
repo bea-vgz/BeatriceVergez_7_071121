@@ -1,4 +1,6 @@
 import PostService from '../service/post.resource'
+import resource from '../service/resource'
+import authHeader from '../service/auth.header'
 
 export const post = {
     namespaced: true,
@@ -7,7 +9,6 @@ export const post = {
       createdPost: { status: '' },
       modifyPost: { status: '' },
       deletedPost: { status: '' },
-      posts: [],
       post: {
         content:'',
         image:'',
@@ -15,10 +16,45 @@ export const post = {
       like: {},
       likes: [],
       comments: [],
-      comment: {}
+      comment: {},
+      page: 1,
+      isOnLastPage: false,
+      list: [],
     },
 
 actions: {
+  initializePostStore ({ dispatch, commit }, params = {}) {
+    commit('reset_store')
+    dispatch('getAllPosts', params)
+  },
+
+  getAllPosts({ state, commit }, params = {}) {
+    let userIdParams = ''
+    if (params.userId) {
+      userIdParams = `&userId=${params.userId}`
+    }
+    return resource.get(`/posts?page=${state.page}${userIdParams}`, { headers: authHeader() })
+      .then(response => {
+          commit('posts_list', state.list.concat(response.data))
+          console.log(response.data)
+      })
+      .catch(() => {
+        commit('messageFailure', 'Problème de connexion')
+      })
+  },
+
+  async loadMore({ state, commit, dispatch }, params) {
+    if (state.isOnLastPage) return
+
+    commit('increment_page')
+    const initialLength = state.list.length
+
+    await dispatch('getAllPosts', params)
+
+    if (state.list.length === initialLength) {
+      commit('reached_last_page')
+    }
+  },
 
   createPost({ commit }, post) {
     return new Promise((resolve, reject) => {
@@ -27,33 +63,12 @@ actions: {
       commit('createPostSuccess', post)
       resolve(response);
     })
-    .then(() => {
-      PostService.getAllPosts()
-        .then(response => {
-          const posts = response.data;
-          console.log(posts);
-          commit("getPosts", posts);
-          resolve(response.data);
-        })
-    })
     .catch(function(error) {
       reject(error);
     });
     })
   },
-
-  getAllPosts({ commit }) {
-    return PostService.getAllPosts()
-    .then((posts) => {
-      commit('getPosts');
-      return Promise.resolve(posts);
-    },
-    (error) => {
-      commit('getPostsFailure')
-      return Promise.reject(error)
-    })
-  },
-
+  
   getOnePost({ commit }) {
     return PostService.getOnePost()
     .then((post) => {
@@ -76,6 +91,20 @@ actions: {
   },
 },
 mutations: {
+  posts_list (state, post) {
+    state.list = post
+  },
+  increment_page (state) {
+    state.page++
+  },
+  reached_last_page (state) {
+    state.isOnLastPage = true
+  },
+  reset_store (state) {
+    state.list = []
+    state.page = 1
+    state.isOnLastPage = false
+  },
     createPostSuccess(state) {
       state.createdPost.status = 'Created'
       state.post = post
@@ -83,14 +112,6 @@ mutations: {
     createPostFailure(state) {
       state.createdPost.status = 'Not created'
       state.post = null
-    },
-    getPosts(state, posts) {
-      state.posts = posts;
-      state.message = "Posts récupérés !";
-    },
-    getPostsFailure(state) {
-      state.posts = null;
-      state.message = "Posts non récupérés !";
     },
     getOnePost(state, post) {
       state.post = post;
@@ -100,17 +121,11 @@ mutations: {
       state.post = null;
       state.message = "Post non récupéré !";
     },
-    deleteSuccess(state, postId) {
-      state.posts = state.posts.filter(post => post.id !== postId)
+    deleteSuccess(state) {
+      state.post = null
     },
     messageFailure(state, message) {
       state.message = message
-    },
-    updateSuccess(state) { 
-      state.post = post
-    },
-    updateFailure(state) {
-      state.user = null;
     },
     getPostsLikes(state, likes) {
       state.post.likes = likes;
@@ -120,14 +135,6 @@ mutations: {
       state.likes = null;
       state.message = "Likes non récupérés !";
     },
-},
-getters : {
-  post(state) {
-    return state.post;
-  },
-  posts: (state) => {
-    return state.posts;
-  },
 }
 
 }

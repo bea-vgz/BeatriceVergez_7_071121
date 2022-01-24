@@ -139,7 +139,6 @@ exports.getOneUser = (req, res, next) => {
 };
 
 /* Se déconnecter 
-
 exports.logout = (req, res) => {
     User.update({
       UserId: req.user

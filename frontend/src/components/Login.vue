@@ -18,7 +18,7 @@
     
     <!-- Email input -->
         <label for="email">  📧  Email * : </label>
-        <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Votre nom" required="required" >
+        <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="xxxx@groupomania.com" required="required" >
 
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : 

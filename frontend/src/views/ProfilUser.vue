@@ -14,17 +14,19 @@
         <div class="line mb-3"></div>
         <div class="posts" v-if="posts">
           <p><strong>SES POSTS</strong></p>
-          {{user.Posts}}
-          </div>
+          <AllPosts :userId="this.$route.params.userId" />
+        </div>
           <p v-else>Ce membre n'a rien publié pour l'instant</p>
         </div>
       </div>
     </b-row>
+
     <Footer />
   </div>
 </template>
 
 <script>
+import AllPosts from "../components/AllPosts.vue";
 import AuthService from '../service/auth.resource'
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
@@ -33,9 +35,11 @@ export default {
   components: {
     Header,
     Footer,
+    AllPosts
   },
   watch: {
-    $route() {
+    $route (to, from) {
+      console.log(from, to)
       window.location.reload()
     }
   },
@@ -51,8 +55,7 @@ export default {
   },
   methods: {
     getOneUser() {
-      const userId = this.$route.params.userId;
-      AuthService.getOneUser(userId)
+      AuthService.getOneUser(this.$route.params.userId)
         .then((res) => {
           this.user = res.data
         })

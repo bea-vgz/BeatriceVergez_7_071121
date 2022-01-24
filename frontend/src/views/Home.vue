@@ -23,15 +23,15 @@
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue';
-import Header from '@/components/Header.vue';
-import CreatePost from '@/components/CreatePost.vue';
-import AllPosts from '@/components/AllPosts.vue';
+import Footer from '../components/Footer.vue';
+import Header from '../components/Header.vue';
+import CreatePost from '../components/CreatePost.vue';
+import AllPosts from '../components/AllPosts.vue';
 export default {
   name: 'HomePage',
   data() {
 		return {
-      posts: {},
+      posts: [],
 		};
 	},
   components: {

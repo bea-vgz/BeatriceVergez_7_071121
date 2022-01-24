@@ -30,7 +30,7 @@
         </div>
     </aside>
     <div class="infoUser bg-white">
-      <h1><strong>Mon profil : </strong> </h1>
+      <h1><strong>Mon profil</strong> </h1>
       <div class="userInfo">
         <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
         <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
@@ -44,7 +44,7 @@
       <modify-profil v-show="modifyProfil" @close="closeModal" />
     </div>
   </div>
-  <AllPosts :UserId="this.$route.params.userId" />
+  <AllPosts :userId="currentUser.userId" />
   <!-- Footer -->
     <div class="footer">
         <Footer />
@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import AllPosts from "../components/AllPosts.vue";
 import router from "../router";
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import modifyProfil from '@/components/ModifyProfil.vue'
+import AllPosts from "../components/AllPosts.vue"
 export default {
   name: "Profil",
   components: {
@@ -80,9 +80,6 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
   },
   methods: {
     displayModal() {
@@ -142,7 +139,8 @@ export default {
 }
 h1 {
   font-size: 30px;
-  color : #fd2d01
+  color : #fd2d01;
+  margin-bottom: 1rem;
 }
 .profil {
     background-color: #F2F2F2;
@@ -278,7 +276,6 @@ a:hover{
   background-color: #fd2d01;
   transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 @media (hover: hover) and (pointer: fine) {
   .underline:hover::before{
     left: 0;

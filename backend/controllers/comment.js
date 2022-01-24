@@ -11,7 +11,7 @@ exports.createComment = async (req, res, next) => {
     })
     comment = await Comment.findOne({
       where: { id: comment.id },
-      include: [{ model: User }]
+      include: { model: User }
     })
       res.status(201).json({ comment })
     }

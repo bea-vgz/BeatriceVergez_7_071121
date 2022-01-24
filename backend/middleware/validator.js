@@ -4,7 +4,7 @@ const signupRules = () => {
     return [
         body('username')
             .exists() .withMessage("Le prénom est obligatoire")
-            .isLength({ min: 4 }) .withMessage("Le prénom doit contenir 4 caractères au minimum"),
+            .isLength({ min: 3 }) .withMessage("Le prénom doit contenir 4 caractères au minimum"),
         body('email')
             .exists() .withMessage("L'adresse email est obligatoire")
             .isLength({ min: 4 }).withMessage("Doit contenir 4 caractères au minimum")

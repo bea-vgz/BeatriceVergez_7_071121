@@ -28,16 +28,16 @@
         </div>
     </aside>
       <div class="ui segment infoUser bg-white">
-        <h2 class="ui dividing header">Mot de passe</h2>
+        <h1><strong>Mot de passe</strong> </h1>
     
         <div class="card">
-          <div class="form-row">
+          <div>
             <label for="password"> 🔒  Mot de passe actuel : </label>
             <div class="inputPassword">
               <input v-if="currentUser" v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
             </div>
           </div>
-          <div class="form-row">
+          <div>
             <label for="newpassword"> 🔒  Nouveau mot de passe : </label>
             <div class="inputPassword">
               <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
@@ -47,7 +47,7 @@
               </button>
             </div>
           </div>
-          <div class="form-row">
+          <div>
             <label for="newpassword">🔒  Confirmer le mot de passe : </label>
             <div class="inputPassword">
               <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
@@ -79,7 +79,7 @@
   import Header from '@/components/Header'
   import Footer from '@/components/Footer'
   import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
-
+  import AuthService from "../service/auth.resource"
   export default {
     name: 'ModifyPassword',
     components: {
@@ -87,6 +87,7 @@
       Footer,
       ConfirmDialogue
     },
+    props: ['user'],
     data () {
       return {
         newPassword: '',
@@ -106,11 +107,8 @@
           const password = {
             password: this.newPassword,
           }
-          let payload = {
-            userId: this.currentUser.userId,
-            data: password
-          }
-          this.$store.dispatch("auth/modifyPassword", payload)
+          const userId = this.currentUser.userId
+          AuthService.modifyPassword(userId, password)
           .then(() => {
             console.log(this.message = 'Mot de passe modifié avec succès')
             alert('Mot de passe modifié')
@@ -173,7 +171,8 @@
 }
 h1 {
   font-size: 30px;
-  color : #fd2d01
+  color : #fd2d01;
+  margin-bottom: 1rem;
 }
 .profil {
     background-color: #F2F2F2;
@@ -217,13 +216,12 @@ input {
     font-family: 'Barlow', sans-serif;
     border: solid 2px #F2F2F2;
     border-radius: 1rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     padding-left: 0.8rem;
     line-height: inherit;
     color: inherit;
     height: 2rem;
-    width: auto;
+    width: 300px;
     text-align: left;
 }
 .optionProfil {
@@ -300,11 +298,5 @@ a:hover{
   background: none;
   border: none;
   cursor: pointer;
-}
-.inputPassword {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: auto;
 }
 </style>
