@@ -81,7 +81,7 @@ import DislikePostService from '../service/dislike_post.resource'
 import LikePostService from '../service/like_post.resource'
 export default {
   name: 'AllLikesPost',
-  props: ['post', 'post.Like_posts.length'],
+  props: ['post'],
   data () {
     return {
       likes: [],

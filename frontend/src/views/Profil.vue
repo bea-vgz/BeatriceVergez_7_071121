@@ -1,11 +1,11 @@
 <template>
-<div class="profil">
+  <div class="profil">
      <!-- Header -->
     <div class="header">
         <Header />
     </div>
     <div class="container_account">
-    <aside class="profil_account bg-white">
+      <aside class="profil_account bg-white">
         <div class="contanier_presentation bg-white border-b py-8">
           <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
           <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
@@ -28,26 +28,31 @@
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
         </div>
-    </aside>
-    <div class="infoUser bg-white">
-      <h1><strong>Mon profil</strong> </h1>
-      <div class="userInfo">
-        <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
-        <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
-        <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
+      </aside>
+      <div>
+        <div class="infoUser bg-white">
+          <h1><strong>Mon profil</strong> </h1>
+          <div class="userInfo">
+            <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
+            <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
+            <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
+          </div>
+          <div class="line mb-3"></div>
+          <a title="Modifier mon profil" @click="displayModal" class="icone">
+            <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
+            Modifier mon profil
+          </a>
+          <modify-profil v-show="modifyProfil" @close="closeModal" />
+        </div>
+        <div class="all-posts">
+          <AllPosts :userId="currentUser.userId" />
+        </div>
       </div>
-      <div class="line mb-3"></div>
-      <a title="Modifier mon profil" @click="displayModal" class="icone underline">
-        <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
-        Modifier mon profil
-      </a>
-      <modify-profil v-show="modifyProfil" @close="closeModal" />
-    </div>
   </div>
-  <AllPosts :userId="currentUser.userId" />
+  
   <!-- Footer -->
     <div class="footer">
-        <Footer />
+      <Footer />
     </div>
   <router-view />
   </div>
@@ -160,22 +165,22 @@ h1 {
   border-color: rgba(231, 233, 244);
 }
 .formulaire_account {
-   flex: 1 1 0%;
+  flex: 1 1 0%;
 }
 .infoUser {
-    padding: 3.5rem;
-    max-width: 100%;
-    width: 40rem;
-    height: auto;
-    border-radius: 1.25rem;
-    box-shadow: 0 0 16px #0000002e;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+  padding: 3.5rem;
+  max-width: 100%;
+  width: 40rem;
+  height: auto;
+  border-radius: 1.25rem;
+  box-shadow: 0 0 16px #0000002e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 .userInfo{
   margin-top: 1rem;

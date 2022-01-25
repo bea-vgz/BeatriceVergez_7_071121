@@ -27,7 +27,6 @@
                 </div>
                 <div class="menu-item">
                   <a @click="logout" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
-                  <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
                 </div>
               </div>
             </transition>
@@ -40,7 +39,6 @@
 <script>
 import router from "../router";
 import UserSearch from '../components/UserSearch';
-import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 export default {
   
   name: 'Header',
@@ -53,7 +51,6 @@ export default {
   },
   components: {
     UserSearch,
-    ConfirmDialogue,
   },
   computed: {
     currentUser() {
@@ -65,23 +62,9 @@ export default {
   },
   methods: {
     async logout() {
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Déconnexion',
-        message: 'Êtes-vous sur de vouloir vous déconnecter ?',
-        okButton: 'Se déconnecter',
-      })
-      if (ok) {
-        this.$store.dispatch('auth/logout');
-        alert('Vous avez été déconnecté. Vous allez être redirigé.')
-        router.push('/');
-      } else {
-        alert("Vous n'avez pas été déconnecté")
-      }
-    },
-
-    checkResearch(){ // Recherche d'utilisateur
-      router.push({ name: 'UserSearch', params: { id: this.userSearch }});
-      this.userSearch = null;      
+      this.$store.dispatch('auth/logout');
+      alert('Vous avez été déconnecté. Vous allez être redirigé.')
+      router.push('/');
     },
   }
 }
@@ -90,6 +73,9 @@ export default {
 <style scoped>
 header {
   margin: 0;
+}
+#nav {
+  width: 100%;
 }
 nav .menu-item, .sub-menu {
   position: absolute;
@@ -142,6 +128,7 @@ nav .menu-item, .sub-menu {
   display: block;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  width: 85%
 }
 .profil_icon {
   padding-right: 0.5rem;
@@ -188,13 +175,13 @@ button {
   text-decoration: none;
 }
 .avatar {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 100%;
-    padding: 0.5rem;
-    object-fit: cover;
-    object-position: center;
-    margin-right: 0.3rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  padding: 0.5rem;
+  object-fit: cover;
+  object-position: center;
+  margin-right: 0.3rem;
 }
 input {
   border-radius: 2rem;

@@ -22,7 +22,6 @@ export default {
   },
   data () {
     return {
-      posts: [],
       post: new Post("", ""),
       file: null,
       image: null,

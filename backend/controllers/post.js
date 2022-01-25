@@ -80,7 +80,7 @@ exports.getOnePost = (req, res, next) => {
   
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPosts = (req, res, next) => {
-  const limit = 4
+  const limit = 10
   const page = parseInt(req.query.page) || 1
 
   const options = {

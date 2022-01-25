@@ -15,6 +15,14 @@ class PostService {
         return resource.get(`/posts/${id}`, { headers: authHeader() })
     }
 
+    /* getAllPosts({ state }, params = {}){
+        let userIdParams = ''
+        if (params.userId) {
+            userIdParams = `&userId=${params.userId}`
+        }
+        return resource.get(`/posts?page=${state.page}${userIdParams}`, { headers: authHeader() })
+    } */
+
     deletePost(id) {
         return resource.delete(`/posts/${id}`, { headers: authHeader() })
         .then(() => localStorage.removeItem('post'))
@@ -27,11 +35,6 @@ class PostService {
             console.log(response)
         });
     }
-
-    /* getAllPostsUser(userId){
-        return resource.get(`/posts/user/${userId}`, { headers: authHeader() })
-    }
-    */
 }
 
 export default new PostService(); 

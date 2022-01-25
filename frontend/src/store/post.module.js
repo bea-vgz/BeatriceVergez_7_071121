@@ -9,17 +9,14 @@ export const post = {
       createdPost: { status: '' },
       modifyPost: { status: '' },
       deletedPost: { status: '' },
-      post: {
-        content:'',
-        image:'',
-      },
+      post: {},
       like: {},
       likes: [],
       comments: [],
       comment: {},
       page: 1,
       isOnLastPage: false,
-      list: [],
+      posts: [],
     },
 
 actions: {
@@ -35,8 +32,7 @@ actions: {
     }
     return resource.get(`/posts?page=${state.page}${userIdParams}`, { headers: authHeader() })
       .then(response => {
-          commit('posts_list', state.list.concat(response.data))
-          console.log(response.data)
+          commit('all_posts', state.posts.concat(response.data))
       })
       .catch(() => {
         commit('messageFailure', 'Problème de connexion')
@@ -47,11 +43,11 @@ actions: {
     if (state.isOnLastPage) return
 
     commit('increment_page')
-    const initialLength = state.list.length
+    const initialLength = state.posts.length
 
     await dispatch('getAllPosts', params)
 
-    if (state.list.length === initialLength) {
+    if (state.posts.length === initialLength) {
       commit('reached_last_page')
     }
   },
@@ -91,8 +87,8 @@ actions: {
   },
 },
 mutations: {
-  posts_list (state, post) {
-    state.list = post
+  all_posts (state, post) {
+    state.posts = post
   },
   increment_page (state) {
     state.page++
@@ -101,7 +97,7 @@ mutations: {
     state.isOnLastPage = true
   },
   reset_store (state) {
-    state.list = []
+    state.posts = []
     state.page = 1
     state.isOnLastPage = false
   },

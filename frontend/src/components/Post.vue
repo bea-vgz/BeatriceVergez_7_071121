@@ -1,6 +1,6 @@
 <template>
-  <div class="container_post">
-    <div class="card-body">
+  <div class="container_post" v-if="post">
+    <div class="card-post">
       <div class="user">
         <div class="UserAvatar" v-if="post.User">
           <router-link :to="{ name: 'ProfilUser', params: { userId: post.UserId } }">
@@ -15,13 +15,26 @@
         <div class="card-text">
           <p class="contentPost"> {{ post.content }}</p>
         </div>
-        <a class="img_container" @click="$router.push(`posts/${post.id}`)">
-          <img :src="`${post.image}`" alt="image" class="img">
-          <span class="a-txt"><font-awesome-icon icon="eye"/> Voir le post </span>
-        </a>
+        <div class="post my-1 mb-lg-4">
+          <img v-b-modal="`modal-photo-${post.id}`" :src="`${post.image}`" alt="image" class="img">
+          <b-modal
+            :id="`modal-photo-${post.id}`"
+            size="xl"
+            class="modal-photo fade bd-example-modal-xl"
+            header-class="header-style"
+          >
+          <div slot="modal-title">
+            <img class="logoGroupo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
+          </div>
+          <div class="align-items-center justify-content-center">
+            <img class="modal-photo-img" :src="post.image" alt="" />
+          </div>
+          <div slot="modal-footer"></div>
+        </b-modal>
+      </div>
       </div>
       <div class="button-dis-like d-flex">
-        <AllLikesPost :post="post" />
+        <AllLikesPost :post="post" :likeNumber="likeNumber"/>
       </div>
 
       <div class="line"></div>
@@ -109,6 +122,7 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
+      likeNumber: this.post.Like_posts
     };
   },
   props: ['post'],
@@ -135,8 +149,8 @@ export default {
       const postId = this.post.id;
       LikePostService.likePost(postId)
       .then((res) => {
-        for (let i = 0; i < res.data.like; i++) {
-          res.data.like
+        if (res.data.like !== this.likeThisPost) {
+          this.likeNumber += res.data.like ? 1 : -1
         }
         this.likeThisPost = res.data.like,
         this.displayNotification('Like !')
@@ -171,7 +185,7 @@ export default {
 };
 </script>
 <style scoped>
-.card-body {
+.card-post {
     padding: 3.5rem;
     border-radius: 1.25rem;
     box-shadow: 0 0 6px #0000002e;
@@ -180,8 +194,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 40rem;
     margin-bottom: 3rem;
     padding: 2rem;
 }
@@ -191,6 +204,7 @@ export default {
     height: 350px;
     object-fit: cover;
     object-position: center;
+    cursor: zoom-in;
 }
 .line {
     display: block;
@@ -294,5 +308,14 @@ a:hover {
 }
 a{
   text-decoration: none;
+}
+.logoGroupo {
+  width: 50px;
+}
+.modal-photo-img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
 }
 </style>

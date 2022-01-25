@@ -1,27 +1,32 @@
 <template>
-  <div class="container-profil">
-    <Header />
-     <b-row class="text-center justify-content-center">
-      <div class="d-flex align-items-center flex-column">
-        <div class="infoUser bg-white">
-          <div class="userInfo">
-            <img :src="user.photoProfil" alt="Photo de profil de l'user" class="avatarProfil">
-            <p><strong>Pseudo : </strong>{{user.username}}</p>
-            <p><strong>Email : </strong>{{ user.email }}</p>
-            <p><strong>Biographie :</strong>{{ user.bio }}</p>
-            <p><strong>Identifiant :</strong> {{ user.id }}</p>
-          </div>
-        <div class="line mb-3"></div>
-        <div class="posts" v-if="posts">
-          <p><strong>SES POSTS</strong></p>
-          <AllPosts :userId="this.$route.params.userId" />
-        </div>
-          <p v-else>Ce membre n'a rien publié pour l'instant</p>
+  <div class="container-profil" v-if="user">
+    <!-- Header -->
+    <div class="header">
+        <Header />
+    </div>
+    <div class="align-items-center flex-column justify-content-center">
+      <div class="infoUser bg-white">
+        <div class="text-center userInfo">
+          <img :src="user.photoProfil" alt="Photo de profil de l'user" class="avatarProfil">
+          <p><strong>Pseudo : </strong>{{user.username}}</p>
+          <p><strong>Email : </strong>{{ user.email }}</p>
+          <p><strong>Biographie :</strong>{{ user.bio }}</p>
+          <p><strong>Identifiant :</strong> {{ user.id }}</p>
         </div>
       </div>
-    </b-row>
-
-    <Footer />
+    </div>
+    <div class="line mb-3"></div>
+    <div class="posts align-items-center">
+      <div class="posts" v-if="user.Posts.length > 0 ">
+        <h3 class="text-center"><strong>SES POSTS</strong></h3>
+        <AllPosts :userId="this.$route.params.userId" />
+      </div>
+      <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+      <Footer />
+    </div>
   </div>
 </template>
 
@@ -46,7 +51,8 @@ export default {
   data () {
     return {
       userId:'',
-      user: {},
+      user: '',
+      post: '',
       posts: []
     }
   },
@@ -60,7 +66,7 @@ export default {
           this.user = res.data
         })
     },
-  }
+  },
 }
 </script>
 
@@ -68,20 +74,23 @@ export default {
 .container-profil {
   background: #F2F2F2;
 }
+h3 {
+  margin-bottom: 2rem;
+}
 .infoUser {
-    padding: 3.5rem;
-    max-width: 100%;
-    width: 40rem;
-    height: auto;
-    border-radius: 1.25rem;
-    box-shadow: 0 0 16px #0000002e;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+  padding: 3.5rem;
+  max-width: 100%;
+  width: 40rem;
+  height: auto;
+  border-radius: 1.25rem;
+  box-shadow: 0 0 16px #0000002e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
 }
 .avatarProfil {
   width: 65px;
