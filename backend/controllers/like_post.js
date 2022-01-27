@@ -9,16 +9,15 @@ exports.likePost = async (req, res, next) => {
       });
       if (existLike) {
         await existLike.destroy();
-        res.status(200).json({ message : "Vous n'aimez plus ce post !", like: false });
+        res.status(200).json({ like: false });
       } else {
         const newLike = await Like_post.create({
           UserId: req.user,
-          PostId: req.params.postId
+          PostId: req.params.postId,
         })
-        res.status(201).json({ 
-          message: " J'aime !",
-          id : newLike.id,
-          like: true
+        res.status(201).send({ 
+          newLike,
+          like: true,
         })
       }
     }

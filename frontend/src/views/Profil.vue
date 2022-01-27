@@ -1,18 +1,17 @@
 <template>
-  <div class="profil">
-     <!-- Header -->
-    <div class="header">
-        <Header />
-    </div>
-    <div class="container_account">
-      <aside class="profil_account bg-white">
-        <div class="contanier_presentation bg-white border-b py-8">
-          <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
-          <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
-          <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
-          <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
-        </div>
-        <div class="optionsProfil bg-white">
+  <div>
+    <Header />
+    <div class="profil">
+      <div class="container_account">
+      <aside class="profil_account bg-white sidebar">
+        <div class="sidebar__widget">
+          <div class="contanier_presentation bg-white border-b py-8">
+            <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
+            <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
+            <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
+            <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
+          </div>
+          <div class="optionsProfil bg-white">
             <div class="option"> 
               <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon> Mon compte</router-link>
             </div>
@@ -27,6 +26,7 @@
               <a @click="deleteUser" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
+          </div>
         </div>
       </aside>
       <div>
@@ -48,13 +48,10 @@
           <AllPosts :userId="currentUser.userId" />
         </div>
       </div>
-  </div>
-  
+      </div>
   <!-- Footer -->
-    <div class="footer">
       <Footer />
     </div>
-  <router-view />
   </div>
 </template>
 
@@ -135,12 +132,17 @@ export default {
 </script>
 
 <style scoped>
+.sidebar__widget {
+  position: sticky;
+  top: 150px;
+  height: 250px;
+}
 .container_account {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    max-width: 100%;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100%;
 }
 h1 {
   font-size: 30px;
@@ -148,9 +150,9 @@ h1 {
   margin-bottom: 1rem;
 }
 .profil {
-    background-color: #F2F2F2;
-    display: flex;
-    flex-direction: column;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: column;
 }
 .avatar {
   width: 65px;
@@ -162,7 +164,7 @@ h1 {
 }
 .bg-white {
   background-color: #fff;
-  border-color: rgba(231, 233, 244);
+  border-color: #fff;
 }
 .formulaire_account {
   flex: 1 1 0%;
@@ -179,8 +181,7 @@ h1 {
   justify-content: center;
   margin-top: 4rem;
   margin-bottom: 4rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin-right: 4rem;
 }
 .userInfo{
   margin-top: 1rem;

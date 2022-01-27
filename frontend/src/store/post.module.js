@@ -1,6 +1,4 @@
 import PostService from '../service/post.resource'
-import resource from '../service/resource'
-import authHeader from '../service/auth.header'
 
 export const post = {
     namespaced: true,
@@ -14,8 +12,6 @@ export const post = {
       likes: [],
       comments: [],
       comment: {},
-      page: 1,
-      isOnLastPage: false,
       posts: [],
     },
 
@@ -30,26 +26,13 @@ actions: {
     if (params.userId) {
       userIdParams = `&userId=${params.userId}`
     }
-    return resource.get(`/posts?page=${state.page}${userIdParams}`, { headers: authHeader() })
+    return PostService.getAllPosts(userIdParams)
       .then(response => {
           commit('all_posts', state.posts.concat(response.data))
       })
       .catch(() => {
         commit('messageFailure', 'Problème de connexion')
       })
-  },
-
-  async loadMore({ state, commit, dispatch }, params) {
-    if (state.isOnLastPage) return
-
-    commit('increment_page')
-    const initialLength = state.posts.length
-
-    await dispatch('getAllPosts', params)
-
-    if (state.posts.length === initialLength) {
-      commit('reached_last_page')
-    }
   },
 
   createPost({ commit }, post) {
@@ -78,29 +61,26 @@ actions: {
   },
 
   deletePost({commit}, postId) {
-    return PostService.deletePost(postId)
-    .then(() => commit('deleteSuccess', postId))
-    .catch(error => {
-      console.log({ error: error })
-      commit('messageFailure', 'Problème de connexion')
-    })
-  },
+    return new Promise((resolve, reject) => {
+      PostService.deletePost(postId)
+      .then(response => {
+        commit('deleteSuccess', postId)
+        resolve(response);
+      })
+      .catch(function(error) {
+        commit('messageFailure')
+        reject(error);
+      });
+      })
+    },
 },
 mutations: {
-  all_posts (state, post) {
-    state.posts = post
-  },
-  increment_page (state) {
-    state.page++
-  },
-  reached_last_page (state) {
-    state.isOnLastPage = true
-  },
-  reset_store (state) {
-    state.posts = []
-    state.page = 1
-    state.isOnLastPage = false
-  },
+    all_posts (state, post) {
+      state.posts = post
+    },
+    reset_store (state) {
+      state.posts = []
+    },
     createPostSuccess(state) {
       state.createdPost.status = 'Created'
       state.post = post
@@ -117,8 +97,8 @@ mutations: {
       state.post = null;
       state.message = "Post non récupéré !";
     },
-    deleteSuccess(state) {
-      state.post = null
+    deleteSuccess(state, posts) {
+      state.posts = posts
     },
     messageFailure(state, message) {
       state.message = message

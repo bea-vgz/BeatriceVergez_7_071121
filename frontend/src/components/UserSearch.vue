@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import AuthService from '../service/auth.resource'
 export default {
   name:'UserSearch',
   data() {
@@ -70,7 +69,7 @@ export default {
         this.users = []
         return
       }
-      const res = await AuthService.getAllUsers(value)
+      const res = await this.$store.dispatch('auth/getAllUsers', value)
       this.users = res.data
     }
   },

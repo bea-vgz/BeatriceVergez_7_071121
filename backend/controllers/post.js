@@ -48,7 +48,9 @@ exports.deletePost = (req, res, next) => {
       const filename = post.image.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
         post.destroy()
-        .then(() => { res.status(200).json({ message: "Post supprimé !" });})
+        .then(() => { 
+          res.status(200).json({ message: "Post supprimé !" });
+        })
         .catch(error => res.status(400).json(error))
       })
     })
@@ -80,8 +82,6 @@ exports.getOnePost = (req, res, next) => {
   
 // Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
 exports.getAllPosts = (req, res, next) => {
-  const limit = 10
-  const page = parseInt(req.query.page) || 1
 
   const options = {
     include: [
@@ -98,8 +98,6 @@ exports.getAllPosts = (req, res, next) => {
         model: Dislike_post,
       },
     ],
-    limit,
-    offset: limit * (page - 1),
     order: [['createdAt', 'DESC']]
   }
 

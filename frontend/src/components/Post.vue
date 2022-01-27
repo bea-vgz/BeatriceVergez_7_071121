@@ -1,6 +1,6 @@
 <template>
-  <div class="container_post" v-if="post">
-    <div class="card-post">
+  <div v-if="post">
+    <div class="card-post mx-auto border-0 p-0 p-lg-3 mb-2 mt-2 mb-lg-5 mt-lg-3 bg-white">
       <div class="user">
         <div class="UserAvatar" v-if="post.User">
           <router-link :to="{ name: 'ProfilUser', params: { userId: post.UserId } }">
@@ -34,7 +34,7 @@
       </div>
       </div>
       <div class="button-dis-like d-flex">
-        <AllLikesPost :post="post" :likeNumber="likeNumber"/>
+        <AllLikesPost :post="post" :likesCount="likesCount"/>
       </div>
 
       <div class="line"></div>
@@ -122,7 +122,7 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
-      likeNumber: this.post.Like_posts
+      likesCount: this.post.likesCount
     };
   },
   props: ['post'],
@@ -150,7 +150,7 @@ export default {
       LikePostService.likePost(postId)
       .then((res) => {
         if (res.data.like !== this.likeThisPost) {
-          this.likeNumber += res.data.like ? 1 : -1
+          this.likesCount += res.data.like ? 1 : -1
         }
         this.likeThisPost = res.data.like,
         this.displayNotification('Like !')
@@ -186,17 +186,13 @@ export default {
 </script>
 <style scoped>
 .card-post {
-    padding: 3.5rem;
     border-radius: 1.25rem;
     box-shadow: 0 0 6px #0000002e;
-    background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    width: 40rem;
     margin-bottom: 3rem;
-    padding: 2rem;
 }
 .img {
     max-width: 100%;

@@ -53,8 +53,8 @@ export const auth = {
       )
     },
     
-    getAllUsers({ commit }) {
-      return AuthService.getAllUsers()
+    getAllUsers({ commit }, value) {
+      return AuthService.getAllUsers(value)
       .then((users) => {
         commit('getUsers');
         return Promise.resolve(users);
@@ -101,7 +101,8 @@ export const auth = {
       state.status.loggedIn= false
       state.user = null
     },
-    deleteFailure() {
+    deleteFailure(state, message) {
+      state.message = message
     },
     updateSuccess(state, user) {
       state.user = user;

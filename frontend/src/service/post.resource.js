@@ -15,13 +15,9 @@ class PostService {
         return resource.get(`/posts/${id}`, { headers: authHeader() })
     }
 
-    /* getAllPosts({ state }, params = {}){
-        let userIdParams = ''
-        if (params.userId) {
-            userIdParams = `&userId=${params.userId}`
-        }
-        return resource.get(`/posts?page=${state.page}${userIdParams}`, { headers: authHeader() })
-    } */
+    getAllPosts(userIdParams){
+        return resource.get(`/posts?${userIdParams}`, { headers: authHeader() })
+    }
 
     deletePost(id) {
         return resource.delete(`/posts/${id}`, { headers: authHeader() })

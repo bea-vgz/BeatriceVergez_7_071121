@@ -91,7 +91,7 @@ export default {
 <style lang="scss">
 .post-button {
   top: 20px;
-  right: 50px;
+  right: 40px;
   padding: 1px 15px 7px !important;
   background-color: transparent;
   border: 0;

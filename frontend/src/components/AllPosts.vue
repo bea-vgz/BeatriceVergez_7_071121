@@ -22,22 +22,6 @@ export default {
   async mounted () {
     await this.$store.dispatch('post/initializePostStore', this.queryParams)
   },
-  created () {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
-  },
-  methods: {
-    handleScroll () {
-      const totalHeight = document.documentElement.scrollHeight
-      const scrollHeight = window.scrollY + window.innerHeight
-      const remainingOffset = totalHeight - scrollHeight
-      if (remainingOffset < 300) {
-        this.$store.dispatch('post/loadMore', this.queryParams)
-      }
-    }
-  },
   computed: {
     ...mapState(['post']),
     queryParams () {

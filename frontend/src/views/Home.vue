@@ -1,9 +1,6 @@
 <template>
-  <div id="Home">
-  <!-- Header -->
-    <div class="header">
-      <Header />
-    </div>
+  <div>
+    <Header />
     <div class="container_home">
     <h1 v-if="currentUser" class="text-align">
 			Bienvenue sur votre fil d'actualité <br />
@@ -12,13 +9,10 @@
     
     <CreatePost />
     <AllPosts />
-
+  
     </div>
  <!-- Footer -->
-    <div class="footer">
-      <Footer />
-    </div>
-  <router-view />
+    <Footer />
   </div>
 </template>
 

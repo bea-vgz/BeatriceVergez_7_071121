@@ -1,6 +1,6 @@
 <template>
   <div id="PostFormulaire">
-    <form class="container_post bg-white">
+    <form class="container_post border-0 bg-white">
       <router-link to="/profil" v-if="currentUser" class="container_user bg-white">
           <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" />
           <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" ref="file" />

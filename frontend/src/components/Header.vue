@@ -1,5 +1,5 @@
 <template>
-  <header id="nav" class="border_nav bg-white" >
+  <div id="nav" class="border_nav bg-white sticky-top" >
     <div class="navigation">
       <div class="nav_logo">
         <router-link to="/home">
@@ -32,9 +32,8 @@
             </transition>
           </div>
         </div>
-
     </div>
-  </header>
+  </div>
 </template>
 <script>
 import router from "../router";
@@ -78,9 +77,9 @@ header {
   width: 100%;
 }
 nav .menu-item, .sub-menu {
-  position: absolute;
   background-color: #fff;
   width: max-content;
+  position: absolute;
   padding: 1.5rem;
   transform: translateX(-30%);
 }
@@ -149,7 +148,6 @@ nav .menu-item, .sub-menu {
   box-shadow: 0 8px 8px 0 rgba(95, 99, 122, 0.123);
   border-width: 0;
   z-index: 1;
-  position: relative;
   box-sizing: border-box;
 }
 button {

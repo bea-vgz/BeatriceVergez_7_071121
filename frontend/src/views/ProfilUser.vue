@@ -1,9 +1,7 @@
 <template>
-  <div class="container-profil" v-if="user">
-    <!-- Header -->
-    <div class="header">
-        <Header />
-    </div>
+  <div class="container-profil">
+    <Header />
+    <div v-if="user">
     <div class="align-items-center flex-column justify-content-center">
       <div class="infoUser bg-white">
         <div class="text-center userInfo">
@@ -24,7 +22,6 @@
       <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
     </div>
     <!-- Footer -->
-    <div class="footer">
       <Footer />
     </div>
   </div>
