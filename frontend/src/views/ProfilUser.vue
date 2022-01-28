@@ -6,10 +6,13 @@
       <div class="infoUser bg-white">
         <div class="text-center userInfo">
           <img :src="user.photoProfil" alt="Photo de profil de l'user" class="avatarProfil">
-          <p><strong>Pseudo : </strong>{{user.username}}</p>
+          <p><strong>Pseudo : </strong>{{ user.username }}</p>
           <p><strong>Email : </strong>{{ user.email }}</p>
           <p><strong>Biographie :</strong>{{ user.bio }}</p>
-          <p><strong>Identifiant :</strong> {{ user.id }}</p>
+          <AdminDeleteAccount
+            v-if="currentUser.isAdmin && !user.deleted"
+            :user="user"
+          />
         </div>
       </div>
     </div>
@@ -32,12 +35,19 @@ import AllPosts from "../components/AllPosts.vue";
 import AuthService from '../service/auth.resource'
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
+import AdminDeleteAccount from "../components/AdminDeleteAccount.vue"
 export default {
   name: 'ProfilUser',
   components: {
     Header,
     Footer,
-    AllPosts
+    AllPosts,
+    AdminDeleteAccount
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
   watch: {
     $route (to, from) {

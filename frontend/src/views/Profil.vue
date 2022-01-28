@@ -35,7 +35,8 @@
           <div class="userInfo">
             <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
             <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
-            <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>      
+            <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>
+            <div v-if="currentUser.isAdmin"><p for="admin"><strong>Statut :</strong>Admin</p></div>      
           </div>
           <div class="line mb-3"></div>
           <a title="Modifier mon profil" @click="displayModal" class="icone">
@@ -45,6 +46,7 @@
           <modify-profil v-show="modifyProfil" @close="closeModal" />
         </div>
         <div class="all-posts">
+          <h3 class="text-center"><strong>MES POSTS</strong></h3>
           <AllPosts :userId="currentUser.userId" />
         </div>
       </div>
@@ -76,6 +78,8 @@ export default {
       modifyProfil: false,
       image:'',
       user:'',
+      posts: [],
+      post: ''
     }
   },
   computed: {
@@ -219,8 +223,11 @@ input {
     text-align: center;
     border-color: rgba(231, 233, 244);
 }
-.delete_user, .modif_user {
+.modif_user {
   margin-top: 2rem;
+  color: #fd2d01
+}
+.delete_user {
   color: #fd2d01
 }
 .delete_icon, .modif_icon {
@@ -235,7 +242,6 @@ input {
     border-radius: 2rem;
     border: solid 0.15rem #fff;
     background-color: #fff;
-    margin-top: 0.8rem;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     width: 100%;

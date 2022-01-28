@@ -38,15 +38,7 @@ const routes = [
     component: () => import("../components/ModifyPassword.vue"),
     meta: { title:'Groupomania - modification Password' }
   },
-
-  // Route OnePost 
-  {
-    path: "/posts/:id",
-    name: "OnePost",
-    component: () => import("../views/OnePost.vue"),
-    meta: { title:'Groupomania - post' }
-  },
-
+  
   // Route User profil 
   {
     path: '/profil/:userId',

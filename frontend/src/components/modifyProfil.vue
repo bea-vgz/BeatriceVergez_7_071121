@@ -67,6 +67,20 @@
                   ></b-form-input>
                 </b-col>
               </div>
+              <div v-if="currentUser.isAdmin" class="d-flex align-items-center">
+                <b-col sm="2" class="d-none d-lg-block p-0">
+                  <label for="admin"><strong>  Statut </strong></label>
+                </b-col>
+                <b-col sm="10">
+                  <b-form-input
+                    id="admin"
+                    type="text"
+                    placeholder="Admin"
+                    class="mb-2 pl-lg-3"
+                    disabled
+                  ></b-form-input>
+                </b-col>
+              </div>
           </b-form>
             <button
               type="submit"

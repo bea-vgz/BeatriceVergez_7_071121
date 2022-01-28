@@ -15,7 +15,7 @@ exports.signup = async (req, res, next) => {
             email: req.body.email,
             password: hash,
             bio: req.body.bio,
-            isAdmin : 0,
+            isAdmin : req.body.isAdmin,
         })
         res.status(201).json({ 
             message: 'Utilisateur crée !', 
@@ -49,7 +49,7 @@ exports.login = (req, res, next) => { // récupération du login
                         bio: user.bio,
                         email: user.email,
                         password: user.password,
-                        isAdmin: false,
+                        isAdmin: user.isAdmin,
                         token: jwt.sign( // identification avec un TOKEN
                             { userId: user.id,
                             isAdmin: user.isAdmin },
@@ -98,7 +98,7 @@ exports.modifyPassword = async (req, res) =>{
 }
 
 // Supprimer un user
-exports.deleteUser = (req, res, next) => {
+exports.deleteUser = async(req, res, next) => {
     User.findOne({where : { id: req.params.id }})
       .then((user) => {
         const filename = user.photoProfil.split('/images/')[1];

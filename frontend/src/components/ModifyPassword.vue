@@ -3,14 +3,15 @@
     <Header/>
 
     <div class="container_account">
-      <aside class="profil_account bg-white">
-        <div class="contanier_presentation bg-white border-b py-8">
-          <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
-          <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
-          <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
-          <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
-        </div>
-        <div class="optionsProfil bg-white">
+      <aside class="profil_account bg-white sidebar">
+        <div class="sidebar__widget">
+          <div class="contanier_presentation bg-white border-b py-8">
+            <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
+            <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
+            <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
+            <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
+          </div>
+          <div class="optionsProfil bg-white">
             <div class="option is-active"> 
               <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon> Mon compte</router-link>
             </div>
@@ -25,8 +26,9 @@
               <a to="/" class="nav_centrale delete_user underline" @click="deleteUser"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
+          </div>
         </div>
-    </aside>
+      </aside>
       <div class="ui segment infoUser bg-white">
         <h1><strong>Mot de passe</strong> </h1>
     
@@ -162,6 +164,11 @@
 </script>
 
 <style scoped>
+.sidebar__widget {
+  position: sticky;
+  top: 150px;
+  height: 250px;
+}
 .container_account {
     display: flex;
     flex-direction: row;
@@ -244,7 +251,6 @@ input {
     border-radius: 2rem;
     border: solid 0.15rem #fff;
     background-color: #fff;
-    margin-top: 0.8rem;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     width: 100%;;
@@ -266,8 +272,11 @@ a:hover{
   padding-right: 0.7rem;
   color: #9e9e9e
 }
-.delete_user, .modif_user {
+.modif_user {
   margin-top: 2rem;
+  color: #fd2d01
+}
+.delete_user {
   color: #fd2d01
 }
 .delete_icon, .modif_icon {

@@ -30,6 +30,7 @@
           customClass="comment-button"
           classCollapse="comment-btn-collapsed"
           :isCreator="comment.UserId == currentUser.userId"
+          :isAdmin="currentUser.isAdmin"
           @clickedEditButton="startEditing"
           @onDelete="deleteComment"
           modifyText="Modifier"

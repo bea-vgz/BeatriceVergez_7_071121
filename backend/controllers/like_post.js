@@ -1,5 +1,6 @@
 const { Like_post } = require('../models/index');
 const { User } = require('../models/index');
+const sequelize = require('sequelize');
 
 // Création d'un like post :
 exports.likePost = async (req, res, next) => {
@@ -24,6 +25,11 @@ exports.likePost = async (req, res, next) => {
     catch (error) {
       res.status(400).json({ error: error.message });
     }
+    const allLikes = Like_post.findAll({ 
+      where: { PostId: req.params.postId },
+      include: { model: User }
+    })
+    res.status(200).json({ allLikes })
 };
 
 //Récupérer tous les likes d'un post

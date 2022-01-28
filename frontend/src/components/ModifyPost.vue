@@ -5,6 +5,7 @@
       classCollapse="post-btn-collapsed"
       :editingPost="true"
       :isCreator="post.UserId == currentUser.userId"
+      :isAdmin="currentUser.isAdmin"
       @onDelete="deletePost"
       :elementId="post.id"
       modifyText="Modifier le post"
