@@ -29,7 +29,7 @@
           </div>
         </div>
       </aside>
-      <div class="ui segment infoUser bg-white">
+      <div class="infoUser bg-white">
         <h1><strong>Mot de passe</strong> </h1>
     
         <div class="card">
@@ -77,6 +77,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   import router from "../router";
   import Header from '@/components/Header'
   import Footer from '@/components/Footer'
@@ -104,6 +105,8 @@
       }
     },
     methods: {
+      ...mapActions(['displayNotification']),
+
       modifyPassword() {
         if (this.newPassword === this.confirmPassword) {
           const password = {
@@ -111,9 +114,11 @@
           }
           const userId = this.currentUser.userId
           AuthService.modifyPassword(userId, password)
-          .then(() => {
-            console.log(this.message = 'Mot de passe modifié avec succès')
-            alert('Mot de passe modifié')
+          .then((response) => {
+            localStorage.setItem('currentUser', JSON.stringify(response));
+            this.currentUser.userId
+            this.displayNotification('Mot de passe modifié avec succès !')
+            router.push('/profil');
           })
         }
         else {

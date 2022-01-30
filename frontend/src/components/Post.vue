@@ -195,7 +195,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    width: 40rem;
     margin-bottom: 3rem;
     padding: 2rem;
 }

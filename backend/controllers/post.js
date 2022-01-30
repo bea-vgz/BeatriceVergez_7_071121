@@ -111,26 +111,3 @@ exports.getAllPosts = (req, res, next) => {
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }))
 }
-
-/* Afficher/Récupérer tous posts / renvoie un tableau contenant tous les posts de la BDD
-exports.getAllPostsUser = (req, res, next) => {
-  Post.findAll({ where: { UserId: req.params.userId },
-    include: [
-      { 
-        model: User
-      },
-      {
-        model: Comment
-      },
-      { 
-        model: Like_post
-      },
-      { 
-        model: Dislike_post
-      },
-    ],
-    order: [["createdAt", "ASC"]]
-  })
-    .then(posts => res.status(200).json(posts))
-    .catch(error => res.status(400).json({ error }));
-}; */

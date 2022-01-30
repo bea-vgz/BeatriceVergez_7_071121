@@ -48,7 +48,7 @@
                     id="username"
                     type="text"
                     placeholder="Pseudo"
-                    v-model="currentUser.username"
+                    v-model="input.username"
                     class="text-dark mb-2 pl-lg-3"
                   ></b-form-input>
                 </b-col>
@@ -62,7 +62,7 @@
                     id="bio"
                     type="text"
                     placeholder="Biographie"
-                    v-model="currentUser.bio"
+                    v-model="input.bio"
                     class="mb-2 pl-lg-3"
                   ></b-form-input>
                 </b-col>
@@ -100,13 +100,17 @@ import AuthService from "../service/auth.resource";
 export default {
   name: "ModifyProfil",
   data() {
+    const currentUser = this.$store.state.auth.user;
     return {
       image: null,
       file: null,
-      photoProfil: null
+      photoProfil: null,
+      input: {
+        username: currentUser.username,
+        bio: currentUser.bio
+      }
     }
   },
-  props: ['user'],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -114,29 +118,30 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
+
     update(){
       let user;
       console.log();
-      if(this.currentUser.photoProfil != "") {
-        user = {
-          username: this.currentUser.username,
-          photoProfil: this.currentUser.photoProfil,
-          bio: this.currentUser.bio
-        }
-      }
-      else if(this.image != "") {
+      if(this.image != "") {
         user = new FormData();
         user.append('image', this.image);
-        user.append('username', this.currentUser.username);
-        user.append('bio', this.currentUser.bio);
+        user.append('username', this.input.username);
+        user.append('bio', this.input.bio);
       }
       else {
-        console.log("Ne peut être vide !");
+        user = {
+          username: this.input.username,
+          image: this.currentUser.photoProfil,
+          bio: this.input.bio
+        }
       }
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
-      .then(() => {
+      .then((response) => {
+        localStorage.setItem('currentUser', JSON.stringify(response));
+        this.currentUser.userId
         this.displayNotification('User modifié !')
+        location.reload()
       })
     },
     onFileChange(event) {

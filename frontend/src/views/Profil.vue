@@ -45,6 +45,7 @@
           </a>
           <modify-profil v-show="modifyProfil" @close="closeModal" />
         </div>
+        <div class="line mb-3"></div>
         <div class="all-posts">
           <h3 class="text-center"><strong>MES POSTS</strong></h3>
           <AllPosts :userId="currentUser.userId" />
@@ -183,9 +184,10 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
-  margin-right: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
 }
 .userInfo{
   margin-top: 1rem;
@@ -287,6 +289,9 @@ a:hover{
   height: 2px;
   background-color: #fd2d01;
   transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.all-posts {
+  width: 100%;
 }
 @media (hover: hover) and (pointer: fine) {
   .underline:hover::before{

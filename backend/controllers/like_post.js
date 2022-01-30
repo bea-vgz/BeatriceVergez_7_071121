@@ -1,6 +1,7 @@
 const { Like_post } = require('../models/index');
 const { User } = require('../models/index');
-const sequelize = require('sequelize');
+const { Post } = require('../models/index');
+const { Sequelize } = require("sequelize");
 
 // Création d'un like post :
 exports.likePost = async (req, res, next) => {
@@ -57,3 +58,15 @@ exports.getLikeOnOnePost = async (req, res, next) => {
     res.status(400).json({ error })
   }
 }
+
+// Nombre de like pour un post
+exports.getLikesCount = async (req, res, next) => {
+  try {
+    const data = await Like_post.findAll({
+      where: Sequelize.where('( SELECT COUNT(like_posts.postId) as NB_LIKES FROM like_posts WHERE postId = ?)')
+    })
+    res.send( { data } )
+    } catch(err){
+      return res.status(500).json({ message: "NB_LIKES : Une erreur s'est produite" });
+    }
+};

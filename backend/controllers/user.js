@@ -73,7 +73,8 @@ exports.modifyUser = (req, res, next) => {
             ...req.body,
             photoProfil: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         } : { ...req.body };
-            user.update({ ...User, id: req.params.id})
+            console.log(User)
+            user.update({...User, id: req.params.id})
             .then(user => res.status(200).json({ message: "User modifié ! ", user }))
             .catch((error) => res.status(400).json({ error }));
         })

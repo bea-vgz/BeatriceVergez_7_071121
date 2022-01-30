@@ -93,7 +93,7 @@ export default {
     this.getAllDislikes()
   },
   methods: {
-    getAllLikes () {
+    getAllLikes() {
       const postId = this.post.id;
       LikePostService.getAllLikesOnePost(postId)
       .then((res) => (
