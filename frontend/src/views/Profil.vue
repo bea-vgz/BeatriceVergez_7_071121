@@ -9,7 +9,6 @@
             <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
             <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
-            <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
           </div>
           <div class="optionsProfil bg-white">
             <div class="option"> 
@@ -33,7 +32,8 @@
         <div>
           <h1><strong>Mon profil</strong> </h1>
           <div class="userInfo">
-            <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
+            <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.username }}</p>
+            <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
             <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
             <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>
             <div v-if="currentUser.isAdmin"><p for="admin"><strong>Statut :</strong>Admin</p></div>      
@@ -47,7 +47,7 @@
         </div>
         <div class="line mb-3"></div>
         <div class="all-posts">
-          <h3 class="text-center"><strong>MES POSTS</strong></h3>
+          <h3 class="text-center"><strong> • MES POSTS • </strong></h3>
           <AllPosts :userId="currentUser.userId" />
         </div>
       </div>
@@ -160,8 +160,8 @@ h1 {
   flex-direction: column;
 }
 .avatar {
-  width: 65px;
-  height: 65px;
+  width: 85px;
+  height: 85px;
   object-fit: cover;
   object-position: center;
   border-radius: 100%;

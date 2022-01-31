@@ -2,29 +2,31 @@
   <div class="container-profil">
     <Header />
     <div v-if="user">
-    <div class="align-items-center flex-column justify-content-center">
-      <div class="infoUser bg-white">
-        <div class="text-center userInfo">
-          <img :src="user.photoProfil" alt="Photo de profil de l'user" class="avatarProfil">
-          <p><strong>Pseudo : </strong>{{ user.username }}</p>
-          <p><strong>Email : </strong>{{ user.email }}</p>
-          <p><strong>Biographie :</strong>{{ user.bio }}</p>
-          <AdminDeleteAccount
-            v-if="currentUser.isAdmin && !user.deleted"
-            :user="user"
-          />
+      <b-row class="row justify-content-center align-items-center flex-column">
+        <b-col cols="12" lg="6" class="align-items-center">
+          <div class="infoUser bg-white">
+            <div class="text-center userInfo">
+              <img :src="user.photoProfil" alt="Photo de profil de l'user" class="avatarProfil">
+              <h1>{{ user.username }}</h1>
+              <p><strong>Email : </strong>{{ user.email }}</p>
+              <p><strong>Biographie :</strong>{{ user.bio }}</p>
+              <AdminDeleteAccount
+                v-if="currentUser.isAdmin && !user.deleted"
+                :user="user"
+              />
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+      <div class="line mb-3"></div>
+      <div class="posts align-items-center">
+        <div class="posts" v-if="user.Posts.length > 0 ">
+          <h3 class="text-center"><strong> • SES POSTS • </strong></h3>
+          <AllPosts :userId="this.$route.params.userId" />
         </div>
+        <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
       </div>
-    </div>
-    <div class="line mb-3"></div>
-    <div class="posts align-items-center">
-      <div class="posts" v-if="user.Posts.length > 0 ">
-        <h3 class="text-center"><strong>SES POSTS</strong></h3>
-        <AllPosts :userId="this.$route.params.userId" />
-      </div>
-      <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
-    </div>
-    <!-- Footer -->
+      <!-- Footer -->
       <Footer />
     </div>
   </div>
@@ -84,24 +86,24 @@ export default {
 h3 {
   margin-bottom: 2rem;
 }
+h1 {
+  font-size: 30px;
+  margin-bottom: 1rem;
+}
 .infoUser {
   padding: 3.5rem;
-  max-width: 100%;
-  width: 40rem;
   height: auto;
   border-radius: 1.25rem;
   box-shadow: 0 0 16px #0000002e;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 6rem;
   margin-bottom: 3rem;
 }
 .avatarProfil {
-  width: 65px;
-  height: 65px;
+  width: 85px;
+  height: 85px;
   object-fit: cover;
   object-position: center;
   border-radius: 100%;
