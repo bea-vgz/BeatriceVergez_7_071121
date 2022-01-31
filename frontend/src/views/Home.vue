@@ -1,11 +1,20 @@
 <template>
   <div>
+
     <Header />
     <div class="container_home">
-    <h1 v-if="currentUser" class="text-align">
-			Bienvenue sur votre fil d'actualité <br />
-      {{ currentUser.username }} ! 😁 
-    </h1>
+
+    <div class="wrapper">
+      <div class="wrapper__text text-align">
+      <h1 class="text text_hello">Hello,</h1>
+    </div>
+    <div class="wrapper__text text-align">
+      <h1 class="text text--highlight animate-delay-3">Bienvenue sur votre fil d'actualité <br /></h1>
+    </div>
+    <div  v-if="currentUser" class="wrapper__text text-align">
+      <h1 class="text text--highlight animate-delay-6">{{ currentUser.username }} ! 😁</h1>
+    </div>
+    </div>
     
     <CreatePost />
     
@@ -36,7 +45,7 @@ export default {
     Header,
     Footer,
     CreatePost,
-    AllPosts
+    AllPosts,
   },
   computed: {
     currentUser() {
@@ -46,7 +55,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container_home {
   font-family: 'Barlow', sans-serif;
   background-color: #F2F2F2;
@@ -62,9 +71,49 @@ h1 {
   width: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 4rem;
 }
 .text-align {
   text-align:center;
 }
+
+body {
+  position: relative;
+}
+.wrapper {
+  margin-top: 4rem;
+  transform: translateY(-50%);
+  &__text {
+    display: block;
+    line-height: 1.3;
+    overflow: hidden;
+  }
+}
+.text {
+  margin: 0;
+  animation: animate 0.6s cubic-bezier(0.2, 0.6, 0.2, 1);
+  animation-fill-mode: backwards;
+}
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}
+.animate-delay-6 {
+  animation-delay: 0.6s;
+}
+.text_hello {
+  font-weight: bolder;
+  color: #fd2d01;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: translateY(30vh);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
 </style>

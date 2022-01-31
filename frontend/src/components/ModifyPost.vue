@@ -88,6 +88,7 @@ export default {
       PostService.modifyPost(postId, post)
       .then(() => {
         this.displayNotification('Post modifié !')
+        location.reload();
       })
     },
     

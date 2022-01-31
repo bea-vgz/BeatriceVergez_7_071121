@@ -22,7 +22,7 @@
       <b-row class="row justify-content-center align-items-center flex-column">
         <b-col cols="12" lg="6" class="align-items-center">
           <div class="posts" v-if="user.Posts.length > 0 ">
-            <h4 class="text-center"><strong> • SES POSTS • </strong></h4>
+            <h4 class="text-center posts-title"><strong> • SES POSTS • </strong></h4>
             <AllPosts :userId="this.$route.params.userId" />
           </div>
           <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
@@ -123,6 +123,9 @@ h1 {
 .user-name {
   font-size: 20px;
   font-weight: bold;
+}
+.posts-title {
+  letter-spacing: 1px;
 }
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .user-name {

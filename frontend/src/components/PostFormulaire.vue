@@ -127,6 +127,7 @@ export default {
   background-color: #fff;
   border-radius: 2rem;
   max-width: 100%;
+  margin-top: 2rem;
   margin-bottom: 3rem;
   padding: 2rem
 }

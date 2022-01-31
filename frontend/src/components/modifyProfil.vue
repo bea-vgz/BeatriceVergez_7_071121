@@ -105,7 +105,6 @@ export default {
     return {
       image: null,
       file: null,
-      photoProfil: null,
     }
   },
   computed: {
@@ -115,6 +114,11 @@ export default {
   },
   updated() {
     this.currentUser;
+  },
+  mounted() {
+    this.username = this.currentUser.username,
+    this.bio = this.currentUser.bio,
+    this.image = this.currentUser.photoProfil
   },
   methods: {
     ...mapActions(['displayNotification']),
@@ -136,8 +140,8 @@ export default {
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then((response) => {
-        localStorage.setItem('currentUser', JSON.stringify(response));
-        this.currentUser.userId
+        localStorage.setItem('currentUser', this.image, JSON.stringify(response));
+        this.currentUser
         this.displayNotification('User modifié !')
         router.push('/home');
       })
@@ -145,7 +149,6 @@ export default {
     onFileChange(event) {
       this.file = URL.createObjectURL(event.target.files[0])
       this.image = event.target.files[0]
-      this.currentUser.photoProfil = ''
     },
     triggerInput () {
       this.$refs.fileUpload.click()

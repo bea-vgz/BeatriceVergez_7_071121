@@ -150,9 +150,7 @@ export default {
       const postId = this.post.id;
       LikePostService.likePost(postId)
       .then((res) => {
-        if (res.data.like !== this.likeThisPost) {
-          this.post.NB_LIKES++;
-        }
+        this.post.NB_LIKES++;
         this.likeThisPost = res.data.like,
         this.displayNotification('Like !')
       })

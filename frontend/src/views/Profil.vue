@@ -29,7 +29,7 @@
         </div>
       </aside>
       <div class="justify-content-center flex-column">
-        <b-col cols="12" lg="10" class="align-items-center">
+        <b-col cols="12" lg="12" class="align-items-center">
           <div class="infoUser bg-white">
             <h1><strong>Mon profil</strong> </h1>
             <div class="userInfo">
@@ -47,8 +47,8 @@
             <modify-profil v-show="modifyProfil" @close="closeModal" />
           </div>
         </b-col>
-        <b-col cols="12" lg="10" class="align-items-center">
-          <h4 class="text-center"><strong> • MES POSTS • </strong></h4>
+        <b-col cols="12" lg="12" class="align-items-center">
+          <h4 class="text-center posts-title"><strong> • MES POSTS • </strong></h4>
           <AllPosts :userId="currentUser.userId" />
         </b-col>
       </div>
@@ -66,6 +66,7 @@ import Header from '@/components/Header.vue';
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 import modifyProfil from '@/components/ModifyProfil.vue'
 import AllPosts from "../components/AllPosts.vue"
+import { mapActions } from 'vuex'
 export default {
   name: "Profil",
   components: {
@@ -90,6 +91,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['displayNotification']),
+
     displayModal() {
       this.modifyProfil = true;
     },
@@ -112,10 +115,10 @@ export default {
         error => {
           console.log(error);
         });
-        alert('Votre compte a été supprimé !')
+        this.displayNotification('Compte supprimé avec succès!')
         router.push('/signup');
       } else {
-        alert("Votre compte n'a pas été supprimé")
+        this.displayNotification("Le compte n'a pas été supprimé !")
       }
     },
       
@@ -127,10 +130,10 @@ export default {
       })
       if (ok) {
         this.$store.dispatch('auth/logout');
-        alert('Vous avez été déconnecté. Vous allez être redirigé.')
+        this.displayNotification("Vous avez été déconnecté !")
         router.push('/');
       } else {
-        alert("Vous n'avez pas été déconnecté")
+        this.displayNotification("Vous n'avez pas été déconnecté !")
       }
     },
   },
@@ -292,6 +295,9 @@ a:hover{
   height: 2px;
   background-color: #fd2d01;
   transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.posts-title {
+  letter-spacing: 1px;
 }
 @media (hover: hover) and (pointer: fine) {
   .underline:hover::before{

@@ -31,8 +31,8 @@
         
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
-        <button type="submit" class="buttonConnect" aria-label="se connecter">
-        <router-link style="text-decoration: none; color: inherit;" to="/profil" > Connexion </router-link>
+        <button type="submit" class="buttonConnect" aria-label="se connecter" @click="login()" >
+          <router-link to="/home" style="text-decoration: none; color: inherit;"> Connexion </router-link>
         </button>
 
         <button type="submit" value="Submit" class="buttonCompte" >
