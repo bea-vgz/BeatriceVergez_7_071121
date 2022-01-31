@@ -19,13 +19,15 @@
         </b-col>
       </b-row>
       <div class="line mb-3"></div>
-      <div class="posts align-items-center">
-        <div class="posts" v-if="user.Posts.length > 0 ">
-          <h3 class="text-center"><strong> • SES POSTS • </strong></h3>
-          <AllPosts :userId="this.$route.params.userId" />
-        </div>
-        <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
-      </div>
+      <b-row class="row justify-content-center align-items-center flex-column">
+        <b-col cols="12" lg="6" class="align-items-center">
+          <div class="posts" v-if="user.Posts.length > 0 ">
+            <h4 class="text-center"><strong> • SES POSTS • </strong></h4>
+            <AllPosts :userId="this.$route.params.userId" />
+          </div>
+          <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
+        </b-col>
+      </b-row>
       <!-- Footer -->
       <Footer />
     </div>
@@ -83,8 +85,9 @@ export default {
 .container-profil {
   background: #F2F2F2;
 }
-h3 {
+h4 {
   margin-bottom: 2rem;
+  margin-top: 1rem;
 }
 h1 {
   font-size: 30px;

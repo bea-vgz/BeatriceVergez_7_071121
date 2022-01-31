@@ -8,11 +8,15 @@
     </h1>
     
     <CreatePost />
-    <AllPosts />
-  
+    
+    <b-row class="row justify-content-center align-items-center flex-column">
+      <b-col cols="12" lg="6" class="align-items-center">
+        <AllPosts />
+      </b-col>
+    </b-row>
     </div>
  <!-- Footer -->
-    <Footer />
+  <Footer />
   </div>
 </template>
 
@@ -60,69 +64,7 @@ h1 {
   margin-right: auto;
   margin-bottom: 4rem;
 }
-.container_post {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background-color: #fff;
-  border-radius: 2rem;
-  max-width: 100%;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem
-}
-.avatar {
-  width: 12%;
-  border-radius: 100%;
-  margin-bottom: 1rem;
-}
-#preview img {
-  max-width: 100%;
-  max-height: 500px;
-}
-.disabled {
-  cursor: not-allowed;
-}
-.form-control {
-  border: 1px solid #ccc;
-}
-.form-control:focus {
-    border: none;
-}
 .text-align {
   text-align:center;
-}
-.line {
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #ccc;
-  margin-top: 1.2rem;
-  margin-bottom: 1.2rem;
-}
-.button {
-  background: white;
-  color: #747474;
-  border: none;
-  border-radius: 0.25rem;
-  font-weight: 500;
-  padding: 0.375rem 0.75rem;
-}
-textarea {
-  border: solid 1px #F2F2F2;
-  background: #F2F2F2;
-  width: 50%;
-  margin-bottom: 1rem;
-}
-.textearea_form {
-  display:flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-}
-.icon {
-  padding-right: 0.5rem;
-  color: #9e9e9e
 }
 </style>

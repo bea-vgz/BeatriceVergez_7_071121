@@ -2,9 +2,6 @@
   <transition name="modal-fade">
     <div class="fixed inset-0 transition-opacity">
       <form @submit.prevent="update" class="modifyProfil" v-if="currentUser">
-        <button type="button" aria-label="fermer" @click="close" class="button_close">
-          <b-icon icon="x-square-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
-        </button>
         <div class="bg-white"></div>
           <div class="img">
             <img :src="file || currentUser.photoProfil" alt="Avatar" ref="file" type="file">
@@ -26,7 +23,7 @@
                   />
                 </svg>
                 <span class="button-text ml-2 d-none d-md-block"
-                  >Changer ma photo de profil</span
+                  >Changer ma photo</span
                 >
               </button>
               <div class="d-flex align-items-center">
@@ -48,7 +45,7 @@
                     id="username"
                     type="text"
                     placeholder="Pseudo"
-                    v-model="newUser.username"
+                    v-model="currentUser.username"
                     class="text-dark mb-2 pl-lg-3"
                   ></b-form-input>
                 </b-col>
@@ -62,7 +59,7 @@
                     id="bio"
                     type="text"
                     placeholder="Biographie"
-                    v-model="newUser.bio"
+                    v-model="currentUser.bio"
                     class="mb-2 pl-lg-3"
                   ></b-form-input>
                 </b-col>
@@ -89,6 +86,10 @@
             >
               Enregistrer
             </button>
+          <button type="button" aria-label="fermer" @click="close" class="d-lg-block button_close">
+            <b-icon icon="x-square-fill" class="mr-lg-3 modif_icon"></b-icon> 
+            <span> Fermer </span>
+          </button>
       </form>
     </div>
   </transition>
@@ -105,7 +106,6 @@ export default {
       image: null,
       file: null,
       photoProfil: null,
-      newUser: {},
     }
   },
   computed: {
@@ -114,7 +114,7 @@ export default {
     }
   },
   updated() {
-    this.newUser = this.currentUser;
+    this.currentUser;
   },
   methods: {
     ...mapActions(['displayNotification']),
@@ -124,20 +124,20 @@ export default {
       if(this.image != "") {
         user = new FormData();
         user.append('image', this.image);
-        user.append('username', this.newUser.username);
-        user.append('bio', this.newUser.bio);
+        user.append('username', this.currentUser.username);
+        user.append('bio', this.currentUser.bio);
       }
       else {
         user = {
-          username: this.newUser.username,
-          bio: this.newUser.bio
+          username: this.currentUser.username,
+          bio: this.currentUser.bio
         }
       }
-      const userId = this.newUser.userId
+      const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then((response) => {
-        localStorage.setItem('newUser', JSON.stringify(response));
-        this.newUser.userId
+        localStorage.setItem('currentUser', JSON.stringify(response));
+        this.currentUser.userId
         this.displayNotification('User modifié !')
         router.push('/home');
       })
@@ -216,11 +216,12 @@ export default {
 .button_close {
   border: none;
   background: none;
-  float: right;
   display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 .button_close:hover {
-  color: rgba(253, 45, 6, 0.8);
+  color: #fd2d01;
   border: none
 }
 .save-btn {

@@ -2,7 +2,7 @@
   <div id="nav" class="border_nav bg-white sticky-top" >
     <div class="navigation">
       <div class="nav_logo">
-        <router-link to="/home">
+        <router-link to="/home" @click="scrollToTop">
           <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
         </router-link>
         <UserSearch />
@@ -65,6 +65,9 @@ export default {
       alert('Vous avez été déconnecté. Vous allez être redirigé.')
       router.push('/');
     },
+    scrollToTop() {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
   }
 }
 </script>

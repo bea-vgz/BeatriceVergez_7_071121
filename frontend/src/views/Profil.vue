@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div class="profil">
-      <div class="container_account">
+    <div class="container_account">
       <aside class="profil_account bg-white sidebar">
         <div class="sidebar__widget">
           <div class="contanier_presentation bg-white border-b py-8">
@@ -28,32 +28,33 @@
           </div>
         </div>
       </aside>
-      <div class="infoUser bg-white">
-        <div>
-          <h1><strong>Mon profil</strong> </h1>
-          <div class="userInfo">
-            <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.username }}</p>
-            <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
-            <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
-            <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>
-            <div v-if="currentUser.isAdmin"><p for="admin"><strong>Statut :</strong>Admin</p></div>      
+      <div class="justify-content-center flex-column">
+        <b-col cols="12" lg="10" class="align-items-center">
+          <div class="infoUser bg-white">
+            <h1><strong>Mon profil</strong> </h1>
+            <div class="userInfo">
+              <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.username }}</p>
+              <p v-if="currentUser"><strong>Email : </strong>{{ currentUser.email }}</p>
+              <p v-if="currentUser"><strong>Biographie :</strong>{{ currentUser.bio }}</p>
+              <p v-if="currentUser"><strong>Identifiant :</strong> {{ currentUser.userId }}</p>
+              <div v-if="currentUser.isAdmin"><p for="admin"><strong>Statut :</strong>Admin</p></div>      
+            </div>
+            <div class="line mb-3"></div>
+            <a title="Modifier mon profil" @click="displayModal" class="icone">
+              <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
+              Modifier mon profil
+            </a>
+            <modify-profil v-show="modifyProfil" @close="closeModal" />
           </div>
-          <div class="line mb-3"></div>
-          <a title="Modifier mon profil" @click="displayModal" class="icone">
-            <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
-            Modifier mon profil
-          </a>
-          <modify-profil v-show="modifyProfil" @close="closeModal" />
-        </div>
-        <div class="line mb-3"></div>
-        <div class="all-posts">
-          <h3 class="text-center"><strong> • MES POSTS • </strong></h3>
+        </b-col>
+        <b-col cols="12" lg="10" class="align-items-center">
+          <h4 class="text-center"><strong> • MES POSTS • </strong></h4>
           <AllPosts :userId="currentUser.userId" />
-        </div>
+        </b-col>
       </div>
-      </div>
+    </div>
   <!-- Footer -->
-      <Footer />
+    <Footer />
     </div>
   </div>
 </template>
@@ -144,7 +145,6 @@ export default {
 }
 .container_account {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   max-width: 100%;
   width: 100%;
@@ -153,6 +153,10 @@ h1 {
   font-size: 30px;
   color : #fd2d01;
   margin-bottom: 1rem;
+}
+h4 {
+  margin-bottom: 2rem;
+  margin-top: 1rem;
 }
 .profil {
   background-color: #F2F2F2;
@@ -177,7 +181,6 @@ h1 {
 .infoUser {
     padding: 3.5rem;
     max-width: 100%;
-    width: 40rem;
     height: auto;
     border-radius: 1.25rem;
     box-shadow: 0 0 16px #0000002e;

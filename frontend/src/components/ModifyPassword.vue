@@ -1,7 +1,6 @@
 <template>
   <div class="profil">
     <Header/>
-
     <div class="container_account">
       <aside class="profil_account bg-white sidebar">
         <div class="sidebar__widget">
@@ -31,7 +30,6 @@
       </aside>
       <div class="infoUser bg-white">
         <h1><strong>Mot de passe</strong> </h1>
-    
         <div class="card">
           <div>
             <label for="password"> 🔒  Mot de passe actuel : </label>

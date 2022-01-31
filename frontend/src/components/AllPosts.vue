@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row class="row justify-content-center align-items-center flex-column">
-      <b-col cols="12" lg="6" v-for="post in post.posts" :key="post.id">
+      <b-col cols="12" v-for="post in post.posts" :key="post.id">
         <Post :post="post" />
       </b-col>
     </b-row>
