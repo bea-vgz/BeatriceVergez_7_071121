@@ -175,11 +175,11 @@
   height: 250px;
 }
 .container_account {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    max-width: 100%;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100%;
 }
 h1 {
   font-size: 30px;
@@ -187,9 +187,9 @@ h1 {
   margin-bottom: 1rem;
 }
 .profil {
-    background-color: #F2F2F2;
-    display: flex;
-    flex-direction: column;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: column;
 }
 .avatar {
   width: 65px;
@@ -207,19 +207,19 @@ h1 {
    flex: 1 1 0%;
 }
 .infoUser {
-    padding: 3.5rem;
-    max-width: 100%;
-    width: 40rem;
-    height: auto;
-    border-radius: 1.25rem;
-    box-shadow: 0 0 16px #0000002e;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+  padding: 3.5rem;
+  max-width: 100%;
+  width: 40rem;
+  height: auto;
+  border-radius: 1.25rem;
+  box-shadow: 0 0 16px #0000002e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
 }
 .card {
   border: none

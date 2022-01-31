@@ -29,8 +29,8 @@
           </div>
         </div>
       </aside>
-      <div>
-        <div class="infoUser bg-white">
+      <div class="infoUser bg-white">
+        <div>
           <h1><strong>Mon profil</strong> </h1>
           <div class="userInfo">
             <p v-if="currentUser"><strong>Pseudo : </strong>{{ currentUser.email }}</p>
@@ -175,19 +175,19 @@ h1 {
   flex: 1 1 0%;
 }
 .infoUser {
-  padding: 3.5rem;
-  max-width: 100%;
-  width: 40rem;
-  height: auto;
-  border-radius: 1.25rem;
-  box-shadow: 0 0 16px #0000002e;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 6rem;
-  margin-bottom: 6rem;
+    padding: 3.5rem;
+    max-width: 100%;
+    width: 40rem;
+    height: auto;
+    border-radius: 1.25rem;
+    box-shadow: 0 0 16px #0000002e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6rem;
+    margin-bottom: 6rem;
 }
 .userInfo{
   margin-top: 1rem;
@@ -289,9 +289,6 @@ a:hover{
   height: 2px;
   background-color: #fd2d01;
   transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.all-posts {
-  width: 100%;
 }
 @media (hover: hover) and (pointer: fine) {
   .underline:hover::before{

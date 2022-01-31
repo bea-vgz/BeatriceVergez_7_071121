@@ -2,8 +2,8 @@
   <transition name="modal-fade">
     <div class="fixed inset-0 transition-opacity">
       <form @submit.prevent="update" class="modifyProfil" v-if="currentUser">
-        <button type="button" aria-label="fermer" @click="close" class="button_close" >
-          <font-awesome-icon icon="times-circle"/>
+        <button type="button" aria-label="fermer" @click="close" class="button_close">
+          <b-icon icon="x-square-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
         </button>
         <div class="bg-white"></div>
           <div class="img">
@@ -48,7 +48,7 @@
                     id="username"
                     type="text"
                     placeholder="Pseudo"
-                    v-model="input.username"
+                    v-model="newUser.username"
                     class="text-dark mb-2 pl-lg-3"
                   ></b-form-input>
                 </b-col>
@@ -62,7 +62,7 @@
                     id="bio"
                     type="text"
                     placeholder="Biographie"
-                    v-model="input.bio"
+                    v-model="newUser.bio"
                     class="mb-2 pl-lg-3"
                   ></b-form-input>
                 </b-col>
@@ -97,51 +97,49 @@
 <script>
 import { mapActions } from 'vuex'
 import AuthService from "../service/auth.resource";
+import router from "../router";
 export default {
   name: "ModifyProfil",
   data() {
-    const currentUser = this.$store.state.auth.user;
     return {
       image: null,
       file: null,
       photoProfil: null,
-      input: {
-        username: currentUser.username,
-        bio: currentUser.bio
-      }
+      newUser: {},
     }
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    },
+    }
+  },
+  updated() {
+    this.newUser = this.currentUser;
   },
   methods: {
     ...mapActions(['displayNotification']),
 
     update(){
       let user;
-      console.log();
       if(this.image != "") {
         user = new FormData();
         user.append('image', this.image);
-        user.append('username', this.input.username);
-        user.append('bio', this.input.bio);
+        user.append('username', this.newUser.username);
+        user.append('bio', this.newUser.bio);
       }
       else {
         user = {
-          username: this.input.username,
-          image: this.currentUser.photoProfil,
-          bio: this.input.bio
+          username: this.newUser.username,
+          bio: this.newUser.bio
         }
       }
-      const userId = this.currentUser.userId
+      const userId = this.newUser.userId
       AuthService.modifyUser(userId, user)
       .then((response) => {
-        localStorage.setItem('currentUser', JSON.stringify(response));
-        this.currentUser.userId
+        localStorage.setItem('newUser', JSON.stringify(response));
+        this.newUser.userId
         this.displayNotification('User modifié !')
-        location.reload()
+        router.push('/home');
       })
     },
     onFileChange(event) {
@@ -159,7 +157,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .modal-fade-enter,
 .modal-fade-leave-to {
   opacity: 0;
@@ -215,8 +213,15 @@ export default {
 .btn-change:hover {
   background:#F2F2F2;
 }
-button{
+.button_close {
   border: none;
+  background: none;
+  float: right;
+  display: block;
+}
+.button_close:hover {
+  color: rgba(253, 45, 6, 0.8);
+  border: none
 }
 .save-btn {
   background-color: rgba(253, 45, 6, 0.8);
