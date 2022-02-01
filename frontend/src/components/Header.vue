@@ -8,7 +8,7 @@
         <UserSearch />
       </div>
         <div class="accessPosts">
-          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none">ACCUEIL</router-link>
+          <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none"><b-icon icon="house-door" class="mr-2 mr-lg-2"></b-icon>ACCUEIL</router-link>
         </div>
 
         <div class="notifUser">
@@ -23,16 +23,32 @@
             <transition name="fade" apear>
               <div class="sub-menu" v-if="isOpen">
                 <div class="menu-item">
-                  <router-link to="/profil"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon>Mon compte</router-link>
+                  <router-link to="/profil"><b-icon icon="person-circle" class="mr-2 mr-lg-2"></b-icon>Mon compte</router-link>
                 </div>
                 <div class="menu-item">
-                  <a @click="logout" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
+                  <a @click="logout" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-2"></b-icon> Me déconnecter </a>
                 </div>
               </div>
             </transition>
           </div>
         </div>
     </div>
+  <div class="menu_toggle">
+  <input type="checkbox" id="menu" />
+  <label for="menu" class="menu">
+	<span></span>
+	<span></span>
+	<span></span>
+  </label>
+  <nav class="nav">
+	<ul>
+	<li><router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none"><b-icon icon="house-door" class="mr-2 mr-lg-2"></b-icon>ACCUEIL</router-link></li>
+	<li><router-link to="/profil"><b-icon icon="person-circle" class="mr-2 mr-lg-2"></b-icon>Mon compte</router-link></li>
+  <li><a @click="logout" class="text-decoration-none"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-2"></b-icon> Me déconnecter </a></li>
+	</ul>
+  </nav>
+  </div>
+
   </div>
 </template>
 <script>
@@ -69,7 +85,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped >
 header {
   margin: 0;
 }
@@ -187,5 +203,172 @@ input {
   background: #F2F2F2;
   padding: 0.7rem;
   width: 100%;
+}
+.menu_toggle {
+  display: none;
+}
+
+@media screen and (min-width: 280px) and (max-width: 769px) {
+/* menu toggle */
+.menu_toggle {
+  display: contents;
+}
+.notifUser, .accessPosts {
+  display: none;
+}
+
+$base-duration: 500ms;
+
+// Colors
+$color-1: #F2F2F2;
+
+// Breakpoints
+$sm: new-breakpoint(min-width 320px);
+$med: new-breakpoint(min-width 768px);
+$lg: new-breakpoint(min-width 1024px);
+
+*, *:before, *:after {
+	box-sizing: border-box;
+	outline: none;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-smooth: auto;
+	font-weight: 300;
+	line-height: 1.75;
+	color: $color-1;
+	overflow-x: hidden;
+}
+
+.menu {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	//box-shadow: 0 0 20px rgba(black,0.2);
+	transition: transform 250ms ease;
+	cursor: pointer;
+	z-index: 200;
+	
+	span {
+		position: relative;
+		display: block;
+		width: 50%;
+		height: 2px;
+		background-color: #242424;
+		float: left;
+		transform-origin: center center;
+		transition: transform 250ms ease;
+		z-index: 200;
+		
+		&:nth-of-type(1) {
+			transform: translateY(-5px);
+		}
+		
+		&:nth-of-type(3) {
+			transform: translateY(5px);
+		}
+	}
+}
+
+#menu {
+	display: none;
+	
+	&:checked ~ .menu {
+		background-color: transparent;
+		transform: rotate(360deg);
+		transition: transform 250ms ease;
+		
+		span {
+			background-color: #242424;
+			transition: transform 250ms ease;
+			
+			&:nth-of-type(1) {
+				transform: translateY(1px) rotate(45deg);
+			}
+			
+			&:nth-of-type(2) {
+				display: none;
+			}
+			
+			&:nth-of-type(3) {
+				transform: translateY(-1px) rotate(-45deg);
+			}
+		}
+	}
+	
+	&:checked ~ .nav {
+		left: 0px;
+		transition: left $base-duration ease;
+	}
+	
+	&:checked ~ main {
+		transform: translateX(250px);
+		transition: transform $base-duration ease;
+	}
+}
+
+.nav {
+	position: fixed;
+	top: 0;
+	left: -240px;
+	width: 220px;
+	height: 35vh;
+	margin: 0;
+	padding: 0;
+	background-color: $color-1;
+	transition: left $base-duration ease;
+	z-index: 0;
+	
+	ul {
+		position: relative;
+		list-style-type: none;
+		margin: 100px 0;
+		padding: 0;
+		
+		li {
+			position: relative;
+			display: block;
+			border-bottom: 2px solid #747474;
+			
+			a {
+				position: relative;
+				display: block;
+				margin: 0;
+				padding: 15px 20px;
+				color: #242424;
+				font-size: 14px;
+				font-weight: bold;
+				text-decoration: none;
+				text-transform: uppercase;
+				
+				&:before {
+					position: absolute;
+					content: '';
+					top: 0;
+					left: 0;
+					width: 0;
+					height: 100%;
+					transition: width 250ms ease;
+					z-index: -1;
+				}
+				
+				&:hover {
+					color: #444;
+				}
+			}
+		}
+	}
+}
 }
 </style>

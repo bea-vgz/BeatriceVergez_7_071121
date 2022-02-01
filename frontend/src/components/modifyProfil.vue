@@ -87,7 +87,7 @@
               Enregistrer
             </button>
           <button type="button" aria-label="fermer" @click="close" class="d-lg-block button_close">
-            <b-icon icon="x-square-fill" class="mr-lg-3 modif_icon"></b-icon> 
+            <b-icon icon="x-square-fill" class="mr-lg-2 modif_icon"></b-icon> 
             <span> Fermer </span>
           </button>
       </form>
@@ -111,9 +111,6 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     }
-  },
-  updated() {
-    this.currentUser;
   },
   mounted() {
     this.username = this.currentUser.username,

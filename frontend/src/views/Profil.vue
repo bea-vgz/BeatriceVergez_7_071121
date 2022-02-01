@@ -12,17 +12,17 @@
           </div>
           <div class="optionsProfil bg-white">
             <div class="option"> 
-              <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon> Mon compte</router-link>
+              <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-2"></b-icon> Mon compte</router-link>
             </div>
             <div class="option">
-              <router-link to="/password" class="nav_centrale underline"><b-icon icon="pencil-square" class="mr-2 mr-lg-3"></b-icon> Modifier mot de passe</router-link>
+              <router-link to="/password" class="nav_centrale underline"><b-icon icon="pencil-square" class="mr-2 mr-lg-2"></b-icon> Modifier mot de passe</router-link>
             </div>
             <div class="option">
-              <a @click="logout" class="text-decoration-none underline"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
+              <a @click="logout" class="text-decoration-none underline"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-2"></b-icon> Me déconnecter </a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
             <div class="option">
-              <a @click="deleteUser" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
+              <a @click="deleteUser" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-2 delete_icon"></b-icon>Supprimer mon compte</a>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
           </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="line mb-3"></div>
             <a title="Modifier mon profil" @click="displayModal" class="icone">
-              <b-icon icon="pencil-fill" class="mr-2 mr-lg-3 modif_icon"></b-icon> 
+              <b-icon icon="pencil-fill" class="mr-2 mr-lg-2 modif_icon"></b-icon> 
               Modifier mon profil
             </a>
             <modify-profil v-show="modifyProfil" @close="closeModal" />
