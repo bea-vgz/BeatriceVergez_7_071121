@@ -306,4 +306,22 @@ a:hover{
     width: 100%;
   }
 }
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  .container_account {
+    display: flex;
+    flex-direction: column;
+  }
+  .infoUser {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  .option {
+    display: flex;
+    justify-content: center;
+  }
+  .sidebar__widget {
+    height: 380px;
+  }
+}
 </style>

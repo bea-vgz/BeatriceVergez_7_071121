@@ -216,6 +216,9 @@ input {
 .notifUser, .accessPosts {
   display: none;
 }
+.logo {
+  padding-left: 0.7rem;
+}
 
 $base-duration: 500ms;
 
@@ -246,12 +249,13 @@ body {
 
 .menu {
 	position: fixed;
-	top: 20px;
+	top: 90px;
 	left: 20px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+  background-color: #F2F2F2;
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
@@ -265,7 +269,7 @@ body {
 		display: block;
 		width: 50%;
 		height: 2px;
-		background-color: #242424;
+		background-color: #fd2d01;
 		float: left;
 		transform-origin: center center;
 		transition: transform 250ms ease;
@@ -290,7 +294,7 @@ body {
 		transition: transform 250ms ease;
 		
 		span {
-			background-color: #242424;
+			background-color: #fd2d01;
 			transition: transform 250ms ease;
 			
 			&:nth-of-type(1) {
@@ -320,13 +324,12 @@ body {
 
 .nav {
 	position: fixed;
-	top: 0;
 	left: -240px;
 	width: 220px;
-	height: 35vh;
+	height: 37vh;
 	margin: 0;
 	padding: 0;
-	background-color: $color-1;
+	background-color: #FFF;
 	transition: left $base-duration ease;
 	z-index: 0;
 	
@@ -339,7 +342,7 @@ body {
 		li {
 			position: relative;
 			display: block;
-			border-bottom: 2px solid #747474;
+			border-bottom: 1px solid #747474;
 			
 			a {
 				position: relative;
@@ -351,6 +354,7 @@ body {
 				font-weight: bold;
 				text-decoration: none;
 				text-transform: uppercase;
+        letter-spacing: 1px;
 				
 				&:before {
 					position: absolute;
