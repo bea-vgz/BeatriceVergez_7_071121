@@ -89,7 +89,6 @@ export default {
     font-family: 'Barlow', sans-serif;
     background-color: #F2F2F2;
     max-width: 100%;
-    width: 100%;
     padding-bottom: 132px;
     padding-top: 100px;
 }
@@ -117,11 +116,12 @@ label {
 }
 .formulaire {
     font-family: 'Barlow', sans-serif;
-    margin-right: 10rem;
+    margin-right: 7rem;
     padding: 2rem;
     border-radius: 1rem;
     display: flex;
-    width: 400px;
+    max-width: 100%;
+    width: 40%;
     flex-direction: column;
     justify-content: center;
     background-color: #ffffff;
@@ -186,5 +186,29 @@ input {
   border-radius: 100%;
   margin-left: 0.7rem;
   background: none
+}
+
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  #loginUser {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding-top: 33px;
+  }
+  .container_intro {
+    margin-bottom: 3rem;
+  }
+  .identity {
+    padding: 2rem;
+  }
+  .formulaire {
+    margin: 0rem;
+    width: 90%;
+  }
+  .identity img {
+    width: 80%;
+    margin: 0;
+  }
 }
 </style>

@@ -11,8 +11,6 @@
       </div>
 
     </section>
-    <div class="card-container">
-
     <form class="formulaire" @submit.prevent="signup">
         <h2>S'inscrire</h2>
     <!-- Username input -->
@@ -48,7 +46,6 @@
 
     </form>
   </div>
-</div>
 </template>
 
 <script>
@@ -90,23 +87,16 @@ export default {
 
 <style scoped>
 #signupUser {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    align-items: center;
-    font-family: 'Barlow', sans-serif;
-    background-color: #F2F2F2;
-    max-width: 100%;
-    width: 100%;
-    padding-bottom: 80px;
-    padding-top: 80px;
-}
-.imgProfil {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
+  font-family: 'Barlow', sans-serif;
+  background-color: #F2F2F2;
+  max-width: 100%;
+  width: 100%;
+  padding-bottom: 80px;
+  padding-top: 80px;
 }
 #photoProfil {
   text-align: center;
@@ -118,45 +108,46 @@ label {
   font-size: 0.9rem;
 }
 h1{
-    font-size: 2rem;
-    font-weight: 600;
-    margin-top : -0.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top : -0.5rem;
 }
 h2 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-top : 1rem;
-    margin-bottom: 1rem
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top : 1rem;
+  margin-bottom: 1rem
 }
 .champs {
-    font-size: 0.7rem;
-    color: #fd2d01;
-    text-align: left;
-    margin-left: 0.5rem;
+  font-size: 0.7rem;
+  color: #fd2d01;
+  text-align: left;
+  margin-left: 0.5rem;
 }
 .formulaire {
-    font-family: 'Barlow', sans-serif;
-    margin-right: 10rem;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    display: flex;
-    width: 400px;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #ffffff;
-    box-shadow: 0 0 16px #0000002e;
+  font-family: 'Barlow', sans-serif;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  max-width: 100%;
+  width: 40%;
+  margin-right: 7rem;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0 0 16px #0000002e;
 }
 .identity img {
-    max-width: 100%;
-    width: 55%;
-    margin: 0;
+  max-width: 100%;
+  width: 55%;
+  margin: 0;
 }
 input {
-    font-family: 'Barlow', sans-serif;
-    padding: 0.8rem;
-    border: solid 2px #F2F2F2;
-    border-radius: 1rem;
-    margin: 0.3rem;
+  font-family: 'Barlow', sans-serif;
+  padding: 0.8rem;
+  border: solid 2px #F2F2F2;
+  border-radius: 1rem;
+  margin: 0.3rem;
 }
 .input_email {
   text-align: left;
@@ -167,38 +158,38 @@ input {
   font-size: 0.9rem;
 }
 .buttonInsc {
-    font-family: 'Barlow', sans-serif;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border: solid 0.15rem #fd2d01;
-    background-color: #fd2d01;
-    color: #fff;
-    margin-top: 1rem;
-    display: block;
-    margin-left: 5rem;
-    margin-right: 5rem;
+  font-family: 'Barlow', sans-serif;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  border: solid 0.15rem #fd2d01;
+  background-color: #fd2d01;
+  color: #fff;
+  margin-top: 1rem;
+  display: block;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 .buttonInsc:hover {
-    background-color: #fff;
-    border: solid 0.15rem #fd2d01;
-    color: #fd2d01;
-    cursor: pointer;
-    font-weight: bold;
+  background-color: #fff;
+  border: solid 0.15rem #fd2d01;
+  color: #fd2d01;
+  cursor: pointer;
+  font-weight: bold;
 }
 .buttonCompte {
-    font-family: 'Barlow', sans-serif;
-    font-weight: 600;
-    padding: 0.5rem;
-    color: #242424;
-    margin: 0.5rem;
-    border: none;
-    background: none;
-    text-decoration: none;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  padding: 0.5rem;
+  color: #242424;
+  margin: 0.5rem;
+  border: none;
+  background: none;
+  text-decoration: none;
 }
 .buttonCompte:hover {
-    font-weight: 600;
-    text-decoration: underline;
-    cursor: pointer
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer
 }
 .buttonEyes {
   background: #F2F2F2;;
@@ -208,5 +199,28 @@ input {
   padding: 0.3rem;
   border-radius: 100%;
   margin-left: 0.7rem;
+}
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  #signupUser {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding-top: 33px;
+  }
+  .container_intro {
+    margin-bottom: 3rem;
+  }
+  .identity {
+    padding: 2rem;
+  }
+  .formulaire {
+    margin: 0rem;
+    width: 90%;
+  }
+  .identity img {
+    width: 80%;
+    margin: 0;
+  }
 }
 </style>

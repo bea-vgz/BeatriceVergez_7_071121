@@ -185,32 +185,31 @@ export default {
 </script>
 <style scoped>
 .card-post {
-    padding: 3.5rem;
-    border-radius: 1.25rem;
-    box-shadow: 0 0 6px #0000002e;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 100%;
-    margin-bottom: 3rem;
-    padding: 2rem;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 0 6px #0000002e;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  margin-bottom: 3rem;
 }
 .img {
-    max-width: 100%;
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    object-position: center;
-    cursor: zoom-in;
+  max-width: 100%;
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: center;
+  cursor: zoom-in;
 }
 .line {
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin-top: 0.8rem;
-    margin-bottom: O.8rem;
-    background-color: rgba(192, 192, 192, 0.5);
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 0.8rem;
+  margin-bottom: O.8rem;
+  background-color: rgba(192, 192, 192, 0.5);
 }
 .blue {
   color: rgb(32, 120, 244);
@@ -272,8 +271,8 @@ a:hover {
   outline: none !important;
 }
 .react-btn:hover {
-    color: #747474 !important;
-    background-color: rgba(108, 117, 125, 0.1) !important;
+  color: #747474 !important;
+  background-color: rgba(108, 117, 125, 0.1) !important;
 }
 .opacity1 div img {
 	opacity: 1;

@@ -51,7 +51,9 @@
 
   </div>
 </template>
+
 <script>
+import { mapActions } from 'vuex'
 import router from "../router";
 import UserSearch from '../components/UserSearch';
 export default {
@@ -76,9 +78,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['displayNotification']),
+
     async logout() {
       this.$store.dispatch('auth/logout');
-      alert('Vous avez été déconnecté. Vous allez être redirigé.')
+      this.displayNotification('Vous avez été déconnecté.')
       router.push('/');
     },
   }
@@ -236,7 +240,7 @@ $lg: new-breakpoint(min-width 1024px);
 }
 
 body {
-	position: relative;
+	position: sticky;
 	margin: 0;
 	padding: 0;
 	font-size: 16px;

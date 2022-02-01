@@ -92,7 +92,7 @@ exports.getAllPosts = (req, res, next) => {
         model: Comment,
       },
       { 
-        model: Like_post, 
+        model: Like_post,
       },
       { 
         model: Dislike_post,

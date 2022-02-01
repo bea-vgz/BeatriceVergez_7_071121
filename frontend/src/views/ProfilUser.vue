@@ -2,7 +2,7 @@
   <div class="container-profil">
     <Header />
     <div v-if="user">
-      <b-row class="row justify-content-center align-items-center flex-column">
+      <b-row class="justify-content-center align-items-center flex-column">
         <b-col cols="12" lg="6" class="align-items-center">
           <div class="infoUser bg-white">
             <div class="text-center userInfo">

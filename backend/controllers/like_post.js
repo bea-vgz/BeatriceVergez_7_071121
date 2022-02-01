@@ -19,7 +19,7 @@ exports.likePost = async (req, res, next) => {
         })
         res.status(201).send({ 
           newLike,
-          like: true,
+          like: true, // retourne objet post
         })
       }
     }

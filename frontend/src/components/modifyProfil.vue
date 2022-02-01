@@ -229,11 +229,13 @@ export default {
   color: white;
   border-radius: 1rem;
   border: none;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   margin-top: 1rem;
   margin-right: auto;
   margin-left: auto;
   padding: 0.375rem 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
 }
 .save-btn:hover,
 .save-btn:focus,
@@ -241,6 +243,9 @@ export default {
   background-color: rgb(253, 45, 6);
   color: white;
   outline: none;
+}
+.save {
+  color: #fff;
 }
 .card-body {
   padding-bottom: 0;

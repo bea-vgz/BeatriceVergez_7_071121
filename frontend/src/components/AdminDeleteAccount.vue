@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import router from "../router";
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
 export default {
@@ -15,6 +16,8 @@ export default {
   },
   props: ['user'],
   methods: {
+    ...mapActions(['displayNotification']),
+
     async deleteUser() {
       const ok = await this.$refs.confirmDialogue.show({
         title: 'Supprimer ce compte',
@@ -29,10 +32,10 @@ export default {
         error => {
           console.log(error);
         });
-        alert('Ce compte a été supprimé !')
+        this.displayNotification('Compte supprimé avec succès!')
         router.push('/signup');
       } else {
-        alert("Ce compte n'a pas été supprimé")
+        this.displayNotification("Le compte n'a pas été supprimé !")
       }
     },
   }

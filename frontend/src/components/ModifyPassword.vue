@@ -2,69 +2,48 @@
   <div class="profil">
     <Header/>
     <div class="container_account">
-      <aside class="profil_account bg-white sidebar">
-        <div class="sidebar__widget">
-          <div class="contanier_presentation bg-white border-b py-8">
-            <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
-            <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
-            <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
-            <p><span v-if="currentUser" class="email">{{ currentUser.email }}</span></p>
-          </div>
-          <div class="optionsProfil bg-white">
-            <div class="option is-active"> 
-              <router-link to="/profil" class="nav_centrale underline"><b-icon icon="person-circle" class="mr-2 mr-lg-3"></b-icon> Mon compte</router-link>
+      <AsideProfil />
+      <div class=" justify-content-center align-items-center flex-column">
+        <b-col cols="12" lg="12" class="align-items-center">
+          <div class="infoUser bg-white">
+            <h1><strong>Mot de passe</strong></h1>
+            <div class="card">
+            <div>
+              <label for="password"> 🔒  Mot de passe actuel : </label>
+              <div class="inputPassword">
+                <input v-if="currentUser" v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
+              </div>
             </div>
-            <div class="option is-active">
-              <router-link to="/password" class="nav_centrale underline"><b-icon icon="pencil-square" class="mr-2 mr-lg-3"></b-icon> Modifier mot de passe</router-link>
+            <div>
+              <label for="newpassword"> 🔒  Nouveau mot de passe : </label>
+              <div class="inputPassword">
+                <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
+                <button type="button" class="buttonEyes" @click="show = !show" >
+                  <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+                  <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+                </button>
+              </div>
             </div>
-            <div class="option is-active">
-              <a @click="logout" to="/" class="text-decoration-none underline"><b-icon icon="box-arrow-in-left" class="mr-2 mr-lg-3"></b-icon> Me déconnecter </a>
-              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            <div>
+              <label for="newpassword">🔒  Confirmer le mot de passe : </label>
+              <div class="inputPassword">
+                <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
+                <button type="button" class="buttonEyes" @click="show = !show" >
+                  <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
+                  <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
+                </button>
+              </div>
             </div>
-            <div class="option is-active">
-              <a to="/" class="nav_centrale delete_user underline" @click="deleteUser"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer mon compte</a>
-              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            <button class="buttonSave save-btn d-lg-block"  aria-label="Sauvegarder" type="submit" @click="modifyPassword()">
+              <router-link to="/profil" class="save">Sauvegarder</router-link>
+            </button>
+            <div v-if="message">
+              {{ message }}
             </div>
           </div>
         </div>
-      </aside>
-      <div class="infoUser bg-white">
-        <h1><strong>Mot de passe</strong> </h1>
-        <div class="card">
-          <div>
-            <label for="password"> 🔒  Mot de passe actuel : </label>
-            <div class="inputPassword">
-              <input v-if="currentUser" v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
-            </div>
-          </div>
-          <div>
-            <label for="newpassword"> 🔒  Nouveau mot de passe : </label>
-            <div class="inputPassword">
-              <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
-              <button type="button" class="buttonEyes" @click="show = !show" >
-                <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
-                <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
-              </button>
-            </div>
-          </div>
-          <div>
-            <label for="newpassword">🔒  Confirmer le mot de passe : </label>
-            <div class="inputPassword">
-              <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
-              <button type="button" class="buttonEyes" @click="show = !show" >
-                <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
-                <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
-              </button>
-            </div>
-          </div>
-        <button class="buttonSave" type="submit" @click="modifyPassword()">
-            <router-link to="/profil" class="save">Sauvegarder</router-link>
-        </button>
-        <div v-if="message">
-          {{ message }}
-        </div>
-        </div>
-     </div>
+     </b-col>
+    </div>
     </div>
     <!-- Footer -->
     <div class="footer">
@@ -79,14 +58,14 @@
   import router from "../router";
   import Header from '@/components/Header'
   import Footer from '@/components/Footer'
-  import ConfirmDialogue from '@/components/ConfirmDialogue.vue'
   import AuthService from "../service/auth.resource"
+  import AsideProfil from "../components/AsideProfil.vue"
   export default {
     name: 'ModifyPassword',
     components: {
       Header,
       Footer,
-      ConfirmDialogue
+      AsideProfil
     },
     props: ['user'],
     data () {
@@ -124,54 +103,11 @@
           alert("Oups, une erreur est survenue")
         }
       },
-
-      async deleteUser() {
-        let payload = this.$store.state.auth.user.userId
-        this.$store.dispatch("auth/deleteUser",payload)
-        .then(data => {
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-        const ok = await this.$refs.confirmDialogue.show({
-          title: 'Supprimer mon compte',
-          message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
-          okButton: 'Supprimer mon compte',
-        })
-        if (ok) {
-          alert('Votre compte a été supprimé !')
-          router.push('/');
-        } else {
-          alert("Oups, une erreur est survenue")
-        }
-      },
-      
-    async logout() {
-      this.$store.dispatch('auth/logout');
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Déconnexion',
-        message: 'Êtes-vous sur de vouloir vous déconnecter ?',
-        okButton: 'Se déconnecter',
-      })
-      // If you throw an error, the method will terminate here unless you surround it wil try/catch
-      if (ok) {
-        alert('Vous avez été déconnecté. Vous allez être redirigé.')
-        router.push('/');
-      } else {
-        alert("Vous n'avez pas été déconnecté")
-      }
-    },
   },
 }
 </script>
 
 <style scoped>
-.sidebar__widget {
-  position: sticky;
-  top: 150px;
-  height: 250px;
-}
 .container_account {
   display: flex;
   flex-direction: row;
@@ -189,25 +125,13 @@ h1 {
   display: flex;
   flex-direction: column;
 }
-.avatar {
-  width: 65px;
-  height: 65px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 100%;
-  margin-bottom: 1rem;
-}
 .bg-white {
   background-color: #fff;
   border-color: rgba(231, 233, 244);
 }
-.formulaire_account {
-   flex: 1 1 0%;
-}
 .infoUser {
   padding: 3.5rem;
   max-width: 100%;
-  width: 40rem;
   height: auto;
   border-radius: 1.25rem;
   box-shadow: 0 0 16px #0000002e;
@@ -223,92 +147,70 @@ h1 {
   border: none
 }
 input {
-    font-family: 'Barlow', sans-serif;
-    border: solid 2px #F2F2F2;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-    padding-left: 0.8rem;
-    line-height: inherit;
-    color: inherit;
-    height: 2rem;
-    width: 300px;
-    text-align: left;
+  font-family: 'Barlow', sans-serif;
+  border: solid 2px #F2F2F2;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 0.8rem;
+  line-height: inherit;
+  color: inherit;
+  height: 2rem;
+  width: auto;
+  text-align: left;
 }
-.optionProfil {
-    border-color: rgba(231, 233, 244);
+a {
+  text-decoration: none;
+  color:#242424;
+  font-size : 1rem;
+  font-weight: bold;
+  cursor: pointer;
 }
-.profil_account {
-    padding: 4rem;
-    border-right-width: 1px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    border-color: rgba(231, 233, 244);
+a:hover {
+  text-decoration: none;
 }
-.option {
-    display: flex;
-    text-align: center;
-    align-items: left;
-    font-family: 'Barlow', sans-serif;
-    font-size: 15px;
-    border-radius: 2rem;
-    border: solid 0.15rem #fff;
-    background-color: #fff;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    width: 100%;;
-    width: 100%;
-}
-a{
-    text-decoration: none;
-    color:#242424;
-    font-size : 1rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-a:hover{
-    color: #fd2d01;
-    cursor: pointer;
-    text-decoration: none;
-}
-.icon {
-  padding-right: 0.7rem;
-  color: #9e9e9e
-}
-.modif_user {
-  margin-top: 2rem;
-  color: #fd2d01
-}
-.delete_user {
-  color: #fd2d01
-}
-.delete_icon, .modif_icon {
-  color: #fd2d01;
-}
-.buttonSave {
-  background-color: #fd2d01;;
-  border: solid 0.15rem #fd2d01;
-  padding: 1rem;
-  padding-right: 1rem;
-  border-radius: 2rem;
-  padding: 0.5rem;
-  max-width: 100%;
-  width: 30%;
+.save-btn {
+  background-color: rgba(253, 45, 6, 0.8);
+  color: white;
+  border-radius: 1rem;
+  border: none;
   margin-top: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0.375rem 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.save-btn:hover,
+.save-btn:focus,
+.save-btn:active {
+  background-color: rgb(253, 45, 6);
+  color: white;
+  outline: none;
 }
 .save {
   color: #fff;
-}
-.border-b {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 1rem;
-}
-.py-8 {
-   padding-bottom: 2rem;
 }
 .buttonEyes {
   background: none;
   border: none;
   cursor: pointer;
+}
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  .container_account {
+    display: flex;
+    flex-direction: column;
+  }
+  .infoUser {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  .option {
+    display: flex;
+    justify-content: center;
+  }
+  .card {
+    text-align: left;
+  }
 }
 </style>

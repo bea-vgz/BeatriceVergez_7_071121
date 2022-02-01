@@ -155,8 +155,8 @@ export default {
     right: 8px;
   }
   .post-button {
-    top: 5px;
-    right: 7px;
+    top: 10px;
+    right: 30px;
     padding: 1px 9px 5px !important;
     font-size: 15px !important;
   }
