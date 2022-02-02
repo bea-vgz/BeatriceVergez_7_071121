@@ -207,7 +207,31 @@ input {
     width: 90%;
   }
   .identity img {
-    width: 80%;
+    width: 90%;
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 780px) and (max-width: 1180px) {
+  #loginUser {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding-top: 33px;
+  }
+  .container_intro {
+    margin-bottom: 3rem;
+  }
+  .identity {
+    padding: 2rem;
+  }
+  .formulaire {
+    margin: 0rem;
+    width: 90%;
+  }
+  .identity img {
+    width: 90%;
     margin: 0;
   }
 }

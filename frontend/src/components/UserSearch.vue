@@ -25,7 +25,6 @@
     >
       <b-icon icon="search"></b-icon>
     </button>
-
     <div
       v-if="users.length"
       class="users-list card border-0 position-fixed"
@@ -125,37 +124,5 @@ export default {
   object-position: center;
   border-radius: 100%;
   margin-right: 0.6rem;
-}
-@media screen and (min-width: 280px) and (max-width: 769px) {
-  .search-bar {
-    margin: 0 10px 15px 15px;
-    &__content {
-      padding: 5px 13px;
-      .search-text {
-        width: 100%;
-      }
-    }
-  }
-  .search-btn-mobile {
-    top: 20px;
-    right: 110px;
-    color: #747474;
-    font-size: 1.1rem;
-    z-index: 2;
-    &:focus {
-      outline: none;
-    }
-  }
-  .users-list {
-    top: 119px;
-    left: 15px;
-    background: white;
-    box-shadow: 0rem 0.2rem 0.5rem rgba(0, 0, 0, 0.08) !important;
-  }
-}
-@media screen and (min-width: 769px) and (max-width: 992px) {
-  .search-bar {
-    display: block !important;
-  }
 }
 </style>
