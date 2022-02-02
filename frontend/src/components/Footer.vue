@@ -20,7 +20,7 @@ export default {
   border-top: 1px solid #ccc;
   padding: 1rem;
   text-align: center;
-  color : #9e9e9e;
+  color : #747474;
   background-color:#ffffff
 }
 </style>

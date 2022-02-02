@@ -129,7 +129,7 @@ $lg: new-breakpoint(min-width 1024px);
 	position: fixed;
 	top: 0;
 	left: -300px;
-	width: 250px;
+	width: 300px;
 	height: 60vh;
 	margin: 0;
 	padding: 0;

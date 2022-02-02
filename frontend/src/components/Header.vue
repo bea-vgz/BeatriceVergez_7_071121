@@ -4,9 +4,13 @@
       <div class="nav_logo">
         <router-link to="/home">
           <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-          <img class="logo-groupo" src="../assets/groupomania_logo.png" alt="Groupomania"/>
         </router-link>
-        <UserSearch />
+        <router-link to="/home">
+          <img class="logo-groupo" src="../assets/logo_groupo.png" alt="Groupomania"/>
+        </router-link>
+        <div class="userSearch">
+          <UserSearch />
+        </div>
       </div>
         <div class="accessPosts">
           <router-link to="/home" aria-label="Fil d'actualité" class="nav_centrale text-decoration-none"><b-icon icon="house-door" class="mr-2 mr-lg-2"></b-icon>ACCUEIL</router-link>
@@ -182,6 +186,8 @@ button {
 }
 .username {
   text-decoration: none;
+  font-weight: bolder;
+  color: #FFF
 }
 .avatar {
   width: 3rem;
@@ -218,10 +224,13 @@ input {
     height: 5rem;
   }
   .logo-groupo {
-    display: flex;
-    width: 30%;
+    display: block;
+    width: 50%;
     float: right;
     padding: 1rem;
+  }
+  .userSearch {
+    display: none;
   }
 }
 </style>

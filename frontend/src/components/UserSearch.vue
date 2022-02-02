@@ -125,4 +125,41 @@ export default {
   border-radius: 100%;
   margin-right: 0.6rem;
 }
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  .search-bar {
+    border-bottom: 1px solid #FFF;
+    margin: 0 10px 15px 15px;
+    &__content {
+      padding: 5px 13px;
+      color: #FFF;
+      .search-text {
+        width: 100%;
+        color:#FFF
+      }
+    }
+  }
+  .search-btn {
+    color: #FFF;
+  }
+  .users-list {
+    top: 119px;
+    left: 15px;
+    background: white;
+    box-shadow: 0rem 0.2rem 0.5rem rgba(0, 0, 0, 0.08) !important;
+  }
+  .search-btn-mobile {
+   display: none;
+  }
+  .search-bar {
+    display: block !important;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .search-bar {
+    display: block !important;
+  }
+  .search-btn-mobile {
+    display: none;
+  }
+}
 </style>

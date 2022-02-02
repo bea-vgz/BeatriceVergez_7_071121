@@ -28,12 +28,16 @@
 <script>
 import { mapActions } from 'vuex'
 import router from "../router";
+import ConfirmDialogue from "../components/ConfirmDialogue.vue"
 export default {
     name: 'AsideProfil',
     computed: {
       currentUser() {
         return this.$store.state.auth.user;
       }
+    },
+    components: {
+      ConfirmDialogue
     },
     methods: {
     ...mapActions(['displayNotification']),

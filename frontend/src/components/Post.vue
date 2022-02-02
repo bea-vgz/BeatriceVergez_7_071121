@@ -255,7 +255,7 @@ a:hover {
 .date {
   font-size: 0.8rem;
   font-style: italic;
-  color: #797979;
+  color: #242424;
 }
 .react-btn {
   background: white;
