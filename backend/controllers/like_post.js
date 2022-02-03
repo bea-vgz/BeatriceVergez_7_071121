@@ -10,23 +10,33 @@ exports.likePost = async (req, res, next) => {
       where: { UserId: req.user, PostId: req.params.postId } 
     });
     if (existLike) {
-      await existLike.destroy();
-      res.status(200).json({ like: false });
+      await existLike.destroy()
+      .then(async () => {
+        const post = await Post.findOne({
+          where: { id: req.params.postId },
+          include: [
+            {
+              model: Like_post
+            },
+          ]
+        });
+      res.status(201).json({ post, like : false })
+      })
     } else {
       Like_post.create({
         UserId: req.user,
         PostId: req.params.postId,
       })
-      .then( async like => {
+      .then(async () => {
         const post = await Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
-              model: Like_post,
-            }
+              model: Like_post
+            },
           ]
         });
-        res.status(201).json({ post, like })
+        res.status(201).json({ post, like: true })
       })
     }
   }
