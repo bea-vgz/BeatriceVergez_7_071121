@@ -11,12 +11,9 @@
 
 <script>
 import PopupModal from './PopupModal.vue'
-
 export default {
     name: 'ConfirmDialogue',
-
     components: { PopupModal },
-
     data: () => ({
         // Parameters that change depending on the type of dialogue
         title: undefined,
@@ -28,7 +25,6 @@ export default {
         resolvePromise: undefined,
         rejectPromise: undefined,
     }),
-
     methods: {
         show(opts = {}) {
             this.title = opts.title
@@ -45,12 +41,10 @@ export default {
                 this.rejectPromise = reject
             })
         },
-
         _confirm() {
             this.$refs.popup.close()
             this.resolvePromise(true)
         },
-
         _cancel() {
             this.$refs.popup.close()
             this.resolvePromise(false)
@@ -67,7 +61,6 @@ export default {
     flex-direction: row;
     justify-content: space-between;
 }
-
 .cancel-btn {
     color: red;
     line-height: 2.5rem;
@@ -81,7 +74,6 @@ export default {
     text-transform: uppercase;
     cursor: pointer;
 }
-
 .ok-btn {
     padding: 0.5em 1em;
     background-color: #d5eae7;

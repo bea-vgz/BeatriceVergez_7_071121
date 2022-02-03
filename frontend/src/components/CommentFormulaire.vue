@@ -12,7 +12,7 @@
         <div>
           <input
             :id="`comment-area-${post.id}`"
-            v-model="content"
+            v-model="comment.content"
             @keydown.enter.exact.prevent
             @keyup.enter.exact="createComment"
             @keydown.enter.shift.exact="newline"
@@ -32,7 +32,9 @@ export default {
   name: 'CommentFormulaire',
   data () {
     return {
+      comment: {
         content: ''
+      }
     };
   },
   props: ['post'],
@@ -47,8 +49,8 @@ export default {
     createComment(){
       const postId = this.post.id;
       const { comment } = CommentService.createComment(
-      { content: this.content }, postId )
-        this.content = ''
+      { content: this.comment.content }, postId )
+        this.comment.content = ''
         this.$emit('commentCreated', comment)
         this.displayNotification('Comment créé !')
     },

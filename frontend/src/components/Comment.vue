@@ -171,28 +171,28 @@ export default {
       });
     },
     likeOrNotComment() {
-      const commentId = this.comment.id;
+      const commentId = this.commentId;
       LikeCommentService.likeComment(commentId)
       .then((res) => (
         this.likeThisComment = res.data.like
       ))
     },
     dislikeOrNotComment() {
-      const commentId = this.comment.id;
+      const commentId = this.commentId;
       DislikeCommentService.dislikeComment(commentId)
       .then((res) => (
         this.dislikeThisComment = res.data.dislike
       ))
     },
     getLikeOneComment(){
-    const commentId = this.comment.id;
+    const commentId = this.commentId;
       LikeCommentService.getLikeOneComment(commentId)
       .then((res) => (
         this.likeThisComment = res.data.like
       ))
     },
     getDislikeOneComment(){
-    const commentId = this.comment.id;
+    const commentId = this.commentId;
       DislikeCommentService.getDislikeOneComment(commentId)
       .then((res) => (
         this.dislikeThisComment = res.data.dislike

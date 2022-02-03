@@ -83,7 +83,6 @@
     },
     methods: {
       ...mapActions(['displayNotification']),
-
       modifyPassword() {
         if (this.newPassword === this.confirmPassword) {
           const password = {

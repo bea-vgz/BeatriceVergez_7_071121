@@ -2,9 +2,7 @@
   <div id="nav" class="border_nav bg-white sticky-top" >
     <div class="navigation">
       <div class="nav_logo">
-        <router-link to="/home">
-          <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-        </router-link>
+        <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
         <router-link to="/home">
           <img class="logo-groupo" src="../assets/logo_groupo.png" alt="Groupomania"/>
         </router-link>

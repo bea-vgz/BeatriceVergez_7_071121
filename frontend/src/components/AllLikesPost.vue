@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="post.Like_posts">
     <div class="buttons-likeDislike d-flex">
     <button
       v-b-modal="`modal-likes-${post.id}`"

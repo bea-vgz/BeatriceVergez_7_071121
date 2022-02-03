@@ -19,7 +19,11 @@
             </div>
             <div class="option">
               <a @click="deleteUser" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-2 delete_icon"></b-icon>Supprimer mon compte</a>
-              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+              <ConfirmDialogue
+                title= 'Supprimer mon compte'
+                message= 'Êtes-vous sur de vouloir supprimer votre compte ?'
+                okButton= 'Supprimer mon compte'
+              />
             </div>
           </div>
         </div>
@@ -41,13 +45,8 @@ export default {
     },
     methods: {
     ...mapActions(['displayNotification']),
-
     async deleteUser() {
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Supprimer mon compte',
-        message: 'Êtes-vous sur de vouloir supprimer votre compte ?',
-        okButton: 'Supprimer mon compte',
-      })
+      const ok = this.$refs.confirmation
       if (ok) {
         let payload = this.$store.state.auth.user.userId
         this.$store.dispatch("auth/deleteUser",payload)

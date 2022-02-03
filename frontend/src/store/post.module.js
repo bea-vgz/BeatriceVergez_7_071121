@@ -43,9 +43,10 @@ actions: {
       resolve(response);
     })
     .catch(function(error) {
+      commit('messageFailure')
       reject(error);
     });
-    })
+  })
   },
   
   getOnePost({ commit }) {
@@ -71,8 +72,8 @@ actions: {
         commit('messageFailure')
         reject(error);
       });
-      })
-    },
+    })
+  },
 },
 mutations: {
     all_posts (state, post) {
@@ -81,9 +82,9 @@ mutations: {
     reset_store (state) {
       state.posts = []
     },
-    createPostSuccess(state) {
-      state.createdPost.status = 'Created'
-      state.post = post
+    createPostSuccess(state, newPost) {
+      state.posts.unshift(newPost)
+      state.posts = [...state.posts]
     },
     createPostFailure(state) {
       state.createdPost.status = 'Not created'
@@ -97,8 +98,8 @@ mutations: {
       state.post = null;
       state.message = "Post non récupéré !";
     },
-    deleteSuccess(state, posts) {
-      state.posts = posts
+    deleteSuccess(state, postId) {
+      state.posts = state.posts.filter(post => post.id !== postId)
     },
     messageFailure(state, message) {
       state.message = message

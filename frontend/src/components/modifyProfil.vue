@@ -112,11 +112,6 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  mounted() {
-    this.username = this.currentUser.username,
-    this.bio = this.currentUser.bio,
-    this.image = this.currentUser.photoProfil
-  },
   methods: {
     ...mapActions(['displayNotification']),
 
@@ -136,8 +131,7 @@ export default {
       }
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
-      .then((response) => {
-        localStorage.setItem('currentUser', this.image, JSON.stringify(response));
+      .then(() => {
         this.currentUser
         this.displayNotification('User modifié !')
         router.push('/home');

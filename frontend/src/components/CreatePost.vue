@@ -3,7 +3,7 @@
     <div @submit="onSubmit" >
       <PostFormulaire
         @onFileSelected="onFileSelected"
-        v-model="post.content"
+        v-model="content"
         :onFormSubmit="didSubmitForm"
         :isCreating="true"
       />
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import Post from '../models/post'
 import { mapActions } from 'vuex'
 import PostFormulaire from '../components/PostFormulaire'
 export default {
@@ -22,8 +21,7 @@ export default {
   },
   data () {
     return {
-      post: new Post("", ""),
-      file: null,
+      content: '',
       image: null,
       didSubmitForm: false
     }
@@ -38,7 +36,7 @@ export default {
     onSubmit(event) {
       const post = new FormData();
       post.append('image', this.image);
-      post.append('content', this.post.content);
+      post.append('content', this.content);
       this.$store.dispatch("post/createPost", post)
       .then(() => {
         this.displayNotification('Post créé !')
@@ -48,7 +46,7 @@ export default {
 
     resetForm(event) {
       event.target.reset()
-      this.post.content = ''
+      this.content = ''
       this.image = null
       this.didSubmitForm = !this.didSubmitForm
     },

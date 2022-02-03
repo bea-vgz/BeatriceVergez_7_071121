@@ -46,6 +46,7 @@ class AuthService {
     modifyPassword(userId, data) {
       return resource.put(`/users/${userId}/password`, data, { headers: authHeader() })
       .then(response => {
+        localStorage.setItem('user', JSON.stringify(response.data));
         console.log(response)
       });
     }

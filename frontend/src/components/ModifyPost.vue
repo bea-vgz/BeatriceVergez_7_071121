@@ -97,7 +97,6 @@ export default {
       this.$store.dispatch("post/deletePost", postId)
       .then(() => {
         this.displayNotification('Post supprimé !')
-        location.reload()
       })
     },
   }

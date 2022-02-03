@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post">
+  <div>
     <div class="card-post">
       <div class="user">
         <div class="UserAvatar" v-if="post.User">
@@ -150,7 +150,6 @@ export default {
       const postId = this.post.id;
       LikePostService.likePost(postId)
       .then((res) => {
-        this.post.NB_LIKES++;
         this.likeThisPost = res.data.like,
         this.displayNotification('Like !')
       })

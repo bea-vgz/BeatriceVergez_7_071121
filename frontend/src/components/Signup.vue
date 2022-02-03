@@ -74,7 +74,7 @@ export default {
       this.$store.dispatch('auth/signup', this.user)
       .then(data => {
         this.message = data.message;
-        window.alert("Création du compte réussi ! Il ne reste plus qu'à vous connecter pour continer !")
+        window.alert("Création du compte réussi ! Il ne reste plus qu'à vous connecter pour continuer !")
         router.push("/");
       })
       .catch((error) => {
