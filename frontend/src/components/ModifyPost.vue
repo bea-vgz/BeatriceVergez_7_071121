@@ -6,7 +6,7 @@
       :editingPost="true"
       :isCreator="post.UserId == currentUser.userId"
       :isAdmin="currentUser.isAdmin"
-      @onDelete="deletePost"
+      @onDelete="openConfirm"
       :elementId="post.id"
       modifyText="Modifier le post"
       deleteText="Supprimer le post"
@@ -28,6 +28,14 @@
         </b-form>
       </b-modal>
     </EditButton>
+    <ConfirmDialogue
+      :reveal="revealConfirm"
+      :title="titleModal"
+      :action="action"
+      @closeConfirm="closeConfirm"
+      :post="post"
+      :message="message"
+    ></ConfirmDialogue>
   </div>
 </template>
 
@@ -36,17 +44,23 @@ import PostService from "../service/post.resource";
 import { mapActions } from 'vuex'
 import PostFormulaire from '../components/PostFormulaire.vue'
 import EditButton from '../components/EditButton.vue'
+import ConfirmDialogue from "../components/ConfirmDialogue.vue"
 export default {
   name: 'ModifyPost',
   components: {
     PostFormulaire,
     EditButton,
+    ConfirmDialogue
   },
   props: ['post'],
   data () {
     return {
       image: '',
       file: '',
+      revealConfirm: false,
+      titleModal: "",
+      action: "",
+      message:""
     }
   },
   computed: {
@@ -92,12 +106,17 @@ export default {
       })
     },
     
-    deletePost() {
-      const postId = this.post.id
-      this.$store.dispatch("post/deletePost", postId)
-      .then(() => {
-        this.displayNotification('Post supprimé !')
-      })
+    openConfirm() {
+      this.revealConfirm = true;
+      this.titleModal = "Suppression du post";
+      this.message = "Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre post ?";
+      this.action = 'deletePost';
+    },
+    closeConfirm(e) {
+      if(e.target === e.currentTarget) {
+        this.revealConfirm = false;
+        this.displayNotification("Le post n'a pas été supprimé !")
+      }
     },
   }
 }

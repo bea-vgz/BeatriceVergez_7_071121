@@ -47,7 +47,17 @@ export default {
                 .then(data => {
                     console.log(data);
                     this.displayNotification('Compte supprimé avec succès!')
-                    router.push('/signup');
+                    router.push('/');
+                },
+                error => {
+                    console.log(error);
+                });
+            }
+            else if(this.action == "deletePost") {
+                const postId = this.post.id
+                this.$store.dispatch("post/deletePost", postId)
+                .then(() => {
+                    this.displayNotification('Post supprimé avec succès!')
                 },
                 error => {
                     console.log(error);

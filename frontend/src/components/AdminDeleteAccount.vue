@@ -1,16 +1,33 @@
 <template>
-  <div class="option justify-content-center">
-    <a @click="deleteUser" class="delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer ce compte utilisateur</a>
-    <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+  <div>
+    <div class="option justify-content-center">
+      <a @click="openConfirm" class="delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-3 delete_icon"></b-icon>Supprimer ce compte utilisateur</a>
+    </div>
+    <ConfirmDialogue
+      :reveal="revealConfirm"
+      :title="titleModal"
+      :action="action"
+      @closeConfirm="closeConfirm"
+      :userId="user.id"
+      :message="message"
+    ></ConfirmDialogue>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import router from "../router";
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
+import router from "../router";
 export default {
-  name: 'UserDeleteAccount',
+  name: 'AdminDeleteAccount',
+  data() {
+    return {
+      revealConfirm: false,
+      titleModal: "",
+      action: "",
+      message:""
+    }
+  },
   components: {
     ConfirmDialogue
   },
@@ -18,24 +35,17 @@ export default {
   methods: {
     ...mapActions(['displayNotification']),
 
-    async deleteUser() {
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Supprimer ce compte',
-        message: 'Êtes-vous sur de vouloir supprimer ce compte ?',
-        okButton: 'Supprimer ce compte',
-      })
-      if (ok) {
-        this.$store.dispatch("auth/deleteUser", this.user.id)
-        .then(data => {
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-        this.displayNotification('Compte supprimé avec succès!')
-        router.push('/signup');
-      } else {
+    openConfirm() {
+      this.revealConfirm = true;
+      this.titleModal = "Suppression du compte";
+      this.message = "Cette action est irréversible. Êtes-vous sûr de vouloir supprimer ce compte ?";
+      this.action = 'deleteUser';
+    },
+    closeConfirm(e) {
+      if(e.target === e.currentTarget) {
+        this.revealConfirm = false;
         this.displayNotification("Le compte n'a pas été supprimé !")
+        router.push('/home');
       }
     },
   }

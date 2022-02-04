@@ -138,7 +138,7 @@ export default {
       })
     },
     onFileChange(event) {
-      this.file = URL.createObjectURL(event.target.files[0])
+      this.currentUser.photoProfil = URL.createObjectURL(event.target.files[0])
       this.image = event.target.files[0]
     },
     triggerInput () {
