@@ -18,15 +18,18 @@
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
             <div class="option">
-              <a @click="deleteUser" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-2 delete_icon"></b-icon>Supprimer mon compte</a>
-              <ConfirmDialogue
-                title= 'Supprimer mon compte'
-                message= 'Êtes-vous sur de vouloir supprimer votre compte ?'
-                okButton= 'Supprimer mon compte'
-              />
+              <a @click="openConfirm" class="nav_centrale delete_user underline"><b-icon icon="trash-fill" class="mr-2 mr-lg-2 delete_icon"></b-icon>Supprimer mon compte</a>
             </div>
           </div>
         </div>
+        <ConfirmDialogue
+          :reveal="revealConfirm"
+          :title="titleModal"
+          :action="action"
+          @closeConfirm="closeConfirm"
+          :userId="user.id"
+          :message="message"
+        ></ConfirmDialogue>
       </aside>
 </template>
 <script>
@@ -40,28 +43,20 @@ export default {
         return this.$store.state.auth.user;
       }
     },
+    data() {
+        return {
+            user: {},
+            revealConfirm: false,
+            titleModal: "",
+            action: "",
+            message:""
+        }
+    },
     components: {
       ConfirmDialogue
     },
     methods: {
     ...mapActions(['displayNotification']),
-    async deleteUser() {
-      const ok = this.$refs.confirmation
-      if (ok) {
-        let payload = this.$store.state.auth.user.userId
-        this.$store.dispatch("auth/deleteUser",payload)
-        .then(data => {
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-        this.displayNotification('Compte supprimé avec succès!')
-        router.push('/signup');
-      } else {
-        this.displayNotification("Le compte n'a pas été supprimé !")
-      }
-    },
       
     async logout() {
       const ok = await this.$refs.confirmDialogue.show({
@@ -77,6 +72,18 @@ export default {
         this.displayNotification("Vous n'avez pas été déconnecté !")
       }
     },
+
+    openConfirm() {
+            this.revealConfirm = true;
+            this.titleModal = "Êtes-vous sûr ?";
+            this.message = "Une fois votre compte supprimé, toutes vos publications seront supprimées ainsi que toutes vos interactions avec les publications des autres utilisateurs.";
+            this.action = 'deleteUser';
+        },
+        closeConfirm(e) {
+            if(e.target === e.currentTarget) {
+                this.revealConfirm = false;
+            }
+        },
   },
 }
 </script>

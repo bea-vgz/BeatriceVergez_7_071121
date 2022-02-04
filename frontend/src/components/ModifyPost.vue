@@ -21,7 +21,7 @@
       >
         <b-form>
           <PostFormulaire
-            :imageUrl="post.image"
+            :image="post.image"
             @onFileSelected="onFileSelected"
             v-model="post.content"
           />

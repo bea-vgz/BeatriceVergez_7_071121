@@ -22,8 +22,14 @@ export default {
   data () {
     return {
       content: '',
-      image: null,
-      didSubmitForm: false
+      image: '',
+      file: '',
+      didSubmitForm: false,
+    }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
     }
   },
   methods: {
@@ -37,6 +43,7 @@ export default {
       const post = new FormData();
       post.append('image', this.image);
       post.append('content', this.content);
+
       this.$store.dispatch("post/createPost", post)
       .then(() => {
         this.displayNotification('Post créé !')
@@ -47,7 +54,7 @@ export default {
     resetForm(event) {
       event.target.reset()
       this.content = ''
-      this.image = null
+      this.image = ''
       this.didSubmitForm = !this.didSubmitForm
     },
   }

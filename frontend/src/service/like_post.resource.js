@@ -7,10 +7,8 @@ class LikePostService {
         return resource.get(`posts/${postId}/likes`, { headers: authHeader() })
     }
 
-    likePost(postId, like) {
-        return resource.post(`posts/${postId}/likes`, like,
-            { headers: authHeader() }
-        )
+    likePost(postId, like ) {
+        return resource.post(`posts/${postId}/likes`, like, { headers: authHeader() })
     }
 
     dislikePost(postId) {

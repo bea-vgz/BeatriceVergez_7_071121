@@ -130,7 +130,7 @@ $lg: new-breakpoint(min-width 1024px);
 	top: 0;
 	left: -300px;
 	width: 300px;
-	height: 60vh;
+	height: 100vh;
 	margin: 0;
 	padding: 0;
 	background-color: #242424f5;
@@ -140,7 +140,7 @@ $lg: new-breakpoint(min-width 1024px);
 	ul {
 		position: relative;
 		list-style-type: none;
-		margin: 100px 0;
+		margin: -200px 0;
 		padding: 0;
 		
 		li {

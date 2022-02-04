@@ -37,7 +37,7 @@
           />
         </svg>
       </div>
-      <span class="likes-number ml-2">{{ post.Dislike_posts.length }} </span>
+      <span class="likes-number ml-2">{{ post.Dislike_posts.length }}</span>
     </button>
     </div>
 

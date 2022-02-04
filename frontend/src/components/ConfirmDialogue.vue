@@ -1,88 +1,161 @@
 <template>
-    <popup-modal ref="popup">
-        <h2 style="margin-top: 0">{{ title }}</h2>
-        <p>{{ message }}</p>
-        <div class="btns">
-            <button class="ok-btn" @click="_confirm">{{ okButton }}</button>
-            <span class="cancel-btn" @click="_cancel">{{ cancelButton }}</span>
+    <div v-if="reveal" class="modal-box confirm-box" @click="closeConfirm">
+        <div class="modal-content">
+            <header class="title">
+                <h2>{{ title ? title : "Êtes-vous sûr ?" }}</h2>
+                <i class="fas fa-times" @click="closeConfirm"></i>
+            </header>
+            <main>
+                <p>{{ message ? message : "Cette action est irréversible." }}</p>
+            </main>
+            <footer>
+                <a aria-role="button" class="cancel" @click="closeConfirm">Annuler</a>
+                <a aria-role="button" class="confirm" @click="confirm">Confirmer</a>
+            </footer>
         </div>
-    </popup-modal>
+    </div>
 </template>
 
 <script>
-import PopupModal from './PopupModal.vue'
+import router from "../router";
+import { mapActions } from 'vuex'
 export default {
-    name: 'ConfirmDialogue',
-    components: { PopupModal },
-    data: () => ({
-        // Parameters that change depending on the type of dialogue
-        title: undefined,
-        message: undefined, // Main text content
-        okButton: undefined, // Text for confirm button; leave it empty because we don't know what we're using it for
-        cancelButton: 'Retour', // text for cancel button
-        
-        // Private variables
-        resolvePromise: undefined,
-        rejectPromise: undefined,
-    }),
-    methods: {
-        show(opts = {}) {
-            this.title = opts.title
-            this.message = opts.message
-            this.okButton = opts.okButton
-            if (opts.cancelButton) {
-                this.cancelButton = opts.cancelButton
-            }
-            // Once we set our config, we tell the popup modal to open
-            this.$refs.popup.open()
-            // Return promise so the caller can get results
-            return new Promise((resolve, reject) => {
-                this.resolvePromise = resolve
-                this.rejectPromise = reject
-            })
-        },
-        _confirm() {
-            this.$refs.popup.close()
-            this.resolvePromise(true)
-        },
-        _cancel() {
-            this.$refs.popup.close()
-            this.resolvePromise(false)
-            // Or you can throw an error
-            // this.rejectPromise(new Error('User cancelled the dialogue'))
-        },
+    name: "Confirm",
+    props: [
+        'reveal',
+        'title',
+        'message',
+        'action',
+        'post',
+        'userId'
+    ],
+    computed: {
+      currentUser() {
+        return this.$store.state.auth.user;
+      }
     },
+    methods: {
+        ...mapActions(['displayNotification']),
+
+        closeConfirm(event) {
+            this.$emit('closeConfirm', event);
+        },
+        confirm() {
+            let payload = this.$store.state.auth.user.userId
+            this.$store.dispatch("auth/deleteUser",payload)
+            .then(data => {
+                console.log(data);
+            },
+            error => {
+                console.log(error);
+            });
+        this.displayNotification('Compte supprimé avec succès!')
+        router.push('/signup');
+      }
+    }
 }
 </script>
-
 <style scoped>
-.btns {
+.modal-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    padding: 30px;
+    z-index: 99;
+}
+
+.modal-box .modal-content {
+    background: #fff;
+    border-radius: 10px;
+    width: 700px;
+    max-width: calc(100% - 30px);
+    margin: auto;
+    max-height: 80vh;
+    position: relative;
+    overflow: auto;
+}
+
+.modal-box .modal-content .title {
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
 }
-.cancel-btn {
-    color: red;
-    line-height: 2.5rem;
-    cursor: pointer;
-    padding: 0.5em 1em;
-    background-color: rgba(255, 0, 0, 0.192);
-    border: 2px solid red;
-    border-radius: 5px;
-    font-size: 13px;
-    font-weight: bold;
-    text-transform: uppercase;
+
+.modal-box .modal-content .title h2 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.modal-box .modal-content .title i {
+    font-size: 25px;
+    color: rgba(0, 0, 0, .5);
     cursor: pointer;
 }
-.ok-btn {
-    padding: 0.5em 1em;
-    background-color: #d5eae7;
-    color: #35907f;
-    border: 2px solid #0ec5a4;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 13px;
-    text-transform: uppercase;
+
+.modal-box .modal-content .user {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-box .modal-content .user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.modal-box.confirm-box main p {
+    margin: 20px;
+}
+
+.modal-box.confirm-box footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(0, 0, 0, .08);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-box.confirm-box footer a {
+    padding: 4px 15px;
+    border: 2px solid;
+    border-radius: 35px;
+    color: #fff;
+    box-sizing: border-box;
     cursor: pointer;
+    transition: .3s ease;
+}
+
+.modal-box.confirm-box footer a:not(:last-child) {
+    margin-right: 10px;
+}
+
+.modal-box.confirm-box footer a.cancel {
+    border-color: crimson;
+    background-color: crimson;
+}
+
+.modal-box.confirm-box footer a.confirm {
+    border-color: #00BF00;
+    background-color: #00BF00;
+}
+
+.modal-box.confirm-box footer a.cancel:hover {
+    background: none;
+    color: crimson;
+}
+
+.modal-box.confirm-box footer a.confirm:hover {
+    background: none;
+    color: #00BF00;
 }
 </style>

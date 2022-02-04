@@ -18,7 +18,24 @@ exports.createPost = async (req, res, next) => {
     where: { id: post.id }, 
     include: { model: User }
   })
-  res.status(201).json({ message: 'Post crée !', post })
+  const allPosts = await Post.findAll({ 
+    include: [
+      { 
+        model: User,
+      },
+      {
+        model: Comment,
+      },
+      { 
+        model: Like_post,
+      },
+      { 
+        model: Dislike_post,
+      },
+    ],
+    order: [['createdAt', 'DESC']]
+  })
+  res.status(201).json({ message: 'Post crée !', post, allPosts })
   } 
   catch (error) {
     console.log(error)

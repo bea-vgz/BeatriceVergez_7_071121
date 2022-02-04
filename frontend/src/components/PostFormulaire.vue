@@ -81,7 +81,7 @@ export default {
   name: 'PostFormulaire',
   data () {
     return {
-      file: this.imageUrl
+      file: this.image
     };
   },
   watch: {
@@ -89,7 +89,7 @@ export default {
       this.file = null
     }
   },
-  props: ['value','imageUrl', 'onFormSubmit', 'isCreating'],
+  props: ['value','image', 'onFormSubmit', 'isCreating'],
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

@@ -68,7 +68,7 @@
             />
           </svg>
 
-          <span :class="`dislike-comment ml-2 ${likeThisComment ? 'blue' : ''}`">J'aime</span>
+          <span :class="`dislike-comment ml-2 ${likeThisComment ? 'blue' : ''}`"> J'aime</span>
         </button>
         <button
           @click="dislikeOrNotComment"
