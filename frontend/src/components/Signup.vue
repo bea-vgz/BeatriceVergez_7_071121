@@ -51,9 +51,8 @@
 <script>
 import router from "../router";
 import User from '../models/user'
-
+import { mapActions } from 'vuex'
 export default {
-  
     name: 'Signup',
     components: {
     },
@@ -69,12 +68,12 @@ export default {
       }
     },
     methods: {
-      
+    ...mapActions(['displayNotification']),
     signup() {
       this.$store.dispatch('auth/signup', this.user)
       .then(data => {
         this.message = data.message;
-        window.alert("Création du compte réussi ! Il ne reste plus qu'à vous connecter pour continuer !")
+        this.displayNotification("Création du compte réussi ! Il ne reste plus qu'à vous connecter pour continuer !")
         router.push("/");
       })
       .catch((error) => {

@@ -1,8 +1,8 @@
 <template>
-    <div v-if="reveal" class="modal-box confirm-box" @click="closeConfirm">
+    <div v-if="reveal" class="modal-box confirm-box text-align-center" @click="closeConfirm">
         <div class="modal-content">
             <header class="title">
-                <h2>{{ title ? title : "Êtes-vous sûr ?" }}</h2>
+                <h2>{{ title ? title : "" }}</h2>
                 <i class="fas fa-times" @click="closeConfirm"></i>
             </header>
             <main>
@@ -20,7 +20,7 @@
 import router from "../router";
 import { mapActions } from 'vuex'
 export default {
-    name: "Confirm",
+    name: "ConfirmDialogue",
     props: [
         'reveal',
         'title',
@@ -41,45 +41,47 @@ export default {
             this.$emit('closeConfirm', event);
         },
         confirm() {
-            let payload = this.$store.state.auth.user.userId
-            this.$store.dispatch("auth/deleteUser",payload)
-            .then(data => {
-                console.log(data);
-            },
-            error => {
-                console.log(error);
-            });
-        this.displayNotification('Compte supprimé avec succès!')
-        router.push('/signup');
-      }
+            if(this.action == "deleteUser") {
+                let payload = this.$store.state.auth.user.userId
+                this.$store.dispatch("auth/deleteUser",payload)
+                .then(data => {
+                    console.log(data);
+                    this.displayNotification('Compte supprimé avec succès!')
+                    router.push('/signup');
+                },
+                error => {
+                    console.log(error);
+                });
+            }
+        }
     }
 }
 </script>
 <style scoped>
 .modal-box {
+    background-color: rgba(0, 0, 0, 0.568);
     position: fixed;
     top: 0;
+    bottom: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, .5);
-    padding: 30px;
-    z-index: 99;
+    right: 0;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    z-index: 2;
 }
 
 .modal-box .modal-content {
     background: #fff;
-    border-radius: 10px;
-    width: 700px;
-    max-width: calc(100% - 30px);
-    margin: auto;
-    max-height: 80vh;
-    position: relative;
-    overflow: auto;
+    border-radius: 2rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.247);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
 }
 
 .modal-box .modal-content .title {
-    display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0, 0, 0, .08);
@@ -92,7 +94,8 @@ export default {
 
 .modal-box .modal-content .title h2 {
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 600;
+    margin-bottom: 1rem;
 }
 
 .modal-box .modal-content .title i {
@@ -119,7 +122,7 @@ export default {
 }
 
 .modal-box.confirm-box footer {
-    padding: 16px 20px;
+    padding: 16px 100px;
     border-top: 1px solid rgba(0, 0, 0, .08);
     display: flex;
     justify-content: flex-end;

@@ -44,13 +44,13 @@ export default {
       }
     },
     data() {
-        return {
-            user: {},
-            revealConfirm: false,
-            titleModal: "",
-            action: "",
-            message:""
-        }
+      return {
+        user: {},
+        revealConfirm: false,
+        titleModal: "",
+        action: "",
+        message:""
+      }
     },
     components: {
       ConfirmDialogue
@@ -58,32 +58,25 @@ export default {
     methods: {
     ...mapActions(['displayNotification']),
       
-    async logout() {
-      const ok = await this.$refs.confirmDialogue.show({
-        title: 'Déconnexion',
-        message: 'Êtes-vous sur de vouloir vous déconnecter ?',
-        okButton: 'Se déconnecter',
-      })
-      if (ok) {
-        this.$store.dispatch('auth/logout');
+    logout() {
+      this.$store.dispatch('auth/logout')
+      .then(() => {
         this.displayNotification("Vous avez été déconnecté !")
         router.push('/');
-      } else {
-        this.displayNotification("Vous n'avez pas été déconnecté !")
+      })
+    },
+    openConfirm() {
+      this.revealConfirm = true;
+      this.titleModal = "Suppression du compte";
+      this.message = "Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre compte ?";
+      this.action = 'deleteUser';
+    },
+    closeConfirm(e) {
+      if(e.target === e.currentTarget) {
+        this.revealConfirm = false;
+        this.displayNotification("Le compte n'a pas été supprimé !")
       }
     },
-
-    openConfirm() {
-            this.revealConfirm = true;
-            this.titleModal = "Êtes-vous sûr ?";
-            this.message = "Une fois votre compte supprimé, toutes vos publications seront supprimées ainsi que toutes vos interactions avec les publications des autres utilisateurs.";
-            this.action = 'deleteUser';
-        },
-        closeConfirm(e) {
-            if(e.target === e.currentTarget) {
-                this.revealConfirm = false;
-            }
-        },
   },
 }
 </script>
