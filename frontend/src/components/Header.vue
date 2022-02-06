@@ -3,9 +3,7 @@
     <div class="navigation">
       <div class="nav_logo">
         <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-        <router-link to="/home">
-          <img class="logo-groupo" src="../assets/logo_groupo.png" alt="Groupomania"/>
-        </router-link>
+        <img class="logo-groupo" src="../assets/logo_groupo.png" alt="Groupomania"/>
         <div class="userSearch">
           <UserSearch />
         </div>

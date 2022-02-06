@@ -69,7 +69,6 @@ export default {
     }
   },
   mounted() {
-    this.content = this.post.description,
     this.image = this.post.image
   },
   methods: {
@@ -78,32 +77,16 @@ export default {
       this.areActionsVisible = !this.areActionsVisible
     },
     onFileSelected(file) {
-      this.post.image = "";
-      this.image = file
+      this.image = file;
     },
     onUpload(){
-      let post;
-      console.log();
-      if(this.post.image != "") {
-        post = {
-          content: this.post.content,
-          image: this.post.image
-        }
-      }
-      else if(this.image != "") {
-        post = new FormData();
+        const post = new FormData();
         post.append('image', this.image);
         post.append('content', this.post.content);
-      }
-      else {
-        console.log("Erreur : la publication ne peut être vide !");
-      }
-      const postId = this.post.id
-      PostService.modifyPost(postId, post)
-      .then(() => {
-        this.displayNotification('Post modifié !')
-        location.reload();
-      })
+        PostService.modifyPost(this.post.id, post)
+        .then(() => {
+          this.displayNotification('Post modifié !')
+        })
     },
     
     openConfirm() {

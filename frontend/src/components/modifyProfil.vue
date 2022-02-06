@@ -105,6 +105,7 @@ export default {
     return {
       image: null,
       file: null,
+      user:'',
     }
   },
   computed: {
@@ -112,6 +113,13 @@ export default {
       return this.$store.state.auth.user;
     }
   },
+
+  async mounted() {
+    const response = await AuthService.getOneUser(
+    this.userId  || this.currentUser.userId)
+    this.user = response.data;
+  },
+
   methods: {
     ...mapActions(['displayNotification']),
 
@@ -132,7 +140,7 @@ export default {
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then(() => {
-        this.currentUser
+        this.currentUser.userId
         this.displayNotification('User modifié !')
         router.push('/home');
       })

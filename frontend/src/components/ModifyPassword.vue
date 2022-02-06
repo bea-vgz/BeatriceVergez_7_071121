@@ -3,7 +3,7 @@
     <Header/>
     <div class="container_account">
       <AsideProfil />
-      <div class=" justify-content-center align-items-center flex-column">
+      <div class="info-password justify-content-center align-items-center flex-column">
         <b-col cols="12" lg="12" class="align-items-center">
           <div class="infoUser bg-white">
             <h1><strong>Mot de passe</strong></h1>
@@ -90,11 +90,10 @@
           }
           const userId = this.currentUser.userId
           AuthService.modifyPassword(userId, password)
-          .then((response) => {
-            localStorage.setItem('currentUser', JSON.stringify(response));
+          .then(() => {
             this.currentUser.userId
             this.displayNotification('Mot de passe modifié avec succès !')
-            router.push('/profil');
+            router.push('/home');
           })
         }
         else {
@@ -109,8 +108,6 @@
 <style scoped>
 .container_account {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   max-width: 100%;
   width: 100%;
 }
@@ -127,6 +124,10 @@ h1 {
 .bg-white {
   background-color: #fff;
   border-color: rgba(231, 233, 244);
+}
+.info-password{
+  margin-left: auto;
+  margin-right: auto;
 }
 .infoUser {
   padding: 3.5rem;

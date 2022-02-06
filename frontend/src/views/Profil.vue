@@ -4,7 +4,7 @@
     <div class="profil">
     <div class="container_account">
       <AsideProfil />
-      <div class="justify-content-center align-items-center flex-column">
+      <div class="info-profil justify-content-center align-items-center flex-column">
         <b-col cols="12" lg="12" class="align-items-center">
           <div class="infoUser bg-white">
             <h1><strong>Mon profil</strong> </h1>
@@ -81,7 +81,6 @@ export default {
 <style scoped>
 .container_account {
   display: flex;
-  justify-content: space-between;
   max-width: 100%;
   width: 100%;
 }
@@ -98,6 +97,10 @@ h4 {
   background-color: #F2F2F2;
   display: flex;
   flex-direction: column;
+}
+.info-profil{
+  margin-left: auto;
+  margin-right: auto;
 }
 .bg-white {
   background-color: #fff;

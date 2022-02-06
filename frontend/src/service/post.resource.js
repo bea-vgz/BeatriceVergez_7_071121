@@ -24,10 +24,10 @@ class PostService {
         .then(() => localStorage.removeItem('post'))
     }
 
-    modifyPost(postId, data) {
-        return resource.put(`/posts/${postId}`, data, { headers: authHeader() })
+    modifyPost(postId, post) {
+        return resource.put(`/posts/${postId}`, post, { headers: authHeader() })
         .then(response => {
-            localStorage.setItem('post', JSON.stringify(response.data));
+            localStorage.setItem('post', JSON.stringify(response));
             console.log(response)
         });
     }

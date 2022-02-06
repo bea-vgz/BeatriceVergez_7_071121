@@ -172,6 +172,7 @@ $lg: new-breakpoint(min-width 1024px);
 				
 				&:hover {
 					color: #444;
+					cursor: pointer;
 					
 					&:before {
 						width: 100%;

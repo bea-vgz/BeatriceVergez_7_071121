@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post.Comments">
+  <div>
     <button
       v-if="post.Comments.length > 0 && !allCommentsDisplayed"
       @click="AllPostsComments"

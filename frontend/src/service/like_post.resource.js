@@ -11,10 +11,6 @@ class LikePostService {
         return resource.post(`posts/${postId}/likes`, like, { headers: authHeader() })
     }
 
-    dislikePost(postId) {
-        return resource.post(`posts/${postId}/dislikes`, { headers: authHeader() })
-    }
-
     getLikeOnOnePost(postId) {
         return resource.get(`posts/${postId}/like`, { headers: authHeader() })
     }

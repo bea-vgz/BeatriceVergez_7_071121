@@ -164,11 +164,13 @@ export default {
 
 .modal-box.confirm-box footer a.cancel:hover {
     background: none;
+    text-decoration: none;
     color: crimson;
 }
 
 .modal-box.confirm-box footer a.confirm:hover {
     background: none;
+    text-decoration: none;
     color: #00BF00;
 }
 </style>
