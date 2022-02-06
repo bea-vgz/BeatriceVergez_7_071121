@@ -40,9 +40,9 @@ export const auth = {
       );
     },
 
-    deleteUser({commit}, user) {
-      return AuthService.delete(user).then(
-        (response) => {
+    deleteUser({commit}, id) {
+      return AuthService.deleteUser(id)
+      .then((response) => {
           commit ('deleteSuccess')
           return Promise.resolve(response);
         },

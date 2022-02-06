@@ -152,9 +152,9 @@ export default {
       .then((res) => {
         if (res.data.like !== this.likeThisPost) {
         this.post.Like_posts.length += res.data.like ? 1 : -1
+        this.likeThisPost = res.data.like
       }
-        this.likeThisPost = res.data.like,
-        this.displayNotification('Like !')
+        this.displayNotification('👍🏻')
       })
     },
     DislikeOrNotPost() {
@@ -162,7 +162,7 @@ export default {
       DislikePostService.dislikePost(postId)
       .then((res) => (
         this.dislikeThisPost = res.data.dislike,
-        this.displayNotification('Dislike !')
+        this.displayNotification('👎🏻')
       ))
     },
     getLikeOnOnePost() {

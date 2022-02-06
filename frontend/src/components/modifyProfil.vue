@@ -114,12 +114,6 @@ export default {
     }
   },
 
-  async mounted() {
-    const response = await AuthService.getOneUser(
-    this.userId  || this.currentUser.userId)
-    this.user = response.data;
-  },
-
   methods: {
     ...mapActions(['displayNotification']),
 

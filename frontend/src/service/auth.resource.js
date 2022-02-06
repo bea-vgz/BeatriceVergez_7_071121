@@ -30,10 +30,9 @@ class AuthService {
       localStorage.removeItem('user')
     }
 
-    delete(payload) {
+    deleteUser(payload) {
       const id = payload
       return resource.delete(`/users/${id}`, { headers: authHeader() })
-      .then(() => localStorage.removeItem('user'))
     }
 
     modifyUser(userId, data) {

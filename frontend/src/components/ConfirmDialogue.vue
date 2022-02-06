@@ -6,7 +6,7 @@
                 <i class="fas fa-times" @click="closeConfirm"></i>
             </header>
             <main>
-                <p>{{ message ? message : "Cette action est irréversible." }}</p>
+                <p>{{ message ? message : "" }}</p>
             </main>
             <footer>
                 <a aria-role="button" class="cancel" @click="closeConfirm">Annuler</a>
@@ -18,7 +18,8 @@
 
 <script>
 import router from "../router";
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
+import AuthService from "../service/auth.resource"
 export default {
     name: "ConfirmDialogue",
     props: [
@@ -43,9 +44,8 @@ export default {
         confirm() {
             if(this.action == "deleteUser") {
                 let payload = this.$store.state.auth.user.userId
-                this.$store.dispatch("auth/deleteUser",payload)
-                .then(data => {
-                    console.log(data);
+                this.$store.dispatch("auth/deleteUser", payload)
+                .then(() => {
                     this.displayNotification('Compte supprimé avec succès!')
                     router.push('/');
                 },
@@ -58,6 +58,16 @@ export default {
                 this.$store.dispatch("post/deletePost", postId)
                 .then(() => {
                     this.displayNotification('Post supprimé avec succès!')
+                },
+                error => {
+                    console.log(error);
+                });
+            }
+            else if(this.action == "deleteAccountUser") {
+                AuthService.deleteUser(`${this.userId}`)
+                .then(() => {
+                    this.currentUser.isAdmin
+                    this.displayNotification('Compte supprimé avec succès!')
                 },
                 error => {
                     console.log(error);
@@ -106,6 +116,7 @@ export default {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
 .modal-box .modal-content .title i {

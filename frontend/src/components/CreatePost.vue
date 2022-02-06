@@ -46,6 +46,7 @@ export default {
 
       this.$store.dispatch("post/createPost", post)
       .then(() => {
+        this.currentUser.userId
         this.displayNotification('Post créé !')
         this.resetForm(event)
       })

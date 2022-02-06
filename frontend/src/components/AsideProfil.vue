@@ -68,7 +68,7 @@ export default {
     openConfirm() {
       this.revealConfirm = true;
       this.titleModal = "Suppression du compte";
-      this.message = "Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre compte ?";
+      this.message = "Cette action est irréversible. Cela supprimera automatiquement tous vos posts et commentaires.. Êtes-vous sûr de vouloir supprimer votre compte ?";
       this.action = 'deleteUser';
     },
     closeConfirm(e) {

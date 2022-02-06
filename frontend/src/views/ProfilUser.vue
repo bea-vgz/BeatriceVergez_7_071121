@@ -11,7 +11,7 @@
               <p><strong>Email : </strong>{{ user.email }}</p>
               <p><strong>Biographie :</strong>{{ user.bio }}</p>
               <AdminDeleteAccount
-                v-if="currentUser.isAdmin && !user.deleted"
+                v-if="currentUser.isAdmin"
                 :user="user"
               />
             </div>
