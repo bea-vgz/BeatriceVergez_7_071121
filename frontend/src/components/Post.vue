@@ -34,7 +34,16 @@
       </div>
       </div>
       <div class="button-dis-like d-flex" v-if="post.Like_posts">
-        <AllLikesPost :post="post" :likesCount="post.Like_posts.length"/>
+        <AllLikesPost 
+          :post="post" 
+          :likesCount="post.Like_posts.length"
+        />
+      </div>
+      <div class="button-dis-like d-flex" v-if="post.Dislike_posts">
+        <AllLikesPost 
+          :post="post" 
+          :dislikesCount="post.Dislike_posts.length"
+        />
       </div>
 
       <div class="line"></div>
@@ -122,7 +131,8 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
-      likesCount: ''
+      likesCount: '',
+      dislikesCount:''
     };
   },
   props: ['post'],
@@ -155,17 +165,16 @@ export default {
       this.displayNotification('👍🏻')
     },
 
-    DislikeOrNotPost() {
+    async DislikeOrNotPost() {
       const postId = this.post.id;
-      DislikePostService.dislikePost(postId)
-      .then((res) => {
+      const res = await DislikePostService.dislikePost(postId)
         if (res.data.dislike !== this.dislikeThisPost) {
         this.post.Dislike_posts.length += res.data.dislike ? 1 : -1
-        this.dislikeThisPost = res.data.dislike
       }
-        this.displayNotification('👎🏻')
-      })
+      this.dislikeThisPost = res.data.dislike
+      this.displayNotification('👎🏻')
     },
+
     getLikeOnOnePost() {
     const postId = this.post.id;
       LikePostService.getLikeOnOnePost(postId)

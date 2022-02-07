@@ -1,5 +1,5 @@
 <template>
-  <div v-if="likesCount">
+  <div>
     <div class="buttons-likeDislike d-flex">
     <button
       v-b-modal="`modal-likes-${post.id}`"
@@ -23,7 +23,7 @@
     <button
       v-b-modal="`modal-dislikes-${post.id}`"
       @click="getAllDislikes"
-      v-if="post.Dislike_posts.length > 0"
+      v-if="dislikesCount > 0"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
     >
@@ -37,11 +37,11 @@
           />
         </svg>
       </div>
-      <span class="likes-number ml-2">{{ post.Dislike_posts.length }}</span>
+      <span class="likes-number ml-2">{{ dislikesCount }}</span>
     </button>
     </div>
 
-    <b-modal :id="`modal-likes-${post.id}`" :title="`${post.Like_posts.length} personne(s) aime(nt) ce post`">
+    <b-modal :id="`modal-likes-${post.id}`" :title="`${likesCount} personne(s) aime(nt) ce post`">
       <div v-for="like_post in likes" :key="like_post.id">
         <router-link
           :to="{ name: 'ProfilUser', params: { userId: like_post.UserId } }"
@@ -57,7 +57,7 @@
       </div>
       <div slot="modal-footer"></div>
     </b-modal>
-    <b-modal :id="`modal-dislikes-${post.id}`" :title="`${likesCount} personne(s) n'aime(nt) pas ce post`">
+    <b-modal :id="`modal-dislikes-${post.id}`" :title="`${dislikesCount} personne(s) n'aime(nt) pas ce post`">
       <div v-for="dislike_post in dislikes" :key="dislike_post.id">
         <router-link
           :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }"
@@ -81,7 +81,7 @@ import DislikePostService from '../service/dislike_post.resource'
 import LikePostService from '../service/like_post.resource'
 export default {
   name: 'AllLikesPost',
-  props: ['post', 'likesCount'],
+  props: ['post', 'likesCount', 'dislikesCount'],
   data () {
     return {
       likes: [],

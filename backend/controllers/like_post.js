@@ -34,9 +34,6 @@ exports.likePost = async (req, res, next) => {
             {
               model: Like_post
             },
-            {
-              model: User
-            },
           ]
         });
         res.status(201).json({ post, like: true})
