@@ -160,10 +160,13 @@ export default {
     DislikeOrNotPost() {
       const postId = this.post.id;
       DislikePostService.dislikePost(postId)
-      .then((res) => (
-        this.dislikeThisPost = res.data.dislike,
+      .then((res) => {
+        if (res.data.dislike !== this.dislikeThisPost) {
+        this.post.Dislike_posts.length += res.data.dislike ? 1 : -1
+        this.dislikeThisPost = res.data.dislike
+      }
         this.displayNotification('👎🏻')
-      ))
+      })
     },
     getLikeOnOnePost() {
     const postId = this.post.id;

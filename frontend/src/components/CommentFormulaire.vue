@@ -48,9 +48,11 @@ export default {
       const postId = this.post.id;
       const { comment } = CommentService.createComment(
       { content: this.content }, postId )
-        this.content = ''
-        this.$emit('commentCreated', comment)
-        this.displayNotification('Comment créé !')
+        .then(() => {
+          this.content = ''
+          this.$emit('commentCreated', comment)
+          this.displayNotification('Comment créé !')
+        })
     },
 
     newline () {

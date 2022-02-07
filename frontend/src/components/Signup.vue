@@ -165,8 +165,9 @@ input {
   color: #fff;
   margin-top: 1rem;
   display: block;
-  margin-left: 5rem;
-  margin-right: 5rem;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .buttonInsc:hover {
   background-color: #fff;

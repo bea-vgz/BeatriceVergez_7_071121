@@ -18,7 +18,7 @@ exports.likePost = async (req, res, next) => {
             {
               model: Like_post
             },
-          ]
+          ],
         });
       res.status(201).json({ post, like : false })
       })

@@ -31,7 +31,7 @@
         
         <p class="champs">Les champs indiqués par une * sont obligatoires</p>
 
-        <button type="submit" class="buttonConnect" aria-label="se connecter" @click="login()" >
+        <button type="submit" class="buttonConnect" aria-label="se connecter">
           <router-link to="/home" style="text-decoration: none; color: inherit;"> Connexion </router-link>
         </button>
 
@@ -153,8 +153,9 @@ input {
     color: #fff;
     margin-top: 1rem;
     display: block;
-    margin-left: 5rem;
-    margin-right: 5rem;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .buttonConnect:hover {
     background-color: #fff;

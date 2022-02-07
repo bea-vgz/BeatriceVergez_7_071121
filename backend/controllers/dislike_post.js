@@ -1,5 +1,6 @@
 const { Dislike_post } = require('../models/index');
 const { User } = require('../models/index');
+const { Post } = require('../models/index');
 
 // Création d'un like post :
 exports.dislikePost = async (req, res, next) => {
@@ -7,24 +8,40 @@ exports.dislikePost = async (req, res, next) => {
     const existDislike = await Dislike_post.findOne({ 
       where: { UserId: req.user, PostId: req.params.postId } 
     });
-      if (existDislike) {
-        await existDislike.destroy();
-        res.status(200).json({ message : "Vous ne dislikez plus ce post !", dislike: false });
-      } else {
-        const newDislike = await Dislike_post.create({
-          UserId: req.user,
-          PostId: req.params.postId
+    if (existDislike) {
+      await existDislike.destroy()
+      .then(async () => {
+        const post = await Post.findOne({
+          where: { id: req.params.postId },
+          include: [
+            {
+              model: Dislike_post
+            },
+          ],
         });
-        res.status(201).json({ 
-          message: " Je n'aime pas !",
-          id: newDislike.id,
-          dislike: true
-        })
-      }
+      res.status(201).json({ post, dislike : false })
+      })
+    } else {
+      Dislike_post.create({
+        UserId: req.user,
+        PostId: req.params.postId,
+      })
+      .then(async () => {
+        const post = await Post.findOne({
+          where: { id: req.params.postId },
+          include: [
+            {
+              model: Dislike_post
+            },
+          ]
+        });
+        res.status(201).json({ post, dislike: true })
+      })
     }
-    catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+  }
+  catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 //Récupérer tous les dislikes d'un post
