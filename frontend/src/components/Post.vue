@@ -34,7 +34,7 @@
       </div>
       </div>
       <div class="button-dis-like d-flex">
-        <AllLikesPost :post="post"/>
+        <AllLikesPost :post="post" :likesCount="post.Like_posts.length"/>
       </div>
 
       <div class="line"></div>
@@ -42,7 +42,6 @@
       <div class="footer d-flex">
         <button
           @click="likeOrNotPost"
-          :likes="likes"
           class="react-btn footer-btn "
           aria-label="Liker ou disliker"
         >
@@ -123,7 +122,7 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
-      likes:''
+      likesCount:''
     };
   },
   props: ['post'],
@@ -146,17 +145,16 @@ export default {
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
-    likeOrNotPost() {
+    async likeOrNotPost() {
       const postId = this.post.id;
-      LikePostService.likePost(postId)
-      .then((res) => {
-        if (res.data.like !== this.likeThisPost) {
+      const res = await LikePostService.likePost(postId)
+      if (res.data.like !== this.likeThisPost) {
         this.post.Like_posts.length += res.data.like ? 1 : -1
-        this.likeThisPost = res.data.like
       }
-        this.displayNotification('👍🏻')
-      })
+      this.likeThisPost = res.data.like
+      this.displayNotification('👍🏻')
     },
+
     DislikeOrNotPost() {
       const postId = this.post.id;
       DislikePostService.dislikePost(postId)

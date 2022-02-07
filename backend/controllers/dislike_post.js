@@ -10,8 +10,8 @@ exports.dislikePost = async (req, res, next) => {
     });
     if (existDislike) {
       await existDislike.destroy()
-      .then(async () => {
-        const post = await Post.findOne({
+      .then((post) => {
+        Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
@@ -26,8 +26,8 @@ exports.dislikePost = async (req, res, next) => {
         UserId: req.user,
         PostId: req.params.postId,
       })
-      .then(async () => {
-        const post = await Post.findOne({
+      .then((post) => {
+        Post.findOne({
           where: { id: req.params.postId },
           include: [
             {

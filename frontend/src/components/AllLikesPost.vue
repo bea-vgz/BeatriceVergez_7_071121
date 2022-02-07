@@ -4,7 +4,7 @@
     <button
       v-b-modal="`modal-likes-${post.id}`"
       @click="getAllLikes"
-      v-if="post.Like_posts.length > 0"
+      v-if="likesCount > 0"
       class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
       aria-label="Afficher les likes"
     >
@@ -81,16 +81,12 @@ import DislikePostService from '../service/dislike_post.resource'
 import LikePostService from '../service/like_post.resource'
 export default {
   name: 'AllLikesPost',
-  props: ['post'],
+  props: ['post', 'likesCount'],
   data () {
     return {
       likes: [],
       dislikes: []
     }
-  },
-  mounted() {
-    this.getAllLikes()
-    this.getAllDislikes()
   },
   methods: {
     getAllLikes() {

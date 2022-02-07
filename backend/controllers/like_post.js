@@ -11,8 +11,8 @@ exports.likePost = async (req, res, next) => {
     });
     if (existLike) {
       await existLike.destroy()
-      .then(async () => {
-        const post = await Post.findOne({
+      .then((post) => {
+        Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
@@ -27,16 +27,19 @@ exports.likePost = async (req, res, next) => {
         UserId: req.user,
         PostId: req.params.postId,
       })
-      .then(async () => {
-        const post = await Post.findOne({
+      .then((post) => {
+        Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
               model: Like_post
             },
+            {
+              model: User
+            },
           ]
         });
-        res.status(201).json({ post, like: true })
+        res.status(201).json({ post, like: true})
       })
     }
   }
@@ -52,7 +55,7 @@ exports.getAllLikesOnePost = async (req, res, next) => {
       where: { PostId: req.params.postId },
       include: { model: User }
     })
-  res.status(200).json({ allLikes })
+  res.status(200).json({ allLikes, likes: allLikes.length })
   } catch (error) {
     res.status(400).json({ error })
   }
