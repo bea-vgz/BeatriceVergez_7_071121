@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post.Like_posts">
+  <div v-if="likesCount">
     <div class="buttons-likeDislike d-flex">
     <button
       v-b-modal="`modal-likes-${post.id}`"
@@ -18,7 +18,7 @@
           />
         </svg>
       </div>
-      <span class="likes-number ml-2">{{ post.Like_posts.length }} </span>
+      <span class="likes-number ml-2">{{ likesCount }} </span>
     </button>
     <button
       v-b-modal="`modal-dislikes-${post.id}`"
@@ -57,7 +57,7 @@
       </div>
       <div slot="modal-footer"></div>
     </b-modal>
-    <b-modal :id="`modal-dislikes-${post.id}`" :title="`${post.Dislike_posts.length} personne(s) n'aime(nt) pas ce post`">
+    <b-modal :id="`modal-dislikes-${post.id}`" :title="`${likesCount} personne(s) n'aime(nt) pas ce post`">
       <div v-for="dislike_post in dislikes" :key="dislike_post.id">
         <router-link
           :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }"

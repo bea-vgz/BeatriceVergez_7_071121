@@ -33,7 +33,7 @@
         </b-modal>
       </div>
       </div>
-      <div class="button-dis-like d-flex">
+      <div class="button-dis-like d-flex" v-if="post.Like_posts">
         <AllLikesPost :post="post" :likesCount="post.Like_posts.length"/>
       </div>
 
@@ -122,7 +122,7 @@ export default {
       comment: {},
       likeThisPost: false,
       dislikeThisPost: false,
-      likesCount:''
+      likesCount: ''
     };
   },
   props: ['post'],
