@@ -17,7 +17,6 @@
 <script>
 import { mapActions } from 'vuex'
 import ConfirmDialogue from '@/components/ConfirmDialogue.vue';
-import router from "../router";
 export default {
   name: 'AdminDeleteAccount',
   data() {
@@ -45,7 +44,6 @@ export default {
       if(e.target === e.currentTarget) {
         this.revealConfirm = false;
         this.displayNotification("Le compte n'a pas été supprimé !")
-        router.push('/home');
       }
     },
   }

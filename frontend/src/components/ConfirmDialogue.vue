@@ -68,6 +68,7 @@ export default {
                 .then(() => {
                     this.currentUser.isAdmin
                     this.displayNotification('Compte supprimé avec succès!')
+                    router.push('/home');
                 },
                 error => {
                     console.log(error);
