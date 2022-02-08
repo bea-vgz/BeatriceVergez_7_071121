@@ -29,10 +29,10 @@
         </label>
         <input id="password" name="password" v-model="user.password" placeholder="Mot de passe" required="required" :type="show ? 'text' : 'password'"/>
         
-        <p class="champs">Les champs indiqués par une * sont obligatoires</p>
+        <p class="champs"><strong>Les champs indiqués par une * sont obligatoires</strong></p>
 
         <button type="submit" class="buttonConnect" aria-label="se connecter">
-          <router-link to="/home" style="text-decoration: none; color: inherit;"> Connexion </router-link>
+          <router-link to="/home" style="text-decoration: none; color: inherit;"><strong> Connexion </strong></router-link>
         </button>
 
         <button type="submit" value="Submit" class="buttonCompte" >
@@ -105,7 +105,7 @@ h2 {
 }
 .champs {
     font-size: 0.7rem;
-    color: #fd2d01;
+    color: #eb2700;
     text-align: left;
     margin-left: 0.5rem;
 }
@@ -148,8 +148,8 @@ input {
     font-family: 'Barlow', sans-serif;
     padding: 0.5rem;
     border-radius: 1rem;
-    border: solid 0.15rem #fd2d01;
-    background-color: #fd2d01;
+    border: solid 0.15rem #eb2700;
+    background-color: #eb2700;
     color: #fff;
     margin-top: 1rem;
     display: block;
@@ -159,8 +159,8 @@ input {
 }
 .buttonConnect:hover {
     background-color: #fff;
-    border: solid 0.15rem #fd2d01;
-    color: #fd2d01;
+    border: solid 0.15rem #eb2700;
+    color: #eb2700;
     cursor: pointer;
     font-weight: bold;
 }
@@ -182,7 +182,7 @@ input {
 .buttonEyes {
   border: none;
   cursor: pointer;
-  color: #fd2d01;
+  color: #eb2700;
   padding: 0.3rem;
   border-radius: 100%;
   margin-left: 0.7rem;

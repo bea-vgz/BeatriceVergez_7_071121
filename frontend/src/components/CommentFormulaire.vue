@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-
     createComment(){
       const postId = this.post.id;
       const { comment } = CommentService.createComment(
@@ -54,7 +53,6 @@ export default {
           this.displayNotification('Comment créé !')
         })
     },
-
     newline () {
       this.content= `${this.content}\n`
     },

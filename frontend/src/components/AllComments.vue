@@ -10,14 +10,14 @@
     </button>
     <div class="comment mb-2 text-left" v-for="comment in comments" :key="comment.id">
       <Comment
-        @commentDeleted="removeComment"
+        @commentDeleted="AllPostsComments"
         :comment="comment"
         :post="post"
       />
     </div>
 
     <CommentFormulaire 
-      @commentCreated="appendComment"
+      @commentCreated="AllPostsComments"
       :post="post" 
     />
   </div>
@@ -51,12 +51,6 @@ export default {
     getDateWithoutTime(date) {
       return require("moment")(date).format("YYYY-MM-DD HH:mm");
     },
-    appendComment(comment) {
-      this.comments.push(comment)
-    },
-    removeComment(commentToDelete) {
-      this.comments = this.comments.filter(comment => comment.id !== commentToDelete.id)
-    }
   },
 }
 </script>

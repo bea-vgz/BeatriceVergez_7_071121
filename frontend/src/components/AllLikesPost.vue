@@ -108,7 +108,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 a {
   text-decoration: none;
   color: #212529;
@@ -146,6 +146,8 @@ a {
 }
 .likes-number {
   font-size: 14px;
+  font-weight: 700;
+  color: #747474
 }
 .UserAvatar {
   display: flex;
@@ -184,6 +186,8 @@ a {
   }
   .likes-number {
     font-size: 12px;
+    font-weight: 700;
+    color: #747474
   }
 }
 .svg-container {

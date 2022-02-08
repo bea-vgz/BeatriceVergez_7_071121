@@ -134,7 +134,7 @@ export default {
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then(() => {
-        this.currentUser.userId
+        AuthService.getOneUser(this.currentUser.userId, this.userId)
         this.displayNotification('User modifié !')
         router.push('/home');
       })

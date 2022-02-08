@@ -103,11 +103,9 @@ export default {
       this.file = URL.createObjectURL(event.target.files[0])
       this.$emit('onFileSelected', event.target.files[0])
     },
-
     triggerInput() {
       this.$refs.fileInput.click()
     },
-
     updateValue(value) {
       this.$emit('input', value)
     },
@@ -179,5 +177,4 @@ button:hover {
 .icon {
   padding-right: 0.5rem;
 }
-
 </style>

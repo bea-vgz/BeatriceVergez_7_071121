@@ -18,7 +18,7 @@
           />
         </svg>
       </div>
-      <span class="likes-number ml-2">{{ likesCount }} </span>
+      <span class="likes-number ml-1">{{ likesCount }} </span>
       </button>
       <button
         v-b-modal="`modal-dislikes-${comment.id}`"
@@ -37,7 +37,7 @@
           />
         </svg>
       </div>
-      <span class="likes-number ml-2">{{ dislikesCount }}</span>
+      <span class="likes-number ml-1">{{ dislikesCount }}</span>
       </button>
     </div>
 
@@ -145,8 +145,9 @@ a {
   border-top: none;
 }
 .likes-number {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
+  color: #747474
 }
 .UserAvatar {
   display: flex;
@@ -185,6 +186,8 @@ a {
   }
   .likes-number {
     font-size: 12px;
+    font-weight: 700;
+    color: #747474
   }
 }
 .svg-container {

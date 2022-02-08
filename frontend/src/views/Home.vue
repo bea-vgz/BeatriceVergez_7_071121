@@ -74,6 +74,8 @@ h1 {
 }
 .text-align {
   text-align:center;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 body {
@@ -115,5 +117,4 @@ body {
     transform: translateY(0%);
   }
 }
-
 </style>

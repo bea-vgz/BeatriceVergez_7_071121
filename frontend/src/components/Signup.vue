@@ -34,10 +34,10 @@
         <label for="bio"> 💬  Biographie : </label>
         <input type="bio" id="bio" v-model="user.bio" placeholder="Quelques mots sur vous : âge, message, poste...">
 
-        <p class="champs">Les champs indiqués par une * sont obligatoires</p>
+        <p class="champs"><strong>Les champs indiqués par une * sont obligatoires</strong></p>
         
         <button class="buttonInsc" type="submit" value="Submit">
-            S'inscrire
+            <strong>S'inscrire</strong>
         </button>
         
         <button type="submit" value="Submit" class="buttonCompte" >
@@ -119,7 +119,7 @@ h2 {
 }
 .champs {
   font-size: 0.7rem;
-  color: #fd2d01;
+  color: #eb2700;
   text-align: left;
   margin-left: 0.5rem;
 }
@@ -160,8 +160,8 @@ input {
   font-family: 'Barlow', sans-serif;
   padding: 0.5rem;
   border-radius: 1rem;
-  border: solid 0.15rem #fd2d01;
-  background-color: #fd2d01;
+  border: solid 0.15rem #eb2700;
+  background-color: #eb2700;
   color: #fff;
   margin-top: 1rem;
   display: block;
@@ -171,8 +171,8 @@ input {
 }
 .buttonInsc:hover {
   background-color: #fff;
-  border: solid 0.15rem #fd2d01;
-  color: #fd2d01;
+  border: solid 0.15rem #eb2700;
+  color: #eb2700;
   cursor: pointer;
   font-weight: bold;
 }
@@ -192,10 +192,10 @@ input {
   cursor: pointer
 }
 .buttonEyes {
-  background: #F2F2F2;;
+  background: none;
   border: none;
   cursor: pointer;
-  color: #fd2d01;
+  color: #eb2700;
   padding: 0.3rem;
   border-radius: 100%;
   margin-left: 0.7rem;

@@ -177,7 +177,6 @@ export default {
         this.comment.Like_comments.length += res.data.like ? 1 : -1
       }
       this.likeThisComment = res.data.like
-      this.displayNotification('👍🏻')
     },
 
     async dislikeOrNotComment() {
@@ -187,7 +186,6 @@ export default {
         this.comment.Dislike_comments.length += res.data.dislike ? 1 : -1
       }
       this.dislikeThisComment = res.data.dislike
-      this.displayNotification('👎🏻')
     },
 
     getLikeOnOneComment(){

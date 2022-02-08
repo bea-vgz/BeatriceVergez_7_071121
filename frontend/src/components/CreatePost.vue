@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @submit="onSubmit" >
+    <div @submit="createPost" >
       <PostFormulaire
         @onFileSelected="onFileSelected"
         v-model="content"
@@ -14,6 +14,7 @@
 <script>
 import { mapActions } from 'vuex'
 import PostFormulaire from '../components/PostFormulaire'
+import PostService from '../service/post.resource'
 export default {
   name: 'CreatePost',
   components: {
@@ -34,24 +35,20 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-
     onFileSelected(file) {
       this.image = file
     },
-
-    onSubmit(event) {
+    createPost(event) {
       const post = new FormData();
       post.append('image', this.image);
       post.append('content', this.content);
-
       this.$store.dispatch("post/createPost", post)
       .then(() => {
-        this.currentUser.userId
+        PostService.getAllPosts()
         this.displayNotification('Post créé !')
         this.resetForm(event)
       })
     },
-
     resetForm(event) {
       event.target.reset()
       this.content = ''

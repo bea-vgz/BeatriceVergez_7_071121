@@ -17,14 +17,6 @@
         />
       </div>
     </div>
-    <button
-      class="search-btn-mobile position-fixed border-0 p-0 bg-transparent d-lg-none d-xl-none"
-      type="button"
-      @click="triggerInput"
-      aria-label="Chercher"
-    >
-      <b-icon icon="search"></b-icon>
-    </button>
     <div
       v-if="users.length"
       class="users-list card border-0 position-fixed"
@@ -147,9 +139,6 @@ export default {
     background: white;
     box-shadow: 0rem 0.2rem 0.5rem rgba(0, 0, 0, 0.08) !important;
   }
-  .search-btn-mobile {
-   display: none;
-  }
   .search-bar {
     display: block !important;
   }
@@ -157,9 +146,6 @@ export default {
 @media screen and (min-width: 769px) and (max-width: 992px) {
   .search-bar {
     display: block !important;
-  }
-  .search-btn-mobile {
-    display: none;
   }
 }
 </style>
