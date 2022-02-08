@@ -4,42 +4,44 @@ const { Comment } = require('../models/index');
 
 // Création d'un like comment :
 exports.dislikeComment = async (req, res, next) => {
-    try {
-      const existDislike = await Dislike_comment.findOne({ where: { UserId: req.user, CommentId: req.params.commentId } });
-      if (existDislike) {
-        await existDislike.destroy()
-        .then((comment) => {
-          Comment.findOne({
-            where: { id: req.params.commentId },
-            include: [
-              {
-                model: Dislike_comment
-              },
-            ],
-          });
-        res.status(201).json({ comment, dislike : false })
-        })
-      } else {
-        Dislike_comment.create({
-          UserId: req.user,
-          CommentId: req.params.commentId
-        })
-        .then((comment) => {
-          Comment.findOne({
-            where: { id: req.params.commentId },
-            include: [
-              {
-                model: Dislike_comment
-              },
-            ]
-          });
-          res.status(201).json({ comment, dislike: true })
-        })
-      }
+  try {
+    const existDislike = await Dislike_comment.findOne({ 
+      where: { UserId: req.user, CommentId: req.params.commentId } 
+    });
+    if (existDislike) {
+      await existDislike.destroy()
+      .then( async () => {
+        const comment = await Comment.findOne({
+          where: { id: req.params.commentId },
+          include: [
+            {
+              model: Dislike_comment
+            },
+          ],
+        });
+      res.status(201).json({ comment, dislike : false })
+      })
+    } else {
+      Dislike_comment.create({
+        UserId: req.user,
+        CommentId: req.params.commentId,
+      })
+      .then( async () => {
+        const comment = await Comment.findOne({
+          where: { id: req.params.commentId },
+          include: [
+            {
+              model: Dislike_comment
+            },
+          ]
+        });
+        res.status(201).json({ comment, dislike: true })
+      })
     }
-    catch (error) { 
-      res.status(400).json({ error: error.message });
-    }
+  }
+  catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 //Récupérer tous les dislikes d'un comment
@@ -49,7 +51,7 @@ exports.getAllDislikesOneComment = async (req, res, next) => {
       where: { CommentId: req.params.commentId },
       include: { model: User }
     })
-  res.status(200).json({ allLikes, dislikes: allDislikes.length })
+    res.status(200).json({ allDislikes, dislikes: allDislikes.length })
   } catch (error) {
     res.status(400).json({ error })
   }

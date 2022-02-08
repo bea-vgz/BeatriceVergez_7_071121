@@ -77,7 +77,8 @@ exports.getPostsComments = (req, res, next) => {
       },
       { 
         model: Dislike_comment
-      },],
+      },
+    ],
     order: [["createdAt", "ASC"]], 
   }) 
     .then(comments => res.status(200).json(comments))
