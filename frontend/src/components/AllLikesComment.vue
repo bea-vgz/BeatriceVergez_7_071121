@@ -2,7 +2,7 @@
   <div>
     <div class="buttons-likeDislike d-flex">
       <button
-        v-b-modal="`modal-likes-${post.id}`"
+        v-b-modal="`modal-likes-${comment.id}`"
         @click="getAllLikes"
         v-if="likesCount > 0"
         class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
@@ -21,7 +21,7 @@
       <span class="likes-number ml-2">{{ likesCount }} </span>
       </button>
       <button
-        v-b-modal="`modal-dislikes-${post.id}`"
+        v-b-modal="`modal-dislikes-${comment.id}`"
         @click="getAllDislikes"
         v-if="dislikesCount > 0"
         class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
@@ -41,33 +41,33 @@
       </button>
     </div>
 
-    <b-modal v-if="likesCount" :id="`modal-likes-${post.id}`" :title="`${likesCount} personne(s) aime(nt) ce post`">
-      <div v-for="like_post in likes" :key="like_post.id">
+    <b-modal v-if="likesCount" :id="`modal-likes-${comment.id}`" :title="`${likesCount} personne(s) aime(nt) ce commentaire`">
+      <div v-for="like_comment in likes" :key="like_comment.id">
         <router-link
-          :to="{ name: 'ProfilUser', params: { userId: like_post.UserId } }"
+          :to="{ name: 'ProfilUser', params: { userId: like_comment.UserId } }"
           ><div class="d-flex align-items-center">
             <div class="d-flex UserAvatar">
-              <router-link :to="{ name: 'ProfilUser', params: { userId: like_post.UserId } }">
-                <img :src="like_post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <router-link :to="{ name: 'ProfilUser', params: { userId: like_comment.UserId } }">
+                <img :src="like_comment.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
               </router-link>
             </div>
-            <p>{{ like_post.User.username }} </p>
+            <p>{{ like_comment.User.username }} </p>
           </div></router-link
         >
       </div>
       <div slot="modal-footer"></div>
     </b-modal>
-    <b-modal v-if="dislikesCount" :id="`modal-dislikes-${post.id}`" :title="`${dislikesCount} personne(s) n'aime(nt) pas ce post`">
-      <div v-for="dislike_post in dislikes" :key="dislike_post.id">
+    <b-modal v-if="dislikesCount" :id="`modal-dislikes-${comment.id}`" :title="`${dislikesCount} personne(s) n'aime(nt) pas ce commentaire`">
+      <div v-for="dislike_comment in dislikes" :key="dislike_comment.id">
         <router-link
-          :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }"
+          :to="{ name: 'ProfilUser', params: { userId: dislike_comment.UserId } }"
           ><div class="d-flex align-items-center">
             <div class="d-flex UserAvatar">
-              <router-link :to="{ name: 'ProfilUser', params: { userId: dislike_post.UserId } }">
-                <img :src="dislike_post.User.photoProfil" alt="Photo de profil de l'user" class="postUserPhoto">
+              <router-link :to="{ name: 'ProfilUser', params: { userId: dislike_comment.UserId } }">
+                <img :src="dislike_comment.User.photoProfil" alt="Photo de profil de l'user" class="commentUserPhoto">
               </router-link>
             </div>
-            <p>{{ dislike_post.User.username }} </p>
+            <p>{{ dislike_comment.User.username }} </p>
           </div>
         </router-link>
       </div>
@@ -77,11 +77,11 @@
 </template>
 
 <script>
-import DislikePostService from '../service/dislike_post.resource'
-import LikePostService from '../service/like_post.resource'
+import DislikeCommentService from '../service/dislike_comment.resource'
+import LikeCommentService from '../service/like_comment.resource'
 export default {
-  name: 'AllLikesPost',
-  props: ['post', 'likesCount', 'dislikesCount'],
+  name: 'AllLikesComment',
+  props: ['comment', 'likesCount', 'dislikesCount'],
   data () {
     return {
       likes: [],
@@ -90,16 +90,16 @@ export default {
   },
   methods: {
     getAllLikes() {
-      const postId = this.post.id;
-      LikePostService.getAllLikesOnePost(postId)
+      const commentId = this.comment.id;
+      LikeCommentService.getAllLikesOneComment(commentId)
       .then((res) => (
         this.likes = res.data.allLikes
       ))
     },
 
     getAllDislikes() {
-      const postId = this.post.id;
-      DislikePostService.getAllDislikesOnePost(postId)
+      const commentId = this.comment.id;
+      DislikeCommentService.getAllDislikesOneComment(commentId)
       .then((res) => (
         this.dislikes = res.data.allDislikes
       ))
@@ -155,7 +155,7 @@ a {
 .infoPostUser {
   padding-left: 1.5rem;
 }
-.postUserPhoto {
+.commentUserPhoto {
   width: 50px;
   height: 50px;
   object-fit: cover;

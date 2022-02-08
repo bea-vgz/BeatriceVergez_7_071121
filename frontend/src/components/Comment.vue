@@ -1,5 +1,5 @@
 <template>
-  <div v-if="comment" class="comment">
+  <div class="comment">
     <div class="d-flex">
       <div class="UserAvatar" v-if="comment.User">
         <router-link :to="{ name: 'ProfilUser', params: { userId: comment.UserId } }" >
@@ -43,6 +43,13 @@
         {{ getDateWithoutTime(comment.updatedAt) }}
       </p>
       <div class="d-flex justify-content-around">
+        <div class="button-dis-like d-flex" v-if="comment.Like_comments">
+            <AllLikesComment
+            :post="post"
+            :comment="comment" 
+            :likesCount="comment.Like_comments.length"
+            />
+          </div>
         <button
           @click="likeOrNotComment"
           class="react-btn"
@@ -68,7 +75,7 @@
             />
           </svg>
 
-          <span :class="`dislike-comment ml-2 ${likeThisComment ? 'blue' : ''}`"> J'aime</span>
+          <span :class="`like-comment ml-2 ${likeThisComment ? 'blue' : ''}`"> J'aime</span>
         </button>
         <button
           @click="dislikeOrNotComment"
@@ -94,8 +101,13 @@
               d="M19,15V3H23V15H19M15,3A2,2 0 0,1 17,5V15C17,15.55 16.78,16.05 16.41,16.41L9.83,23L8.77,21.94C8.5,21.67 8.33,21.3 8.33,20.88L8.36,20.57L9.31,16H3C1.89,16 1,15.1 1,14V12C1,11.74 1.05,11.5 1.14,11.27L4.16,4.22C4.46,3.5 5.17,3 6,3H15M15,5H5.97L3,12V14H11.78L10.65,19.32L15,14.97V5Z"
             />
           </svg>
-
-          <span :class="`like-comment ml-2 ${dislikeThisComment ? 'red' : ''}`">Je n'aime pas</span>
+          <div class="button-dis-like d-flex" v-if="comment.Dislike_comments">
+            <AllLikesComment
+            :comment="comment" 
+            :dislikesCount="comment.Dislike_comments.length"
+            />
+          </div>
+          <span :class="`dislike-comment ml-2 ${dislikeThisComment ? 'red' : ''}`">Je n'aime pas</span>
         </button>
       </div>
     </div>
@@ -107,12 +119,14 @@ import DislikeCommentService from "../service/dislike_comment.resource";
 import LikeCommentService from "../service/like_comment.resource";
 import { mapActions } from 'vuex'
 import CommentService from "../service/comment.resource";
-import EditButton from '../components/EditButton.vue'
+import EditButton from '../components/EditButton.vue';
+import AllLikesComment from '../components/AllLikesComment.vue'
 export default {
   name: 'Comment',
   props: ['post', 'comment'],
   components: {
-    EditButton
+    EditButton,
+    AllLikesComment
   },
   computed: {
     currentUser() {
@@ -124,11 +138,13 @@ export default {
       isEditing: false,
       likeThisComment: false,
       dislikeThisComment: false,
+      likesCount: '',
+      dislikesCount:''
     }
   },
   mounted() {
-    this.getLikeOneComment()
-    this.getDislikeOneComment()
+    this.getLikeOnOneComment()
+    this.getDislikeOnOneComment()
   },
   methods: {
      ...mapActions(['displayNotification']),
@@ -170,30 +186,38 @@ export default {
         console.log(error);
       });
     },
-    likeOrNotComment() {
+
+
+    async likeOrNotComment() {
       const commentId = this.comment.id;
-      LikeCommentService.likeComment(commentId)
+      const res = await LikeCommentService.likeComment(commentId)
+      if (res.data.like !== this.likeThisComment) {
+        this.comment.Like_comments.length += res.data.like ? 1 : -1
+      }
+      this.likeThisComment = res.data.like
+      this.displayNotification('👍🏻')
+    },
+
+    async dislikeOrNotComment() {
+      const commentId = this.comment.id;
+      const res = await DislikeCommentService.dislikeComment(commentId)
+      if (res.data.dislike !== this.dislikeThisComment) {
+        this.comment.Dislike_comments.length += res.data.dislike ? 1 : -1
+      }
+      this.dislikeThisComment = res.data.dislike
+      this.displayNotification('👎🏻')
+    },
+
+    getLikeOnOneComment(){
+    const commentId = this.comment.id;
+      LikeCommentService.getLikeOnOneComment(commentId)
       .then((res) => (
         this.likeThisComment = res.data.like
       ))
     },
-    dislikeOrNotComment() {
-      const commentId = this.comment.id;
-      DislikeCommentService.dislikeComment(commentId)
-      .then((res) => (
-        this.dislikeThisComment = res.data.dislike
-      ))
-    },
-    getLikeOneComment(){
+    getDislikeOnOneComment(){
     const commentId = this.comment.id;
-      LikeCommentService.getLikeOneComment(commentId)
-      .then((res) => (
-        this.likeThisComment = res.data.like
-      ))
-    },
-    getDislikeOneComment(){
-    const commentId = this.comment.id;
-      DislikeCommentService.getDislikeOneComment(commentId)
+      DislikeCommentService.getDislikeOnOneComment(commentId)
       .then((res) => (
         this.dislikeThisComment = res.data.dislike
       ))

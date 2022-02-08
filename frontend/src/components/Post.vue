@@ -33,15 +33,10 @@
         </b-modal>
       </div>
       </div>
-      <div class="button-dis-like d-flex" v-if="post.Like_posts">
+      <div class="button-dis-like d-flex" v-if="post.Like_posts && post.Dislike_posts">
         <AllLikesPost 
           :post="post" 
           :likesCount="post.Like_posts.length"
-        />
-      </div>
-      <div class="button-dis-like d-flex" v-if="post.Dislike_posts">
-        <AllLikesPost 
-          :post="post" 
           :dislikesCount="post.Dislike_posts.length"
         />
       </div>

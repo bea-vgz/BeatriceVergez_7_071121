@@ -3,7 +3,7 @@ import authHeader from './auth.header'
 
 class LikeCommentService {
 
-    getCommentsLikes(commentId) {
+    getAllLikesOneComment(commentId) {
         return resource.get(`comments/${commentId}/likes`, { headers: authHeader() })
     }
 
@@ -13,7 +13,7 @@ class LikeCommentService {
         )
     }
 
-    getLikeOneComment(commentId) {
+    getLikeOnOneComment(commentId) {
         return resource.get(`comments/${commentId}/like`, { headers: authHeader() })
     }
 }

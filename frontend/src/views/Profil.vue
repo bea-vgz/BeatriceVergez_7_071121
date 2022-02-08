@@ -82,7 +82,6 @@ export default {
 .container_account {
   display: flex;
   max-width: 100%;
-  width: 100%;
 }
 h1 {
   font-size: 30px;
@@ -113,7 +112,6 @@ h4 {
 .infoUser {
   padding: 3.5rem;
   max-width: 100%;
-  width: 40rem;
   height: auto;
   border-radius: 1.25rem;
   box-shadow: 0 0 16px #0000002e;

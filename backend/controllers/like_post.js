@@ -11,8 +11,8 @@ exports.likePost = async (req, res, next) => {
     });
     if (existLike) {
       await existLike.destroy()
-      .then((post) => {
-        Post.findOne({
+      .then( async() => {
+        const post = await Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
@@ -27,8 +27,8 @@ exports.likePost = async (req, res, next) => {
         UserId: req.user,
         PostId: req.params.postId,
       })
-      .then((post) => {
-        Post.findOne({
+      .then( async() => {
+        const post = await Post.findOne({
           where: { id: req.params.postId },
           include: [
             {

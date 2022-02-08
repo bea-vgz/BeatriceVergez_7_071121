@@ -10,8 +10,8 @@ exports.dislikePost = async (req, res, next) => {
     });
     if (existDislike) {
       await existDislike.destroy()
-      .then((post) => {
-        Post.findOne({
+      .then( async () => {
+        const post = await Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
@@ -26,8 +26,8 @@ exports.dislikePost = async (req, res, next) => {
         UserId: req.user,
         PostId: req.params.postId,
       })
-      .then((post) => {
-        Post.findOne({
+      .then( async () => {
+        const post = await Post.findOne({
           where: { id: req.params.postId },
           include: [
             {
@@ -51,7 +51,7 @@ exports.getAllDislikesOnePost = async (req, res, next) => {
       where: { PostId: req.params.postId },
       include: { model: User }
     })
-    res.status(200).json({ allDislikes })
+    res.status(200).json({ allDislikes, dislikes: allDislikes.length })
   } catch (error) {
     res.status(400).json({ error })
   }

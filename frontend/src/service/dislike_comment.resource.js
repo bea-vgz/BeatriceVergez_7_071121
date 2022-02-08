@@ -13,7 +13,7 @@ class DislikeCommentService {
         )
     }
 
-    getDislikeOneComment(commentId) {
+    getDislikeOnOneComment(commentId) {
         return resource.get(`comments/${commentId}/dislike`, { headers: authHeader() })
     }
 }

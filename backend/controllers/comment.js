@@ -1,5 +1,7 @@
 const { Comment } = require('../models/index');
 const { User } = require('../models/index');
+const { Like_comment } = require('../models/index');
+const { Dislike_comment } = require('../models/index');
 
 // Création d'un commentaire :
 exports.createComment = async (req, res, next) => {
@@ -46,7 +48,17 @@ exports.deleteComment = (req, res, next) => {
 // Afficher/Récupérer un commentaire 
 exports.getOneComment = (req, res, next) => {
     Comment.findOne({ where: { id: req.params.id, PostId: req.params.postId },
-      include: [{ model: User }],
+      include: [
+        { 
+          model: User 
+        },
+        { 
+          model: Like_comment
+        },
+        { 
+          model: Dislike_comment
+        },
+      ],
       order: [["createdAt", "ASC"]], 
     })
       .then((comment) => res.status(200).json(comment))
@@ -56,7 +68,16 @@ exports.getOneComment = (req, res, next) => {
 // Afficher/Récupérer tous les commentaires
 exports.getPostsComments = (req, res, next) => {
   Comment.findAll({ where: { PostId: req.params.postId },
-    include: [{ model: User }],
+    include: [
+      { 
+        model: User 
+      },
+      { 
+        model: Like_comment
+      },
+      { 
+        model: Dislike_comment
+      },],
     order: [["createdAt", "ASC"]], 
   }) 
     .then(comments => res.status(200).json(comments))
