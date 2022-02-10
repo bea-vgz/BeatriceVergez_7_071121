@@ -98,8 +98,8 @@ mutations: {
       state.post = null;
       state.message = "Post non récupéré !";
     },
-    deleteSuccess(state, postId) {
-      state.posts = state.posts.filter(post => post.id !== postId)
+    deleteSuccess(state) {
+      state.post = null
     },
     messageFailure(state, message) {
       state.message = message
