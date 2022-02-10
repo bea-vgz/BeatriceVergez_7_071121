@@ -93,7 +93,7 @@ export default {
 }
 h1 {
   font-size: 30px;
-  color : #fd2d01;
+  color : #e22600;
   margin-bottom: 1rem;
 }
 .avatar {
@@ -117,10 +117,10 @@ h1 {
     border-color: rgba(231, 233, 244);
 }
 .delete_user {
-  color: #fd2d01
+  color: #e22600
 }
 .delete_icon {
-  color: #fd2d01;
+  color: #e22600;
 }
 .option {
     display: flex;
@@ -143,7 +143,7 @@ a {
     cursor: pointer;
 }
 a:hover{
-    color: #fd2d01;
+    color: #e22600;
     cursor: pointer;
     text-decoration: none;
 }
@@ -168,7 +168,7 @@ a:hover{
   right: 0;
   width: 0;
   height: 2px;
-  background-color: #fd2d01;
+  background-color: #e22600;
   transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 @media (hover: hover) and (pointer: fine) {

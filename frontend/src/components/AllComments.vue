@@ -63,7 +63,7 @@ export default {
   padding: 1rem 1rem;
   &:hover {
     cursor: pointer;
-    color: #fd2d01
+    color: #e22600
   }
   &:focus {
     background: none;
@@ -80,7 +80,7 @@ export default {
   right: 0;
   width: 0;
   height: 2px;
-  background-color: #fd2d01;
+  background-color: #e22600;
   transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 @media (hover: hover) and (pointer: fine) {

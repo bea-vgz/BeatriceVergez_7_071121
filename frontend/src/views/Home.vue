@@ -103,7 +103,7 @@ body {
 }
 .text_hello {
   font-weight: bolder;
-  color: #fd2d01;
+  color: #e22600;
 }
 
 @keyframes animate {

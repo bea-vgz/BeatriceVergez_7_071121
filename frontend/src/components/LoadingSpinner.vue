@@ -1,5 +1,5 @@
 <template>
-    <div class="loader">
+    <div class="loader" v-if="isLoading">
         <svg class="circle">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
             <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
@@ -12,6 +12,11 @@
 <script>
 export default {
   name: 'LoadingSpinner',
+  data() {
+    return {
+      isLoading: false,
+    }
+  },
 }
 </script>
 

@@ -116,7 +116,7 @@ export default {
 .btn-outline-secondary,
 .btn-secondary {
   &:hover {
-    color: #fd2d01 !important;
+    color: #e22600 !important;
     background-color: rgba(108, 117, 125, 0.1) !important;
     box-shadow: none !important;
   }

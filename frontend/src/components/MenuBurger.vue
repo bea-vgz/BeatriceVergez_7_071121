@@ -72,7 +72,7 @@ $lg: new-breakpoint(min-width 1024px);
 		display: block;
 		width: 50%;
 		height: 2px;
-		background-color: #fd2d01;
+		background-color: #e22600;
 		float: left;
 		transform-origin: center center;
 		transition: transform 250ms ease;

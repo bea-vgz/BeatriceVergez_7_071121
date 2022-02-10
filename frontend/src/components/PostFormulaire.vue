@@ -63,7 +63,7 @@
             class="d-none"
             type="file"
             accept="image/png, image/jpeg, image/gif"
-            aria-required="true"
+            required="true"
             @change="onFileSelected"
           />
         </div>

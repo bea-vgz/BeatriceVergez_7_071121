@@ -14,8 +14,8 @@
     <form class="formulaire" @submit.prevent="signup">
         <h2>S'inscrire</h2>
     <!-- Username input -->
-        <label for="userName"> 👤 Pseudo * : </label>
-        <input type="text" id="userName" v-model="user.username" placeholder="Pseudo" required="required">
+        <label for="username"> 👤 Pseudo * : </label>
+        <input type="text" id="username" v-model="user.username" placeholder="Pseudo" required="required">
 
     <!-- Email input -->
         <label for="email"> 📧  Email * : </label>
@@ -118,8 +118,8 @@ h2 {
   margin-bottom: 1rem
 }
 .champs {
-  font-size: 0.7rem;
-  color: #eb2700;
+  font-size: 0.8rem;
+  color: #e22600;
   text-align: left;
   margin-left: 0.5rem;
 }
@@ -160,8 +160,8 @@ input {
   font-family: 'Barlow', sans-serif;
   padding: 0.5rem;
   border-radius: 1rem;
-  border: solid 0.15rem #eb2700;
-  background-color: #eb2700;
+  border: solid 0.15rem #e22600;
+  background-color: #e22600;
   color: #fff;
   margin-top: 1rem;
   display: block;
@@ -171,8 +171,8 @@ input {
 }
 .buttonInsc:hover {
   background-color: #fff;
-  border: solid 0.15rem #eb2700;
-  color: #eb2700;
+  border: solid 0.15rem #e22600;
+  color: #e22600;
   cursor: pointer;
   font-weight: bold;
 }
@@ -195,7 +195,7 @@ input {
   background: none;
   border: none;
   cursor: pointer;
-  color: #eb2700;
+  color: #e22600;
   padding: 0.3rem;
   border-radius: 100%;
   margin-left: 0.7rem;

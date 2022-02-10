@@ -22,7 +22,7 @@
 
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : 
-          <button type="button" class="buttonEyes" @click="show = !show" >
+          <button type="button" class="buttonEyes" @click="show = !show" aria-role="img">
             <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes" v-show="show" />
             <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes" v-show="!show" />
           </button>
@@ -104,8 +104,8 @@ h2 {
     margin-bottom: 1rem
 }
 .champs {
-    font-size: 0.7rem;
-    color: #eb2700;
+    font-size: 0.8rem;
+    color: #e22600;
     text-align: left;
     margin-left: 0.5rem;
 }
@@ -148,8 +148,8 @@ input {
     font-family: 'Barlow', sans-serif;
     padding: 0.5rem;
     border-radius: 1rem;
-    border: solid 0.15rem #eb2700;
-    background-color: #eb2700;
+    border: solid 0.15rem #e22600;
+    background-color: #e22600;
     color: #fff;
     margin-top: 1rem;
     display: block;
@@ -159,8 +159,8 @@ input {
 }
 .buttonConnect:hover {
     background-color: #fff;
-    border: solid 0.15rem #eb2700;
-    color: #eb2700;
+    border: solid 0.15rem #e22600;
+    color: #e22600;
     cursor: pointer;
     font-weight: bold;
 }
@@ -182,7 +182,7 @@ input {
 .buttonEyes {
   border: none;
   cursor: pointer;
-  color: #eb2700;
+  color: #e22600;
   padding: 0.3rem;
   border-radius: 100%;
   margin-left: 0.7rem;

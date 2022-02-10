@@ -52,7 +52,7 @@
               </div>
               <div class="d-flex align-items-center">
                 <b-col sm="2" class="d-none d-lg-block p-0">
-                  <label for="email"><strong> Biographie </strong></label>
+                  <label for="bio"><strong> Biographie </strong></label>
                 </b-col>
                 <b-col sm="10">
                   <b-form-input
@@ -134,7 +134,7 @@ export default {
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then(() => {
-        AuthService.getOneUser(this.currentUser.userId, this.userId)
+        this.$store.dispatch('auth/getOneUser', this.currentUser.userId, this.userId)
         this.displayNotification('User modifié !')
         router.push('/home');
       })
@@ -217,7 +217,7 @@ export default {
   margin-left: auto;
 }
 .button_close:hover {
-  color: #fd2d01;
+  color: #e22600;
   border: none
 }
 .save-btn {

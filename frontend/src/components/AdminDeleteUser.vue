@@ -61,11 +61,11 @@ export default {
   right: 0;
   width: 0;
   height: 2px;
-  background-color: #fd2d01;
+  background-color: #e22600;
   transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .delete_user {
-  color: #fd2d01
+  color: #e22600
 }
 .option {
   display: flex;
@@ -83,7 +83,7 @@ a{
     cursor: pointer;
 }
 a:hover{
-    color: #fd2d01;
+    color: #e22600;
     cursor: pointer;
     text-decoration: none;
 }

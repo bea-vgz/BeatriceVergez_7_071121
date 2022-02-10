@@ -57,7 +57,7 @@
         >
           <div v-if="likeThisComment">
             <path
-              fill="rgb(32, 120, 244)"
+              fill="rgb(14, 96, 211)"
             />
           </div>
           <div v-else>
@@ -81,7 +81,7 @@
         >
           <div v-if="dislikeThisComment">
             <path
-              fill="rgb(239, 42, 16)"
+              fill="rgb(226, 38, 0)"
             />
           </div>
           <div v-else>
@@ -281,10 +281,10 @@ a {
     color: #747474 !important;
 }
 .blue {
-  color: rgb(32, 120, 244);
+  color: rgb(10, 91, 204);
 }
 .red {
-  color: rgb(239, 42, 16);
+  color: rgb(196, 33, 12);
 }
 .footer-comment {
   display: flex;

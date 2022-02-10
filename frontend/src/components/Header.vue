@@ -123,7 +123,7 @@ nav .menu-item, .sub-menu {
 }
 #nav a:hover {
   cursor: pointer;
-  color: #fd2d01;
+  color: #e22600;
 }
 .nav_centrale {
   padding: 2rem;

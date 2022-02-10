@@ -23,7 +23,7 @@
       <b-row class="row justify-content-center align-items-center flex-column">
         <b-col cols="12" lg="6" class="align-items-center">
           <div class="posts" v-if="user.Posts.length > 0 ">
-            <h4 class="text-center posts-title"><strong> • SES POSTS • </strong></h4>
+            <h2 class="text-center posts-title"><strong> • SES POSTS • </strong></h2>
             <AllPosts :userId="this.$route.params.userId" />
           </div>
           <p v-else class="text-center"><strong>Ce membre n'a encore publié aucun post 😉</strong></p>
@@ -89,9 +89,11 @@ export default {
 .container-profil {
   background: #F2F2F2;
 }
-h4 {
+h2 {
   margin-bottom: 2rem;
   margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 h1 {
   font-size: 30px;

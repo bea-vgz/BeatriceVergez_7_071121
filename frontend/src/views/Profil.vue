@@ -24,7 +24,7 @@
           </div>
         </b-col>
         <b-col lg="12" class="align-items-center">
-          <h4 class="text-center posts-title"><strong> • MES POSTS • </strong></h4>
+          <h2 class="text-center posts-title"><strong> • MES POSTS • </strong></h2>
           <AllPosts :userId="currentUser.userId" />
         </b-col>
       </div>
@@ -85,12 +85,14 @@ export default {
 }
 h1 {
   font-size: 30px;
-  color : #fd2d01;
+  color : #e22600;
   margin-bottom: 1rem;
 }
-h4 {
+h2 {
   margin-bottom: 2rem;
   margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 .profil {
   background-color: #F2F2F2;
@@ -135,7 +137,7 @@ h4 {
   margin-bottom: 1.2rem;
 }
 .modif_icon {
-  color: #fd2d01;
+  color: #e22600;
 }
 a {
   text-decoration: none;
@@ -145,7 +147,7 @@ a {
   cursor: pointer;
 }
 a:hover{
-  color: #fd2d01;
+  color: #e22600;
   cursor: pointer;
   text-decoration: none;
 }
@@ -154,7 +156,7 @@ a:hover{
   color: #9e9e9e
 }
 .icone {
-  color: #fd2d01;
+  color: #e22600;
 }
 .posts-title {
   letter-spacing: 1px;

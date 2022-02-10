@@ -15,7 +15,7 @@
               </div>
             </div>
             <div>
-              <label for="newpassword"> 🔒  Nouveau mot de passe : </label>
+              <label for="newPassword"> 🔒  Nouveau mot de passe : </label>
               <div class="inputPassword">
                 <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
                 <button type="button" class="buttonEyes" @click="show = !show" >
@@ -25,7 +25,7 @@
               </div>
             </div>
             <div>
-              <label for="newpassword">🔒  Confirmer le mot de passe : </label>
+              <label for="confirmPassword">🔒  Confirmer le mot de passe : </label>
               <div class="inputPassword">
                 <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
                 <button type="button" class="buttonEyes" @click="show = !show" >
@@ -113,7 +113,7 @@
 }
 h1 {
   font-size: 30px;
-  color : #fd2d01;
+  color : #e22600;
   margin-bottom: 1rem;
 }
 .profil {

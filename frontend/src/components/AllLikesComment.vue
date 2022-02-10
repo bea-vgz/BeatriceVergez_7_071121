@@ -166,13 +166,13 @@ a {
 }
 .svg-container-like {
   border-radius: 100%;
-  background-color: rgb(32, 120, 244);
+  background-color: #0e60d3;
   width: 18px;
   height: 18px;
 }
 .svg-container-dislike {
   border-radius: 100%;
-  background-color: rgb(239, 42, 16);
+  background-color: #e22600;
   width: 18px;
   height: 18px;
 }
