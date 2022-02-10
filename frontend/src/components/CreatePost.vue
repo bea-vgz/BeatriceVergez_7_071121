@@ -14,7 +14,6 @@
 <script>
 import { mapActions } from 'vuex'
 import PostFormulaire from '../components/PostFormulaire'
-import PostService from '../service/post.resource'
 export default {
   name: 'CreatePost',
   components: {
@@ -44,7 +43,7 @@ export default {
       post.append('content', this.content);
       this.$store.dispatch("post/createPost", post)
       .then(() => {
-        PostService.getAllPosts()
+        this.$store.dispatch('post/AllPostsStore')
         this.displayNotification('Post créé !')
         this.resetForm(event)
       })

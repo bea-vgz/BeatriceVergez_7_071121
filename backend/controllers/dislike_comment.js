@@ -1,4 +1,5 @@
 const { Dislike_comment } = require('../models/index');
+const { Like_comment } = require('../models/index');
 const { User } = require('../models/index');
 const { Comment } = require('../models/index');
 
@@ -8,7 +9,10 @@ exports.dislikeComment = async (req, res, next) => {
     const existDislike = await Dislike_comment.findOne({ 
       where: { UserId: req.user, CommentId: req.params.commentId } 
     });
-    if (existDislike) {
+    const existLike = await Like_comment.findOne({ 
+      where: { UserId: req.user, CommentId: req.params.commentId } 
+    });
+    if (existDislike && !existLike) {
       await existDislike.destroy()
       .then( async () => {
         const comment = await Comment.findOne({
@@ -21,7 +25,7 @@ exports.dislikeComment = async (req, res, next) => {
         });
       res.status(201).json({ comment, dislike : false })
       })
-    } else {
+    } else if (!existDislike && !existLike) {
       Dislike_comment.create({
         UserId: req.user,
         CommentId: req.params.commentId,
@@ -37,6 +41,9 @@ exports.dislikeComment = async (req, res, next) => {
         });
         res.status(201).json({ comment, dislike: true })
       })
+    }
+    else {
+      res.status(400).json({ msg: "Vous ne pouvez pas disliker ce commentaire. Vous devez d'abord enlever votre vote" });
     }
   }
   catch (error) {

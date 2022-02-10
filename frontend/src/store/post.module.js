@@ -16,7 +16,7 @@ export const post = {
     },
 
 actions: {
-  initializePostStore ({ dispatch, commit }, params = {}) {
+  AllPostsStore ({ dispatch, commit }, params = {}) {
     commit('reset_store')
     dispatch('getAllPosts', params)
   },
@@ -82,8 +82,8 @@ mutations: {
     reset_store (state) {
       state.posts = []
     },
-    createPostSuccess(state, newPost) {
-      state.posts.unshift(newPost)
+    createPostSuccess(state, post) {
+      state.posts.unshift(post)
       state.posts = [...state.posts]
     },
     createPostFailure(state) {

@@ -2,7 +2,7 @@
     <footer>
       <!-- Copyright -->
       <div class="footer">
-        © 2021 Copyright – Groupomania
+        © 2022 Copyright – Groupomania
       </div>
       <!-- Copyright -->
     </footer>

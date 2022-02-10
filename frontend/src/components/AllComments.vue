@@ -49,7 +49,7 @@ export default {
         this.allCommentsDisplayed = true ))
     },
     getDateWithoutTime(date) {
-      return require("moment")(date).format("YYYY-MM-DD HH:mm");
+      return require("moment")(date).format("DD-MM-YYYY HH:mm");
     },
   },
 }

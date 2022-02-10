@@ -50,7 +50,7 @@ export default {
         .then(() => {
           this.content = ''
           this.$emit('commentCreated', comment)
-          this.displayNotification('Comment créé !')
+          this.displayNotification('Commentaire créé !')
         })
     },
     newline () {

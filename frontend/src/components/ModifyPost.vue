@@ -11,22 +11,22 @@
       modifyText="Modifier le post"
       deleteText="Supprimer le post"
     >
-      <b-modal
-        :id="`modal-${post.id}`"
-        title="Modifier la publication"
-        ok-title="Enregistrer"
-        ok-variant="light"
-        @ok="onUpload"
-        ok-only
-      >
-        <b-form>
-          <PostFormulaire
-            :image="post.image"
-            @onFileSelected="onFileSelected"
-            v-model="post.content"
-          />
-        </b-form>
-      </b-modal>
+    <b-modal
+      :id="`modal-${post.id}`"
+      title="Modifier la publication"
+      ok-title="Enregistrer"
+      ok-variant="light"
+      @ok="updatePost"
+      ok-only
+    >
+    <b-form>
+      <PostFormulaire
+        :image="post.image"
+        @onFileSelected="onFileSelected"
+        v-model="post.content"
+      />
+    </b-form>
+    </b-modal>
     </EditButton>
     <ConfirmDialogue
       :reveal="revealConfirm"
@@ -79,15 +79,15 @@ export default {
     onFileSelected(file) {
       this.image = file;
     },
-    onUpload(){
-        const post = new FormData();
-        post.append('image', this.image);
-        post.append('content', this.post.content);
-        PostService.modifyPost(this.post.id, post)
-        .then(() => {
-          this.displayNotification('Post modifié !')
-          location.reload()
-        })
+    async updatePost(){
+      const post = new FormData();
+      post.append('image', this.image);
+      post.append('content', this.post.content);
+      await PostService.modifyPost(this.post.id, post)
+      .then(() => {
+        this.$store.dispatch('post/AllPostsStore')
+        this.displayNotification('Post modifié !')
+      })
     },
     
     openConfirm() {

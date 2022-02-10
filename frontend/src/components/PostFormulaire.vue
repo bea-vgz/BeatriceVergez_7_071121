@@ -10,7 +10,7 @@
           <div class="textarea_form">
             <b-form-textarea
               :value="value"
-              @input="updateValue"
+              @input="updateContent"
               id="content"
               :placeholder="`Quoi de beau, ${currentUser.username} ?`"
               aria-label="Écrire une publication"
@@ -43,10 +43,7 @@
           </button>
           <button
             v-if="isCreating"
-            :class=" `d-flex align-items-center justify-content-center 
-             ${ emptyField ? 'disabled' : ''
-            }` "
-            :disabled="emptyField"
+            :class="`d-flex align-items-center justify-content-center`"
             type="submit"
             aria-label="Publier"
           >
@@ -94,9 +91,6 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    emptyField () {
-      return !this.value.trim().length && !this.file
-    }
   },
   methods: {
     onFileSelected(event) {
@@ -106,7 +100,7 @@ export default {
     triggerInput() {
       this.$refs.fileInput.click()
     },
-    updateValue(value) {
+    updateContent(value) {
       this.$emit('input', value)
     },
   },

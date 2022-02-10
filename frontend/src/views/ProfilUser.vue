@@ -8,9 +8,10 @@
             <div class="text-center userInfo">
               <img :src="user.photoProfil" alt="Photo de profil de l'user" class="avatarProfil">
               <h1>{{ user.username }}</h1>
+              <p><strong>Membre depuis le :</strong> {{ getDateWithoutTime(user.createdAt) }}</p>
               <p><strong>Email : </strong>{{ user.email }}</p>
               <p><strong>Biographie :</strong>{{ user.bio }}</p>
-              <AdminDeleteAccount
+              <AdminDeleteUser
                 v-if="currentUser.isAdmin"
                 :user="user"
               />
@@ -39,14 +40,14 @@ import AllPosts from "../components/AllPosts.vue";
 import AuthService from '../service/auth.resource'
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import AdminDeleteAccount from "../components/AdminDeleteAccount.vue"
+import AdminDeleteUser from "../components/AdminDeleteUser.vue"
 export default {
   name: 'ProfilUser',
   components: {
     Header,
     Footer,
     AllPosts,
-    AdminDeleteAccount
+    AdminDeleteUser
   },
   computed: {
     currentUser() {
@@ -76,6 +77,9 @@ export default {
         .then((res) => {
           this.user = res.data
         })
+    },
+    getDateWithoutTime(date) {
+      return require("moment")(date).format("DD-MM-YYYY");
     },
   },
 }

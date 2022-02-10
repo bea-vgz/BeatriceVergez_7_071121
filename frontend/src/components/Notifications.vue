@@ -5,20 +5,20 @@
 <script>
 import { mapState} from 'vuex'
 export default {
-  name: 'NotificationAlert',
+  name: 'Notifications',
   watch: {
     message (newMessage) {
       if (!newMessage) return
       this.$bvToast.toast(newMessage, {
-        title: 'Notification',
+        title: 'Notifications',
         autoHideDelay: 4000
       })
     }
   },
   computed: {
-    ...mapState(['notificationAlert']),
+    ...mapState(['notifications']),
     message () {
-      return this.notificationAlert.message
+      return this.notifications.message
     }
   }
 }

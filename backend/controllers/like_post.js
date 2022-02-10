@@ -1,4 +1,5 @@
 const { Like_post } = require('../models/index');
+const { Dislike_post } = require('../models/index');
 const { User } = require('../models/index');
 const { Post } = require('../models/index');
 const { Sequelize } = require("sequelize");
@@ -9,7 +10,10 @@ exports.likePost = async (req, res, next) => {
     const existLike = await Like_post.findOne({ 
       where: { UserId: req.user, PostId: req.params.postId } 
     });
-    if (existLike) {
+    const existDislike = await Dislike_post.findOne({ 
+      where: { UserId: req.user, PostId: req.params.postId } 
+    });
+    if (existLike && !existDislike) {
       await existLike.destroy()
       .then( async() => {
         const post = await Post.findOne({
@@ -22,7 +26,7 @@ exports.likePost = async (req, res, next) => {
         });
       res.status(201).json({ post, like : false })
       })
-    } else {
+    } else if(!existLike && !existDislike) {
       Like_post.create({
         UserId: req.user,
         PostId: req.params.postId,
@@ -38,6 +42,9 @@ exports.likePost = async (req, res, next) => {
         });
         res.status(201).json({ post, like: true})
       })
+    }
+    else {
+      res.status(400).json({ msg: "Vous ne pouvez pas aimer ce post. Vous devez d'abord enlever votre vote" });
     }
   }
   catch (error) {

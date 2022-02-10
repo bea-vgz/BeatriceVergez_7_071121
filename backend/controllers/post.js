@@ -111,3 +111,26 @@ exports.getAllPosts = (req, res, next) => {
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }))
 }
+
+// Afficher/Récupérer tous les commentaires
+exports.getPosts = (req, res, next) => {
+  Post.findAll({
+    include: [
+      { 
+        model: User 
+      },
+      { 
+        model: Comment
+      },
+      { 
+        model: Like_post
+      },
+      { 
+        model: Dislike_post
+      },
+    ],
+    order: [["createdAt", "ASC"]], 
+  }) 
+    .then(posts => res.status(200).json(posts))
+    .catch(error => res.status(400).json({ error }));
+};

@@ -5,6 +5,7 @@
             <img v-if="currentUser" :src="currentUser.photoProfil"  class="avatar" alt="Avatar" ref="file" type="file" />
             <img v-else src="//ssl.gstatic.com/accounts/ui/avatar_1x.png"  class="avatar" alt="Avatar" />
             <h1 v-if="currentUser" class="username">{{ currentUser.username }}</h1>
+            <p v-if="currentUser"><strong>Membre depuis le :</strong> {{ getDateWithoutTime(user.createdAt) }}</p>
           </div>
           <div class="optionsProfil bg-white">
             <div class="option"> 
@@ -76,6 +77,9 @@ export default {
         this.revealConfirm = false;
         this.displayNotification("Le compte n'a pas été supprimé !")
       }
+    },
+    getDateWithoutTime(date) {
+      return require("moment")(date).format("DD-MM-YYYY");
     },
   },
 }
@@ -184,7 +188,7 @@ a:hover{
     justify-content: center;
   }
   .sidebar__widget {
-    height: 380px;
+    height: 420px;
   }
 }
 </style>

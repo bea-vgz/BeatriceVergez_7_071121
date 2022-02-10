@@ -131,7 +131,7 @@ export default {
   methods: {
      ...mapActions(['displayNotification']),
     getDateWithoutTime(date) {
-      return require("moment")(date).format("YYYY-MM-DD HH:mm");
+      return require("moment")(date).format("DD-MM-YYYY HH:mm");
     },
     startEditing(comment) {
       this.isEditing = true

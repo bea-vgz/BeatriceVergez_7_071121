@@ -19,6 +19,10 @@ class PostService {
         return resource.get(`/posts?${userIdParams}`, { headers: authHeader() })
     }
 
+    getPosts(data){
+        return resource.get(`/posts`, data, { headers: authHeader() })
+    }
+
     deletePost(id) {
         return resource.delete(`/posts/${id}`, { headers: authHeader() })
         .then(() => localStorage.removeItem('post'))

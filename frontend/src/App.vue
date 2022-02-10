@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <NotificationAlert />
+    <Notifications />
     <router-view />
   </div>
 </template>
 
 <script>
-import NotificationAlert from '../src/components/NotificationAlert'
+import Notifications from '../src/components/Notifications'
 export default {
   name: 'App',
   components: {
-    NotificationAlert
+    Notifications
   }
 }
 </script>

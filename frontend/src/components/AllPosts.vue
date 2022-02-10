@@ -2,7 +2,9 @@
   <div>
     <b-row class="row justify-content-center align-items-center flex-column">
       <b-col cols="12" v-for="post in post.posts" :key="post.id">
-        <Post :post="post" />
+        <Post
+          :post="post"
+        />
       </b-col>
     </b-row>
     <p class="mx-2">{{ post.errorMessage }}</p>
@@ -20,7 +22,7 @@ export default {
   },
   props: ['userId'],
   async mounted () {
-    await this.$store.dispatch('post/initializePostStore', this.queryParams)
+    await this.$store.dispatch('post/AllPostsStore', this.queryParams)
   },
   computed: {
     ...mapState(['post']),
