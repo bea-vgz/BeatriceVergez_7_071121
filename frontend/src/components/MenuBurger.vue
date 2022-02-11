@@ -1,11 +1,11 @@
 <template>
     <div class="menu_toggle">
     <input type="checkbox" id="menu" />
-    <label for="menu" class="menu">
-	<span class="line"><!-- line--></span>    
-	<span class="line"><!-- line--></span>
-	<span class="line"><!-- line--></span>
-    </label>
+	<label for="menu" class="menu">
+	<span></span>
+	<span></span>
+	<span></span>
+	</label>
     <nav class="nav">
     <div class="top">
     <UserSearch />
@@ -29,7 +29,6 @@ export default {
   },
   methods: {
   ...mapActions(['displayNotification']),
-
     async logout() {
       this.$store.dispatch('auth/logout');
       this.displayNotification('Vous avez été déconnecté.')
@@ -40,17 +39,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 $base-duration: 500ms;
-
 // Breakpoints
 $sm: new-breakpoint(min-width 320px);
 $med: new-breakpoint(min-width 768px);
 $lg: new-breakpoint(min-width 1024px);
-
 *, *:before, *:after {
 	box-sizing: border-box;
 	outline: none;
 }
-
 .menu {
 	position: fixed;
 	top: 15px;
@@ -87,7 +83,6 @@ $lg: new-breakpoint(min-width 1024px);
 		}
 	}
 }
-
 #menu {
 	display: none;
 	
@@ -124,7 +119,6 @@ $lg: new-breakpoint(min-width 1024px);
 		transition: transform $base-duration ease;
 	}
 }
-
 .nav {
 	position: fixed;
 	top: 0;

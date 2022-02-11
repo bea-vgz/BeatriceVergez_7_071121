@@ -67,13 +67,11 @@ export default {
   },
   methods: {
     ...mapActions(['displayNotification']),
-
     async logout() {
       this.$store.dispatch('auth/logout');
       this.displayNotification('Vous avez été déconnecté.')
       router.push('/');
     },
-
     scrollToTop() {
       window.scrollTo(0,0);
     }
@@ -199,7 +197,7 @@ button {
   object-position: center;
   margin-right: 0.3rem;
 }
-.menu_toggle{
+.menu_toggle {
   display: none;
 }
 @media screen and (min-width: 280px) and (max-width: 769px) {
@@ -219,7 +217,7 @@ button {
   }
   .logo-groupo {
     display: block;
-    width: 50%;
+    width: 45%;
     float: right;
     padding: 1rem;
   }
