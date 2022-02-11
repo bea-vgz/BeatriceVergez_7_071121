@@ -67,7 +67,10 @@ const routes = [
 ] 
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior() {
+    return {x: 0, y: 0}
+  }
 })
 
 // Permet de mettre à jour le titre (les meta) en fonction du routeur

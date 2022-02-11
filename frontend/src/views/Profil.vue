@@ -24,7 +24,6 @@
           </div>
         </b-col>
         <b-col lg="12" class="align-items-center">
-          <h2 class="text-center posts-title"><strong> • MES POSTS • </strong></h2>
           <AllPosts :userId="currentUser.userId" />
         </b-col>
       </div>
@@ -124,6 +123,7 @@ h2 {
   margin-right: auto;
   margin-top: 6rem;
   margin-bottom: 6rem;
+  width: 40rem;
 }
 .userInfo {
   margin-top: 1rem;
@@ -170,6 +170,7 @@ a:hover{
     margin-top: 3rem;
     margin-bottom: 3rem;
     text-align: center;
+    width: auto;
   }
 }
 </style>

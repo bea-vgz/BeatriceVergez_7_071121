@@ -79,11 +79,11 @@ export default {
     onFileSelected(file) {
       this.image = file;
     },
-    async updatePost(){
+    updatePost(){
       const post = new FormData();
       post.append('image', this.image);
       post.append('content', this.post.content);
-      await PostService.modifyPost(this.post.id, post)
+      PostService.modifyPost(this.post.id, post)
       .then(() => {
         this.$store.dispatch('post/AllPostsStore')
         this.displayNotification('Post modifié !')

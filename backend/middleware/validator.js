@@ -8,7 +8,7 @@ const signupRules = () => {
         body('email')
             .exists() .withMessage("L'adresse email est obligatoire")
             .isLength({ min: 4 }).withMessage("Doit contenir 4 caractères au minimum")
-            .contains("groupomania.com") .withMessage("Votre adresse mail est celle de l'entreprise")
+            .contains("@groupomania.com") .withMessage("Votre adresse mail est celle de l'entreprise")
             .normalizeEmail(),
         body('password')
             .exists() .withMessage("Le mot de passe est obligatoire")

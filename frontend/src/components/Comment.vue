@@ -133,11 +133,8 @@ export default {
     getDateWithoutTime(date) {
       return require("moment")(date).format("DD-MM-YYYY HH:mm");
     },
-    startEditing(comment) {
+    startEditing() {
       this.isEditing = true
-      setTimeout(() => {
-        this.$refs.inputContent.focus(comment)
-      }, 30)
     },
     newline () {
       this.comment.content = `${this.comment.content}\n`

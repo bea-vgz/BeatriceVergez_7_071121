@@ -5,7 +5,7 @@ class AuthService {
     signup(user) {
         return resource.post('/users/signup', {
             username: user.username,
-            email: user.email,
+            email: user.email + '@groupomania.com',
             password: user.password,
             bio: user.bio,
             photoProfil: user.photoProfil,
@@ -15,7 +15,7 @@ class AuthService {
 
     login(user) {
       return resource.post('/users/login', {
-        email: user.email,
+        email: user.email + '@groupomania.com',
         password: user.password,
       })
       .then(response => {

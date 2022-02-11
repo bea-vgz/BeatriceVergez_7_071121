@@ -30,7 +30,7 @@
             <img class="logoGroupo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
           </div>
           <div class="align-items-center justify-content-center">
-            <img class="modal-photo-img" :src="post.image" alt="" />
+            <img class="modal-photo-img" :src="post.image" alt="image" />
           </div>
           <div slot="modal-footer"></div>
         </b-modal>

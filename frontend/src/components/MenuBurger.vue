@@ -2,9 +2,9 @@
     <div class="menu_toggle">
     <input type="checkbox" id="menu" />
     <label for="menu" class="menu">
-	<span></span>
-	<span></span>
-	<span></span>
+	<span class="line"><!-- line--></span>    
+	<span class="line"><!-- line--></span>
+	<span class="line"><!-- line--></span>
     </label>
     <nav class="nav">
     <div class="top">

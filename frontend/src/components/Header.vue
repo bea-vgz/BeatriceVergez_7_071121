@@ -2,8 +2,8 @@
   <div id="nav" class="border_nav bg-white sticky-top" >
     <div class="navigation">
       <div class="nav_logo">
-        <img class="logo" src="../assets/icon_groupomania.png" alt="Groupomania"/>
-        <img class="logo-groupo" src="../assets/logo_groupo.png" alt="Groupomania"/>
+        <img class="logo" src="../assets/icon_groupomania.png" @click="scrollToTop" alt="Groupomania"/>
+        <img class="logo-groupo" src="../assets/logo_groupo.png" @click="scrollToTop" alt="Groupomania"/>
         <div class="userSearch">
           <UserSearch />
         </div>
@@ -73,6 +73,10 @@ export default {
       this.displayNotification('Vous avez été déconnecté.')
       router.push('/');
     },
+
+    scrollToTop() {
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>
@@ -135,7 +139,8 @@ nav .menu-item, .sub-menu {
   display: block;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  width: 85%
+  width: 85%;
+  cursor: pointer;
 }
 .logo-groupo {
   display: none;
@@ -193,13 +198,6 @@ button {
   object-fit: cover;
   object-position: center;
   margin-right: 0.3rem;
-}
-input {
-  border-radius: 2rem;
-  border: solid 1px #F2F2F2;
-  background: #F2F2F2;
-  padding: 0.7rem;
-  width: 100%;
 }
 .menu_toggle{
   display: none;

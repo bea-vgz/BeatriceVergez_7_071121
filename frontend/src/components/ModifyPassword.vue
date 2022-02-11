@@ -11,13 +11,13 @@
             <div>
               <label for="password"> 🔒  Mot de passe actuel : </label>
               <div class="inputPassword">
-                <input v-if="currentUser" v-model="currentUser.password" class="form-row_input" id="actuelPassword" type='password' />
+                <input v-if="currentUser" v-model="currentUser.password" placeholder="Mot de passe actuel" class="form-row_input" id="password" type='password' />
               </div>
             </div>
             <div>
               <label for="newPassword"> 🔒  Nouveau mot de passe : </label>
               <div class="inputPassword">
-                <input v-model="newPassword" class="form-row_input" id="newPassword" :type="show ? 'text' : 'password'" />
+                <input v-model="newPassword" class="form-row_input" id="newPassword" placeholder="Votre nouveau mot de passe" :type="show ? 'text' : 'password'" />
                 <button type="button" class="buttonEyes" @click="show = !show" >
                   <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
                   <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
@@ -27,7 +27,7 @@
             <div>
               <label for="confirmPassword">🔒  Confirmer le mot de passe : </label>
               <div class="inputPassword">
-                <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" :type="show ? 'text' : 'password'" />
+                <input v-model="confirmPassword" class="form-row_input" id="confirmPassword" placeholder="Confirmez votre nouveau mot de passe" :type="show ? 'text' : 'password'" />
                 <button type="button" class="buttonEyes" @click="show = !show" >
                   <font-awesome-icon icon="eye" alt="mot de passe visible" class="eyes text-color" v-show="show" />
                   <font-awesome-icon icon="eye-slash" alt="mot de passe invisible" class="eyes text-color" v-show="!show" />
@@ -132,6 +132,7 @@ h1 {
 .infoUser {
   padding: 3.5rem;
   max-width: 100%;
+  width: 100%;
   height: auto;
   border-radius: 1.25rem;
   box-shadow: 0 0 16px #0000002e;
@@ -142,6 +143,7 @@ h1 {
   margin-right: auto;
   margin-top: 6rem;
   margin-bottom: 6rem;
+  width: 40rem;
 }
 .card {
   border: none
@@ -155,7 +157,7 @@ input {
   line-height: inherit;
   color: inherit;
   height: 2rem;
-  width: auto;
+  width: 80%;
   text-align: left;
 }
 a {
@@ -169,7 +171,7 @@ a:hover {
   text-decoration: none;
 }
 .save-btn {
-  background-color: rgba(253, 45, 6, 0.8);
+  background-color: #ff2600e5;
   color: white;
   border-radius: 1rem;
   border: none;
@@ -183,7 +185,7 @@ a:hover {
 .save-btn:hover,
 .save-btn:focus,
 .save-btn:active {
-  background-color: rgb(253, 45, 6);
+  background-color: #e22600;
   color: white;
   outline: none;
 }
@@ -194,6 +196,7 @@ a:hover {
   background: none;
   border: none;
   cursor: pointer;
+  color: #e22600;
 }
 @media screen and (min-width: 280px) and (max-width: 769px) {
   .container_account {
@@ -204,6 +207,7 @@ a:hover {
     margin-top: 3rem;
     margin-bottom: 3rem;
     text-align: center;
+    width: auto;
   }
   .option {
     display: flex;

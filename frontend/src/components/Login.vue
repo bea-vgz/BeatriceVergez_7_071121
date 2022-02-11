@@ -18,8 +18,10 @@
     
     <!-- Email input -->
         <label for="email">  📧  Email * : </label>
-        <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="xxxx@groupomania.com" required="required" >
-
+        <div class="d-flex">
+          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Email (pseudo)" required="required" >
+          <span class="input-group-text">@groupomania.com</span>
+        </div>
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : 
           <button type="button" class="buttonEyes" @click="show = !show" aria-role="img">

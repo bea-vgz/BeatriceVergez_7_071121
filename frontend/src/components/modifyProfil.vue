@@ -32,6 +32,7 @@
                     ref="fileUpload"
                     class="d-none"
                     type="file"
+                    aria-label="image"
                     @change="onFileChange"
                   />
                 </b-col>
@@ -134,7 +135,7 @@ export default {
       const userId = this.currentUser.userId
       AuthService.modifyUser(userId, user)
       .then(() => {
-        this.$store.dispatch('auth/getOneUser', this.currentUser.userId, this.userId)
+        this.$store.dispatch('auth/getAllUsers')
         this.displayNotification('User modifié !')
         router.push('/home');
       })
@@ -221,7 +222,7 @@ export default {
   border: none
 }
 .save-btn {
-  background-color: rgba(253, 45, 6, 0.8);
+  background-color: #ff2600e5;
   color: white;
   border-radius: 1rem;
   border: none;
@@ -236,7 +237,7 @@ export default {
 .save-btn:hover,
 .save-btn:focus,
 .save-btn:active {
-  background-color: rgb(253, 45, 6);
+  background-color: #e22600;
   color: white;
   outline: none;
 }

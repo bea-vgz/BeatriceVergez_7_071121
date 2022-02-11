@@ -19,8 +19,10 @@
 
     <!-- Email input -->
         <label for="email"> 📧  Email * : </label>
-        <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="xxxx@groupomania.com" required="required" >
-
+        <div class="d-flex">
+          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Email (pseudo)" required="required" >
+          <span class="input-group-text">@groupomania.com</span>
+        </div>
     <!-- Password input -->
         <label for="password"> 🔒  Mot de passe * : 
           <button type="button" class="buttonEyes" @click="show = !show" >
@@ -147,14 +149,8 @@ input {
   border: solid 2px #F2F2F2;
   border-radius: 1rem;
   margin: 0.3rem;
-}
-.input_email {
-  text-align: left;
-  width: 100%;
-}
-.input_email_text {
-  color: rgb(141, 141, 141);
-  font-size: 0.9rem;
+  max-width: 100%;
+  width: auto;
 }
 .buttonInsc {
   font-family: 'Barlow', sans-serif;
