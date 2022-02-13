@@ -4,13 +4,13 @@ Social Network Groupomania
 
 **Frontend :**
 
-cd frontend
-npm install 
+cd frontend /
+npm install /
 npm run serve
 
 
 **Backend :**
 
-cd backend
-npm install
+cd backend /
+npm install /
 nodemon server
