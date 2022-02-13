@@ -1,7 +1,7 @@
 # BeatriceVergez_7_071121
 Social Network Groupomania
 
-**Clone**
+**Clone :**
 git clone git@github.com:bea-vgz/BeatriceVergez_7_071121
 
 **Frontend :**
