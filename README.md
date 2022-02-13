@@ -1,5 +1,5 @@
-# BeatriceVergez_7_071121
-Social Network Groupomania
+# BeatriceVergez_7_071121 - GROUPOMANIA
+Social Network // Créer un réseau social d'entreprise // P7_Openclassrooms
 
 --
 
