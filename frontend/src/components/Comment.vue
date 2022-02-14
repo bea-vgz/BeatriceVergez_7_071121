@@ -70,6 +70,7 @@
         </button>
         <div class="button-dis-like d-flex" v-if="comment.Dislike_comments">
           <AllLikesComment
+          :post="post"
           :comment="comment" 
           :dislikesCount="comment.Dislike_comments.length"
           />
@@ -287,6 +288,16 @@ a {
   display: flex;
 }
 .like-comment, .dislike-comment {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+}
+@media screen and (min-width: 280px) and (max-width: 769px) {
+  .comment-date {
+  margin-left: 40px;
+  margin-right: 0.5rem;
+  font-size: 0.6rem;
+  }
+  .react-btn {
+    padding: none;
+  }
 }
 </style>

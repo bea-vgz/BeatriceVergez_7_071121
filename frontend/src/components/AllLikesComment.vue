@@ -5,7 +5,7 @@
         v-b-modal="`modal-likes-${comment.id}`"
         @click="getAllLikes"
         v-if="likesCount > 0"
-        class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
+        class="like-btn d-flex align-items-center my-2 text-left"
         aria-label="Afficher les likes"
       >
       <div
@@ -24,7 +24,7 @@
         v-b-modal="`modal-dislikes-${comment.id}`"
         @click="getAllDislikes"
         v-if="dislikesCount > 0"
-        class="like-btn d-flex align-items-center my-2 mt-lg-0 mb-lg-3 ml-2 text-left"
+        class="like-btn d-flex align-items-center my-2 text-left"
         aria-label="Afficher les likes"
       >
       <div
@@ -180,16 +180,6 @@ a {
   display: flex;
   justify-content: center;
 }
-@media screen and (min-width: 280px) and (max-width: 767px) {
-  .modal-title {
-    font-size: 14px;
-  }
-  .likes-number {
-    font-size: 12px;
-    font-weight: 700;
-    color: #747474
-  }
-}
 .svg-container {
   border-radius: 100%;
   background-color: rgb(32, 120, 244);
@@ -204,5 +194,15 @@ a {
 }
 .like-profile-picture {
   height: 30px;
+}
+@media screen and (min-width: 280px) and (max-width: 767px) {
+  .modal-title {
+    font-size: 14px;
+  }
+  .likes-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: #747474
+  }
 }
 </style>

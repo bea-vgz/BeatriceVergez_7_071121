@@ -20,7 +20,7 @@
     <!-- Email input -->
         <label for="email"> 📧  Email * : </label>
         <div class="d-flex">
-          <input type="text" id="email" v-model="user.email" autocomplete="email" placeholder="Email (pseudo)" required="required" >
+          <input type="text" name="email" id="email" v-model="user.email" autocomplete="email" placeholder="Email (pseudo)" required="required" >
           <span class="input-group-text">@groupomania.com</span>
         </div>
     <!-- Password input -->
@@ -150,7 +150,7 @@ input {
   border-radius: 1rem;
   margin: 0.3rem;
   max-width: 100%;
-  width: auto;
+  width: 100%;
 }
 .buttonInsc {
   font-family: 'Barlow', sans-serif;

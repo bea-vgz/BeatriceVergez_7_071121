@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 Vue.use(VueRouter)
+Vue.use(VueResource)
 
 const routes = [
   // Route login
@@ -54,16 +56,6 @@ const routes = [
     component: () => import('../components/Error404.vue'),
     meta: { title:'Groupomania - Error404' }
   }
- /* {
-    pat
- /* {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about"  '../views/About.vue') */
-  //} 
 ] 
 
 const router = new VueRouter({

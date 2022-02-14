@@ -11,9 +11,9 @@
           class="search-text border-0 bg-transparent"
           type="text"
           v-model="search"
-          placeholder="Rechercher un utilisateur..."
+          placeholder="Rechercher un collègue..."
           ref="searchInput"
-          aria-label="Chercher un utilisateur"
+          aria-label="Chercher un collègue"
         />
       </div>
     </div>
@@ -99,6 +99,7 @@ export default {
   padding: 1rem;
   padding-bottom: 0.2rem;
   z-index: 1;
+  top: 70px;
   box-shadow: 0px 1px 5px 4px rgba(204, 204, 204, 0.2);
   transform: translateX(-60%);
   transform: translateY(30%);
@@ -134,7 +135,7 @@ export default {
     color: #FFF;
   }
   .users-list {
-    top: 119px;
+    top: 110px;
     left: 15px;
     background: white;
     box-shadow: 0rem 0.2rem 0.5rem rgba(0, 0, 0, 0.08) !important;

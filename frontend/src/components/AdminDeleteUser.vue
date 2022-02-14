@@ -76,16 +76,16 @@ export default {
   width: 100%;
 }
 a{
-    text-decoration: none;
-    color:#242424;
-    font-size : 1rem;
-    font-weight: bold;
+  text-decoration: none;
+  color:#242424;
+  font-size : 1rem;
+  font-weight: bold;
     cursor: pointer;
 }
 a:hover{
-    color: #e22600;
-    cursor: pointer;
-    text-decoration: none;
+  color: #e22600;
+  cursor: pointer;
+  text-decoration: none;
 }
 .icon {
   padding-right: 0.7rem;

@@ -2,9 +2,10 @@
     <div class="menu_toggle">
     <input type="checkbox" id="menu" />
 	<label for="menu" class="menu">
-	<span></span>
-	<span></span>
-	<span></span>
+		<span class="line-1"></span>
+		<span class="line-2"></span>
+		<span class="line-3"></span>
+		Menu 
 	</label>
     <nav class="nav">
     <div class="top">
@@ -49,7 +50,7 @@ $lg: new-breakpoint(min-width 1024px);
 }
 .menu {
 	position: fixed;
-	top: 15px;
+	top: 25px;
 	left: 20px;
 	display: flex;
 	align-items: center;
@@ -57,10 +58,11 @@ $lg: new-breakpoint(min-width 1024px);
 	flex-direction: column;
 	width: 50px;
 	height: 50px;
-	background-color: white;
+	background-color: transparent;
 	border-radius: 50%;
 	transition: transform 250ms ease;
 	cursor: pointer;
+	color: transparent;
 	z-index: 200;
 	
 	span {
@@ -90,6 +92,7 @@ $lg: new-breakpoint(min-width 1024px);
 		background-color: transparent;
 		transform: rotate(360deg);
 		transition: transform 250ms ease;
+		color: transparent;
 		
 		span {
 			background-color: white;
@@ -124,7 +127,7 @@ $lg: new-breakpoint(min-width 1024px);
 	top: 0;
 	left: -300px;
 	width: 300px;
-	height: 100vh;
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	background-color: #242424f5;

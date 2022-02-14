@@ -41,9 +41,9 @@
               {{ message }}
             </div>
           </div>
-        </div>
-     </b-col>
-    </div>
+          </div>
+        </b-col>
+      </div>
     </div>
     <!-- Footer -->
     <div class="footer">

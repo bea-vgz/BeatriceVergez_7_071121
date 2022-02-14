@@ -178,7 +178,7 @@ a:hover{
     width: 100%;
   }
 }
-@media screen and (min-width: 280px) and (max-width: 769px) {
+@media screen and (min-width: 280px) and (max-width: 896px) {
   .container_account {
     display: flex;
     flex-direction: column;

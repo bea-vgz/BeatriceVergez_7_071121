@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -43,7 +44,9 @@ Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(LayoutPlugin) // Ceci importe <b -modal> ainsi que la directive vb-modal
+Vue.use(LayoutPlugin)
+Vue.prototype.$axios = axios
+
 
 new Vue({
   router,

@@ -35,8 +35,8 @@ class AuthService {
       return resource.delete(`/users/${id}`, { headers: authHeader() })
     }
 
-    modifyUser(userId, data) {
-      return resource.put(`/users/${userId}`, data, { headers: authHeader() })
+    modifyUser(userId, user) {
+      return resource.put(`/users/${userId}`, user, { headers: authHeader() })
       .then(response => {
         console.log(response)
       });

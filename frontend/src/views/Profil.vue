@@ -23,7 +23,7 @@
             <modify-profil v-show="modifyProfil" @close="closeModal" />
           </div>
         </b-col>
-        <b-col lg="12" class="align-items-center">
+        <b-col col-lg="12" class="align-items-center">
           <AllPosts :userId="currentUser.userId" />
         </b-col>
       </div>
@@ -162,6 +162,18 @@ a:hover{
   letter-spacing: 1px;
 }
 @media screen and (min-width: 280px) and (max-width: 769px) {
+  .container_account {
+    display: flex;
+    flex-direction: column;
+  }
+  .infoUser {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    width: auto;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 896px) {
   .container_account {
     display: flex;
     flex-direction: column;

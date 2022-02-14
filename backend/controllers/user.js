@@ -138,12 +138,3 @@ exports.getOneUser = (req, res, next) => {
       .then(user => res.status(200).json(user))
       .catch(error => res.status(400).json({ error }));
 };
-
-/* Se déconnecter 
-exports.logout = (req, res) => {
-    User.update({
-      UserId: req.user
-    })
-    .then(() => res.status(200).json({ message: "Utilisateur deconnecté"}))
-    .catch(error => { throw error })
-} */

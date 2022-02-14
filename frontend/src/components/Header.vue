@@ -146,6 +146,7 @@ nav .menu-item, .sub-menu {
 }
 .logo-groupo {
   display: none;
+  cursor: pointer;
 }
 .profil_icon {
   padding-right: 0.5rem;
