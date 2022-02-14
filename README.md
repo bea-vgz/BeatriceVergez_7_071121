@@ -20,6 +20,7 @@ __
 
 cd frontend /
 npm install /
+(si besoin : npm install node-sass)
 npm run serve
 
 __
@@ -28,4 +29,5 @@ __
 
 cd backend /
 npm install /
+(si besoin : npm install bcrypt)
 nodemon server
