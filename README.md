@@ -12,7 +12,7 @@ Partage de photos et/ou gifs entre collègues
 __
 
 **Clone :**
-git clone git@github.com:bea-vgz/BeatriceVergez_7_071121
+git clone https://github.com/bea-vgz/BeatriceVergez_7_071121.git
 
 __
 
